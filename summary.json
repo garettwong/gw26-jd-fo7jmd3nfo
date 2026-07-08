@@ -1,0 +1,27 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 02.xlsx",
+  "events": 211,
+  "counts": {
+    "confirmed": 127,
+    "unconfirmed": 78,
+    "note": 6
+  },
+  "categories": {
+    "YMCA SEN": 61,
+    "School": 1,
+    "勵行 / ERB": 114,
+    "Holiday": 6,
+    "Mike Sir": 3,
+    "DGS / UE": 2,
+    "循道": 24
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}
