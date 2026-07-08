@@ -1,7 +1,7 @@
 {
   "name": "ERB Super Timetable",
   "short_name": "ERB Timetable",
-  "start_url": "./?v=redtext1&build=coursefilter-blackframes-20260708b",
+  "start_url": "./?v=redtext1&build=coursejump-statusfilters-20260708c",
   "display": "standalone",
   "background_color": "#eef1f6",
   "theme_color": "#0f7d7d",
