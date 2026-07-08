@@ -1,4 +1,5 @@
 from openpyxl import load_workbook
+from openpyxl.cell.rich_text import CellRichText, TextBlock
 from pathlib import Path
 import calendar, datetime, html, json, re
 
@@ -8,7 +9,7 @@ OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
 
-wb = load_workbook(SRC, data_only=False)
+wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
     (0, [3,4], 3, "Sunday"),
     (1, [5,6], 6, "Monday"),
@@ -21,13 +22,117 @@ GROUPS = [
 DAY_ROWS = [6,11,16,21,26,31]
 MONTH_MAP = {"June":6, "July New":7, "August New":8, "September New":9, "October New":10, "November New":11, "December New":12}
 
-def norm_text(v):
+def raw_text(v):
     if v is None:
         return ""
-    s = str(v).replace("\r", "\n")
+    if isinstance(v, CellRichText):
+        return "".join(str(part.text if isinstance(part, TextBlock) else part) for part in v)
+    return str(v)
+
+def norm_text(v):
+    s = raw_text(v).replace("\r", "\n")
     s = re.sub(r"\n+", " / ", s)
     s = re.sub(r"\s+", " ", s).strip()
     return s
+
+def color_rgb(font):
+    col = getattr(font, "color", None)
+    if not col:
+        return ""
+    try:
+        if col.type == "rgb" and col.rgb:
+            return str(col.rgb).upper()
+    except Exception:
+        pass
+    return ""
+
+def is_red_font(font):
+    rgb = color_rgb(font)
+    return bool(rgb and rgb.endswith("FF0000"))
+
+def cell_text_runs(cell):
+    value = cell.value
+    whole_red = is_red_font(cell.font)
+    runs = []
+    if isinstance(value, CellRichText):
+        for part in value:
+            if isinstance(part, TextBlock):
+                txt = str(part.text)
+                red = whole_red or is_red_font(part.font)
+            else:
+                txt = str(part)
+                red = whole_red
+            if txt:
+                runs.append((txt, red))
+    else:
+        txt = raw_text(value)
+        if txt:
+            runs.append((txt, whole_red))
+    return normalize_runs(runs)
+
+def normalize_runs(runs):
+    out = []
+    for txt, red in runs:
+        txt = str(txt).replace("\r", "\n")
+        txt = re.sub(r"\n+", " / ", txt)
+        txt = re.sub(r"\s+", " ", txt)
+        if not txt:
+            continue
+        if out and not out[-1][0].endswith((" ", "/")) and not txt.startswith((" ", "/")):
+            out.append((" ", False))
+        out.append((txt, red))
+    while out and not out[0][0].strip():
+        out.pop(0)
+    while out and not out[-1][0].strip():
+        out.pop()
+    if out:
+        first_txt, first_red = out[0]
+        out[0] = (first_txt.lstrip(), first_red)
+        last_txt, last_red = out[-1]
+        out[-1] = (last_txt.rstrip(), last_red)
+    merged = []
+    for txt, red in out:
+        if not txt:
+            continue
+        if merged and merged[-1][1] == red:
+            merged[-1] = (merged[-1][0] + txt, red)
+        else:
+            merged.append((txt, red))
+    return merged
+
+def runs_plain(runs):
+    return "".join(txt for txt, _ in runs)
+
+def split_runs(runs):
+    before, after = [], []
+    found = False
+    for txt, red in runs:
+        if found:
+            after.append((txt, red))
+            continue
+        idx = txt.find(" / ")
+        if idx >= 0:
+            if txt[:idx].strip():
+                before.append((txt[:idx].rstrip(), red))
+            rem = txt[idx+3:].lstrip()
+            if rem:
+                after.append((rem, red))
+            found = True
+        else:
+            before.append((txt, red))
+    if not before:
+        before = runs[:]
+    return before, after
+
+def runs_html(runs):
+    bits = []
+    for txt, red in runs:
+        esc = html.escape(str(txt), quote=True)
+        if red:
+            bits.append(f'<span class="xl-red">{esc}</span>')
+        else:
+            bits.append(esc)
+    return "".join(bits)
 
 def border_status(cell):
     styles = [cell.border.top.style, cell.border.right.style, cell.border.bottom.style, cell.border.left.style]
@@ -108,7 +213,8 @@ for sheet in MONTH_SHEETS:
     for row in range(1, ws.max_row + 1):
         for col in range(1, ws.max_column + 1):
             cell = ws.cell(row, col)
-            text = norm_text(cell.value)
+            text_runs = cell_text_runs(cell)
+            text = runs_plain(text_runs)
             if not text:
                 continue
             if row in (1,2,3,4,5):
@@ -124,11 +230,14 @@ for sheet in MONTH_SHEETS:
             seen.add(key)
             status = border_status(cell)
             cat, cat_label = category(text)
-            title, detail = split_title(text)
+            title_runs, detail_runs = split_runs(text_runs)
+            title, detail = runs_plain(title_runs), runs_plain(detail_runs)
             ev = {
                 "date": dt.isoformat(), "month": sheet, "row": row, "col": col, "cell": cell.coordinate,
                 "text": text, "title": title, "detail": detail, "status": status, "fill": fill_rgb(cell),
                 "category": cat, "category_label": cat_label,
+                "html": runs_html(text_runs), "title_html": runs_html(title_runs), "detail_html": runs_html(detail_runs),
+                "red": any(red for _, red in text_runs),
             }
             events.append(ev)
             by_date.setdefault(dt.isoformat(), []).append(ev)
@@ -145,16 +254,20 @@ for ev in events:
         CATS.append((ev["category"], ev["category_label"]))
 
 CSS = r'''
-*{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}body{margin:0;font-family:"Segoe UI Variable","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:#eef1f6;color:#1d2734;line-height:1.42}.wrap{max-width:1280px;margin:0 auto;padding:28px 16px 70px}.hero{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.title{font-size:30px;font-weight:850;letter-spacing:-.45px;margin:0}.title .y{color:#0f7d7d}.sub{color:#64707f;margin:6px 0 0;font-size:14px}.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.btn{border:1px solid #d8e0ea;background:#fff;color:#344153;border-radius:10px;padding:8px 12px;font-weight:750;font-size:13px;text-decoration:none;box-shadow:0 1px 2px rgba(20,30,50,.05)}.btn:hover{border-color:#8bb8bd}.stats,.legend{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}.stat,.legend-card{background:#fff;border:1px solid #e2e7ef;border-radius:12px;padding:8px 13px;font-size:13px;color:#46505e;box-shadow:0 1px 2px rgba(20,30,50,.05)}.stat b{color:#1d2734;font-size:15px}.legend-card{display:flex;align-items:center;gap:8px}.sample{width:28px;height:18px;border-radius:6px;background:#f9fcff}.sample.confirmed{border:3px solid #1f7a4d}.sample.unconfirmed{border:3px dashed #d17b00}.sample.note{border:2px solid #b8c1ce}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.filter{border:1px solid #dbe3ed;background:#fff;border-radius:999px;padding:7px 11px;font-weight:750;font-size:12px;color:#4c5a6b;cursor:pointer}.filter.active{background:#0f7d7d;color:#fff;border-color:#0f7d7d}.section-h{font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:#8a94a2;font-weight:800;margin:24px 2px 10px}.month{background:#fff;border:1px solid #e2e7ef;border-radius:16px;padding:16px;margin-top:18px;box-shadow:0 1px 3px rgba(20,30,50,.06)}.month h2{margin:0 0 12px;font-size:20px;font-weight:850;letter-spacing:-.2px}.gridwrap{overflow-x:auto}.grid{display:grid;grid-template-columns:repeat(7,minmax(124px,1fr));gap:7px;min-width:868px}.dow{font-size:11.5px;font-weight:800;color:#98a2af;text-align:center;padding:2px 0;text-transform:uppercase;letter-spacing:.5px}.cell{min-height:132px;border:1px solid #e8ecf3;border-radius:10px;padding:6px;background:#fcfdff;display:flex;flex-direction:column;gap:4px}.cell.out{background:#f4f6f9;border-style:dashed;opacity:.5}.cell.wknd{background:#f7f9fc}.cell.today{outline:3px solid #0f7d7d;outline-offset:1px}.dnum{font-size:12px;font-weight:850;color:#9aa4b1}.cell.has .dnum{color:#2d3948}.chip{border-radius:8px;padding:5px 7px 6px;background:#fff;box-shadow:0 1px 1px rgba(20,30,50,.04);cursor:pointer;overflow:visible}.chip.confirmed{border:2.5px solid #1f7a4d}.chip.unconfirmed{border:2.5px dashed #d17b00}.chip.note{border:1.5px solid #b8c1ce;background:#f8fafc}.chip .top{display:flex;justify-content:space-between;gap:6px;align-items:flex-start}.chip .cat{font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.35px;opacity:.82}.chip .status{font-size:9.5px;font-weight:850;white-space:nowrap}.chip .ttl{font-size:11.5px;font-weight:850;margin-top:2px;color:#172232;line-height:1.22}.chip .det{font-size:10.2px;color:#596676;margin-top:2px;line-height:1.22;display:block;white-space:normal;overflow:visible}.chip .fulltxt{display:none}.cat-ymca{background:#e3f7fa}.cat-erb{background:#fff1e6}.cat-methodist{background:#eef0ff}.cat-dgs{background:#ecfdf3}.cat-holiday{background:#f3f4f6}.cat-mike{background:#fff8db}.cat-school{background:#fce7f3}.cat-other{background:#f6f7fb}.agenda{display:none}.aday{display:flex;gap:10px;align-items:flex-start;padding:9px 2px;border-top:1px solid #eef1f6}.aday:first-child{border-top:none}.adate{flex:0 0 48px;text-align:center}.adate .adow{display:block;font-size:11px;font-weight:800;color:#98a2af;text-transform:uppercase}.adate .anum{display:block;font-size:20px;font-weight:850;color:#3a4452;line-height:1.1}.achips{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}.foot{margin-top:28px;color:#7a8492;font-size:12.5px;border-top:1px solid #e2e7ef;padding-top:14px}.modal{position:fixed;inset:0;background:rgba(18,26,38,.56);display:flex;align-items:center;justify-content:center;padding:18px;z-index:50}.modal[hidden]{display:none}.modal-card{background:#fff;border-radius:16px;max-width:560px;width:100%;padding:20px 20px 22px;box-shadow:0 14px 44px rgba(15,25,45,.32);position:relative;max-height:88vh;overflow:auto}.modal-x{position:absolute;top:8px;right:12px;border:none;background:transparent;font-size:26px;line-height:1;color:#98a2af;cursor:pointer}.modal-h{font-size:20px;font-weight:850;padding-right:24px}.modal-date{color:#69737f;font-size:13px;margin-top:2px}.modal-body{white-space:pre-wrap;margin-top:14px;font-size:15px}.pill{display:inline-block;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:850;margin-top:10px;margin-right:6px}.pill.confirmed{background:#e7f6ee;color:#16623d}.pill.unconfirmed{background:#fff3df;color:#a25600}.pill.note{background:#eef2f7;color:#596676}@media (max-width:820px){.wrap{padding:14px 10px 48px}.hero{display:block}.title{font-size:22px}.sub{font-size:13px}.actions{justify-content:flex-start;margin-top:10px}.month{padding:12px 10px 14px}.month h2{font-size:17px}.stats,.legend{gap:7px}.stat,.legend-card{font-size:12px;padding:7px 10px}}@media (orientation:portrait) and (max-width:820px){.gridwrap{display:none}.agenda{display:block}.aday{scroll-margin-top:18px}.aday.today{background:linear-gradient(90deg,rgba(15,125,125,.10),transparent);border-radius:14px}}@media (orientation:landscape) and (max-height:540px){.sub,.stats,.legend,.filters,.foot{display:none}.month{padding:8px;margin-top:10px}.month h2{font-size:15px;margin:0 0 6px}.gridwrap{overflow:visible}.grid{min-width:0;gap:3px}.dow{font-size:8.5px;letter-spacing:0;padding:0}.cell{min-height:96px;height:auto;padding:2px;border-radius:5px;overflow:visible}.dnum{font-size:9px}.chip{padding:2px 3px 3px;border-radius:4px;overflow:visible}.chip.confirmed{border-width:1.7px}.chip.unconfirmed{border-width:1.7px}.chip .top{margin-bottom:1px}.chip .cat,.chip .status{font-size:5.8px;font-weight:550;letter-spacing:0}.chip .ttl,.chip .det{display:none}.chip .fulltxt{display:block;font-size:6.6px;font-weight:400;line-height:1.14;color:#172232;white-space:normal;overflow:visible;word-break:break-word;overflow-wrap:anywhere}}@media print{body{background:#fff}.month,.stat,.legend-card{box-shadow:none}.actions,.filters{display:none}.gridwrap{overflow:visible}.grid{min-width:0}.chip{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}body{margin:0;font-family:"Segoe UI Variable","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:#eef1f6;color:#1d2734;line-height:1.42}.xl-red{color:#d60000;font-weight:700}.chip .xl-red{color:#d60000}.modal-body .xl-red{color:#d60000;font-weight:750}.wrap{max-width:1280px;margin:0 auto;padding:28px 16px 70px}.hero{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.title{font-size:30px;font-weight:850;letter-spacing:-.45px;margin:0}.title .y{color:#0f7d7d}.sub{color:#64707f;margin:6px 0 0;font-size:14px}.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.btn{border:1px solid #d8e0ea;background:#fff;color:#344153;border-radius:10px;padding:8px 12px;font-weight:750;font-size:13px;text-decoration:none;box-shadow:0 1px 2px rgba(20,30,50,.05)}.btn:hover{border-color:#8bb8bd}.stats,.legend{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}.stat,.legend-card{background:#fff;border:1px solid #e2e7ef;border-radius:12px;padding:8px 13px;font-size:13px;color:#46505e;box-shadow:0 1px 2px rgba(20,30,50,.05)}.stat b{color:#1d2734;font-size:15px}.legend-card{display:flex;align-items:center;gap:8px}.sample{width:28px;height:18px;border-radius:6px;background:#f9fcff}.sample.confirmed{border:3px solid #1f7a4d}.sample.unconfirmed{border:3px dashed #d17b00}.sample.note{border:2px solid #b8c1ce}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.filter{border:1px solid #dbe3ed;background:#fff;border-radius:999px;padding:7px 11px;font-weight:750;font-size:12px;color:#4c5a6b;cursor:pointer}.filter.active{background:#0f7d7d;color:#fff;border-color:#0f7d7d}.section-h{font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:#8a94a2;font-weight:800;margin:24px 2px 10px}.month{background:#fff;border:1px solid #e2e7ef;border-radius:16px;padding:16px;margin-top:18px;box-shadow:0 1px 3px rgba(20,30,50,.06)}.month h2{margin:0 0 12px;font-size:20px;font-weight:850;letter-spacing:-.2px}.gridwrap{overflow-x:auto}.grid{display:grid;grid-template-columns:repeat(7,minmax(124px,1fr));gap:7px;min-width:868px}.dow{font-size:11.5px;font-weight:800;color:#98a2af;text-align:center;padding:2px 0;text-transform:uppercase;letter-spacing:.5px}.cell{min-height:132px;border:1px solid #e8ecf3;border-radius:10px;padding:6px;background:#fcfdff;display:flex;flex-direction:column;gap:4px}.cell.out{background:#f4f6f9;border-style:dashed;opacity:.5}.cell.wknd{background:#f7f9fc}.cell.today{outline:3px solid #0f7d7d;outline-offset:1px}.dnum{font-size:12px;font-weight:850;color:#9aa4b1}.cell.has .dnum{color:#2d3948}.chip{border-radius:8px;padding:5px 7px 6px;background:#fff;box-shadow:0 1px 1px rgba(20,30,50,.04);cursor:pointer;overflow:visible}.chip.confirmed{border:2.5px solid #1f7a4d}.chip.unconfirmed{border:2.5px dashed #d17b00}.chip.note{border:1.5px solid #b8c1ce;background:#f8fafc}.chip .top{display:flex;justify-content:space-between;gap:6px;align-items:flex-start}.chip .cat{font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.35px;opacity:.82}.chip .status{font-size:9.5px;font-weight:850;white-space:nowrap}.chip .ttl{font-size:11.5px;font-weight:850;margin-top:2px;color:#172232;line-height:1.22}.chip .det{font-size:10.2px;color:#596676;margin-top:2px;line-height:1.22;display:block;white-space:normal;overflow:visible}.chip .fulltxt{display:none}.cat-ymca{background:#e3f7fa}.cat-erb{background:#fff1e6}.cat-methodist{background:#eef0ff}.cat-dgs{background:#ecfdf3}.cat-holiday{background:#f3f4f6}.cat-mike{background:#fff8db}.cat-school{background:#fce7f3}.cat-other{background:#f6f7fb}.agenda{display:none}.aday{display:flex;gap:10px;align-items:flex-start;padding:9px 2px;border-top:1px solid #eef1f6}.aday:first-child{border-top:none}.adate{flex:0 0 48px;text-align:center}.adate .adow{display:block;font-size:11px;font-weight:800;color:#98a2af;text-transform:uppercase}.adate .anum{display:block;font-size:20px;font-weight:850;color:#3a4452;line-height:1.1}.achips{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}.foot{margin-top:28px;color:#7a8492;font-size:12.5px;border-top:1px solid #e2e7ef;padding-top:14px}.modal{position:fixed;inset:0;background:rgba(18,26,38,.56);display:flex;align-items:center;justify-content:center;padding:18px;z-index:50}.modal[hidden]{display:none}.modal-card{background:#fff;border-radius:16px;max-width:560px;width:100%;padding:20px 20px 22px;box-shadow:0 14px 44px rgba(15,25,45,.32);position:relative;max-height:88vh;overflow:auto}.modal-x{position:absolute;top:8px;right:12px;border:none;background:transparent;font-size:26px;line-height:1;color:#98a2af;cursor:pointer}.modal-h{font-size:20px;font-weight:850;padding-right:24px}.modal-date{color:#69737f;font-size:13px;margin-top:2px}.modal-body{white-space:pre-wrap;margin-top:14px;font-size:15px}.pill{display:inline-block;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:850;margin-top:10px;margin-right:6px}.pill.confirmed{background:#e7f6ee;color:#16623d}.pill.unconfirmed{background:#fff3df;color:#a25600}.pill.note{background:#eef2f7;color:#596676}@media (max-width:820px){.wrap{padding:14px 10px 48px}.hero{display:block}.title{font-size:22px}.sub{font-size:13px}.actions{justify-content:flex-start;margin-top:10px}.month{padding:12px 10px 14px}.month h2{font-size:17px}.stats,.legend{gap:7px}.stat,.legend-card{font-size:12px;padding:7px 10px}}@media (orientation:portrait) and (max-width:820px){.gridwrap{display:none}.agenda{display:block}.aday{scroll-margin-top:18px}.aday.today{background:linear-gradient(90deg,rgba(15,125,125,.10),transparent);border-radius:14px}}@media (orientation:landscape) and (max-height:540px){.sub,.stats,.legend,.filters,.foot{display:none}.month{padding:8px;margin-top:10px}.month h2{font-size:15px;margin:0 0 6px}.gridwrap{overflow:visible}.grid{min-width:0;gap:3px}.dow{font-size:8.5px;letter-spacing:0;padding:0}.cell{min-height:96px;height:auto;padding:2px;border-radius:5px;overflow:visible}.dnum{font-size:9px}.chip{padding:2px 3px 3px;border-radius:4px;overflow:visible}.chip.confirmed{border-width:1.7px}.chip.unconfirmed{border-width:1.7px}.chip .top{margin-bottom:1px}.chip .cat,.chip .status{font-size:5.8px;font-weight:550;letter-spacing:0}.chip .ttl,.chip .det{display:none}.chip .fulltxt{display:block;font-size:6.6px;font-weight:400;line-height:1.14;color:#172232;white-space:normal;overflow:visible;word-break:break-word;overflow-wrap:anywhere}}@media print{body{background:#fff}.month,.stat,.legend-card{box-shadow:none}.actions,.filters{display:none}.gridwrap{overflow:visible}.grid{min-width:0}.chip{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 '''
 
 def chip(ev):
     st = ev['status']
     mark = '✓' if st == 'confirmed' else '?' if st == 'unconfirmed' else '•'
-    return (f'<div class="chip {st} cat-{ev["category"]}" tabindex="0" role="button" '
-            f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-text="{ehtml(ev["text"])}">'
+    title_html = ev.get("title_html") or ehtml(ev["title"])
+    detail_html = ev.get("detail_html") or ehtml(ev["detail"])
+    full_html = ev.get("html") or ehtml(ev["text"])
+    red_cls = " has-red" if ev.get("red") else ""
+    return (f'<div class="chip {st} cat-{ev["category"]}{red_cls}" tabindex="0" role="button" '
+            f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}">'
             f'<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
-            f'<div class="ttl">{ehtml(ev["title"])}</div><div class="det">{ehtml(ev["detail"])}</div><div class="fulltxt">{ehtml(ev["text"])}</div></div>')
+            f'<div class="ttl">{title_html}</div><div class="det">{detail_html}</div><div class="fulltxt">{full_html}</div></div>')
 
 def month_html(year, month):
     cal = calendar.Calendar(firstweekday=6)
@@ -200,10 +313,10 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <script>
 const modal=document.getElementById('modal');
 function openChip(el){{
-  const st=el.dataset.status, cat=el.dataset.cat, txt=el.dataset.text, date=el.dataset.date;
+  const st=el.dataset.status, cat=el.dataset.cat, txt=el.dataset.text, html=el.dataset.html||'', date=el.dataset.date;
   modal.querySelector('.modal-h').textContent=cat;
   modal.querySelector('.modal-date').innerHTML=date+' · <span class="pill '+st+'">'+(st==='confirmed'?'Confirmed / 已確認':st==='unconfirmed'?'Unconfirmed / 未確認':'Note / 備註')+'</span>';
-  modal.querySelector('.modal-body').textContent=txt;
+  modal.querySelector('.modal-body').innerHTML=html||txt;
   modal.hidden=false;
 }}
 document.querySelectorAll('.chip').forEach(el=>{{el.addEventListener('click',()=>openChip(el));el.addEventListener('keydown',e=>{{if(e.key==='Enter'||e.key===' '){{e.preventDefault();openChip(el)}}}})}});
