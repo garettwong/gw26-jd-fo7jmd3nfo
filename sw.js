@@ -1,4 +1,4 @@
-const BUILD_ID = 'coursecode-blackframes-20260708a';
+const BUILD_ID = 'coursefilter-blackframes-20260708b';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
