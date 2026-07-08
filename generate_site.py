@@ -8,6 +8,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
+BUILD_ID = "coursecode-blackframes-20260708a"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
@@ -204,8 +205,47 @@ def split_title(text):
         return text, ""
     return parts[0], " / ".join(parts[1:])
 
+COURSE_CODE_RE = re.compile(r"\b(?:HK\d+[A-Z]+|MC\d+[A-Z]+|PFSA\d+|DGS|[A-Z]{2,5}\d{1,4}[A-Z]{0,4})\b", re.I)
+CLASS_RE = re.compile(r"\bClass\s+([^,/()]+)", re.I)
+CODE_PAREN_CLASS_RE = re.compile(r"\b(?:HK\d+[A-Z]+|MC\d+[A-Z]+|PFSA\d+)\s*\(([^)]+)\)", re.I)
+LESSON_RE = re.compile(r"(?:^|[\s/\-])L\s*(\d+)\b", re.I)
+TIME_RE = re.compile(r"(?<!\d)([01]?\d|2[0-3])[:：]?([0-5]\d)\s*(?:-|–|至|to)", re.I)
+
+
+def natural_key(value):
+    value = str(value or "").strip().upper()
+    parts = re.split(r"(\d+)", value)
+    return tuple(int(p) if p.isdigit() else p for p in parts if p != "")
+
+
+def course_sort_parts(text):
+    text = str(text or "")
+    code_m = COURSE_CODE_RE.search(text)
+    code = code_m.group(0).upper() if code_m else ""
+    cls = ""
+    cls_m = CLASS_RE.search(text)
+    if cls_m:
+        cls = cls_m.group(1).strip()
+        cls = re.sub(r"\s*-\s*L\s*\d+\b.*$", "", cls, flags=re.I).strip()
+    if not cls:
+        paren_m = CODE_PAREN_CLASS_RE.search(text)
+        if paren_m:
+            cls = paren_m.group(1).strip()
+    lesson_m = LESSON_RE.search(text)
+    lesson = int(lesson_m.group(1)) if lesson_m else 999
+    time_m = TIME_RE.search(text)
+    start = int(time_m.group(1)) * 60 + int(time_m.group(2)) if time_m else 9999
+    return code, cls.upper(), lesson, start
+
+
+def event_sort_key(ev):
+    code, cls, lesson, start = course_sort_parts(ev.get("text", ""))
+    return (0 if code else 1, natural_key(code), natural_key(cls), lesson, start, ev.get("row", 999), ev.get("col", 999), ev.get("text", ""))
+
+
 events = []
 by_date = {}
+
 for sheet in MONTH_SHEETS:
     ws = wb[sheet]
     month = MONTH_MAP[sheet]
@@ -243,7 +283,7 @@ for sheet in MONTH_SHEETS:
             by_date.setdefault(dt.isoformat(), []).append(ev)
 
 for ds in by_date:
-    by_date[ds].sort(key=lambda e: (e["row"], e["col"], e["text"]))
+    by_date[ds].sort(key=event_sort_key)
 
 def ehtml(s):
     return html.escape(str(s or ""), quote=True)
@@ -304,6 +344,11 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <meta name="description" content="ERB / YMCA / school teaching timetable, June to December 2026. Solid frame = confirmed; dotted frame = unconfirmed.">
 <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ERB Timetable"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0f7d7d">
+<meta name="erb-build" content="coursecode-blackframes-20260708a">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script>window.ERB_BUILD_ID='{BUILD_ID}';(function(){{if(!/^https?:$/.test(location.protocol))return;var p=new URLSearchParams(location.search);if(p.get('build')!==window.ERB_BUILD_ID){{p.set('build',window.ERB_BUILD_ID);location.replace(location.pathname+'?'+p.toString()+location.hash);}}}})();</script>
 <style>{CSS}</style></head><body><main class="wrap">
 <div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">June–December 2026 · copied from Excel source · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
 <div class="stats"><div class="stat"><b>{len(events)}</b> total entries</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div><div class="stat"><b>{counts.get('note',0)}</b> notes/holidays</div></div>
@@ -313,6 +358,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="foot">Source: <b>{ehtml(SRC.name)}</b>. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed. Click any entry to read the full copied text.</div>
 </main><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
 <script>
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){{window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?build='+window.ERB_BUILD_ID).then(r=>r.update()).catch(()=>{{}}));}}
 const modal=document.getElementById('modal');
 function openChip(el){{
   const st=el.dataset.status, cat=el.dataset.cat, txt=el.dataset.text, html=el.dataset.html||'', date=el.dataset.date;
@@ -366,7 +412,7 @@ document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',(
 (OUTDIR / '.nojekyll').write_text('', encoding='utf-8')
 (OUTDIR / 'events.json').write_text(json.dumps(events, ensure_ascii=False, indent=2), encoding='utf-8')
 (OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "events": len(events), "counts": counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
-(OUTDIR / 'manifest.webmanifest').write_text(json.dumps({"name":"ERB Super Timetable","short_name":"ERB Timetable","start_url":"./","display":"standalone","background_color":"#eef1f6","theme_color":"#0f7d7d","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icon-512.png","sizes":"512x512","type":"image/png"}]}, ensure_ascii=False, indent=2), encoding='utf-8')
+(OUTDIR / 'manifest.webmanifest').write_text(json.dumps({"name":"ERB Super Timetable","short_name":"ERB Timetable","start_url":"./?v=redtext1&build=" + BUILD_ID,"display":"standalone","background_color":"#eef1f6","theme_color":"#0f7d7d","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icon-512.png","sizes":"512x512","type":"image/png"}]}, ensure_ascii=False, indent=2), encoding='utf-8')
 try:
     from PIL import Image, ImageDraw
     def make_icon(size, filename):
