@@ -15,7 +15,9 @@
     "html": "YMCA SEN / (PFSA2) (09:30 - 12:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (09:30 - 12:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-05",
@@ -33,7 +35,9 @@
     "html": "YMCA SEN / (PFSA2) (09:30 - 12:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (09:30 - 12:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-03",
@@ -51,7 +55,9 @@
     "html": "佛教志蓮中學 / Canva + AI Course / 13:20 - 15:05",
     "title_html": "佛教志蓮中學",
     "detail_html": "Canva + AI Course / 13:20 - 15:05",
-    "red": false
+    "red": false,
+    "group_label": "School",
+    "group": "g17"
   },
   {
     "date": "2026-06-04",
@@ -69,7 +75,9 @@
     "html": "YMCA SEN / (PFSA2) (13:30 - 15:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (13:30 - 15:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-05",
@@ -87,7 +95,9 @@
     "html": "YMCA SEN / (PFSA2) (13:30 - 15:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (13:30 - 15:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-11",
@@ -105,7 +115,9 @@
     "html": "YMCA SEN / (PFSA2) (09:30 - 12:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (09:30 - 12:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-12",
@@ -123,7 +135,9 @@
     "html": "YMCA SEN / (PFSA2) (09:30 - 12:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (09:30 - 12:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-11",
@@ -141,7 +155,9 @@
     "html": "YMCA SEN / (PFSA2) (13:30 - 15:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (13:30 - 15:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-12",
@@ -159,7 +175,9 @@
     "html": "YMCA SEN / (PFSA2) (13:30 - 15:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (13:30 - 15:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-18",
@@ -177,7 +195,9 @@
     "html": "YMCA SEN / (PFSA2) (09:30 - 12:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (09:30 - 12:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-18",
@@ -195,7 +215,9 @@
     "html": "YMCA SEN / (PFSA2) (13:30 - 15:30) / <span class=\"xl-red\">[afternoon black rain]</span>",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (13:30 - 15:30) / <span class=\"xl-red\">[afternoon black rain]</span>",
-    "red": true
+    "red": true,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-15",
@@ -213,7 +235,9 @@
     "html": "勵行-豪輝 (Garett) - L1 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L1",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-06-16",
@@ -231,7 +255,9 @@
     "html": "勵行-豪輝 (Garett) - L2 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L2",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-06-17",
@@ -249,7 +275,9 @@
     "html": "勵行-豪輝 (Garett) - L3 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L3",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-06-18",
@@ -267,7 +295,9 @@
     "html": "勵行-豪輝 (Garett) - L4 [black rain cancelled] / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130) /",
     "title_html": "勵行-豪輝 (Garett) - L4 [black rain cancelled]",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130) /",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-06-25",
@@ -285,7 +315,9 @@
     "html": "YMCA SEN / (PFSA2) (09:30 - 12:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (09:30 - 12:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-26",
@@ -303,7 +335,9 @@
     "html": "YMCA SEN / (PFSA2) (09:30 - 12:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (09:30 - 12:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-25",
@@ -321,7 +355,9 @@
     "html": "YMCA SEN / (PFSA2) (13:30 - 15:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (13:30 - 15:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-26",
@@ -339,7 +375,9 @@
     "html": "YMCA SEN / (PFSA2) (13:30 - 15:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (13:30 - 15:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-06-27",
@@ -357,7 +395,9 @@
     "html": "勵行-四海 (Garett) <span class=\"xl-red\">[substitue]</span> / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1500 - 1730)",
     "title_html": "勵行-四海 (Garett) <span class=\"xl-red\">[substitue]</span>",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1500 - 1730)",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-06-22",
@@ -375,7 +415,9 @@
     "html": "勵行-豪輝 (Garett) - L4 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L4",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-06-23",
@@ -393,7 +435,9 @@
     "html": "勵行-豪輝 (Garett) - L5 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L5",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-06-24",
@@ -411,7 +455,9 @@
     "html": "勵行-豪輝 <span class=\"xl-red\">(Andy)</span> - L6 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130)",
     "title_html": "勵行-豪輝 <span class=\"xl-red\">(Andy)</span> - L6",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130)",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-06-25",
@@ -429,7 +475,9 @@
     "html": "勵行-豪輝 (Garett) - L7 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L7",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130)",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-06-29",
@@ -447,7 +495,9 @@
     "html": "勵行-豪輝 (Garett) - L8 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1915 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L8",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1915 - 2130)",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-06-30",
@@ -465,7 +515,9 @@
     "html": "勵行-豪輝 (Garett) - L9 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L9",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-07-01",
@@ -483,7 +535,9 @@
     "html": "<span class=\"xl-red\">Public Holiday</span>",
     "title_html": "<span class=\"xl-red\">Public Holiday</span>",
     "detail_html": "",
-    "red": true
+    "red": true,
+    "group_label": "Holiday",
+    "group": "g15"
   },
   {
     "date": "2026-07-03",
@@ -501,7 +555,9 @@
     "html": "YMCA SEN / (PFSA2) (09:30 - 12:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (09:30 - 12:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-07-03",
@@ -519,7 +575,9 @@
     "html": "YMCA SEN / (PFSA2) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-07-02",
@@ -537,7 +595,9 @@
     "html": "勵行-豪輝 (Garett) - L10 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L10",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130)",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-07-03",
@@ -555,7 +615,9 @@
     "html": "Mike Sir AI Lesson - L1 / 1915 - 1015",
     "title_html": "Mike Sir AI Lesson - L1",
     "detail_html": "1915 - 1015",
-    "red": false
+    "red": false,
+    "group_label": "Mike Sir",
+    "group": "g16"
   },
   {
     "date": "2026-07-07",
@@ -573,7 +635,9 @@
     "html": "YMCA SEN / (PFSA2) (09:00 - 13:00)",
     "title_html": "YMCA SEN",
     "detail_html": "(PFSA2) (09:00 - 13:00)",
-    "red": false
+    "red": false,
+    "group_label": "PFSA2",
+    "group": "g13"
   },
   {
     "date": "2026-07-09",
@@ -591,7 +655,9 @@
     "html": "DGS Unreal / 8:00am - 9:50am / 11:00am - 13:00pm",
     "title_html": "DGS Unreal",
     "detail_html": "8:00am - 9:50am / 11:00am - 13:00pm",
-    "red": false
+    "red": false,
+    "group_label": "DGS",
+    "group": "g01"
   },
   {
     "date": "2026-07-06",
@@ -609,7 +675,9 @@
     "html": "勵行-豪輝 (Garett) - L11 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L11",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-07-07",
@@ -627,7 +695,9 @@
     "html": "勵行-豪輝 (Garett) - L12 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L12",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130)",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-07-08",
@@ -645,7 +715,9 @@
     "html": "勵行-豪輝 (Garett) - L13 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L13",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-07-09",
@@ -663,7 +735,9 @@
     "html": "勵行-豪輝 (Garett) - L14 <span class=\"xl-red\">[Group Presentation]</span> / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L14 <span class=\"xl-red\">[Group Presentation]</span>",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1845 - 2130)",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-07-10",
@@ -681,7 +755,9 @@
     "html": "Mike Sir AI Lesson - L2 / 1915 - 1015",
     "title_html": "Mike Sir AI Lesson - L2",
     "detail_html": "1915 - 1015",
-    "red": false
+    "red": false,
+    "group_label": "Mike Sir",
+    "group": "g16"
   },
   {
     "date": "2026-07-13",
@@ -699,7 +775,9 @@
     "html": "DGS Unreal / 8:00am - 9:50am / 11:00am - 13:00pm",
     "title_html": "DGS Unreal",
     "detail_html": "8:00am - 9:50am / 11:00am - 13:00pm",
-    "red": false
+    "red": false,
+    "group_label": "DGS",
+    "group": "g01"
   },
   {
     "date": "2026-07-13",
@@ -717,7 +795,9 @@
     "html": "勵行-豪輝 <span class=\"xl-red\">(Andy)</span> - L15 / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130)",
     "title_html": "勵行-豪輝 <span class=\"xl-red\">(Andy)</span> - L15",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130)",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-07-15",
@@ -735,7 +815,9 @@
     "html": "勵行-豪輝 (Garett) - L16 <span class=\"xl-red\">[持續筆試] / </span>人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L16 <span class=\"xl-red\">[持續筆試]</span>",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1900 - 2130)",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-07-16",
@@ -753,7 +835,9 @@
     "html": "勵行-豪輝 (Garett) - L17 <span class=\"xl-red\">[期末實務試]</span> / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1830 - 2130)",
     "title_html": "勵行-豪輝 (Garett) - L17 <span class=\"xl-red\">[期末實務試]</span>",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG (1830 - 2130)",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG",
+    "group": "g06"
   },
   {
     "date": "2026-07-17",
@@ -771,7 +855,9 @@
     "html": "Mike Sir AI Lesson - L3 / 1915 - 1015",
     "title_html": "Mike Sir AI Lesson - L3",
     "detail_html": "1915 - 1015",
-    "red": false
+    "red": false,
+    "group_label": "Mike Sir",
+    "group": "g16"
   },
   {
     "date": "2026-07-24",
@@ -789,7 +875,9 @@
     "html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L1 / Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
     "title_html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L1",
     "detail_html": "Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-07-25",
@@ -807,7 +895,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-07-24",
@@ -825,7 +915,9 @@
     "html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L2 / Certificate in AI-enhanced Social Media Content, 1400 - 1730 /",
     "title_html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L2",
     "detail_html": "Certificate in AI-enhanced Social Media Content, 1400 - 1730 /",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-07-25",
@@ -843,7 +935,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-07-29",
@@ -861,7 +955,9 @@
     "html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L3 / Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
     "title_html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L3",
     "detail_html": "Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-07-31",
@@ -879,7 +975,9 @@
     "html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L5 / Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
     "title_html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L5",
     "detail_html": "Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-07-29",
@@ -897,7 +995,9 @@
     "html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L4 / Certificate in AI-enhanced Social Media Content, 1400 - 1730 /",
     "title_html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L4",
     "detail_html": "Certificate in AI-enhanced Social Media Content, 1400 - 1730 /",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-07-31",
@@ -915,7 +1015,9 @@
     "html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L6 / Certificate in AI-enhanced Social Media Content, 1400 - 1730 /",
     "title_html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L6",
     "detail_html": "Certificate in AI-enhanced Social Media Content, 1400 - 1730 /",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-08-01",
@@ -933,7 +1035,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-01",
@@ -951,7 +1055,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-05",
@@ -969,7 +1075,9 @@
     "html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L7 / Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
     "title_html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L7",
     "detail_html": "Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-08-07",
@@ -987,7 +1095,9 @@
     "html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L9 / Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
     "title_html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L9",
     "detail_html": "Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-08-08",
@@ -1005,7 +1115,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-05",
@@ -1023,7 +1135,9 @@
     "html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L8 / Certificate in AI-enhanced Social Media Content, 1400 - 1730 /",
     "title_html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L8",
     "detail_html": "Certificate in AI-enhanced Social Media Content, 1400 - 1730 /",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-08-06",
@@ -1041,7 +1155,9 @@
     "html": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1800) - L1",
     "title_html": "勵行-彩雲 (Garett)",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1800) - L1",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · CW8",
+    "group": "g08"
   },
   {
     "date": "2026-08-07",
@@ -1059,7 +1175,9 @@
     "html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L10 / Certificate in AI-enhanced Social Media Content, 1400 - 1730 <span class=\"xl-red\">(Written Test)</span> /",
     "title_html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L10",
     "detail_html": "Certificate in AI-enhanced Social Media Content, 1400 - 1730 <span class=\"xl-red\">(Written Test)</span> /",
-    "red": true
+    "red": true,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-08-08",
@@ -1077,7 +1195,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-12",
@@ -1095,7 +1215,9 @@
     "html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L11 / Certificate in AI-enhanced Social Media Content, 0900 - 1300 <span class=\"xl-red\">(Group Presentation) /</span>",
     "title_html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L11",
     "detail_html": "Certificate in AI-enhanced Social Media Content, 0900 - 1300 <span class=\"xl-red\">(Group Presentation) /</span>",
-    "red": true
+    "red": true,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-08-15",
@@ -1113,7 +1235,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-11",
@@ -1131,7 +1255,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-12",
@@ -1149,7 +1275,9 @@
     "html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L12 / Certificate in AI-enhanced Social Media Content, 1400 - 1730 <span class=\"xl-red\">(Practical Exam)</span> /",
     "title_html": "勵行 - 四海 (Garett) - HK265HG, Class FS - L12",
     "detail_html": "Certificate in AI-enhanced Social Media Content, 1400 - 1730 <span class=\"xl-red\">(Practical Exam)</span> /",
-    "red": true
+    "red": true,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-08-13",
@@ -1167,7 +1295,9 @@
     "html": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1730) - L2",
     "title_html": "勵行-彩雲 (Garett)",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1730) - L2",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · CW8",
+    "group": "g08"
   },
   {
     "date": "2026-08-14",
@@ -1185,7 +1315,9 @@
     "html": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1800) - L3",
     "title_html": "勵行-彩雲 (Garett)",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1800) - L3",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · CW8",
+    "group": "g08"
   },
   {
     "date": "2026-08-15",
@@ -1203,7 +1335,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-18",
@@ -1221,7 +1355,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-08-19",
@@ -1239,7 +1375,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-21",
@@ -1257,7 +1395,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-08-22",
@@ -1275,7 +1415,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-18",
@@ -1293,7 +1435,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-08-19",
@@ -1311,7 +1455,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-20",
@@ -1329,7 +1475,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800)",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800)",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-21",
@@ -1347,7 +1495,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-08-22",
@@ -1365,7 +1515,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-25",
@@ -1383,7 +1535,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-08-28",
@@ -1401,7 +1555,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-08-29",
@@ -1419,7 +1575,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-24",
@@ -1437,7 +1595,9 @@
     "html": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1800) - L4",
     "title_html": "勵行-彩雲 (Garett)",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1800) - L4",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · CW8",
+    "group": "g08"
   },
   {
     "date": "2026-08-25",
@@ -1455,7 +1615,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-08-26",
@@ -1473,7 +1635,9 @@
     "html": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1800) - L5",
     "title_html": "勵行-彩雲 (Garett)",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1800) - L5",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · CW8",
+    "group": "g08"
   },
   {
     "date": "2026-08-27",
@@ -1491,7 +1655,9 @@
     "html": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1730) - L6",
     "title_html": "勵行-彩雲 (Garett)",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1730) - L6",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · CW8",
+    "group": "g08"
   },
   {
     "date": "2026-08-28",
@@ -1509,7 +1675,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-08-29",
@@ -1527,7 +1695,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-08-24",
@@ -1545,7 +1715,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Andy</span> / L1",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Andy</span>",
     "detail_html": "L1",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-08-25",
@@ -1563,7 +1735,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Andy</span> / L2",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Andy</span>",
     "detail_html": "L2",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-08-26",
@@ -1581,7 +1755,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Andy</span> / L3",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Andy</span>",
     "detail_html": "L3",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-08-27",
@@ -1599,7 +1775,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Andy</span> / L4",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Andy</span>",
     "detail_html": "L4",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-08-31",
@@ -1617,7 +1795,9 @@
     "html": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1800) - L7",
     "title_html": "勵行-彩雲 (Garett)",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1800) - L7",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · CW8",
+    "group": "g08"
   },
   {
     "date": "2026-08-31",
@@ -1635,7 +1815,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - Garett / L5",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - Garett",
     "detail_html": "L5",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-09-01",
@@ -1653,7 +1835,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-04",
@@ -1671,7 +1855,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-05",
@@ -1689,7 +1875,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-09-01",
@@ -1707,7 +1895,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-02",
@@ -1725,7 +1915,9 @@
     "html": "勵行-彩雲 (Garett) <span class=\"xl-red\">[小組匯報]</span> / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - <span class=\"xl-red\">1730?</span> ) - L8",
     "title_html": "勵行-彩雲 (Garett) <span class=\"xl-red\">[小組匯報]</span>",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - <span class=\"xl-red\">1730?</span> ) - L8",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW8",
+    "group": "g08"
   },
   {
     "date": "2026-09-03",
@@ -1743,7 +1935,9 @@
     "html": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - <span class=\"xl-red\">1730?</span> ) - L9",
     "title_html": "勵行-彩雲 (Garett)",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - <span class=\"xl-red\">1730?</span> ) - L9",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW8",
+    "group": "g08"
   },
   {
     "date": "2026-09-04",
@@ -1761,7 +1955,9 @@
     "html": "勵行-彩雲 <span class=\"xl-red\">(Calvin)</span> / 人工智能創作營銷社交媒體內容技巧證書,HK244EG, Class CW8, (1400 - 1730) - L10",
     "title_html": "勵行-彩雲 <span class=\"xl-red\">(Calvin)</span>",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書,HK244EG, Class CW8, (1400 - 1730) - L10",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW8",
+    "group": "g08"
   },
   {
     "date": "2026-09-04",
@@ -1779,7 +1975,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-05",
@@ -1797,7 +1995,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-09-01",
@@ -1815,7 +2015,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span> / L6",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span>",
     "detail_html": "L6",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-09-02",
@@ -1833,7 +2035,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span> / L7",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span>",
     "detail_html": "L7",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-09-03",
@@ -1851,7 +2055,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span> / L8",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span>",
     "detail_html": "L8",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-09-07",
@@ -1869,7 +2075,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-09-08",
@@ -1887,7 +2095,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-09",
@@ -1905,7 +2115,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-09-10",
@@ -1923,7 +2135,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-09-11",
@@ -1941,7 +2155,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-07",
@@ -1959,7 +2175,9 @@
     "html": "勵行-彩雲<span class=\"xl-red\"> (Calvin) [持續筆試]</span> / 人工智能創作營銷社交媒體內容技巧證書, HK244EG, Class CW8 / (1400 - <span class=\"xl-red\">1730?</span> ) - L11",
     "title_html": "勵行-彩雲<span class=\"xl-red\"> (Calvin) [持續筆試]</span>",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書, HK244EG, Class CW8 / (1400 - <span class=\"xl-red\">1730?</span> ) - L11",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW8",
+    "group": "g08"
   },
   {
     "date": "2026-09-07",
@@ -1977,7 +2195,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS / (1400 - 1800)",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS / (1400 - 1800)",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-09-08",
@@ -1995,7 +2215,9 @@
     "html": "勵行-彩雲 <span class=\"xl-red\">(Calvin) [期末實務試]</span> / 人工智能創作營銷社交媒體內容技巧證書, HK244EG, Class CW8, (1400 - 1800) - L12",
     "title_html": "勵行-彩雲 <span class=\"xl-red\">(Calvin) [期末實務試]</span>",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書, HK244EG, Class CW8, (1400 - 1800) - L12",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW8",
+    "group": "g08"
   },
   {
     "date": "2026-09-08",
@@ -2013,7 +2235,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-09",
@@ -2031,7 +2255,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-09-10",
@@ -2049,7 +2275,9 @@
     "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
     "title_html": "循道-灣仔",
     "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false
+    "red": false,
+    "group_label": "MC0106DS",
+    "group": "g12"
   },
   {
     "date": "2026-09-11",
@@ -2067,7 +2295,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-08",
@@ -2085,7 +2315,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span> / L9",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span>",
     "detail_html": "L9",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-09-15",
@@ -2103,7 +2335,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-16",
@@ -2121,7 +2355,9 @@
     "html": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L1",
     "title_html": "上水彩園 - HK239HG (Garett), Class SS",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 0900-1200 - L1",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · SS",
+    "group": "g03"
   },
   {
     "date": "2026-09-18",
@@ -2139,7 +2375,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-15",
@@ -2157,7 +2395,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-16",
@@ -2175,7 +2415,9 @@
     "html": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L1",
     "title_html": "勵行-四海 (Garett)",
     "detail_html": "Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L1",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-09-17",
@@ -2193,7 +2435,9 @@
     "html": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L2",
     "title_html": "勵行-四海 (Garett)",
     "detail_html": "Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L2",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-09-18",
@@ -2211,7 +2455,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-14",
@@ -2229,7 +2475,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span> / L10",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span>",
     "detail_html": "L10",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-09-15",
@@ -2247,7 +2495,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span> / L11",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span>",
     "detail_html": "L11",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-09-18",
@@ -2265,7 +2515,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span> / L12",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span>",
     "detail_html": "L12",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-09-22",
@@ -2283,7 +2535,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-23",
@@ -2301,7 +2555,9 @@
     "html": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L2",
     "title_html": "上水彩園 - HK239HG (Garett), Class SS",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 0900-1200 - L2",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · SS",
+    "group": "g03"
   },
   {
     "date": "2026-09-25",
@@ -2319,7 +2575,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-26",
@@ -2337,7 +2595,9 @@
     "html": "<span class=\"xl-red\">Public Holiday</span>",
     "title_html": "<span class=\"xl-red\">Public Holiday</span>",
     "detail_html": "",
-    "red": true
+    "red": true,
+    "group_label": "Holiday",
+    "group": "g15"
   },
   {
     "date": "2026-09-21",
@@ -2355,7 +2615,9 @@
     "html": "上水彩園 - HK280HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1330-1730 - L1",
     "title_html": "上水彩園 - HK280HG (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 1330-1730 - L1",
-    "red": false
+    "red": false,
+    "group_label": "HK280HG",
+    "group": "g11"
   },
   {
     "date": "2026-09-22",
@@ -2373,7 +2635,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-23",
@@ -2391,7 +2655,9 @@
     "html": "上水彩園 - HK280HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1330-1730 - L2",
     "title_html": "上水彩園 - HK280HG (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 1330-1730 - L2",
-    "red": false
+    "red": false,
+    "group_label": "HK280HG",
+    "group": "g11"
   },
   {
     "date": "2026-09-24",
@@ -2409,7 +2675,9 @@
     "html": "上水彩園 - HK280HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1330-1730 - L3",
     "title_html": "上水彩園 - HK280HG (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 1330-1730 - L3",
-    "red": false
+    "red": false,
+    "group_label": "HK280HG",
+    "group": "g11"
   },
   {
     "date": "2026-09-25",
@@ -2427,7 +2695,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-21",
@@ -2445,7 +2715,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L1",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L1",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-09-22",
@@ -2463,7 +2735,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span> / L13",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span>",
     "detail_html": "L13",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-09-23",
@@ -2481,7 +2755,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L2",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L2",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-09-24",
@@ -2499,7 +2775,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L3",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L3",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-09-29",
@@ -2517,7 +2795,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-30",
@@ -2535,7 +2815,9 @@
     "html": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L3",
     "title_html": "上水彩園 - HK239HG (Garett), Class SS",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 0900-1200 - L3",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · SS",
+    "group": "g03"
   },
   {
     "date": "2026-09-28",
@@ -2553,7 +2835,9 @@
     "html": "上水彩園 - HK280HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1330-1730 - L4",
     "title_html": "上水彩園 - HK280HG (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 1330-1730 - L4",
-    "red": false
+    "red": false,
+    "group_label": "HK280HG",
+    "group": "g11"
   },
   {
     "date": "2026-09-29",
@@ -2571,7 +2855,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-09-30",
@@ -2589,7 +2875,9 @@
     "html": "上水彩園 - HK280HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1330-1730 - L5",
     "title_html": "上水彩園 - HK280HG (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 1330-1730 - L5",
-    "red": false
+    "red": false,
+    "group_label": "HK280HG",
+    "group": "g11"
   },
   {
     "date": "2026-09-28",
@@ -2607,7 +2895,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L4",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L4",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-09-29",
@@ -2625,7 +2915,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span> / L14",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span>",
     "detail_html": "L14",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-09-30",
@@ -2643,7 +2935,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L5",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L5",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-10-01",
@@ -2661,7 +2955,9 @@
     "html": "<span class=\"xl-red\">Public Holiday</span>",
     "title_html": "<span class=\"xl-red\">Public Holiday</span>",
     "detail_html": "",
-    "red": true
+    "red": true,
+    "group_label": "Holiday",
+    "group": "g15"
   },
   {
     "date": "2026-10-02",
@@ -2679,7 +2975,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-03",
@@ -2697,7 +2995,9 @@
     "html": "勵行- 順天 - HK239HG, Class ST (Garett) / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L1",
     "title_html": "勵行- 順天 - HK239HG, Class ST (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 0900-1200 - L1",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · ST",
+    "group": "g04"
   },
   {
     "date": "2026-10-02",
@@ -2715,7 +3015,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-06",
@@ -2733,7 +3035,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-07",
@@ -2751,7 +3055,9 @@
     "html": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L4",
     "title_html": "上水彩園 - HK239HG (Garett), Class SS",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 0900-1200 - L4",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · SS",
+    "group": "g03"
   },
   {
     "date": "2026-10-09",
@@ -2769,7 +3075,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-10",
@@ -2787,7 +3095,9 @@
     "html": "勵行- 順天 - HK239HG, Class ST (Garett) / 人工智能知識2應用證書 (兼讀制) / 0900-1200 - L2",
     "title_html": "勵行- 順天 - HK239HG, Class ST (Garett)",
     "detail_html": "人工智能知識2應用證書 (兼讀制) / 0900-1200 - L2",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · ST",
+    "group": "g04"
   },
   {
     "date": "2026-10-05",
@@ -2805,7 +3115,9 @@
     "html": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L8",
     "title_html": "勵行-四海 (Garett)",
     "detail_html": "Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L8",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-10-06",
@@ -2823,7 +3135,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-07",
@@ -2841,7 +3155,9 @@
     "html": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L9",
     "title_html": "勵行-四海 (Garett)",
     "detail_html": "Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L9",
-    "red": false
+    "red": false,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-10-08",
@@ -2859,7 +3175,9 @@
     "html": "勵行-四海 (Garett) <span class=\"xl-red\">(Written Test)</span> / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L10",
     "title_html": "勵行-四海 (Garett) <span class=\"xl-red\">(Written Test)</span>",
     "detail_html": "Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L10",
-    "red": true
+    "red": true,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-10-09",
@@ -2877,7 +3195,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-05",
@@ -2895,7 +3215,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L6",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L6",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-10-06",
@@ -2913,7 +3235,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L7",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L7",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-10-07",
@@ -2931,7 +3255,9 @@
     "html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span> / L17 <span class=\"xl-red\">(持續筆試)</span>",
     "title_html": "勵行-彩雲 HK244EG(CW) - 1900 - 2130 - <span class=\"xl-red\">Garett</span>",
     "detail_html": "L17 <span class=\"xl-red\">(持續筆試)</span>",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · CW",
+    "group": "g07"
   },
   {
     "date": "2026-10-08",
@@ -2949,7 +3275,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L8",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L8",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-10-13",
@@ -2967,7 +3295,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-14",
@@ -2985,7 +3315,9 @@
     "html": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L5 <span class=\"xl-red\">(持續評估 / 小組討論及專題報告)</span>",
     "title_html": "上水彩園 - HK239HG (Garett), Class SS",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 0900-1200 - L5 <span class=\"xl-red\">(持續評估 / 小組討論及專題報告)</span>",
-    "red": true
+    "red": true,
+    "group_label": "HK239HG · SS",
+    "group": "g03"
   },
   {
     "date": "2026-10-16",
@@ -3003,7 +3335,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-17",
@@ -3021,7 +3355,9 @@
     "html": "勵行- 順天 - HK239HG, Class ST (Garett) / 人工智能知識2應用證書 (兼讀制) / 0900-1200 - L3",
     "title_html": "勵行- 順天 - HK239HG, Class ST (Garett)",
     "detail_html": "人工智能知識2應用證書 (兼讀制) / 0900-1200 - L3",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · ST",
+    "group": "g04"
   },
   {
     "date": "2026-10-12",
@@ -3039,7 +3375,9 @@
     "html": "勵行-四海 (Garett) <span class=\"xl-red\">(Group Presentation)</span> / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L11",
     "title_html": "勵行-四海 (Garett) <span class=\"xl-red\">(Group Presentation)</span>",
     "detail_html": "Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L11",
-    "red": true
+    "red": true,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-10-13",
@@ -3057,7 +3395,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-14",
@@ -3075,7 +3415,9 @@
     "html": "勵行-四海 (Garett) <span class=\"xl-red\">(Final Practical Exam)</span> / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L12",
     "title_html": "勵行-四海 (Garett) <span class=\"xl-red\">(Final Practical Exam)</span>",
     "detail_html": "Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L12",
-    "red": true
+    "red": true,
+    "group_label": "HK265HG · FS",
+    "group": "g10"
   },
   {
     "date": "2026-10-16",
@@ -3093,7 +3435,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-12",
@@ -3111,7 +3455,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L9",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L9",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-10-13",
@@ -3129,7 +3475,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L10",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L10",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-10-15",
@@ -3147,7 +3495,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L11",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L11",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-10-19",
@@ -3165,7 +3515,9 @@
     "html": "<span class=\"xl-red\">Public Holiday</span>",
     "title_html": "<span class=\"xl-red\">Public Holiday</span>",
     "detail_html": "",
-    "red": true
+    "red": true,
+    "group_label": "Holiday",
+    "group": "g15"
   },
   {
     "date": "2026-10-20",
@@ -3183,7 +3535,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-21",
@@ -3201,7 +3555,9 @@
     "html": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L6 <span class=\"xl-red\">(期末筆試10:30-11:30)</span>",
     "title_html": "上水彩園 - HK239HG (Garett), Class SS",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 0900-1200 - L6 <span class=\"xl-red\">(期末筆試10:30-11:30)</span>",
-    "red": true
+    "red": true,
+    "group_label": "HK239HG · SS",
+    "group": "g03"
   },
   {
     "date": "2026-10-23",
@@ -3219,7 +3575,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-24",
@@ -3237,7 +3595,9 @@
     "html": "勵行- 順天 - HK239HG, Class ST (Garett) / 人工智能知識2應用證書 (兼讀制) / 0900-1200 - L4",
     "title_html": "勵行- 順天 - HK239HG, Class ST (Garett)",
     "detail_html": "人工智能知識2應用證書 (兼讀制) / 0900-1200 - L4",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · ST",
+    "group": "g04"
   },
   {
     "date": "2026-10-20",
@@ -3255,7 +3615,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-23",
@@ -3273,7 +3635,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-20",
@@ -3291,7 +3655,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L12",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L12",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-10-22",
@@ -3309,7 +3675,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L13",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L13",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-10-27",
@@ -3327,7 +3695,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-30",
@@ -3345,7 +3715,9 @@
     "html": "YMCA SEN / (QAT7) (09:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (09:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-31",
@@ -3363,7 +3735,9 @@
     "html": "勵行- 順天 - HK239HG, Class ST (Garett) / 人工智能知識2應用證書 (兼讀制) / 0900-1200 - L5",
     "title_html": "勵行- 順天 - HK239HG, Class ST (Garett)",
     "detail_html": "人工智能知識2應用證書 (兼讀制) / 0900-1200 - L5",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · ST",
+    "group": "g04"
   },
   {
     "date": "2026-10-27",
@@ -3381,7 +3755,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-30",
@@ -3399,7 +3775,9 @@
     "html": "YMCA SEN / (QAT7) (13:30 - 17:30)",
     "title_html": "YMCA SEN",
     "detail_html": "(QAT7) (13:30 - 17:30)",
-    "red": false
+    "red": false,
+    "group_label": "QAT7",
+    "group": "g14"
   },
   {
     "date": "2026-10-26",
@@ -3417,7 +3795,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L14",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L14",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-10-27",
@@ -3435,7 +3815,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L15",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L15",
-    "red": false
+    "red": false,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-10-29",
@@ -3453,7 +3835,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L16 <span class=\"xl-red\">(小組匯報)</span>",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L16 <span class=\"xl-red\">(小組匯報)</span>",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-11-07",
@@ -3471,7 +3855,9 @@
     "html": "勵行- 順天 - HK239HG, Class ST (Garett) / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L5",
     "title_html": "勵行- 順天 - HK239HG, Class ST (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 0900-1200 - L5",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · ST",
+    "group": "g04"
   },
   {
     "date": "2026-11-02",
@@ -3489,7 +3875,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2100 - L17 <span class=\"xl-red\">(持續筆試)</span>",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2100 - L17 <span class=\"xl-red\">(持續筆試)</span>",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-11-03",
@@ -3507,7 +3895,9 @@
     "html": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1845 - 2145 - L18 <span class=\"xl-red\">(期末實務試)</span>",
     "title_html": "勵行-四海 (Garett) - HK244EG, Class FS",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1845 - 2145 - L18 <span class=\"xl-red\">(期末實務試)</span>",
-    "red": true
+    "red": true,
+    "group_label": "HK244EG · FS",
+    "group": "g09"
   },
   {
     "date": "2026-11-11",
@@ -3525,7 +3915,9 @@
     "html": "勵行-彩雲 (Garett) / 人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (0900 - 1200) - L1 /",
     "title_html": "勵行-彩雲 (Garett)",
     "detail_html": "人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (0900 - 1200) - L1 /",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · 城巿一條龍",
+    "group": "g05"
   },
   {
     "date": "2026-11-12",
@@ -3543,7 +3935,9 @@
     "html": "勵行-彩雲 (Garett) / 人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (0900 - 1200) - L3",
     "title_html": "勵行-彩雲 (Garett)",
     "detail_html": "人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (0900 - 1200) - L3",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · 城巿一條龍",
+    "group": "g05"
   },
   {
     "date": "2026-11-13",
@@ -3561,7 +3955,9 @@
     "html": "勵行-彩雲 (Garett) <span class=\"xl-red\">[Group Discussion]</span> / 人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (0900 - 1200) - L5",
     "title_html": "勵行-彩雲 (Garett) <span class=\"xl-red\">[Group Discussion]</span>",
     "detail_html": "人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (0900 - 1200) - L5",
-    "red": true
+    "red": true,
+    "group_label": "HK239HG · 城巿一條龍",
+    "group": "g05"
   },
   {
     "date": "2026-11-11",
@@ -3579,7 +3975,9 @@
     "html": "勵行-彩雲 (Garett) / 人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (1300 - 1600) - L2 /",
     "title_html": "勵行-彩雲 (Garett)",
     "detail_html": "人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (1300 - 1600) - L2 /",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · 城巿一條龍",
+    "group": "g05"
   },
   {
     "date": "2026-11-12",
@@ -3597,7 +3995,9 @@
     "html": "勵行-彩雲 (Garett) / 人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (1300 - 1600) - L4",
     "title_html": "勵行-彩雲 (Garett)",
     "detail_html": "人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (1300 - 1600) - L4",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG · 城巿一條龍",
+    "group": "g05"
   },
   {
     "date": "2026-11-13",
@@ -3615,7 +4015,9 @@
     "html": "勵行-彩雲 (Garett) <span class=\"xl-red\">[Final Exam]</span> / 人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (1300 - 1600) - L6",
     "title_html": "勵行-彩雲 (Garett) <span class=\"xl-red\">[Final Exam]</span>",
     "detail_html": "人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (1300 - 1600) - L6",
-    "red": true
+    "red": true,
+    "group_label": "HK239HG · 城巿一條龍",
+    "group": "g05"
   },
   {
     "date": "2026-11-23",
@@ -3633,7 +4035,9 @@
     "html": "勵行- 藍田 - HK239HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1400-1700",
     "title_html": "勵行- 藍田 - HK239HG (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG",
+    "group": "g02"
   },
   {
     "date": "2026-11-24",
@@ -3651,7 +4055,9 @@
     "html": "勵行- 藍田 - HK239HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1400-1700",
     "title_html": "勵行- 藍田 - HK239HG (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG",
+    "group": "g02"
   },
   {
     "date": "2026-11-25",
@@ -3669,7 +4075,9 @@
     "html": "勵行- 藍田 - HK239HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1400-1700",
     "title_html": "勵行- 藍田 - HK239HG (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG",
+    "group": "g02"
   },
   {
     "date": "2026-11-26",
@@ -3687,7 +4095,9 @@
     "html": "勵行- 藍田 - HK239HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1400-1700",
     "title_html": "勵行- 藍田 - HK239HG (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG",
+    "group": "g02"
   },
   {
     "date": "2026-11-27",
@@ -3705,7 +4115,9 @@
     "html": "勵行- 藍田 - HK239HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1400-1700",
     "title_html": "勵行- 藍田 - HK239HG (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG",
+    "group": "g02"
   },
   {
     "date": "2026-11-30",
@@ -3723,43 +4135,9 @@
     "html": "勵行- 藍田 - HK239HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1400-1700",
     "title_html": "勵行- 藍田 - HK239HG (Garett)",
     "detail_html": "人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "red": false
-  },
-  {
-    "date": "2026-12-01",
-    "month": "December New",
-    "row": 8,
-    "col": 8,
-    "cell": "H8",
-    "text": "勵行- 藍田 - HK239HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "title": "勵行- 藍田 - HK239HG (Garett)",
-    "detail": "人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "status": "unconfirmed",
-    "fill": "",
-    "category": "erb",
-    "category_label": "勵行 / ERB",
-    "html": "勵行- 藍田 - HK239HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "title_html": "勵行- 藍田 - HK239HG (Garett)",
-    "detail_html": "人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "red": false
-  },
-  {
-    "date": "2026-12-02",
-    "month": "December New",
-    "row": 8,
-    "col": 11,
-    "cell": "K8",
-    "text": "勵行- 藍田 - HK239HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "title": "勵行- 藍田 - HK239HG (Garett)",
-    "detail": "人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "status": "unconfirmed",
-    "fill": "",
-    "category": "erb",
-    "category_label": "勵行 / ERB",
-    "html": "勵行- 藍田 - HK239HG (Garett) / 人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "title_html": "勵行- 藍田 - HK239HG (Garett)",
-    "detail_html": "人工智能知識及應用證書 (兼讀制) / 1400-1700",
-    "red": false
+    "red": false,
+    "group_label": "HK239HG",
+    "group": "g02"
   },
   {
     "date": "2026-12-25",
@@ -3777,7 +4155,9 @@
     "html": "<span class=\"xl-red\">Public Holiday</span>",
     "title_html": "<span class=\"xl-red\">Public Holiday</span>",
     "detail_html": "",
-    "red": true
+    "red": true,
+    "group_label": "Holiday",
+    "group": "g15"
   },
   {
     "date": "2026-12-26",
@@ -3795,6 +4175,8 @@
     "html": "<span class=\"xl-red\">Public Holiday</span>",
     "title_html": "<span class=\"xl-red\">Public Holiday</span>",
     "detail_html": "",
-    "red": true
+    "red": true,
+    "group_label": "Holiday",
+    "group": "g15"
   }
 ]

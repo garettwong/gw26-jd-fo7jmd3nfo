@@ -1,4 +1,4 @@
-const BUILD_ID = 'coursejump-statusfilters-20260708c';
+const BUILD_ID = 'checked02-dec-cancelled-20260708d';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

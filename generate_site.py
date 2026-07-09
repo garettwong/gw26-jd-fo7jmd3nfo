@@ -8,7 +8,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "coursejump-statusfilters-20260708c"
+BUILD_ID = "checked02-dec-cancelled-20260708d"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
@@ -205,10 +205,10 @@ def split_title(text):
         return text, ""
     return parts[0], " / ".join(parts[1:])
 
-COURSE_CODE_RE = re.compile(r"(?:HK\d+[A-Z]+|MC\d+[A-Z]+|PFSA\d+|QAT\d+|DGS)", re.I)
-CLASS_RE = re.compile(r"Class\s+([^,/()]+)", re.I)
-CODE_PAREN_CLASS_RE = re.compile(r"(?:HK\d+[A-Z]+|MC\d+[A-Z]+|PFSA\d+|QAT\d+)\s*\(([^)]+)\)", re.I)
-LESSON_RE = re.compile(r"(?:^|[\s/\-])L\s*(\d+)", re.I)
+COURSE_CODE_RE = re.compile(r"(?<![A-Z0-9])(?:HK\d+[A-Z]+|MC\d+[A-Z]+|PFSA\d+|QAT\d+|DGS)(?![A-Z0-9])", re.I)
+CLASS_RE = re.compile(r"(?<![A-Z0-9])Class\s+([^,/()]+)", re.I)
+CODE_PAREN_CLASS_RE = re.compile(r"(?<![A-Z0-9])(?:HK\d+[A-Z]+|MC\d+[A-Z]+|PFSA\d+|QAT\d+)\s*\(([^)]+)\)", re.I)
+LESSON_RE = re.compile(r"(?:^|[\s/\-])L\s*(\d+)(?!\d)", re.I)
 TIME_RE = re.compile(r"(?<!\d)([01]?\d|2[0-3])[:：]?([0-5]\d)\s*(?:-|–|至|to)", re.I)
 TIMEISH_RE = re.compile(r"\d{1,2}\s*:?\s*\d{2}|\d{3,4}\s*-|[-–]\s*\d{3,4}")
 NAME_WORDS = {"GARETT", "GARRETT", "ANDY", "CALVIN", "MIKE"}
@@ -222,7 +222,7 @@ def natural_key(value):
 
 def clean_class(value):
     value = re.sub(r"\s+", " ", str(value or "").strip())
-    value = re.sub(r"\s*-\s*L\s*\d+.*$", "", value, flags=re.I).strip()
+    value = re.sub(r"\s*-\s*L\s*\d+(?!\d).*$", "", value, flags=re.I).strip()
     return value
 
 
@@ -387,7 +387,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <meta name="description" content="ERB / YMCA / school teaching timetable, June to December 2026. Solid frame = confirmed; dotted frame = unconfirmed.">
 <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ERB Timetable"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0f7d7d">
-<meta name="erb-build" content="coursejump-statusfilters-20260708c">
+<meta name="erb-build" content="{BUILD_ID}">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">

@@ -1,15 +1,15 @@
 {
   "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 02.xlsx",
-  "events": 211,
+  "events": 209,
   "counts": {
     "confirmed": 127,
-    "unconfirmed": 78,
+    "unconfirmed": 76,
     "note": 6
   },
   "categories": {
     "YMCA SEN": 61,
     "School": 1,
-    "勵行 / ERB": 114,
+    "勵行 / ERB": 112,
     "Holiday": 6,
     "Mike Sir": 3,
     "DGS / UE": 2,
