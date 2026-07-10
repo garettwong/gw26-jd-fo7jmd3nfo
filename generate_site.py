@@ -8,7 +8,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checked04-aligned-cards-20260710a"
+BUILD_ID = "checked04-compact-erb-cards-20260710a"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
@@ -373,23 +373,20 @@ CSS = r'''
 CSS += r'''
 @media (min-width:821px){.wrap{width:100%;max-width:none;margin:0;padding:28px clamp(16px,1.6vw,36px) 70px}}
 .title,.month h2{letter-spacing:0}
-.chip{position:relative;display:grid;justify-items:center;gap:2px;padding:7px 8px 8px;text-align:center}
-.chip .status{position:absolute;top:4px;right:6px;z-index:1}
-.class-id,.course-class{display:inline-flex;align-items:center;justify-content:center;gap:4px;max-width:calc(100% - 24px);min-height:19px;margin:0;padding:2px 6px;border-radius:4px;background:#fff;font-size:9.3px;font-weight:900;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 2px rgba(12,18,28,.12)}
-.class-id{border:2px solid hsl(var(--class-hue),72%,38%);color:hsl(var(--class-hue),72%,24%)}
-.class-dot{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:hsl(var(--class-hue),72%,38%);box-shadow:none}
-.course-class{border:1.5px solid #6f7b89;color:#283544}
-.card-location,.card-teacher,.card-course,.card-time,.card-lesson{width:100%;text-align:center;overflow-wrap:anywhere}
-.card-location{min-height:14px;font-size:10.5px;font-weight:900;color:#172232}
-.card-teacher{min-height:14px;font-size:10px;font-weight:800;color:#0f6868}
-.card-teacher.is-missing{color:#929ca9;font-weight:700}
-.card-teacher.is-alert{color:#d60000}
-.card-course{min-height:25px;display:flex;align-items:center;justify-content:center;font-size:10.3px;font-weight:750;line-height:1.2;color:#263343}
-.card-time{min-height:14px;font-size:10.2px;font-weight:800;color:#425164;font-variant-numeric:tabular-nums}
-.card-lesson{min-height:14px;font-size:9.8px;font-weight:800;color:#5b6776}
+.chip.erb-compact{position:relative;display:grid;justify-items:center;gap:2px;padding:6px 7px 7px;text-align:center}
+.chip.erb-compact .status{position:absolute;top:4px;right:6px;z-index:1}
+.chip.erb-compact .class-id{display:inline-flex;align-items:center;align-self:center;justify-content:center;gap:4px;max-width:calc(100% - 24px);min-height:18px;margin:0;padding:2px 6px;border:2px solid hsl(var(--class-hue),72%,38%);border-radius:4px;background:#fff;color:hsl(var(--class-hue),72%,24%);font-size:9.3px;font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 2px rgba(12,18,28,.12)}
+.chip.erb-compact .class-dot{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:hsl(var(--class-hue),72%,38%);box-shadow:none}
+.erb-meta,.erb-course,.erb-foot{width:100%;text-align:center;overflow-wrap:anywhere}
+.erb-meta{font-size:10px;font-weight:850;line-height:1.15;color:#172232}
+.erb-teacher{color:#0f6868}
+.erb-teacher.is-alert{color:#d60000}
+.erb-course{font-size:10.3px;font-weight:750;line-height:1.17;color:#263343}
+.erb-foot{font-size:9.9px;font-weight:800;line-height:1.15;color:#4d5b6c;font-variant-numeric:tabular-nums}
+.erb-sep{padding:0 3px;color:#8d97a4}
 .card-note{color:#d60000;font-weight:850}
-.chip .fulltxt{display:none!important}
-@media (orientation:landscape) and (max-height:540px){.chip{gap:1px;padding:3px 4px 4px}.class-id,.course-class{min-height:10px;max-width:calc(100% - 14px);padding:1px 3px;font-size:6px;border-radius:2px}.class-id{border-width:1.3px}.class-dot{width:4px;height:4px;flex-basis:4px}.card-location,.card-teacher,.card-time,.card-lesson{min-height:7px;font-size:6px;line-height:1.08}.card-course{min-height:13px;font-size:6px;line-height:1.08}.chip .status{top:2px;right:3px;font-size:5.8px}}
+.chip.erb-compact .fulltxt{display:none!important}
+@media (orientation:landscape) and (max-height:540px){.chip.erb-compact{gap:1px;padding:3px 4px 4px}.chip.erb-compact .class-id{min-height:10px;max-width:calc(100% - 14px);padding:1px 3px;font-size:6px;border-width:1.3px;border-radius:2px}.chip.erb-compact .class-dot{width:4px;height:4px;flex-basis:4px}.erb-meta,.erb-course,.erb-foot{font-size:6px;line-height:1.08}.chip.erb-compact .status{top:2px;right:3px;font-size:5.8px}}
 '''
 
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
@@ -493,27 +490,31 @@ def event_fields(ev):
 def chip(ev):
     st = ev['status']
     mark = '✓' if st == 'confirmed' else '?' if st == 'unconfirmed' else '•'
+    title_html = ev.get("title_html") or ehtml(ev["title"])
+    detail_html = ev.get("detail_html") or ehtml(ev["detail"])
     full_html = ev.get("html") or ehtml(ev["text"])
     red_cls = " has-red" if ev.get("red") else ""
+    if ev["category"] != "erb":
+        return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}" tabindex="0" role="button" '
+                f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}">'
+                f'<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
+                f'<div class="ttl">{title_html}</div><div class="det">{detail_html}</div><div class="fulltxt">{full_html}</div></div>')
+
     fields = event_fields(ev)
-    if ev["category"] == "erb":
-        class_label = fields["class_label"]
-        class_hue = zlib.crc32(class_label.encode("utf-8")) % 360
-        identity_html = (f'<div class="class-id" style="--class-hue:{class_hue}" title="Course / class: {ehtml(class_label)}">'
-                         f'<span class="class-dot" aria-hidden="true"></span>{ehtml(class_label)}</div>')
-    else:
-        identity_html = f'<div class="course-class" title="Course / class">{ehtml(fields["class_label"])}</div>'
+    class_label = fields["class_label"]
+    class_hue = zlib.crc32(class_label.encode("utf-8")) % 360
+    identity_html = (f'<div class="class-id" style="--class-hue:{class_hue}" title="Course / class: {ehtml(class_label)}">'
+                     f'<span class="class-dot" aria-hidden="true"></span>{ehtml(class_label)}</div>')
     teacher_cls = " is-missing" if fields["teacher"] == "-" else " is-alert" if fields["teacher"] in {"Andy", "Calvin"} else ""
     note_html = "".join(f' <span class="card-note">[{ehtml(note)}]</span>' for note in fields["notes"])
-    course_cls = " card-note" if ev["category"] == "holiday" else ""
-    return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}" tabindex="0" role="button" '
+    return (f'<div class="chip erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}" tabindex="0" role="button" '
             f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}">'
             f'<span class="status" aria-label="{ehtml(st)}">{mark}</span>{identity_html}'
-            f'<div class="card-location" title="Location">{ehtml(fields["location"])}</div>'
-            f'<div class="card-teacher{teacher_cls}" title="Teacher">Teacher: {ehtml(fields["teacher"])}</div>'
-            f'<div class="card-course{course_cls}" title="Course name">{ehtml(fields["course_name"])}</div>'
-            f'<div class="card-time" title="Time">{ehtml(fields["time"])}</div>'
-            f'<div class="card-lesson" title="Lesson">{ehtml(fields["lesson"])}{note_html}</div>'
+            f'<div class="erb-meta"><span class="erb-location">{ehtml(fields["location"])}</span><span class="erb-sep">&middot;</span>'
+            f'<span class="erb-teacher{teacher_cls}">Teacher: {ehtml(fields["teacher"])}</span></div>'
+            f'<div class="erb-course">{ehtml(fields["course_name"])}</div>'
+            f'<div class="erb-foot"><span class="erb-time">{ehtml(fields["time"])}</span><span class="erb-sep">&middot;</span>'
+            f'<span class="erb-lesson">{ehtml(fields["lesson"])}{note_html}</span></div>'
             f'<div class="fulltxt">{full_html}</div></div>')
 
 def month_html(year, month):

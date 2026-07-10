@@ -1,4 +1,4 @@
-const BUILD_ID = 'checked04-aligned-cards-20260710a';
+const BUILD_ID = 'checked04-compact-erb-cards-20260710a';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
