@@ -1,9 +1,9 @@
 {
-  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 02.xlsx",
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 03.xlsx",
   "events": 209,
   "counts": {
-    "confirmed": 127,
-    "unconfirmed": 76,
+    "confirmed": 145,
+    "unconfirmed": 58,
     "note": 6
   },
   "categories": {

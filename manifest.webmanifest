@@ -1,7 +1,7 @@
 {
   "name": "ERB Super Timetable",
   "short_name": "ERB Timetable",
-  "start_url": "./?v=redtext1&build=checked02-dec-cancelled-20260708d",
+  "start_url": "./?v=redtext1&build=checked03-wide-20260710a",
   "display": "standalone",
   "background_color": "#eef1f6",
   "theme_color": "#0f7d7d",

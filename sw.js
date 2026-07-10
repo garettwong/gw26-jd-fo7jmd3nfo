@@ -1,4 +1,4 @@
-const BUILD_ID = 'checked02-dec-cancelled-20260708d';
+const BUILD_ID = 'checked03-wide-20260710a';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
