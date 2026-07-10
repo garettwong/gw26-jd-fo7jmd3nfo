@@ -8,7 +8,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checked04-weekdays-20260710a"
+BUILD_ID = "checked04-time-order-20260710a"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
@@ -212,7 +212,7 @@ CLASS_RE = re.compile(r"(?<![A-Z0-9])Class\s+([^,/()]+)", re.I)
 CODE_PAREN_CLASS_RE = re.compile(r"(?<![A-Z0-9])(?:HK\d+[A-Z]+|MC\d+[A-Z]+|PFSA\d+|QAT\d+)\s*\(([^)]+)\)", re.I)
 NAMED_CLASS_RE = re.compile(r"\(([^()]*班)\)", re.I)
 LESSON_RE = re.compile(r"(?:^|[\s/\-])L\s*(\d+)(?!\d)", re.I)
-TIME_RE = re.compile(r"(?<!\d)([01]?\d|2[0-3])[:：]?([0-5]\d)\s*(?:-|–|至|to)", re.I)
+TIME_RE = re.compile(r"(?<!\d)([01]?\d|2[0-3])[:：]?([0-5]\d)\s*(am|pm)?\s*(?:-|–|至|to)", re.I)
 TIMEISH_RE = re.compile(r"\d{1,2}\s*:?\s*\d{2}|\d{3,4}\s*-|[-–]\s*\d{3,4}")
 NAME_WORDS = {"GARETT", "GARRETT", "ANDY", "CALVIN", "MIKE"}
 
@@ -256,7 +256,17 @@ def course_sort_parts(text):
     lesson_m = LESSON_RE.search(text)
     lesson = int(lesson_m.group(1)) if lesson_m else 999
     time_m = TIME_RE.search(text)
-    start = int(time_m.group(1)) * 60 + int(time_m.group(2)) if time_m else 9999
+    if time_m:
+        hour = int(time_m.group(1))
+        minute = int(time_m.group(2))
+        marker = (time_m.group(3) or "").lower()
+        if marker == "pm" and hour < 12:
+            hour += 12
+        elif marker == "am" and hour == 12:
+            hour = 0
+        start = hour * 60 + minute
+    else:
+        start = 9999
     return code, cls.upper(), lesson, start
 
 
@@ -274,7 +284,7 @@ def course_group_label(text, category_label):
 
 def event_sort_key(ev):
     code, cls, lesson, start = course_sort_parts(ev.get("text", ""))
-    return (0 if code else 1, natural_key(code), natural_key(cls), lesson, start, ev.get("row", 999), ev.get("col", 999), ev.get("text", ""))
+    return (start, 0 if code else 1, natural_key(code), natural_key(cls), lesson, ev.get("row", 999), ev.get("col", 999), ev.get("text", ""))
 
 
 events = []
