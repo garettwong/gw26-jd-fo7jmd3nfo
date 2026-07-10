@@ -1,4 +1,4 @@
-const BUILD_ID = 'checked04-class-identifiers-20260710a';
+const BUILD_ID = 'checked04-sharp-identifiers-20260710a';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
