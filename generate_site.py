@@ -8,7 +8,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checked04-sharp-identifiers-20260710a"
+BUILD_ID = "checked04-aligned-cards-20260710a"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
@@ -373,25 +373,148 @@ CSS = r'''
 CSS += r'''
 @media (min-width:821px){.wrap{width:100%;max-width:none;margin:0;padding:28px clamp(16px,1.6vw,36px) 70px}}
 .title,.month h2{letter-spacing:0}
+.chip{position:relative;display:grid;justify-items:center;gap:2px;padding:7px 8px 8px;text-align:center}
+.chip .status{position:absolute;top:4px;right:6px;z-index:1}
+.class-id,.course-class{display:inline-flex;align-items:center;justify-content:center;gap:4px;max-width:calc(100% - 24px);min-height:19px;margin:0;padding:2px 6px;border-radius:4px;background:#fff;font-size:9.3px;font-weight:900;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 2px rgba(12,18,28,.12)}
+.class-id{border:2px solid hsl(var(--class-hue),72%,38%);color:hsl(var(--class-hue),72%,24%)}
+.class-dot{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:hsl(var(--class-hue),72%,38%);box-shadow:none}
+.course-class{border:1.5px solid #6f7b89;color:#283544}
+.card-location,.card-teacher,.card-course,.card-time,.card-lesson{width:100%;text-align:center;overflow-wrap:anywhere}
+.card-location{min-height:14px;font-size:10.5px;font-weight:900;color:#172232}
+.card-teacher{min-height:14px;font-size:10px;font-weight:800;color:#0f6868}
+.card-teacher.is-missing{color:#929ca9;font-weight:700}
+.card-teacher.is-alert{color:#d60000}
+.card-course{min-height:25px;display:flex;align-items:center;justify-content:center;font-size:10.3px;font-weight:750;line-height:1.2;color:#263343}
+.card-time{min-height:14px;font-size:10.2px;font-weight:800;color:#425164;font-variant-numeric:tabular-nums}
+.card-lesson{min-height:14px;font-size:9.8px;font-weight:800;color:#5b6776}
+.card-note{color:#d60000;font-weight:850}
+.chip .fulltxt{display:none!important}
+@media (orientation:landscape) and (max-height:540px){.chip{gap:1px;padding:3px 4px 4px}.class-id,.course-class{min-height:10px;max-width:calc(100% - 14px);padding:1px 3px;font-size:6px;border-radius:2px}.class-id{border-width:1.3px}.class-dot{width:4px;height:4px;flex-basis:4px}.card-location,.card-teacher,.card-time,.card-lesson{min-height:7px;font-size:6px;line-height:1.08}.card-course{min-height:13px;font-size:6px;line-height:1.08}.chip .status{top:2px;right:3px;font-size:5.8px}}
 '''
+
+TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
+TEACHER_RE = re.compile(r"\b(Garett|Garrett|Andy|Calvin|Mike(?:\s+Sir)?)\b", re.I)
+NOTE_WORD_RE = re.compile(r"test|exam|presentation|discussion|cancel|substitut", re.I)
+
+
+def clean_location(title, category):
+    if category == "ymca":
+        return "YMCA"
+    if category == "dgs":
+        return "DGS"
+    if category in {"holiday", "mike"}:
+        return "-"
+    value = str(title or "")
+    code_m = COURSE_CODE_RE.search(value)
+    if code_m:
+        value = value[:code_m.start()]
+    value = re.sub(r"\([^)]*\)|\[[^\]]*\]", "", value)
+    value = re.sub(r"\s*-\s*L\s*\d+.*$", "", value, flags=re.I)
+    value = re.sub(r"\s*-\s*", "-", value)
+    return value.strip(" ,-/") or "-"
+
+
+def display_clock(hour, minute, marker):
+    hour = int(hour)
+    minute = int(minute)
+    marker = (marker or "").lower()
+    if marker == "pm" and hour < 12:
+        hour += 12
+    elif marker == "am" and hour == 12:
+        hour = 0
+    return f"{hour:02d}:{minute:02d}"
+
+
+def display_times(text):
+    ranges = []
+    for match in TIME_RANGE_RE.finditer(str(text or "")):
+        start = display_clock(match.group(1), match.group(2), match.group(3))
+        end = display_clock(match.group(4), match.group(5), match.group(6))
+        ranges.append(f"{start}-{end}")
+    return " / ".join(ranges) or "-"
+
+
+def display_notes(text):
+    notes = re.findall(r"\[([^\]]+)\]", str(text or ""))
+    for value in re.findall(r"\(([^)]+)\)", str(text or "")):
+        if NOTE_WORD_RE.search(value):
+            notes.append(value)
+    return list(dict.fromkeys(note.strip() for note in notes if note.strip()))
+
+
+def event_fields(ev):
+    text = str(ev.get("text") or "")
+    title = str(ev.get("title") or "")
+    category = ev.get("category")
+    parts = [part.strip() for part in text.split(" / ") if part.strip()]
+
+    teacher_m = TEACHER_RE.search(text)
+    teacher = teacher_m.group(1) if teacher_m else "-"
+    if teacher.lower() in {"garett", "garrett"}:
+        teacher = "Garett"
+    elif teacher.lower().startswith("mike"):
+        teacher = "Mike Sir"
+
+    if category == "ymca":
+        course_name = "SEN"
+    elif category == "dgs":
+        course_name = re.sub(r"^DGS\s*", "", title, flags=re.I).strip() or "Unreal"
+    elif category == "holiday":
+        course_name = title or "Public Holiday"
+    elif category == "mike":
+        course_name = re.sub(r"^Mike\s+Sir\s*", "", title, flags=re.I)
+        course_name = re.sub(r"\s*-\s*L\s*\d+.*$", "", course_name, flags=re.I).strip() or "AI Lesson"
+    else:
+        course_name = parts[1] if len(parts) > 1 else (ev.get("detail") or title)
+        code_m = COURSE_CODE_RE.search(course_name)
+        if code_m:
+            course_name = course_name[:code_m.start()]
+        time_m = TIME_RANGE_RE.search(course_name)
+        if time_m:
+            course_name = course_name[:time_m.start()]
+        course_name = course_name.strip(" ,-/") or "-"
+
+    class_label = ev.get("group_label") or "-"
+    if category in {"holiday", "school", "mike"}:
+        class_label = "-"
+    lesson_m = LESSON_RE.search(text)
+    lesson = f"Lesson {lesson_m.group(1)}" if lesson_m else "Lesson -"
+    return {
+        "class_label": class_label,
+        "location": clean_location(title, category),
+        "teacher": teacher,
+        "course_name": course_name,
+        "time": display_times(text),
+        "lesson": lesson,
+        "notes": display_notes(text),
+    }
+
 
 def chip(ev):
     st = ev['status']
     mark = '✓' if st == 'confirmed' else '?' if st == 'unconfirmed' else '•'
-    title_html = ev.get("title_html") or ehtml(ev["title"])
-    detail_html = ev.get("detail_html") or ehtml(ev["detail"])
     full_html = ev.get("html") or ehtml(ev["text"])
     red_cls = " has-red" if ev.get("red") else ""
-    class_id_html = ""
+    fields = event_fields(ev)
     if ev["category"] == "erb":
-        class_label = ev["group_label"]
+        class_label = fields["class_label"]
         class_hue = zlib.crc32(class_label.encode("utf-8")) % 360
-        class_id_html = (f'<div class="class-id" style="--class-hue:{class_hue}" title="{ehtml(class_label)}">'
+        identity_html = (f'<div class="class-id" style="--class-hue:{class_hue}" title="Course / class: {ehtml(class_label)}">'
                          f'<span class="class-dot" aria-hidden="true"></span>{ehtml(class_label)}</div>')
+    else:
+        identity_html = f'<div class="course-class" title="Course / class">{ehtml(fields["class_label"])}</div>'
+    teacher_cls = " is-missing" if fields["teacher"] == "-" else " is-alert" if fields["teacher"] in {"Andy", "Calvin"} else ""
+    note_html = "".join(f' <span class="card-note">[{ehtml(note)}]</span>' for note in fields["notes"])
+    course_cls = " card-note" if ev["category"] == "holiday" else ""
     return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}" tabindex="0" role="button" '
             f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}">'
-            f'<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
-            f'{class_id_html}<div class="ttl">{title_html}</div><div class="det">{detail_html}</div><div class="fulltxt">{full_html}</div></div>')
+            f'<span class="status" aria-label="{ehtml(st)}">{mark}</span>{identity_html}'
+            f'<div class="card-location" title="Location">{ehtml(fields["location"])}</div>'
+            f'<div class="card-teacher{teacher_cls}" title="Teacher">Teacher: {ehtml(fields["teacher"])}</div>'
+            f'<div class="card-course{course_cls}" title="Course name">{ehtml(fields["course_name"])}</div>'
+            f'<div class="card-time" title="Time">{ehtml(fields["time"])}</div>'
+            f'<div class="card-lesson" title="Lesson">{ehtml(fields["lesson"])}{note_html}</div>'
+            f'<div class="fulltxt">{full_html}</div></div>')
 
 def month_html(year, month):
     cal = calendar.Calendar(firstweekday=6)
