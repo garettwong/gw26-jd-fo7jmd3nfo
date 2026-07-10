@@ -3,12 +3,12 @@ from openpyxl.cell.rich_text import CellRichText, TextBlock
 from pathlib import Path
 import calendar, datetime, html, json, re
 
-SRC = Path(r"C:/Users/garet/OneDrive/桌面/Timetable/ERB Super Timetable 04_checking 03.xlsx")
+SRC = Path(r"C:/Users/garet/OneDrive/桌面/Timetable/ERB Super Timetable 04_checking 04.xlsx")
 OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checked03-wide-20260710a"
+BUILD_ID = "checked04-classnames-20260710a"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
@@ -140,7 +140,9 @@ def border_status(cell):
     styles = [s for s in styles if s]
     if not styles:
         return "note"
-    if any("dash" in str(s).lower() for s in styles):
+    dashed = sum("dash" in str(style).lower() for style in styles)
+    solid = len(styles) - dashed
+    if dashed >= solid:
         return "unconfirmed"
     return "confirmed"
 
@@ -208,6 +210,7 @@ def split_title(text):
 COURSE_CODE_RE = re.compile(r"(?<![A-Z0-9])(?:HK\d+[A-Z]+|MC\d+[A-Z]+|PFSA\d+|QAT\d+|DGS)(?![A-Z0-9])", re.I)
 CLASS_RE = re.compile(r"(?<![A-Z0-9])Class\s+([^,/()]+)", re.I)
 CODE_PAREN_CLASS_RE = re.compile(r"(?<![A-Z0-9])(?:HK\d+[A-Z]+|MC\d+[A-Z]+|PFSA\d+|QAT\d+)\s*\(([^)]+)\)", re.I)
+NAMED_CLASS_RE = re.compile(r"\(([^()]*班)\)", re.I)
 LESSON_RE = re.compile(r"(?:^|[\s/\-])L\s*(\d+)(?!\d)", re.I)
 TIME_RE = re.compile(r"(?<!\d)([01]?\d|2[0-3])[:：]?([0-5]\d)\s*(?:-|–|至|to)", re.I)
 TIMEISH_RE = re.compile(r"\d{1,2}\s*:?\s*\d{2}|\d{3,4}\s*-|[-–]\s*\d{3,4}")
@@ -227,7 +230,10 @@ def clean_class(value):
 
 
 def parenthetical_class(text):
-    m = CODE_PAREN_CLASS_RE.search(str(text or ""))
+    text = str(text or "")
+    m = CODE_PAREN_CLASS_RE.search(text)
+    if not m:
+        m = NAMED_CLASS_RE.search(text)
     if not m:
         return ""
     value = clean_class(m.group(1))
@@ -257,6 +263,8 @@ def course_sort_parts(text):
 def course_group_label(text, category_label):
     text = str(text or "")
     code, cls, _lesson, _start = course_sort_parts(text)
+    if code and not cls:
+        cls = INFERRED_CLASS_BY_CODE.get(code, "")
     if code:
         return f"{code} · {cls}" if cls else code
     if "Mike Sir" in text:
@@ -271,6 +279,7 @@ def event_sort_key(ev):
 
 events = []
 by_date = {}
+INFERRED_CLASS_BY_CODE = {}
 
 for sheet in MONTH_SHEETS:
     ws = wb[sheet]
@@ -310,6 +319,17 @@ for sheet in MONTH_SHEETS:
 
 for ds in by_date:
     by_date[ds].sort(key=event_sort_key)
+
+classes_by_code = {}
+for event in events:
+    code, cls, _lesson, _start = course_sort_parts(event["text"])
+    if code and cls:
+        classes_by_code.setdefault(code, set()).add(cls)
+INFERRED_CLASS_BY_CODE = {
+    code: next(iter(classes))
+    for code, classes in classes_by_code.items()
+    if len(classes) == 1
+}
 
 _group_labels = sorted({course_group_label(e["text"], e["category_label"]) for e in events}, key=lambda label: (0 if COURSE_CODE_RE.fullmatch(label.split(" · ", 1)[0]) or label == "DGS" else 1, natural_key(label.split(" · ", 1)[0]), natural_key(label.split(" · ", 1)[1] if " · " in label else ""), label))
 _group_slugs = {label: f"g{i:02d}" for i, label in enumerate(_group_labels, 1)}
