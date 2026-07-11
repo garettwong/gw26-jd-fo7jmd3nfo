@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checked04-full-class-overlaps-20260711a"
+BUILD_ID = "checked04-slot-brackets-floating-toggle-20260711a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
@@ -435,6 +435,13 @@ CSS += r'''
 @media (orientation:landscape) and (max-height:540px){.course-code-legend{display:none}.chip.layer-class,.chip.erb-compact.layer-class{padding-left:7px}.chip.layer-class.confirmed,.chip.layer-class.unconfirmed,.chip.layer-class.note{box-shadow:inset 4px 0 0 #8c78b5,0 1px 1px rgba(20,30,50,.04)}.overlap-group{gap:2px}.overlap-group.overlap-active{padding:1px 6px 1px 0}.overlap-group.overlap-active::after{width:4px;border-width:1.4px}}
 '''
 
+CSS += r'''
+.chip.layer-class{--context-color:#8c78b5}.chip.cat-erb.layer-class{--context-color:#d9772e}.chip.cat-methodist.layer-class{--context-color:#7567b9}.chip.cat-ymca.layer-class{--context-color:#238a99}.chip.cat-dgs.layer-class{--context-color:#31865c}.sample.class-layer{box-shadow:inset 7px 0 0 #d9772e,inset -7px 0 0 #7567b9}.chip.layer-class.confirmed{box-shadow:inset 8px 0 0 var(--context-color),0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.unconfirmed{box-shadow:inset 8px 0 0 var(--context-color),0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.note{box-shadow:inset 8px 0 0 var(--context-color),0 1px 1px rgba(20,30,50,.04)}.floating-mode-toggle{position:fixed;z-index:40;left:clamp(76px,8vw,310px);bottom:24px;width:58px;height:58px;border:2px solid #fff;border-radius:50%;background:#0f7074;color:#fff;box-shadow:0 5px 18px rgba(25,38,55,.30);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;cursor:pointer;font-family:inherit}.floating-mode-toggle:hover{background:#0b5f63}.floating-mode-toggle:focus-visible{outline:3px solid #ffc857;outline-offset:3px}.toggle-glyph{font-size:15px;font-weight:900;line-height:1}.toggle-label{font-size:8px;font-weight:800;line-height:1.1;margin-top:3px;text-transform:uppercase}.grid .holiday-cell{background:#f1f3f6}.grid .holiday-cell .chip.cat-holiday{position:relative;flex:1;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-radius:7px}.grid .holiday-cell .chip.cat-holiday .top{position:absolute;top:7px;left:8px;right:8px;width:auto}.grid .holiday-cell .chip.cat-holiday .ttl{font-size:14px;margin:0}.grid .holiday-cell .chip.cat-holiday .det{display:none}
+@media (max-width:820px){.floating-mode-toggle{left:auto;right:14px;bottom:14px;width:54px;height:54px}.toggle-glyph{font-size:14px}}
+@media (orientation:landscape) and (max-height:540px){.chip.layer-class.confirmed,.chip.layer-class.unconfirmed,.chip.layer-class.note{box-shadow:inset 4px 0 0 var(--context-color),0 1px 1px rgba(20,30,50,.04)}.floating-mode-toggle{width:42px;height:42px;bottom:8px}.toggle-glyph{font-size:11px}.toggle-label{font-size:6px}.grid .holiday-cell .chip.cat-holiday{min-height:58px}.grid .holiday-cell .chip.cat-holiday .ttl{display:block;font-size:7px}}
+@media print{.floating-mode-toggle{display:none}}
+'''
+
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
 TEACHER_RE = re.compile(r"\b(Garett|Garrett|Andy|Calvin|Mike(?:\s+Sir)?)\b", re.I)
 NOTE_WORD_RE = re.compile(r"test|exam|presentation|discussion|cancel|substitut", re.I)
@@ -563,6 +570,18 @@ def event_interval(ev):
     return start, end
 
 
+def event_slot(ev):
+    interval = event_interval(ev)
+    if interval is None:
+        return "other"
+    start, _end = interval
+    if start < 13 * 60:
+        return "morning"
+    if start < 18 * 60:
+        return "afternoon"
+    return "night"
+
+
 def chip(ev):
     st = ev['status']
     mark = '✓' if st == 'confirmed' else '?' if st == 'unconfirmed' else '•'
@@ -603,41 +622,21 @@ def chip(ev):
 
 
 def render_day_events(day_events):
-    groups = []
-    current = []
-    current_end = None
-
-    def flush():
-        nonlocal current, current_end
-        if current:
-            groups.append(current)
-        current = []
-        current_end = None
-
+    slot_order = ["morning", "afternoon", "night", "other"]
+    groups = {slot: [] for slot in slot_order}
     for ev in sorted(day_events, key=event_sort_key):
-        interval = event_interval(ev)
-        if interval is None:
-            flush()
-            groups.append([ev])
-            continue
-        start, end = interval
-        if current and current_end is not None and start < current_end:
-            current.append(ev)
-            current_end = max(current_end, end)
-        else:
-            flush()
-            current = [ev]
-            current_end = end
-    flush()
-
+        groups[event_slot(ev)].append(ev)
     rendered = []
-    for group in groups:
+    for slot in slot_order:
+        group = groups[slot]
+        if not group:
+            continue
         if len(group) == 1:
             rendered.append(chip(group[0]))
             continue
         ordered = sorted(group, key=lambda ev: (0 if event_layer(ev) == "mine" else 1, event_sort_key(ev)))
-        rendered.append('<div class="overlap-group overlap-active" data-overlap-count="{}">{}</div>'.format(
-            len(ordered), ''.join(chip(ev) for ev in ordered)
+        rendered.append('<div class="overlap-group overlap-active slot-{}" data-slot="{}" data-overlap-count="{}">{}</div>'.format(
+            slot, slot, len(ordered), ''.join(chip(ev) for ev in ordered)
         ))
     return ''.join(rendered)
 
@@ -648,10 +647,11 @@ def month_html(year, month):
         for day in week:
             ds = day.isoformat()
             evs = [] if day.month != month else by_date.get(ds, [])
-            cls = "cell" + (" out" if day.month != month else "") + (" wknd" if day.weekday() >= 5 and day.month == month else "") + (" has" if evs else "")
+            cls = "cell" + (" out" if day.month != month else "") + (" wknd" if day.weekday() >= 5 and day.month == month else "") + (" has" if evs else "") + (" holiday-cell" if any(e["category"] == "holiday" for e in evs) else "")
+            cell_id = f"d-{ds}" if day.month == month else f"d-out-m{month}-{ds}"
             mon = calendar.month_abbr[day.month]
             weekday = day.strftime("%a")
-            cells.append(f'<div class="{cls}" id="d-{ds}"><div class="dnum"><span class="dmon">{mon}</span><span class="dday">{day.day}</span><span class="dweekday">{weekday}</span></div>' + render_day_events(evs) + '</div>')
+            cells.append(f'<div class="{cls}" id="{cell_id}"><div class="dnum"><span class="dmon">{mon}</span><span class="dday">{day.day}</span><span class="dweekday">{weekday}</span></div>' + render_day_events(evs) + '</div>')
     grid = '<div class="gridwrap"><div class="grid">' + ''.join(cells) + '</div></div>'
     daykeys = sorted(d for d in (datetime.date.fromisoformat(k) for k in by_date) if d.year == year and d.month == month)
     agenda_bits = []
@@ -698,11 +698,10 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
 <div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div><div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
 <div class="section-h">ERB course codes</div><div class="course-code-legend">{erb_code_legend}</div>
-<div class="layer-controls"><div class="section-h">Timetable view</div><div class="layer-switch" role="group" aria-label="Timetable view"><button class="mode-filter" data-mode="mine">My lessons</button><button class="mode-filter" data-mode="full">Full class</button><button class="mode-filter active" data-mode="both">Both</button></div></div>
 <div class="section-h">Filter by course / class</div><div class="filters"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{cat_filters}</div>
 {months_html}
 <div class="foot">Sources: <b>{ehtml(SRC.name)}</b> plus <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
-</main><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
+</main><button id="modeToggle" class="floating-mode-toggle" type="button" aria-label="Show only my lessons" title="Show only my lessons"><span class="toggle-glyph" aria-hidden="true">MY</span><span class="toggle-label" aria-hidden="true">Only</span></button><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
 <script>
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){{window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?build='+window.ERB_BUILD_ID).then(r=>r.update()).catch(()=>{{}}));}}
 const modal=document.getElementById('modal');
@@ -740,7 +739,7 @@ function applyFilters(){{
   window.__filterActive = f !== 'all';
   document.querySelectorAll('.chip').forEach(ch=>{{
     const courseMatch=f==='all'||ch.classList.contains('grp-'+f);
-    const layerMatch=mode==='both'||(mode==='mine'&&ch.dataset.layer==='mine')||(mode==='full'&&ch.dataset.course==='1');
+    const layerMatch=mode==='both'||(mode==='mine'&&ch.dataset.layer==='mine');
     ch.style.display=courseMatch&&layerMatch?'':'none';
   }});
   document.querySelectorAll('.overlap-group').forEach(group=>{{
@@ -757,12 +756,23 @@ document.querySelectorAll('.course-filter').forEach(btn=>btn.addEventListener('c
   applyFilters();
   if(f!=='all') jumpToFilter(btn);
 }}));
-document.querySelectorAll('.mode-filter').forEach(btn=>btn.addEventListener('click',()=>{{
-  document.querySelectorAll('.mode-filter').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
-  window.__layerMode=btn.dataset.mode;
+const modeToggle=document.getElementById('modeToggle');
+function updateModeToggle(){{
+  const showingFull=window.__layerMode==='both';
+  modeToggle.querySelector('.toggle-glyph').textContent=showingFull?'MY':'ALL';
+  modeToggle.querySelector('.toggle-label').textContent=showingFull?'Only':'Full';
+  const label=showingFull?'Show only my lessons':'Show full timetable';
+  modeToggle.setAttribute('aria-label',label);
+  modeToggle.setAttribute('title',label);
+  modeToggle.setAttribute('aria-pressed',showingFull?'false':'true');
+}}
+modeToggle.addEventListener('click',()=>{{
+  window.__layerMode=window.__layerMode==='both'?'mine':'both';
   applyFilters();
-}}));
+  updateModeToggle();
+}});
 applyFilters();
+updateModeToggle();
 (function(){{
  const pad=n=>String(n).padStart(2,'0');
  const localDate=d=>`${{d.getFullYear()}}-${{pad(d.getMonth()+1)}}-${{pad(d.getDate())}}`;
