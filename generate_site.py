@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checked04-slot-brackets-floating-toggle-20260711a"
+BUILD_ID = "checked04-me-only-mike-pinned-20260711a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
@@ -701,7 +701,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="section-h">Filter by course / class</div><div class="filters"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{cat_filters}</div>
 {months_html}
 <div class="foot">Sources: <b>{ehtml(SRC.name)}</b> plus <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
-</main><button id="modeToggle" class="floating-mode-toggle" type="button" aria-label="Show only my lessons" title="Show only my lessons"><span class="toggle-glyph" aria-hidden="true">MY</span><span class="toggle-label" aria-hidden="true">Only</span></button><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
+</main><button id="modeToggle" class="floating-mode-toggle" type="button" aria-label="Show me only, keeping Mike Sir visible" title="Show me only, keeping Mike Sir visible"><span class="toggle-glyph" aria-hidden="true">ME</span><span class="toggle-label" aria-hidden="true">Only</span></button><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
 <script>
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){{window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?build='+window.ERB_BUILD_ID).then(r=>r.update()).catch(()=>{{}}));}}
 const modal=document.getElementById('modal');
@@ -739,7 +739,7 @@ function applyFilters(){{
   window.__filterActive = f !== 'all';
   document.querySelectorAll('.chip').forEach(ch=>{{
     const courseMatch=f==='all'||ch.classList.contains('grp-'+f);
-    const layerMatch=mode==='both'||(mode==='mine'&&ch.dataset.layer==='mine');
+    const layerMatch=mode==='both'||(mode==='mine'&&(ch.dataset.layer==='mine'||ch.dataset.cat==='Mike Sir'));
     ch.style.display=courseMatch&&layerMatch?'':'none';
   }});
   document.querySelectorAll('.overlap-group').forEach(group=>{{
@@ -759,9 +759,9 @@ document.querySelectorAll('.course-filter').forEach(btn=>btn.addEventListener('c
 const modeToggle=document.getElementById('modeToggle');
 function updateModeToggle(){{
   const showingFull=window.__layerMode==='both';
-  modeToggle.querySelector('.toggle-glyph').textContent=showingFull?'MY':'ALL';
+  modeToggle.querySelector('.toggle-glyph').textContent=showingFull?'ME':'ALL';
   modeToggle.querySelector('.toggle-label').textContent=showingFull?'Only':'Full';
-  const label=showingFull?'Show only my lessons':'Show full timetable';
+  const label=showingFull?'Show me only, keeping Mike Sir visible':'Show full timetable';
   modeToggle.setAttribute('aria-label',label);
   modeToggle.setAttribute('title',label);
   modeToggle.setAttribute('aria-pressed',showingFull?'false':'true');
