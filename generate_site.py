@@ -1,14 +1,20 @@
 from openpyxl import load_workbook
 from openpyxl.cell.rich_text import CellRichText, TextBlock
 from pathlib import Path
-import calendar, datetime, html, json, re, zlib
+import calendar, datetime, html, json, re, sys, zlib
+
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except (AttributeError, OSError):
+    pass
 
 SRC = Path(r"C:/Users/garet/OneDrive/桌面/Timetable/ERB Super Timetable 04_checking 04.xlsx")
 OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checked04-compact-erb-cards-20260710a"
+BUILD_ID = "checked04-full-class-layers-20260711a"
+CONTEXT_SRC = OUTDIR / "class_context.json"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
@@ -288,6 +294,7 @@ def event_sort_key(ev):
 
 
 events = []
+context_events = []
 by_date = {}
 INFERRED_CLASS_BY_CODE = {}
 
@@ -327,11 +334,41 @@ for sheet in MONTH_SHEETS:
             events.append(ev)
             by_date.setdefault(dt.isoformat(), []).append(ev)
 
+if CONTEXT_SRC.exists():
+    raw_context = json.loads(CONTEXT_SRC.read_text(encoding="utf-8"))
+    baseline_keys = {
+        (event["date"],) + course_sort_parts(event["text"])[:3]
+        for event in events
+    }
+    for index, item in enumerate(raw_context, 1):
+        dt = datetime.date.fromisoformat(item["date"])
+        text = norm_text(item["text"])
+        cat, cat_label = category(text)
+        if cat != "erb":
+            raise ValueError(f"Context entry {index} must be an ERB lesson")
+        key = (dt.isoformat(),) + course_sort_parts(text)[:3]
+        if key in baseline_keys:
+            raise ValueError(f"Context entry {index} duplicates a workbook lesson: {key}")
+        title, detail = split_title(text)
+        ev = {
+            "date": dt.isoformat(), "month": calendar.month_name[dt.month], "row": 999, "col": 999,
+            "cell": f"context-{index}", "text": text, "title": title, "detail": detail,
+            "status": item.get("status", "unconfirmed"), "fill": "", "category": cat,
+            "category_label": cat_label, "html": html.escape(text, quote=True),
+            "title_html": html.escape(title, quote=True), "detail_html": html.escape(detail, quote=True),
+            "red": False, "layer": "class",
+            "teacher": item.get("teacher", "Other tutor / TBC"), "source": item.get("source", ""),
+        }
+        context_events.append(ev)
+        by_date.setdefault(dt.isoformat(), []).append(ev)
+
+display_events = events + context_events
+
 for ds in by_date:
     by_date[ds].sort(key=event_sort_key)
 
 classes_by_code = {}
-for event in events:
+for event in display_events:
     code, cls, _lesson, _start = course_sort_parts(event["text"])
     if code and cls:
         classes_by_code.setdefault(code, set()).add(cls)
@@ -341,9 +378,9 @@ INFERRED_CLASS_BY_CODE = {
     if len(classes) == 1
 }
 
-_group_labels = sorted({course_group_label(e["text"], e["category_label"]) for e in events}, key=lambda label: (0 if COURSE_CODE_RE.fullmatch(label.split(" · ", 1)[0]) or label == "DGS" else 1, natural_key(label.split(" · ", 1)[0]), natural_key(label.split(" · ", 1)[1] if " · " in label else ""), label))
+_group_labels = sorted({course_group_label(e["text"], e["category_label"]) for e in display_events}, key=lambda label: (0 if COURSE_CODE_RE.fullmatch(label.split(" · ", 1)[0]) or label == "DGS" else 1, natural_key(label.split(" · ", 1)[0]), natural_key(label.split(" · ", 1)[1] if " · " in label else ""), label))
 _group_slugs = {label: f"g{i:02d}" for i, label in enumerate(_group_labels, 1)}
-for ev in events:
+for ev in display_events:
     ev["group_label"] = course_group_label(ev["text"], ev["category_label"])
     ev["group"] = _group_slugs[ev["group_label"]]
 
@@ -353,7 +390,7 @@ def ehtml(s):
 GROUPS = []
 for label in _group_labels:
     slug = _group_slugs[label]
-    group_events = [e for e in events if e["group"] == slug]
+    group_events = [e for e in display_events if e["group"] == slug]
     statuses = {e["status"] for e in group_events}
     if statuses == {"confirmed"}:
         group_status = "confirmed"
@@ -373,6 +410,7 @@ CSS = r'''
 CSS += r'''
 @media (min-width:821px){.wrap{width:100%;max-width:none;margin:0;padding:28px clamp(16px,1.6vw,36px) 70px}}
 .title,.month h2{letter-spacing:0}
+.layer-controls{margin:16px 0 2px}.layer-controls .section-h{margin:0 0 8px}.layer-switch{display:inline-grid;grid-template-columns:repeat(3,minmax(104px,1fr));padding:3px;border:1px solid #cfd8e5;border-radius:8px;background:#e5eaf1;box-shadow:0 1px 2px rgba(20,30,50,.06)}.mode-filter{min-height:34px;border:0;border-radius:6px;padding:6px 11px;background:transparent;color:#4c5a6b;font:inherit;font-size:12px;font-weight:800;cursor:pointer}.mode-filter.active{background:#fff;color:#145f63;box-shadow:0 1px 3px rgba(20,30,50,.18)}.sample.class-layer{border:2px solid #8b80aa;background:#fff1e6;box-shadow:inset 4px 0 0 #a99bc7}.chip.layer-class.confirmed{box-shadow:inset 3px 0 0 #a99bc7,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.unconfirmed{box-shadow:inset 3px 0 0 #a99bc7,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.modal-source{margin-top:14px;padding-top:10px;border-top:1px solid #e4e9f0;color:#6c7786;font-size:12px}.pill.class-layer{background:#eeeaf7;color:#5d537a}
 .chip.erb-compact{position:relative;display:grid;justify-items:center;gap:2px;padding:6px 7px 7px;text-align:center}
 .chip.erb-compact .status{position:absolute;top:4px;right:6px;z-index:1}
 .chip.erb-compact .class-id{display:inline-flex;align-items:center;align-self:center;justify-content:center;gap:4px;max-width:calc(100% - 24px);min-height:18px;margin:0;padding:2px 6px;border:2px solid hsl(var(--class-hue),72%,38%);border-radius:4px;background:#fff;color:hsl(var(--class-hue),72%,24%);font-size:9.3px;font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 2px rgba(12,18,28,.12)}
@@ -387,6 +425,8 @@ CSS += r'''
 .card-note{color:#d60000;font-weight:850}
 .chip.erb-compact .fulltxt{display:none!important}
 @media (orientation:landscape) and (max-height:540px){.chip.erb-compact{gap:1px;padding:3px 4px 4px}.chip.erb-compact .class-id{min-height:10px;max-width:calc(100% - 14px);padding:1px 3px;font-size:6px;border-width:1.3px;border-radius:2px}.chip.erb-compact .class-dot{width:4px;height:4px;flex-basis:4px}.erb-meta,.erb-course,.erb-foot{font-size:6px;line-height:1.08}.chip.erb-compact .status{top:2px;right:3px;font-size:5.8px}}
+@media (max-width:520px){.layer-switch{display:grid;width:100%;grid-template-columns:repeat(3,minmax(0,1fr))}.mode-filter{padding:6px 4px}}
+@media (orientation:landscape) and (max-height:540px){.layer-controls{display:none}}
 '''
 
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
@@ -446,7 +486,7 @@ def event_fields(ev):
     parts = [part.strip() for part in text.split(" / ") if part.strip()]
 
     teacher_m = TEACHER_RE.search(text)
-    teacher = teacher_m.group(1) if teacher_m else "-"
+    teacher = str(ev.get("teacher") or (teacher_m.group(1) if teacher_m else "-"))
     if teacher.lower() in {"garett", "garrett"}:
         teacher = "Garett"
     elif teacher.lower().startswith("mike"):
@@ -487,6 +527,14 @@ def event_fields(ev):
     }
 
 
+def event_layer(ev):
+    if ev.get("layer") == "class":
+        return "class"
+    if ev.get("category") != "erb":
+        return "mine"
+    return "class" if event_fields(ev)["teacher"] not in {"Garett", "-"} else "mine"
+
+
 def chip(ev):
     st = ev['status']
     mark = '✓' if st == 'confirmed' else '?' if st == 'unconfirmed' else '•'
@@ -494,9 +542,13 @@ def chip(ev):
     detail_html = ev.get("detail_html") or ehtml(ev["detail"])
     full_html = ev.get("html") or ehtml(ev["text"])
     red_cls = " has-red" if ev.get("red") else ""
+    layer = event_layer(ev)
+    layer_cls = f" layer-{layer}"
+    layer_attrs = (f' data-layer="{layer}" data-erb="{1 if ev["category"] == "erb" else 0}"'
+                   f' data-source="{ehtml(ev.get("source", ""))}"')
     if ev["category"] != "erb":
-        return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}" tabindex="0" role="button" '
-                f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}">'
+        return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}" tabindex="0" role="button" '
+                f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}>'
                 f'<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
                 f'<div class="ttl">{title_html}</div><div class="det">{detail_html}</div><div class="fulltxt">{full_html}</div></div>')
 
@@ -507,8 +559,8 @@ def chip(ev):
                      f'<span class="class-dot" aria-hidden="true"></span>{ehtml(class_label)}</div>')
     teacher_cls = " is-missing" if fields["teacher"] == "-" else " is-alert" if fields["teacher"] in {"Andy", "Calvin"} else ""
     note_html = "".join(f' <span class="card-note">[{ehtml(note)}]</span>' for note in fields["notes"])
-    return (f'<div class="chip erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}" tabindex="0" role="button" '
-            f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}">'
+    return (f'<div class="chip erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}" tabindex="0" role="button" '
+            f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}>'
             f'<span class="status" aria-label="{ehtml(st)}">{mark}</span>{identity_html}'
             f'<div class="erb-meta"><span class="erb-location">{ehtml(fields["location"])}</span><span class="erb-sep">&middot;</span>'
             f'<span class="erb-teacher{teacher_cls}">Teacher: {ehtml(fields["teacher"])}</span></div>'
@@ -539,13 +591,16 @@ def month_html(year, month):
     return f'<section class="month" id="m{month}"><h2>{calendar.month_name[month]} {year}</h2>{grid}<div class="agenda">{agenda}</div></section>'
 
 counts = {"confirmed": 0, "unconfirmed": 0, "note": 0}
-for e in events:
+for e in display_events:
     counts[e['status']] = counts.get(e['status'], 0) + 1
 cat_counts = {}
-for e in events:
+for e in display_events:
     cat_counts[e['category_label']] = cat_counts.get(e['category_label'], 0) + 1
+layer_counts = {"mine": 0, "class": 0}
+for e in display_events:
+    layer_counts[event_layer(e)] += 1
 months_html = ''.join(month_html(YEAR, m) for m in range(6, 13))
-cat_filters = ''.join(f'<button class="filter {ehtml(group_status)}" data-filter="{ehtml(slug)}" data-first-date="{ehtml(first_date)}" data-status-summary="{ehtml(group_status)}" title="{ehtml(label)} · {ehtml(group_status)}">{ehtml(label)} ({sum(1 for e in events if e["group"] == slug)})</button>' for label, slug, group_status, first_date in GROUPS)
+cat_filters = ''.join(f'<button class="filter course-filter {ehtml(group_status)}" data-filter="{ehtml(slug)}" data-first-date="{ehtml(first_date)}" data-status-summary="{ehtml(group_status)}" title="{ehtml(label)} · {ehtml(group_status)}">{ehtml(label)} ({sum(1 for e in display_events if e["group"] == slug)})</button>' for label, slug, group_status, first_date in GROUPS)
 
 HTML = f'''<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=6, user-scalable=yes">
@@ -559,28 +614,32 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <meta http-equiv="Expires" content="0">
 <script>window.ERB_BUILD_ID='{BUILD_ID}';(function(){{if(!/^https?:$/.test(location.protocol))return;var p=new URLSearchParams(location.search);if(p.get('build')!==window.ERB_BUILD_ID){{p.set('build',window.ERB_BUILD_ID);location.replace(location.pathname+'?'+p.toString()+location.hash);}}}})();</script>
 <style>{CSS}</style></head><body><main class="wrap">
-<div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">June–December 2026 · copied from Excel source · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
-<div class="stats"><div class="stat"><b>{len(events)}</b> total entries</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div><div class="stat"><b>{counts.get('note',0)}</b> notes/holidays</div></div>
-<div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
-<div class="section-h">Filter by course / class</div><div class="filters"><button class="filter active" data-filter="all">All ({len(events)})</button>{cat_filters}</div>
+<div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">June–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
+<div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
+<div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div><div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
+<div class="layer-controls"><div class="section-h">Timetable view</div><div class="layer-switch" role="group" aria-label="Timetable view"><button class="mode-filter" data-mode="mine">My lessons</button><button class="mode-filter" data-mode="full">Full class</button><button class="mode-filter active" data-mode="both">Both</button></div></div>
+<div class="section-h">Filter by course / class</div><div class="filters"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{cat_filters}</div>
 {months_html}
-<div class="foot">Source: <b>{ehtml(SRC.name)}</b>. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed. Filtered and sorted by course code, class, lesson/time. Click any entry to read the full copied text.</div>
+<div class="foot">Sources: <b>{ehtml(SRC.name)}</b> plus <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
 </main><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
 <script>
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){{window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?build='+window.ERB_BUILD_ID).then(r=>r.update()).catch(()=>{{}}));}}
 const modal=document.getElementById('modal');
 function openChip(el){{
-  const st=el.dataset.status, cat=el.dataset.cat, txt=el.dataset.text, html=el.dataset.html||'', date=el.dataset.date;
+  const st=el.dataset.status, cat=el.dataset.cat, txt=el.dataset.text, html=el.dataset.html||'', date=el.dataset.date, source=el.dataset.source||'', layer=el.dataset.layer;
   modal.querySelector('.modal-h').textContent=cat;
-  modal.querySelector('.modal-date').innerHTML=date+' · <span class="pill '+st+'">'+(st==='confirmed'?'Confirmed / 已確認':st==='unconfirmed'?'Unconfirmed / 未確認':'Note / 備註')+'</span>';
-  modal.querySelector('.modal-body').innerHTML=html||txt;
+  modal.querySelector('.modal-date').innerHTML=date+' · <span class="pill '+st+'">'+(st==='confirmed'?'Confirmed / 已確認':st==='unconfirmed'?'Unconfirmed / 未確認':'Note / 備註')+'</span>'+(layer==='class'?' <span class="pill class-layer">Full class context</span>':'');
+  modal.querySelector('.modal-body').innerHTML=(html||txt)+(source?'<div class="modal-source">Source: '+source.replace(/[&<>"']/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[c]))+'</div>':'');
   modal.hidden=false;
 }}
 document.querySelectorAll('.chip').forEach(el=>{{el.addEventListener('click',()=>openChip(el));el.addEventListener('keydown',e=>{{if(e.key==='Enter'||e.key===' '){{e.preventDefault();openChip(el)}}}})}});
 modal.querySelector('.modal-x').onclick=()=>modal.hidden=true; modal.addEventListener('click',e=>{{if(e.target===modal) modal.hidden=true}}); document.addEventListener('keydown',e=>{{if(e.key==='Escape') modal.hidden=true}});
 function isPortraitAgenda(){{return window.matchMedia('(orientation: portrait) and (max-width: 820px)').matches;}}
 function jumpToFilter(btn){{
-  const ds=btn.dataset.firstDate;
+  const f=btn.dataset.filter;
+  const candidates=Array.from(document.querySelectorAll('.chip.grp-'+f)).filter(ch=>ch.style.display!=='none');
+  const preferred=candidates.find(ch=>isPortraitAgenda()?ch.closest('.agenda'):ch.closest('.grid'))||candidates[0];
+  const ds=preferred&&preferred.dataset.date;
   if(!ds) return;
   const target=document.getElementById((isPortraitAgenda()?'a-d-':'d-')+ds)||document.getElementById('a-d-'+ds)||document.getElementById('d-'+ds);
   if(!target) return;
@@ -593,15 +652,32 @@ function jumpToFilter(btn){{
     }}
   }}, 40);
 }}
-document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{{
-  document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
-  const f=btn.dataset.filter;
+window.__courseFilter='all';
+window.__layerMode='both';
+function applyFilters(){{
+  const f=window.__courseFilter, mode=window.__layerMode;
   window.__filterActive = f !== 'all';
-  document.querySelectorAll('.chip').forEach(ch=>{{ ch.style.display=(f==='all'||ch.classList.contains('grp-'+f))?'':'none'; }});
+  document.querySelectorAll('.chip').forEach(ch=>{{
+    const courseMatch=f==='all'||ch.classList.contains('grp-'+f);
+    const layerMatch=mode==='both'||(mode==='mine'&&ch.dataset.layer==='mine')||(mode==='full'&&ch.dataset.erb==='1');
+    ch.style.display=courseMatch&&layerMatch?'':'none';
+  }});
   document.querySelectorAll('.cell').forEach(cell=>{{ const visible=Array.from(cell.querySelectorAll('.chip')).some(ch=>ch.style.display!=='none'); if(cell.querySelector('.chip')) cell.classList.toggle('has', visible); }});
-  document.querySelectorAll('.aday').forEach(day=>{{ const chips=Array.from(day.querySelectorAll('.chip')); if(chips.length) day.style.display=(f==='all'||chips.some(ch=>ch.style.display!=='none'))?'':'none'; }});
+  document.querySelectorAll('.aday').forEach(day=>{{ const chips=Array.from(day.querySelectorAll('.chip')); if(chips.length) day.style.display=chips.some(ch=>ch.style.display!=='none')?'':'none'; }});
+}}
+document.querySelectorAll('.course-filter').forEach(btn=>btn.addEventListener('click',()=>{{
+  document.querySelectorAll('.course-filter').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  const f=btn.dataset.filter;
+  window.__courseFilter=f;
+  applyFilters();
   if(f!=='all') jumpToFilter(btn);
 }}));
+document.querySelectorAll('.mode-filter').forEach(btn=>btn.addEventListener('click',()=>{{
+  document.querySelectorAll('.mode-filter').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  window.__layerMode=btn.dataset.mode;
+  applyFilters();
+}}));
+applyFilters();
 (function(){{
  const pad=n=>String(n).padStart(2,'0');
  const localDate=d=>`${{d.getFullYear()}}-${{pad(d.getMonth()+1)}}-${{pad(d.getDate())}}`;
@@ -637,10 +713,34 @@ document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',(
 }})();
 </script></body></html>'''
 
+SW = f'''const BUILD_ID = '{BUILD_ID}';
+
+self.addEventListener('install', event => {{
+  self.skipWaiting();
+}});
+
+self.addEventListener('activate', event => {{
+  event.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(keys.map(key => caches.delete(key))))
+      .then(() => self.clients.claim())
+  );
+}});
+
+self.addEventListener('fetch', event => {{
+  const url = new URL(event.request.url);
+  if (url.origin !== self.location.origin) return;
+  if (event.request.method !== 'GET') return;
+  const req = new Request(event.request, {{ cache: 'no-store' }});
+  event.respondWith(fetch(req).catch(() => fetch(event.request)));
+}});
+'''
+
 (OUTDIR / 'index.html').write_text(HTML, encoding='utf-8')
 (OUTDIR / '.nojekyll').write_text('', encoding='utf-8')
+(OUTDIR / 'sw.js').write_text(SW, encoding='utf-8')
 (OUTDIR / 'events.json').write_text(json.dumps(events, ensure_ascii=False, indent=2), encoding='utf-8')
-(OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "events": len(events), "counts": counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
+(OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
 (OUTDIR / 'manifest.webmanifest').write_text(json.dumps({"name":"ERB Super Timetable","short_name":"ERB Timetable","start_url":"./?v=redtext1&build=" + BUILD_ID,"display":"standalone","background_color":"#eef1f6","theme_color":"#0f7d7d","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icon-512.png","sizes":"512x512","type":"image/png"}]}, ensure_ascii=False, indent=2), encoding='utf-8')
 try:
     from PIL import Image, ImageDraw
