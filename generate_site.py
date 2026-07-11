@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checked04-full-class-layers-20260711a"
+BUILD_ID = "checked04-full-class-layers-20260711b"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
@@ -530,6 +530,8 @@ def event_fields(ev):
 def event_layer(ev):
     if ev.get("layer") == "class":
         return "class"
+    if ev.get("category") == "mike":
+        return "other"
     if ev.get("category") != "erb":
         return "mine"
     return "class" if event_fields(ev)["teacher"] not in {"Garett", "-"} else "mine"
@@ -596,7 +598,7 @@ for e in display_events:
 cat_counts = {}
 for e in display_events:
     cat_counts[e['category_label']] = cat_counts.get(e['category_label'], 0) + 1
-layer_counts = {"mine": 0, "class": 0}
+layer_counts = {"mine": 0, "class": 0, "other": 0}
 for e in display_events:
     layer_counts[event_layer(e)] += 1
 months_html = ''.join(month_html(YEAR, m) for m in range(6, 13))

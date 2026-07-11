@@ -9,8 +9,9 @@
     "note": 6
   },
   "layers": {
-    "mine": 200,
-    "class": 12
+    "mine": 197,
+    "class": 12,
+    "other": 3
   },
   "categories": {
     "YMCA SEN": 61,

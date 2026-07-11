@@ -1,4 +1,4 @@
-const BUILD_ID = 'checked04-full-class-layers-20260711a';
+const BUILD_ID = 'checked04-full-class-layers-20260711b';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
