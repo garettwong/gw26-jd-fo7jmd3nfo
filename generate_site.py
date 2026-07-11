@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checked04-full-class-layers-20260711b"
+BUILD_ID = "checked04-full-class-overlaps-20260711a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
@@ -344,8 +344,8 @@ if CONTEXT_SRC.exists():
         dt = datetime.date.fromisoformat(item["date"])
         text = norm_text(item["text"])
         cat, cat_label = category(text)
-        if cat != "erb":
-            raise ValueError(f"Context entry {index} must be an ERB lesson")
+        if cat not in {"erb", "methodist"}:
+            raise ValueError(f"Context entry {index} must be an ERB or Methodist lesson")
         key = (dt.isoformat(),) + course_sort_parts(text)[:3]
         if key in baseline_keys:
             raise ValueError(f"Context entry {index} duplicates a workbook lesson: {key}")
@@ -427,6 +427,12 @@ CSS += r'''
 @media (orientation:landscape) and (max-height:540px){.chip.erb-compact{gap:1px;padding:3px 4px 4px}.chip.erb-compact .class-id{min-height:10px;max-width:calc(100% - 14px);padding:1px 3px;font-size:6px;border-width:1.3px;border-radius:2px}.chip.erb-compact .class-dot{width:4px;height:4px;flex-basis:4px}.erb-meta,.erb-course,.erb-foot{font-size:6px;line-height:1.08}.chip.erb-compact .status{top:2px;right:3px;font-size:5.8px}}
 @media (max-width:520px){.layer-switch{display:grid;width:100%;grid-template-columns:repeat(3,minmax(0,1fr))}.mode-filter{padding:6px 4px}}
 @media (orientation:landscape) and (max-height:540px){.layer-controls{display:none}}
+'''
+
+CSS += r'''
+.course-code-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 8px}.code-key{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:9px;padding:8px 10px;border:1px solid #dbe2ec;border-left:5px solid #0f7d7d;border-radius:6px;background:#fff;color:#465364;font-size:12px;line-height:1.3}.code-key b{color:#1d2734;white-space:nowrap}.sample.class-layer{box-shadow:inset 8px 0 0 #8c78b5}.chip.layer-class{padding-left:14px}.chip.layer-class.confirmed{box-shadow:inset 8px 0 0 #8c78b5,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.unconfirmed{box-shadow:inset 8px 0 0 #8c78b5,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.note{box-shadow:inset 8px 0 0 #8c78b5,0 1px 1px rgba(20,30,50,.04)}.chip.erb-compact.layer-class{padding-left:14px}.context-teacher{font-weight:850;color:#6c568f}.overlap-group{position:relative;display:flex;flex-direction:column;gap:4px;min-width:0}.overlap-group.overlap-active{padding:3px 12px 3px 0}.overlap-group.overlap-active::after{content:"";position:absolute;top:1px;right:1px;bottom:1px;width:8px;border:2.5px solid #536170;border-left:0;border-radius:0 5px 5px 0;pointer-events:none}.overlap-group.overlap-active>.chip.layer-mine:first-child{outline:2px solid rgba(15,125,125,.20);outline-offset:1px}
+@media (max-width:820px){.course-code-legend{grid-template-columns:1fr}.code-key{font-size:11.5px}.overlap-group.overlap-active{padding-right:13px}}
+@media (orientation:landscape) and (max-height:540px){.course-code-legend{display:none}.chip.layer-class,.chip.erb-compact.layer-class{padding-left:7px}.chip.layer-class.confirmed,.chip.layer-class.unconfirmed,.chip.layer-class.note{box-shadow:inset 4px 0 0 #8c78b5,0 1px 1px rgba(20,30,50,.04)}.overlap-group{gap:2px}.overlap-group.overlap-active{padding:1px 6px 1px 0}.overlap-group.overlap-active::after{width:4px;border-width:1.4px}}
 '''
 
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
@@ -537,6 +543,26 @@ def event_layer(ev):
     return "class" if event_fields(ev)["teacher"] not in {"Garett", "-"} else "mine"
 
 
+def event_interval(ev):
+    match = TIME_RANGE_RE.search(str(ev.get("text") or ""))
+    if not match:
+        return None
+
+    def minutes(hour, minute, marker):
+        hour = int(hour)
+        minute = int(minute)
+        marker = (marker or "").lower()
+        if marker == "pm" and hour < 12:
+            hour += 12
+        elif marker == "am" and hour == 12:
+            hour = 0
+        return hour * 60 + minute
+
+    start = minutes(match.group(1), match.group(2), match.group(3))
+    end = minutes(match.group(4), match.group(5), match.group(6))
+    return start, end
+
+
 def chip(ev):
     st = ev['status']
     mark = '✓' if st == 'confirmed' else '?' if st == 'unconfirmed' else '•'
@@ -547,12 +573,16 @@ def chip(ev):
     layer = event_layer(ev)
     layer_cls = f" layer-{layer}"
     layer_attrs = (f' data-layer="{layer}" data-erb="{1 if ev["category"] == "erb" else 0}"'
+                   f' data-course="{1 if ev["category"] in {"erb", "methodist"} else 0}"'
                    f' data-source="{ehtml(ev.get("source", ""))}"')
     if ev["category"] != "erb":
+        teacher_suffix = ""
+        if layer == "class" and ev.get("teacher"):
+            teacher_suffix = f' / <span class="context-teacher">Teacher: {ehtml(ev["teacher"])}</span>'
         return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}" tabindex="0" role="button" '
                 f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}>'
                 f'<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
-                f'<div class="ttl">{title_html}</div><div class="det">{detail_html}</div><div class="fulltxt">{full_html}</div></div>')
+                f'<div class="ttl">{title_html}</div><div class="det">{detail_html}{teacher_suffix}</div><div class="fulltxt">{full_html}</div></div>')
 
     fields = event_fields(ev)
     class_label = fields["class_label"]
@@ -571,6 +601,46 @@ def chip(ev):
             f'<span class="erb-lesson">{ehtml(fields["lesson"])}{note_html}</span></div>'
             f'<div class="fulltxt">{full_html}</div></div>')
 
+
+def render_day_events(day_events):
+    groups = []
+    current = []
+    current_end = None
+
+    def flush():
+        nonlocal current, current_end
+        if current:
+            groups.append(current)
+        current = []
+        current_end = None
+
+    for ev in sorted(day_events, key=event_sort_key):
+        interval = event_interval(ev)
+        if interval is None:
+            flush()
+            groups.append([ev])
+            continue
+        start, end = interval
+        if current and current_end is not None and start < current_end:
+            current.append(ev)
+            current_end = max(current_end, end)
+        else:
+            flush()
+            current = [ev]
+            current_end = end
+    flush()
+
+    rendered = []
+    for group in groups:
+        if len(group) == 1:
+            rendered.append(chip(group[0]))
+            continue
+        ordered = sorted(group, key=lambda ev: (0 if event_layer(ev) == "mine" else 1, event_sort_key(ev)))
+        rendered.append('<div class="overlap-group overlap-active" data-overlap-count="{}">{}</div>'.format(
+            len(ordered), ''.join(chip(ev) for ev in ordered)
+        ))
+    return ''.join(rendered)
+
 def month_html(year, month):
     cal = calendar.Calendar(firstweekday=6)
     cells = [f'<div class="dow">{d}</div>' for d in ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]]
@@ -581,14 +651,14 @@ def month_html(year, month):
             cls = "cell" + (" out" if day.month != month else "") + (" wknd" if day.weekday() >= 5 and day.month == month else "") + (" has" if evs else "")
             mon = calendar.month_abbr[day.month]
             weekday = day.strftime("%a")
-            cells.append(f'<div class="{cls}" id="d-{ds}"><div class="dnum"><span class="dmon">{mon}</span><span class="dday">{day.day}</span><span class="dweekday">{weekday}</span></div>' + ''.join(chip(e) for e in evs) + '</div>')
+            cells.append(f'<div class="{cls}" id="d-{ds}"><div class="dnum"><span class="dmon">{mon}</span><span class="dday">{day.day}</span><span class="dweekday">{weekday}</span></div>' + render_day_events(evs) + '</div>')
     grid = '<div class="gridwrap"><div class="grid">' + ''.join(cells) + '</div></div>'
     daykeys = sorted(d for d in (datetime.date.fromisoformat(k) for k in by_date) if d.year == year and d.month == month)
     agenda_bits = []
     for day in daykeys:
         ds = day.isoformat()
         mon = calendar.month_abbr[day.month]
-        agenda_bits.append(f'<div class="aday" id="a-d-{ds}" data-date="{ds}"><div class="adate"><span class="adow">{day.strftime("%a")}</span><span class="amon">{mon}</span><span class="anum">{day.day}</span></div><div class="achips">' + ''.join(chip(e) for e in by_date[ds]) + '</div></div>')
+        agenda_bits.append(f'<div class="aday" id="a-d-{ds}" data-date="{ds}"><div class="adate"><span class="adow">{day.strftime("%a")}</span><span class="amon">{mon}</span><span class="anum">{day.day}</span></div><div class="achips">' + render_day_events(by_date[ds]) + '</div></div>')
     agenda = ''.join(agenda_bits)
     return f'<section class="month" id="m{month}"><h2>{calendar.month_name[month]} {year}</h2>{grid}<div class="agenda">{agenda}</div></section>'
 
@@ -603,6 +673,14 @@ for e in display_events:
     layer_counts[event_layer(e)] += 1
 months_html = ''.join(month_html(YEAR, m) for m in range(6, 13))
 cat_filters = ''.join(f'<button class="filter course-filter {ehtml(group_status)}" data-filter="{ehtml(slug)}" data-first-date="{ehtml(first_date)}" data-status-summary="{ehtml(group_status)}" title="{ehtml(label)} · {ehtml(group_status)}">{ehtml(label)} ({sum(1 for e in display_events if e["group"] == slug)})</button>' for label, slug, group_status, first_date in GROUPS)
+erb_code_legend = ''.join(
+    f'<div class="code-key"><b>{ehtml(code)}</b><span>{ehtml(name)}</span></div>'
+    for code, name in [
+        ("HK239HG", "人工智能知識及應用證書（兼讀制）"),
+        ("HK244EG", "人工智能創作營銷社交媒體內容技巧證書（兼讀制）"),
+        ("HK265HG", "Certificate in AI-enhanced Social Media Content"),
+    ]
+)
 
 HTML = f'''<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=6, user-scalable=yes">
@@ -619,6 +697,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">June–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
 <div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div><div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
+<div class="section-h">ERB course codes</div><div class="course-code-legend">{erb_code_legend}</div>
 <div class="layer-controls"><div class="section-h">Timetable view</div><div class="layer-switch" role="group" aria-label="Timetable view"><button class="mode-filter" data-mode="mine">My lessons</button><button class="mode-filter" data-mode="full">Full class</button><button class="mode-filter active" data-mode="both">Both</button></div></div>
 <div class="section-h">Filter by course / class</div><div class="filters"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{cat_filters}</div>
 {months_html}
@@ -661,8 +740,12 @@ function applyFilters(){{
   window.__filterActive = f !== 'all';
   document.querySelectorAll('.chip').forEach(ch=>{{
     const courseMatch=f==='all'||ch.classList.contains('grp-'+f);
-    const layerMatch=mode==='both'||(mode==='mine'&&ch.dataset.layer==='mine')||(mode==='full'&&ch.dataset.erb==='1');
+    const layerMatch=mode==='both'||(mode==='mine'&&ch.dataset.layer==='mine')||(mode==='full'&&ch.dataset.course==='1');
     ch.style.display=courseMatch&&layerMatch?'':'none';
+  }});
+  document.querySelectorAll('.overlap-group').forEach(group=>{{
+    const visible=Array.from(group.querySelectorAll('.chip')).filter(ch=>ch.style.display!=='none').length;
+    group.classList.toggle('overlap-active',visible>=2);
   }});
   document.querySelectorAll('.cell').forEach(cell=>{{ const visible=Array.from(cell.querySelectorAll('.chip')).some(ch=>ch.style.display!=='none'); if(cell.querySelector('.chip')) cell.classList.toggle('has', visible); }});
   document.querySelectorAll('.aday').forEach(day=>{{ const chips=Array.from(day.querySelectorAll('.chip')); if(chips.length) day.style.display=chips.some(ch=>ch.style.display!=='none')?'':'none'; }});

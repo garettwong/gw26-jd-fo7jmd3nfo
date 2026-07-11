@@ -1,26 +1,26 @@
 {
   "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 04.xlsx",
   "events": 209,
-  "display_events": 212,
-  "context_events": 3,
+  "display_events": 249,
+  "context_events": 40,
   "counts": {
     "confirmed": 152,
-    "unconfirmed": 54,
-    "note": 6
+    "unconfirmed": 90,
+    "note": 7
   },
   "layers": {
     "mine": 197,
-    "class": 12,
+    "class": 49,
     "other": 3
   },
   "categories": {
     "YMCA SEN": 61,
     "School": 1,
-    "勵行 / ERB": 115,
+    "勵行 / ERB": 127,
     "Holiday": 6,
     "Mike Sir": 3,
     "DGS / UE": 2,
-    "循道": 24
+    "循道": 49
   },
   "months": [
     "June",
