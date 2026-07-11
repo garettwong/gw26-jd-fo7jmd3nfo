@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checked04-three-view-today-mobile-20260711a"
+BUILD_ID = "checked04-four-button-compare-position-20260711a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
@@ -436,9 +436,10 @@ CSS += r'''
 '''
 
 CSS += r'''
-.chip.layer-class{--context-color:#8c78b5}.chip.cat-erb.layer-class{--context-color:#d9772e}.chip.cat-methodist.layer-class{--context-color:#7567b9}.chip.cat-ymca.layer-class{--context-color:#238a99}.chip.cat-dgs.layer-class{--context-color:#31865c}.sample.class-layer{box-shadow:inset 7px 0 0 #d9772e,inset -7px 0 0 #7567b9}.chip.layer-class.confirmed{box-shadow:inset 8px 0 0 var(--context-color),0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.unconfirmed{box-shadow:inset 8px 0 0 var(--context-color),0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.note{box-shadow:inset 8px 0 0 var(--context-color),0 1px 1px rgba(20,30,50,.04)}.floating-mode-switch{position:fixed;z-index:40;left:clamp(58px,4.6vw,177px);bottom:24px;display:grid;grid-template-columns:repeat(3,48px);gap:3px;padding:4px;border:2px solid #fff;border-radius:12px;background:#dfe6ec;box-shadow:0 5px 18px rgba(25,38,55,.30);font-family:inherit}.mode-option{width:48px;height:44px;border:0;border-radius:8px;background:#fff;color:#405064;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;font-family:inherit}.mode-option:hover{background:#eef7f7}.mode-option:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.mode-option.active{background:#0f7074;color:#fff}.mode-main{font-size:12px;font-weight:900;line-height:1}.mode-sub{font-size:7px;font-weight:850;line-height:1;text-transform:uppercase}.grid .holiday-cell{background:#f1f3f6}.grid .holiday-cell .chip.cat-holiday{position:relative;flex:1;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-radius:7px}.grid .holiday-cell .chip.cat-holiday .top{position:absolute;top:7px;left:8px;right:8px;width:auto}.grid .holiday-cell .chip.cat-holiday .ttl{font-size:14px;margin:0}.grid .holiday-cell .chip.cat-holiday .det{display:none}
-@media (max-width:820px){.floating-mode-switch{left:auto;right:14px;bottom:14px;grid-template-columns:repeat(3,44px)}.mode-option{width:44px;height:42px}.mode-main{font-size:11px}}
-@media (orientation:landscape) and (max-height:540px){.chip.layer-class.confirmed,.chip.layer-class.unconfirmed,.chip.layer-class.note{box-shadow:inset 4px 0 0 var(--context-color),0 1px 1px rgba(20,30,50,.04)}.floating-mode-switch{left:clamp(48px,4vw,150px);bottom:8px;grid-template-columns:repeat(3,36px);gap:2px;padding:3px}.mode-option{width:36px;height:32px;border-radius:6px}.mode-main{font-size:9px}.mode-sub{font-size:5px}.grid .holiday-cell .chip.cat-holiday{min-height:58px}.grid .holiday-cell .chip.cat-holiday .ttl{display:block;font-size:7px}}
+.chip.layer-class{--context-color:#8c78b5}.chip.cat-erb.layer-class{--context-color:#d9772e}.chip.cat-methodist.layer-class{--context-color:#7567b9}.chip.cat-ymca.layer-class{--context-color:#238a99}.chip.cat-dgs.layer-class{--context-color:#31865c}.sample.class-layer{box-shadow:inset 7px 0 0 #d9772e,inset -7px 0 0 #7567b9}.chip.layer-class.confirmed{box-shadow:inset 8px 0 0 var(--context-color),0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.unconfirmed{box-shadow:inset 8px 0 0 var(--context-color),0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.note{box-shadow:inset 8px 0 0 var(--context-color),0 1px 1px rgba(20,30,50,.04)}.floating-mode-switch{position:fixed;z-index:40;left:clamp(58px,3.6vw,138px);bottom:24px;display:grid;grid-template-columns:repeat(4,48px);gap:3px;padding:4px;border:2px solid #fff;border-radius:12px;background:#dfe6ec;box-shadow:0 5px 18px rgba(25,38,55,.30);font-family:inherit}.mode-option,.today-option{width:48px;height:44px;border:0;border-radius:8px;background:#fff;color:#405064;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;font-family:inherit}.mode-option:hover,.today-option:hover{background:#eef7f7}.mode-option:focus-visible,.today-option:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.mode-option.active{background:#0f7074;color:#fff}.today-option{color:#0f7074}.today-option .mode-main{font-size:8px}.mode-main{font-size:12px;font-weight:900;line-height:1}.mode-sub{font-size:7px;font-weight:850;line-height:1;text-transform:uppercase}.grid .holiday-cell{background:#f1f3f6}.grid .holiday-cell .chip.cat-holiday{position:relative;flex:1;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-radius:7px}.grid .holiday-cell .chip.cat-holiday .top{position:absolute;top:7px;left:8px;right:8px;width:auto}.grid .holiday-cell .chip.cat-holiday .ttl{font-size:14px;margin:0}.grid .holiday-cell .chip.cat-holiday .det{display:none}
+@media (max-width:820px){.floating-mode-switch{left:auto;right:14px;bottom:14px;grid-template-columns:repeat(4,42px)}.mode-option,.today-option{width:42px;height:42px}.mode-main{font-size:10px}.today-option .mode-main{font-size:7px}}
+@media (min-width:821px) and (max-width:1400px){.floating-mode-switch{left:32px;grid-template-columns:repeat(3,36px)}.today-option{grid-column:1/-1;width:114px;height:28px}.mode-option{width:36px;height:34px}.mode-main{font-size:9px}.mode-sub{font-size:5.5px}.today-option .mode-main{font-size:7px}}
+@media (orientation:landscape) and (max-height:540px){.chip.layer-class.confirmed,.chip.layer-class.unconfirmed,.chip.layer-class.note{box-shadow:inset 4px 0 0 var(--context-color),0 1px 1px rgba(20,30,50,.04)}.floating-mode-switch{left:clamp(42px,3vw,112px);bottom:8px;grid-template-columns:repeat(4,34px);gap:2px;padding:3px}.mode-option,.today-option{width:34px;height:32px;border-radius:6px}.mode-main{font-size:8px}.today-option .mode-main{font-size:6px}.mode-sub{font-size:5px}.grid .holiday-cell .chip.cat-holiday{min-height:58px}.grid .holiday-cell .chip.cat-holiday .ttl{display:block;font-size:7px}}
 @media print{.floating-mode-switch{display:none}}
 '''
 
@@ -703,7 +704,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="section-h">Filter by course / class</div><div class="filters"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{cat_filters}</div>
 {months_html}
 <div class="foot">Sources: <b>{ehtml(SRC.name)}</b> plus <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
-</main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view"><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All: full timetable" title="All: full timetable"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
+</main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view and navigation"><button id="floatingToday" class="today-option" type="button" aria-label="Go to today" title="Go to today"><span class="mode-main">TODAY</span></button><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All: full timetable" title="All: full timetable"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
 <script>
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){{window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?build='+window.ERB_BUILD_ID).then(r=>r.update()).catch(()=>{{}}));}}
 const modal=document.getElementById('modal');
@@ -761,11 +762,44 @@ document.querySelectorAll('.course-filter').forEach(btn=>btn.addEventListener('c
   applyFilters();
   if(f!=='all') jumpToFilter(btn);
 }}));
+function captureModeAnchor(){{
+  const selector=isPortraitAgenda()?'.agenda .aday':'.grid .cell:not(.out)';
+  const candidates=Array.from(document.querySelectorAll(selector)).filter(el=>{{
+    const style=getComputedStyle(el), rect=el.getBoundingClientRect();
+    return style.display!=='none'&&rect.bottom>0&&rect.top<innerHeight;
+  }});
+  if(!candidates.length) return null;
+  const anchorY=innerHeight/2;
+  const distance=el=>{{const rect=el.getBoundingClientRect();return rect.top<=anchorY&&rect.bottom>=anchorY?0:Math.min(Math.abs(rect.top-anchorY),Math.abs(rect.bottom-anchorY));}};
+  const target=candidates.reduce((best,el)=>distance(el)<distance(best)?el:best);
+  return {{id:target.id,top:target.getBoundingClientRect().top}};
+}}
+function restoreModeAnchor(anchor){{
+  if(!anchor){{window.__restoringModeAnchor=false;return;}}
+  requestAnimationFrame(()=>setTimeout(()=>{{
+    const target=document.getElementById(anchor.id);
+    if(!target){{window.__restoringModeAnchor=false;return;}}
+    if(isPortraitAgenda()){{target.classList.remove('empty-day');target.style.display='';}}
+    const delta=target.getBoundingClientRect().top-anchor.top;
+    const previousScrollBehavior=document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior='auto';
+    window.__restoringModeAnchor=true;
+    window.scrollTo(0,Math.max(0,window.scrollY+delta));
+    document.documentElement.style.scrollBehavior=previousScrollBehavior;
+    setTimeout(()=>{{window.__restoringModeAnchor=false;}},80);
+  }},30));
+}}
+window.__modeCompareAnchor=null;
+window.__restoringModeAnchor=false;
+window.addEventListener('scroll',()=>{{if(!window.__restoringModeAnchor) window.__modeCompareAnchor=null;}},{{passive:true}});
 document.querySelectorAll('.mode-option').forEach(btn=>btn.addEventListener('click',()=>{{
+  const anchor=window.__modeCompareAnchor||captureModeAnchor();
+  window.__modeCompareAnchor=anchor;
   document.querySelectorAll('.mode-option').forEach(option=>option.classList.toggle('active',option===btn));
   window.__layerMode=btn.dataset.mode;
+  window.__restoringModeAnchor=true;
   applyFilters();
-  setTimeout(()=>window.focusTimetableToday?.(),60);
+  restoreModeAnchor(anchor);
 }}));
 applyFilters();
 (function(){{
@@ -798,7 +832,8 @@ applyFilters();
    }}
  }}
  window.focusTimetableToday=()=>focusToday(true);
- todayBtn.addEventListener('click', e=>{{e.preventDefault(); window.__filterActive=false; focusToday();}});
+ document.getElementById('floatingToday').addEventListener('click',()=>{{window.__modeCompareAnchor=null;window.focusTimetableToday();}});
+ todayBtn.addEventListener('click', e=>{{e.preventDefault(); window.__filterActive=false; window.__modeCompareAnchor=null; focusToday();}});
  focusToday();
  requestAnimationFrame(focusToday);
  window.addEventListener('load', ()=>setTimeout(focusToday,80));

@@ -1,4 +1,4 @@
-const BUILD_ID = 'checked04-three-view-today-mobile-20260711a';
+const BUILD_ID = 'checked04-four-button-compare-position-20260711a';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
