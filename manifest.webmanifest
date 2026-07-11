@@ -1,20 +1,25 @@
 {
-  "name": "ERB Super Timetable",
-  "short_name": "ERB Timetable",
-  "start_url": "./?v=redtext1&build=checked04-four-button-compare-position-20260711a",
+  "id": "./",
+  "name": "Garett's ERB",
+  "short_name": "Garett's ERB",
+  "description": "Garett's ERB teaching timetable",
+  "start_url": "./?v=redtext1&build=checked04-iphone-install-guide-20260711a",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#eef1f6",
-  "theme_color": "#0f7d7d",
+  "theme_color": "#0f7074",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

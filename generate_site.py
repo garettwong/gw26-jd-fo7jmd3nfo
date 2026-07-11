@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checked04-four-button-compare-position-20260711a"
+BUILD_ID = "checked04-iphone-install-guide-20260711a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
@@ -443,6 +443,10 @@ CSS += r'''
 @media print{.floating-mode-switch{display:none}}
 '''
 
+CSS += r'''
+.install-guide{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;padding:18px;background:rgba(20,29,41,.56)}.install-guide[hidden]{display:none}.install-sheet{position:relative;width:min(100%,430px);border:1px solid #dce3eb;border-radius:16px;background:#fff;padding:18px;box-shadow:0 18px 50px rgba(12,22,36,.32)}.install-head{display:grid;grid-template-columns:62px 1fr;gap:13px;align-items:center;padding-right:24px}.install-icon{width:62px;height:62px;border-radius:14px;box-shadow:0 2px 8px rgba(15,30,45,.20)}.install-title{margin:0;font-size:19px;font-weight:900;color:#172232}.install-copy{margin:3px 0 0;color:#627080;font-size:12.5px}.install-close{position:absolute;top:9px;right:10px;width:32px;height:32px;border:0;border-radius:50%;background:#eef2f6;color:#596676;font-size:22px;line-height:1;cursor:pointer}.install-steps{display:grid;gap:9px;margin:16px 0}.install-step{display:grid;grid-template-columns:26px 1fr;gap:9px;align-items:start;color:#344153;font-size:13px;line-height:1.35}.install-step[hidden]{display:none}.install-step b{display:flex;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;background:#0f7074;color:#fff;font-size:11px}.install-action{width:100%;min-height:42px;border:0;border-radius:8px;background:#0f7074;color:#fff;font:inherit;font-size:13px;font-weight:850;cursor:pointer}.install-action:hover{background:#0b5f63}.install-note{margin:10px 0 0;color:#7a8492;font-size:11px;text-align:center}@media (min-width:821px){.install-guide{align-items:center}}@media print{.install-guide{display:none!important}}
+'''
+
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
 TEACHER_RE = re.compile(r"\b(Garett|Garrett|Andy|Calvin|Mike(?:\s+Sir)?)\b", re.I)
 NOTE_WORD_RE = re.compile(r"test|exam|presentation|discussion|cancel|substitut", re.I)
@@ -687,10 +691,10 @@ erb_code_legend = ''.join(
 
 HTML = f'''<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=6, user-scalable=yes">
-<title>ERB Super Timetable — Jun–Dec 2026</title>
+<title>Garett's ERB — Super Timetable</title>
 <meta name="description" content="ERB / YMCA / school teaching timetable, June to December 2026. Solid frame = confirmed; dotted frame = unconfirmed.">
 <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ERB Timetable"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0f7d7d">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Garett's ERB"><meta name="application-name" content="Garett's ERB"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0f7074">
 <meta name="erb-build" content="{BUILD_ID}">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -704,9 +708,27 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="section-h">Filter by course / class</div><div class="filters"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{cat_filters}</div>
 {months_html}
 <div class="foot">Sources: <b>{ehtml(SRC.name)}</b> plus <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
-</main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view and navigation"><button id="floatingToday" class="today-option" type="button" aria-label="Go to today" title="Go to today"><span class="mode-main">TODAY</span></button><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All: full timetable" title="All: full timetable"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
+</main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view and navigation"><button id="floatingToday" class="today-option" type="button" aria-label="Go to today" title="Go to today"><span class="mode-main">TODAY</span></button><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All: full timetable" title="All: full timetable"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div><div id="installGuide" class="install-guide" hidden><div class="install-sheet" role="dialog" aria-modal="true" aria-labelledby="installTitle"><button class="install-close" type="button" aria-label="Close install guide">×</button><div class="install-head"><img class="install-icon" src="icon-180.png" alt="Garett's ERB app icon"><div><h2 id="installTitle" class="install-title">Add Garett's ERB</h2><p class="install-copy">Keep the timetable on your iPhone Home Screen.</p></div></div><div class="install-steps"><div class="install-step safari-only"><b>1</b><span>Tap <strong>Share</strong> in Safari.</span></div><div class="install-step safari-only"><b>2</b><span>Choose <strong>Add to Home Screen</strong>.</span></div><div class="install-step safari-only"><b>3</b><span>Turn on <strong>Open as Web App</strong>, then tap <strong>Add</strong>.</span></div><div class="install-step open-safari" hidden><b>1</b><span>Open this link in <strong>Safari</strong>, then use Share → Add to Home Screen.</span></div></div><button class="install-action" type="button">Got it</button><p class="install-note">This guide appears only once.</p></div></div><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
 <script>
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){{window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?build='+window.ERB_BUILD_ID).then(r=>r.update()).catch(()=>{{}}));}}
+const installGuide=document.getElementById('installGuide');
+(function setupInstallGuide(){{
+  const ua=navigator.userAgent||'';
+  const isiOS=/iPhone|iPad|iPod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  const standalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  const inApp=/(CriOS|FxiOS|EdgiOS|OPiOS|GSA|FBAN|FBAV|Instagram|WhatsApp)/i.test(ua);
+  const preview=new URLSearchParams(location.search).get('install')==='preview';
+  let seen=false;
+  try{{seen=localStorage.getItem('garetts-erb-install-guide-v1')==='seen';}}catch(_e){{}}
+  if((isiOS&&!standalone&&!seen)||preview){{
+    if(inApp){{installGuide.querySelectorAll('.safari-only').forEach(el=>el.hidden=true);installGuide.querySelector('.open-safari').hidden=false;}}
+    setTimeout(()=>{{installGuide.hidden=false;installGuide.querySelector('.install-close').focus();}},550);
+  }}
+  function dismiss(){{installGuide.hidden=true;if(!preview){{try{{localStorage.setItem('garetts-erb-install-guide-v1','seen');}}catch(_e){{}}}}}}
+  installGuide.querySelector('.install-close').addEventListener('click',dismiss);
+  installGuide.querySelector('.install-action').addEventListener('click',dismiss);
+  installGuide.addEventListener('click',event=>{{if(event.target===installGuide)dismiss();}});
+}})();
 const modal=document.getElementById('modal');
 function openChip(el){{
   const st=el.dataset.status, cat=el.dataset.cat, txt=el.dataset.text, html=el.dataset.html||'', date=el.dataset.date, source=el.dataset.source||'', layer=el.dataset.layer;
@@ -871,18 +893,23 @@ self.addEventListener('fetch', event => {{
 (OUTDIR / 'sw.js').write_text(SW, encoding='utf-8')
 (OUTDIR / 'events.json').write_text(json.dumps(events, ensure_ascii=False, indent=2), encoding='utf-8')
 (OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
-(OUTDIR / 'manifest.webmanifest').write_text(json.dumps({"name":"ERB Super Timetable","short_name":"ERB Timetable","start_url":"./?v=redtext1&build=" + BUILD_ID,"display":"standalone","background_color":"#eef1f6","theme_color":"#0f7d7d","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icon-512.png","sizes":"512x512","type":"image/png"}]}, ensure_ascii=False, indent=2), encoding='utf-8')
+(OUTDIR / 'manifest.webmanifest').write_text(json.dumps({"id":"./","name":"Garett's ERB","short_name":"Garett's ERB","description":"Garett's ERB teaching timetable","start_url":"./?v=redtext1&build=" + BUILD_ID,"scope":"./","display":"standalone","background_color":"#eef1f6","theme_color":"#0f7074","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}, ensure_ascii=False, indent=2), encoding='utf-8')
 try:
-    from PIL import Image, ImageDraw
+    from PIL import Image, ImageDraw, ImageFont
     def make_icon(size, filename):
         output_path = OUTDIR / filename
-        if output_path.exists():
-            return
-        img = Image.new('RGB', (size, size), '#0f7d7d')
+        img = Image.new('RGB', (size, size), '#0f7074')
         d = ImageDraw.Draw(img)
-        pad = size // 9
-        d.rounded_rectangle([pad, pad, size-pad, size-pad], radius=size//7, fill='#ffffff')
-        d.text((size//2, size//2), 'ERB', anchor='mm', fill='#0f7d7d')
+        pad = max(2, size // 12)
+        radius = max(4, size // 6)
+        d.rounded_rectangle([pad, pad, size-pad, size-pad], radius=radius, fill='#ffffff')
+        d.rounded_rectangle([pad, pad, size-pad, size//3], radius=radius, fill='#f2a33a')
+        d.rectangle([pad, size//5, size-pad, size//3], fill='#f2a33a')
+        font_path = r'C:/Windows/Fonts/segoeuib.ttf'
+        g_font = ImageFont.truetype(font_path, max(9, int(size*.37)))
+        erb_font = ImageFont.truetype(font_path, max(6, int(size*.16)))
+        d.text((size//2, int(size*.54)), 'G', anchor='mm', font=g_font, fill='#0f7074')
+        d.text((size//2, int(size*.80)), 'ERB', anchor='mm', font=erb_font, fill='#1d2734')
         img.save(output_path)
     make_icon(32, 'favicon-32.png')
     make_icon(180, 'icon-180.png')
