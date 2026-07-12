@@ -1,4 +1,4 @@
-const BUILD_ID = 'checking06-hk281dscw7-mc0106ds-20260712-r02';
+const BUILD_ID = 'checking08-hk281dscw7-mc0106ds-choiwan-20260712-r04';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

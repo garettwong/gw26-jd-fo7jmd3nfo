@@ -8,12 +8,12 @@ try:
 except (AttributeError, OSError):
     pass
 
-SRC = Path(r"C:/Users/garet/OneDrive/桌面/Timetable/ERB Super Timetable 04_checking 06_20260712_R02_HK281DSCW7_MC0106DS.xlsx")
+SRC = Path(r"C:/Users/garet/OneDrive/桌面/Timetable/ERB Super Timetable 04_checking 08_20260712_R04_HK281DSCW7_MC0106DS.xlsx")
 OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checking06-hk281dscw7-mc0106ds-20260712-r02"
+BUILD_ID = "checking08-hk281dscw7-mc0106ds-choiwan-20260712-r04"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
