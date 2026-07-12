@@ -1,4 +1,4 @@
-const BUILD_ID = 'checked04-iphone-install-guide-20260711a';
+const BUILD_ID = 'checking06-hk281dscw7-mc0106ds-20260712-r02';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

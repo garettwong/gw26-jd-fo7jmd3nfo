@@ -8,12 +8,12 @@ try:
 except (AttributeError, OSError):
     pass
 
-SRC = Path(r"C:/Users/garet/OneDrive/桌面/Timetable/ERB Super Timetable 04_checking 04.xlsx")
+SRC = Path(r"C:/Users/garet/OneDrive/桌面/Timetable/ERB Super Timetable 04_checking 06_20260712_R02_HK281DSCW7_MC0106DS.xlsx")
 OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checked04-iphone-install-guide-20260711a"
+BUILD_ID = "checking06-hk281dscw7-mc0106ds-20260712-r02"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
@@ -142,7 +142,8 @@ def runs_html(runs):
     return "".join(bits)
 
 def border_status(cell):
-    styles = [cell.border.top.style, cell.border.right.style, cell.border.bottom.style, cell.border.left.style]
+    sides = [getattr(cell.border, edge, None) for edge in ("top", "right", "bottom", "left")]
+    styles = [getattr(side, "style", None) for side in sides]
     styles = [s for s in styles if s]
     if not styles:
         return "note"
@@ -199,7 +200,7 @@ def category(text):
         return "dgs", "DGS / UE"
     if "循道" in text or "MC0106" in text:
         return "methodist", "循道"
-    if "勵行" in text or "HK244" in text or "HK239" in text or "HK265" in text or "HK280" in text:
+    if "勵行" in text or "HK244" in text or "HK239" in text or "HK265" in text or "HK280" in text or "HK281" in text:
         return "erb", "勵行 / ERB"
     if "Mike" in text:
         return "mike", "Mike Sir"
@@ -686,6 +687,7 @@ erb_code_legend = ''.join(
         ("HK239HG", "人工智能知識及應用證書（兼讀制）"),
         ("HK244EG", "人工智能創作營銷社交媒體內容技巧證書（兼讀制）"),
         ("HK265HG", "Certificate in AI-enhanced Social Media Content"),
+        ("HK281DS", "創意數碼媒體設計及製作助理證書"),
     ]
 )
 

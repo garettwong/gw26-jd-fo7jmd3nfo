@@ -17,7 +17,7 @@
     "detail_html": "(PFSA2) (09:30 - 12:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-05",
@@ -37,7 +37,7 @@
     "detail_html": "(PFSA2) (09:30 - 12:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-03",
@@ -57,7 +57,7 @@
     "detail_html": "Canva + AI Course / 13:20 - 15:05",
     "red": false,
     "group_label": "School",
-    "group": "g17"
+    "group": "g18"
   },
   {
     "date": "2026-06-04",
@@ -77,7 +77,7 @@
     "detail_html": "(PFSA2) (13:30 - 15:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-05",
@@ -97,7 +97,7 @@
     "detail_html": "(PFSA2) (13:30 - 15:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-11",
@@ -117,7 +117,7 @@
     "detail_html": "(PFSA2) (09:30 - 12:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-12",
@@ -137,7 +137,7 @@
     "detail_html": "(PFSA2) (09:30 - 12:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-11",
@@ -157,7 +157,7 @@
     "detail_html": "(PFSA2) (13:30 - 15:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-12",
@@ -177,7 +177,7 @@
     "detail_html": "(PFSA2) (13:30 - 15:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-18",
@@ -197,7 +197,7 @@
     "detail_html": "(PFSA2) (09:30 - 12:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-18",
@@ -217,7 +217,7 @@
     "detail_html": "(PFSA2) (13:30 - 15:30) / <span class=\"xl-red\">[afternoon black rain]</span>",
     "red": true,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-15",
@@ -317,7 +317,7 @@
     "detail_html": "(PFSA2) (09:30 - 12:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-26",
@@ -337,7 +337,7 @@
     "detail_html": "(PFSA2) (09:30 - 12:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-25",
@@ -357,7 +357,7 @@
     "detail_html": "(PFSA2) (13:30 - 15:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-26",
@@ -377,7 +377,7 @@
     "detail_html": "(PFSA2) (13:30 - 15:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-06-27",
@@ -537,7 +537,7 @@
     "detail_html": "",
     "red": true,
     "group_label": "Holiday",
-    "group": "g15"
+    "group": "g16"
   },
   {
     "date": "2026-07-03",
@@ -557,7 +557,7 @@
     "detail_html": "(PFSA2) (09:30 - 12:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-07-03",
@@ -577,7 +577,7 @@
     "detail_html": "(PFSA2) (13:30 - 17:30)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-07-02",
@@ -617,7 +617,7 @@
     "detail_html": "1915 - 1015",
     "red": false,
     "group_label": "Mike Sir",
-    "group": "g16"
+    "group": "g17"
   },
   {
     "date": "2026-07-07",
@@ -637,7 +637,7 @@
     "detail_html": "(PFSA2) (09:00 - 13:00)",
     "red": false,
     "group_label": "PFSA2",
-    "group": "g13"
+    "group": "g14"
   },
   {
     "date": "2026-07-09",
@@ -757,7 +757,7 @@
     "detail_html": "1915 - 1015 (CANCELLED)",
     "red": false,
     "group_label": "Mike Sir",
-    "group": "g16"
+    "group": "g17"
   },
   {
     "date": "2026-07-13",
@@ -857,7 +857,7 @@
     "detail_html": "1915 - 1015",
     "red": false,
     "group_label": "Mike Sir",
-    "group": "g16"
+    "group": "g17"
   },
   {
     "date": "2026-07-24",
@@ -880,26 +880,6 @@
     "group": "g11"
   },
   {
-    "date": "2026-07-25",
-    "month": "July New",
-    "row": 22,
-    "col": 20,
-    "cell": "T22",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "status": "unconfirmed",
-    "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false,
-    "group_label": "MC0106DS · 第2班",
-    "group": "g12"
-  },
-  {
     "date": "2026-07-24",
     "month": "July New",
     "row": 23,
@@ -918,26 +898,6 @@
     "red": false,
     "group_label": "HK265HG · FS",
     "group": "g11"
-  },
-  {
-    "date": "2026-07-25",
-    "month": "July New",
-    "row": 23,
-    "col": 20,
-    "cell": "T23",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "status": "unconfirmed",
-    "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false,
-    "group_label": "MC0106DS · 第2班",
-    "group": "g12"
   },
   {
     "date": "2026-07-29",
@@ -1025,19 +985,19 @@
     "row": 7,
     "col": 20,
     "cell": "T7",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "status": "unconfirmed",
+    "text": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L3 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 0900 - 1300",
+    "title": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L3",
+    "detail": "創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 0900 - 1300",
+    "status": "confirmed",
     "fill": "",
     "category": "methodist",
     "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "html": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L3 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 0900 - 1300",
+    "title_html": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L3",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 0900 - 1300",
     "red": false,
     "group_label": "MC0106DS · 第2班",
-    "group": "g12"
+    "group": "g13"
   },
   {
     "date": "2026-08-01",
@@ -1045,19 +1005,19 @@
     "row": 8,
     "col": 20,
     "cell": "T8",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "status": "unconfirmed",
+    "text": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L4 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 1400 - 1800",
+    "title": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L4",
+    "detail": "創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 1400 - 1800",
+    "status": "confirmed",
     "fill": "",
     "category": "methodist",
     "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
+    "html": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L4 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 1400 - 1800",
+    "title_html": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L4",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 1400 - 1800",
     "red": false,
     "group_label": "MC0106DS · 第2班",
-    "group": "g12"
+    "group": "g13"
   },
   {
     "date": "2026-08-05",
@@ -1105,19 +1065,19 @@
     "row": 12,
     "col": 20,
     "cell": "T12",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "status": "unconfirmed",
+    "text": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L7 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 0900 - 1300",
+    "title": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L7",
+    "detail": "創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 0900 - 1300",
+    "status": "confirmed",
     "fill": "",
     "category": "methodist",
     "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "html": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L7 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 0900 - 1300",
+    "title_html": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L7",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 0900 - 1300",
     "red": false,
     "group_label": "MC0106DS · 第2班",
-    "group": "g12"
+    "group": "g13"
   },
   {
     "date": "2026-08-05",
@@ -1185,19 +1145,19 @@
     "row": 13,
     "col": 20,
     "cell": "T13",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "status": "unconfirmed",
+    "text": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L8 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 1400 - 1800",
+    "title": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L8",
+    "detail": "創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 1400 - 1800",
+    "status": "confirmed",
     "fill": "",
     "category": "methodist",
     "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
+    "html": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L8 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 1400 - 1800",
+    "title_html": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L8",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 1400 - 1800",
     "red": false,
     "group_label": "MC0106DS · 第2班",
-    "group": "g12"
+    "group": "g13"
   },
   {
     "date": "2026-08-12",
@@ -1225,39 +1185,19 @@
     "row": 17,
     "col": 20,
     "cell": "T17",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "status": "unconfirmed",
+    "text": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L15 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 0900 - 1300",
+    "title": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L15",
+    "detail": "創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 0900 - 1300",
+    "status": "confirmed",
     "fill": "",
     "category": "methodist",
     "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "html": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L15 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 0900 - 1300",
+    "title_html": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L15",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 0900 - 1300",
     "red": false,
     "group_label": "MC0106DS · 第2班",
-    "group": "g12"
-  },
-  {
-    "date": "2026-08-11",
-    "month": "August New",
-    "row": 18,
-    "col": 8,
-    "cell": "H18",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "status": "unconfirmed",
-    "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false,
-    "group_label": "MC0106DS · 第2班",
-    "group": "g12"
+    "group": "g13"
   },
   {
     "date": "2026-08-12",
@@ -1325,19 +1265,19 @@
     "row": 18,
     "col": 20,
     "cell": "T18",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "status": "unconfirmed",
+    "text": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L16 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 1400 - 1800",
+    "title": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L16",
+    "detail": "創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 1400 - 1800",
+    "status": "confirmed",
     "fill": "",
     "category": "methodist",
     "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
+    "html": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L16 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 1400 - 1800",
+    "title_html": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L16",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 1400 - 1800",
     "red": false,
     "group_label": "MC0106DS · 第2班",
-    "group": "g12"
+    "group": "g13"
   },
   {
     "date": "2026-08-18",
@@ -1357,27 +1297,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
-  },
-  {
-    "date": "2026-08-19",
-    "month": "August New",
-    "row": 22,
-    "col": 11,
-    "cell": "K22",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "status": "unconfirmed",
-    "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false,
-    "group_label": "MC0106DS · 第2班",
-    "group": "g12"
+    "group": "g15"
   },
   {
     "date": "2026-08-21",
@@ -1397,27 +1317,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
-  },
-  {
-    "date": "2026-08-22",
-    "month": "August New",
-    "row": 22,
-    "col": 20,
-    "cell": "T22",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "status": "unconfirmed",
-    "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "red": false,
-    "group_label": "MC0106DS · 第2班",
-    "group": "g12"
+    "group": "g15"
   },
   {
     "date": "2026-08-18",
@@ -1437,47 +1337,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
-  },
-  {
-    "date": "2026-08-19",
-    "month": "August New",
-    "row": 23,
-    "col": 11,
-    "cell": "K23",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "status": "unconfirmed",
-    "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false,
-    "group_label": "MC0106DS · 第2班",
-    "group": "g12"
-  },
-  {
-    "date": "2026-08-20",
-    "month": "August New",
-    "row": 23,
-    "col": 14,
-    "cell": "N23",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800)",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800)",
-    "status": "unconfirmed",
-    "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800)",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800)",
-    "red": false,
-    "group_label": "MC0106DS · 第2班",
-    "group": "g12"
+    "group": "g15"
   },
   {
     "date": "2026-08-21",
@@ -1497,27 +1357,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
-  },
-  {
-    "date": "2026-08-22",
-    "month": "August New",
-    "row": 23,
-    "col": 20,
-    "cell": "T23",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "status": "unconfirmed",
-    "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "red": false,
-    "group_label": "MC0106DS · 第2班",
-    "group": "g12"
+    "group": "g15"
   },
   {
     "date": "2026-08-25",
@@ -1537,7 +1377,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-08-28",
@@ -1557,7 +1397,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-08-29",
@@ -1565,18 +1405,18 @@
     "row": 27,
     "col": 20,
     "cell": "T27",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L4 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L4",
+    "detail": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
     "status": "unconfirmed",
     "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L4 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L4",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
     "red": false,
-    "group_label": "MC0106DS · 第2班",
+    "group_label": "HK281DS · CW7",
     "group": "g12"
   },
   {
@@ -1617,7 +1457,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-08-26",
@@ -1677,7 +1517,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-08-29",
@@ -1685,18 +1525,18 @@
     "row": 28,
     "col": 20,
     "cell": "T28",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L5 / 創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L5",
+    "detail": "創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
     "status": "unconfirmed",
     "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L5 / 創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L5",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
     "red": false,
-    "group_label": "MC0106DS · 第2班",
+    "group_label": "HK281DS · CW7",
     "group": "g12"
   },
   {
@@ -1837,7 +1677,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-04",
@@ -1857,7 +1697,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-05",
@@ -1865,18 +1705,18 @@
     "row": 7,
     "col": 20,
     "cell": "T7",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L16 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L16",
+    "detail": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
     "status": "unconfirmed",
     "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L16 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L16",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
     "red": false,
-    "group_label": "MC0106DS · 第2班",
+    "group_label": "HK281DS · CW7",
     "group": "g12"
   },
   {
@@ -1897,7 +1737,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-02",
@@ -1912,10 +1752,10 @@
     "fill": "",
     "category": "erb",
     "category_label": "勵行 / ERB",
-    "html": "勵行-彩雲 (Garett) <span class=\"xl-red\">[小組匯報]</span> / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - <span class=\"xl-red\">1730?</span> ) - L8",
-    "title_html": "勵行-彩雲 (Garett) <span class=\"xl-red\">[小組匯報]</span>",
-    "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - <span class=\"xl-red\">1730?</span> ) - L8",
-    "red": true,
+    "html": "勵行-彩雲 (Garett) [小組匯報] / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1730? ) - L8",
+    "title_html": "勵行-彩雲 (Garett) [小組匯報]",
+    "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1730? ) - L8",
+    "red": false,
     "group_label": "HK244EG · CW8",
     "group": "g07"
   },
@@ -1932,10 +1772,10 @@
     "fill": "",
     "category": "erb",
     "category_label": "勵行 / ERB",
-    "html": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - <span class=\"xl-red\">1730?</span> ) - L9",
+    "html": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1730? ) - L9",
     "title_html": "勵行-彩雲 (Garett)",
-    "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - <span class=\"xl-red\">1730?</span> ) - L9",
-    "red": true,
+    "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class CW8, (1400 - 1730? ) - L9",
+    "red": false,
     "group_label": "HK244EG · CW8",
     "group": "g07"
   },
@@ -1952,10 +1792,10 @@
     "fill": "",
     "category": "erb",
     "category_label": "勵行 / ERB",
-    "html": "勵行-彩雲 <span class=\"xl-red\">(Calvin)</span> / 人工智能創作營銷社交媒體內容技巧證書,HK244EG, Class CW8, (1400 - 1730) - L10",
-    "title_html": "勵行-彩雲 <span class=\"xl-red\">(Calvin)</span>",
+    "html": "勵行-彩雲 (Calvin) / 人工智能創作營銷社交媒體內容技巧證書,HK244EG, Class CW8, (1400 - 1730) - L10",
+    "title_html": "勵行-彩雲 (Calvin)",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書,HK244EG, Class CW8, (1400 - 1730) - L10",
-    "red": true,
+    "red": false,
     "group_label": "HK244EG · CW8",
     "group": "g07"
   },
@@ -1977,7 +1817,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-05",
@@ -1985,18 +1825,18 @@
     "row": 8,
     "col": 20,
     "cell": "T8",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L17 / 創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L17",
+    "detail": "創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
     "status": "unconfirmed",
     "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L17 / 創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L17",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
     "red": false,
-    "group_label": "MC0106DS · 第2班",
+    "group_label": "HK281DS · CW7",
     "group": "g12"
   },
   {
@@ -2065,18 +1905,18 @@
     "row": 12,
     "col": 5,
     "cell": "E12",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L18 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L18",
+    "detail": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
     "status": "unconfirmed",
     "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L18 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L18",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
     "red": false,
-    "group_label": "MC0106DS · 第2班",
+    "group_label": "HK281DS · CW7",
     "group": "g12"
   },
   {
@@ -2097,7 +1937,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-09",
@@ -2105,18 +1945,18 @@
     "row": 12,
     "col": 11,
     "cell": "K12",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L22 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L22",
+    "detail": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
     "status": "unconfirmed",
     "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L22 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L22",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
     "red": false,
-    "group_label": "MC0106DS · 第2班",
+    "group_label": "HK281DS · CW7",
     "group": "g12"
   },
   {
@@ -2125,18 +1965,18 @@
     "row": 12,
     "col": 14,
     "cell": "N12",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L24 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L24",
+    "detail": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
     "status": "unconfirmed",
     "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (0900 - 1300) /",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L24 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L24",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
     "red": false,
-    "group_label": "MC0106DS · 第2班",
+    "group_label": "HK281DS · CW7",
     "group": "g12"
   },
   {
@@ -2157,7 +1997,27 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
+  },
+  {
+    "date": "2026-09-12",
+    "month": "September New",
+    "row": 12,
+    "col": 20,
+    "cell": "T12",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L28 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L28",
+    "detail": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "status": "unconfirmed",
+    "fill": "00000000",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L28 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L28",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "red": false,
+    "group_label": "HK281DS · CW7",
+    "group": "g12"
   },
   {
     "date": "2026-09-07",
@@ -2172,10 +2032,10 @@
     "fill": "",
     "category": "erb",
     "category_label": "勵行 / ERB",
-    "html": "勵行-彩雲<span class=\"xl-red\"> (Calvin) [持續筆試]</span> / 人工智能創作營銷社交媒體內容技巧證書, HK244EG, Class CW8 / (1400 - <span class=\"xl-red\">1730?</span> ) - L11",
-    "title_html": "勵行-彩雲<span class=\"xl-red\"> (Calvin) [持續筆試]</span>",
-    "detail_html": "人工智能創作營銷社交媒體內容技巧證書, HK244EG, Class CW8 / (1400 - <span class=\"xl-red\">1730?</span> ) - L11",
-    "red": true,
+    "html": "勵行-彩雲 (Calvin) [持續筆試] / 人工智能創作營銷社交媒體內容技巧證書, HK244EG, Class CW8 / (1400 - 1730? ) - L11",
+    "title_html": "勵行-彩雲 (Calvin) [持續筆試]",
+    "detail_html": "人工智能創作營銷社交媒體內容技巧證書, HK244EG, Class CW8 / (1400 - 1730? ) - L11",
+    "red": false,
     "group_label": "HK244EG · CW8",
     "group": "g07"
   },
@@ -2185,18 +2045,18 @@
     "row": 13,
     "col": 6,
     "cell": "F13",
-    "text": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS / (1400 - 1800)",
-    "title": "循道-灣仔",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS / (1400 - 1800)",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L19 / 創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L19",
+    "detail": "創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
     "status": "unconfirmed",
     "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 / 創意數碼媒體設計及製作 / MC0106DS / (1400 - 1800)",
-    "title_html": "循道-灣仔",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS / (1400 - 1800)",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L19 / 創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L19",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
     "red": false,
-    "group_label": "MC0106DS · 第2班",
+    "group_label": "HK281DS · CW7",
     "group": "g12"
   },
   {
@@ -2212,10 +2072,10 @@
     "fill": "",
     "category": "erb",
     "category_label": "勵行 / ERB",
-    "html": "勵行-彩雲 <span class=\"xl-red\">(Calvin) [期末實務試]</span> / 人工智能創作營銷社交媒體內容技巧證書, HK244EG, Class CW8, (1400 - 1800) - L12",
-    "title_html": "勵行-彩雲 <span class=\"xl-red\">(Calvin) [期末實務試]</span>",
+    "html": "勵行-彩雲 (Calvin) [期末實務試] / 人工智能創作營銷社交媒體內容技巧證書, HK244EG, Class CW8, (1400 - 1800) - L12",
+    "title_html": "勵行-彩雲 (Calvin) [期末實務試]",
     "detail_html": "人工智能創作營銷社交媒體內容技巧證書, HK244EG, Class CW8, (1400 - 1800) - L12",
-    "red": true,
+    "red": false,
     "group_label": "HK244EG · CW8",
     "group": "g07"
   },
@@ -2237,7 +2097,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-09",
@@ -2245,18 +2105,18 @@
     "row": 13,
     "col": 11,
     "cell": "K13",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L23 / 創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L23",
+    "detail": "創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
     "status": "unconfirmed",
     "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L23 / 創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L23",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
     "red": false,
-    "group_label": "MC0106DS · 第2班",
+    "group_label": "HK281DS · CW7",
     "group": "g12"
   },
   {
@@ -2265,18 +2125,18 @@
     "row": 13,
     "col": 14,
     "cell": "N13",
-    "text": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title": "循道-灣仔 (第2班)",
-    "detail": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L25 / 創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L25",
+    "detail": "創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
     "status": "unconfirmed",
     "fill": "",
-    "category": "methodist",
-    "category_label": "循道",
-    "html": "循道-灣仔 (第2班) / 創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
-    "title_html": "循道-灣仔 (第2班)",
-    "detail_html": "創意數碼媒體設計及製作 / MC0106DS, (1400 - 1800) /",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L25 / 創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L25",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
     "red": false,
-    "group_label": "MC0106DS · 第2班",
+    "group_label": "HK281DS · CW7",
     "group": "g12"
   },
   {
@@ -2297,7 +2157,27 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
+  },
+  {
+    "date": "2026-09-12",
+    "month": "September New",
+    "row": 13,
+    "col": 20,
+    "cell": "T13",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L29 / 創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L29",
+    "detail": "創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "status": "unconfirmed",
+    "fill": "00000000",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L29 / 創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L29",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 1400 - 1800 [centre/address TBC]",
+    "red": false,
+    "group_label": "HK281DS · CW7",
+    "group": "g12"
   },
   {
     "date": "2026-09-08",
@@ -2320,6 +2200,26 @@
     "group": "g06"
   },
   {
+    "date": "2026-09-14",
+    "month": "September New",
+    "row": 17,
+    "col": 5,
+    "cell": "E17",
+    "text": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L30 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L30",
+    "detail": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "status": "unconfirmed",
+    "fill": "00000000",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L30 / 創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "title_html": "ERB - Centre TBC (104課室) (Garett) - HK281DS, Class CW7 - L30",
+    "detail_html": "創意數碼媒體設計及製作助理證書 / 0900 - 1300 [centre/address TBC]",
+    "red": false,
+    "group_label": "HK281DS · CW7",
+    "group": "g12"
+  },
+  {
     "date": "2026-09-15",
     "month": "September New",
     "row": 17,
@@ -2337,7 +2237,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-16",
@@ -2377,7 +2277,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-15",
@@ -2397,7 +2297,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-16",
@@ -2457,7 +2357,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-14",
@@ -2512,10 +2412,10 @@
     "fill": "FFFFFF00",
     "category": "erb",
     "category_label": "勵行 / ERB",
-    "html": "勵行-彩雲 HK244EG (CW) / 人工智能創作營銷社交媒體內容技巧證書 / 1900 - 2130 - <span class=\"xl-red\">Garett- </span>L12",
+    "html": "勵行-彩雲 HK244EG (CW) / 人工智能創作營銷社交媒體內容技巧證書 / 1900 - 2130 - Garett- L12",
     "title_html": "勵行-彩雲 HK244EG (CW)",
-    "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / 1900 - 2130 - <span class=\"xl-red\">Garett- </span>L12",
-    "red": true,
+    "detail_html": "人工智能創作營銷社交媒體內容技巧證書 / 1900 - 2130 - Garett- L12",
+    "red": false,
     "group_label": "HK244EG · CW",
     "group": "g06"
   },
@@ -2537,7 +2437,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-23",
@@ -2577,7 +2477,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-26",
@@ -2597,7 +2497,7 @@
     "detail_html": "",
     "red": true,
     "group_label": "Holiday",
-    "group": "g15"
+    "group": "g16"
   },
   {
     "date": "2026-09-21",
@@ -2637,7 +2537,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-23",
@@ -2697,7 +2597,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-21",
@@ -2797,7 +2697,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-30",
@@ -2857,7 +2757,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-09-30",
@@ -2957,7 +2857,7 @@
     "detail_html": "",
     "red": true,
     "group_label": "Holiday",
-    "group": "g15"
+    "group": "g16"
   },
   {
     "date": "2026-10-02",
@@ -2977,7 +2877,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-03",
@@ -3017,7 +2917,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-06",
@@ -3037,7 +2937,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-07",
@@ -3077,7 +2977,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-10",
@@ -3137,7 +3037,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-07",
@@ -3197,7 +3097,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-05",
@@ -3297,7 +3197,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-14",
@@ -3337,7 +3237,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-17",
@@ -3397,7 +3297,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-14",
@@ -3437,7 +3337,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-12",
@@ -3517,7 +3417,7 @@
     "detail_html": "",
     "red": true,
     "group_label": "Holiday",
-    "group": "g15"
+    "group": "g16"
   },
   {
     "date": "2026-10-20",
@@ -3537,7 +3437,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-21",
@@ -3577,7 +3477,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-24",
@@ -3617,7 +3517,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-23",
@@ -3637,7 +3537,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-20",
@@ -3697,7 +3597,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-30",
@@ -3717,7 +3617,7 @@
     "detail_html": "(QAT7) (09:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-31",
@@ -3757,7 +3657,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-30",
@@ -3777,7 +3677,7 @@
     "detail_html": "(QAT7) (13:30 - 17:30)",
     "red": false,
     "group_label": "QAT7",
-    "group": "g14"
+    "group": "g15"
   },
   {
     "date": "2026-10-26",
@@ -4157,7 +4057,7 @@
     "detail_html": "",
     "red": true,
     "group_label": "Holiday",
-    "group": "g15"
+    "group": "g16"
   },
   {
     "date": "2026-12-26",
@@ -4177,6 +4077,6 @@
     "detail_html": "",
     "red": true,
     "group_label": "Holiday",
-    "group": "g15"
+    "group": "g16"
   }
 ]
