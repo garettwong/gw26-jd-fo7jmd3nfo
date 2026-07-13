@@ -1,5 +1,7 @@
 {
-  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 08_20260712_R04_HK281DSCW7_MC0106DS.xlsx",
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 09_20260712_R05_HK281DSCW7_MC0106DS_Colored.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "HK244EG(CW)_R2_20260713_R01",
   "events": 208,
   "display_events": 298,
   "context_events": 90,

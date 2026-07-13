@@ -8,13 +8,14 @@ try:
 except (AttributeError, OSError):
     pass
 
-SRC = Path(r"C:/Users/garet/OneDrive/桌面/Timetable/ERB Super Timetable 04_checking 08_20260712_R04_HK281DSCW7_MC0106DS.xlsx")
+SRC = Path(r"C:/Users/garet/OneDrive/桌面/Timetable/ERB Super Timetable 04_checking 09_20260712_R05_HK281DSCW7_MC0106DS_Colored.xlsx")
 OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checking08-hk281dscw7-mc0106ds-choiwan-20260712-r04"
+BUILD_ID = "checking09-hk244eg-cw-r2-20260713-r01"
 CONTEXT_SRC = OUTDIR / "class_context.json"
+OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
@@ -335,6 +336,49 @@ for sheet in MONTH_SHEETS:
             events.append(ev)
             by_date.setdefault(dt.isoformat(), []).append(ev)
 
+override_revision = ""
+if OVERRIDES_SRC.exists():
+    override_data = json.loads(OVERRIDES_SRC.read_text(encoding="utf-8"))
+    override_revision = str(override_data.get("revision", ""))
+    override_index = {}
+    for event in events:
+        code, cls, lesson, _start = course_sort_parts(event["text"])
+        if code and cls and lesson != 999:
+            key = (event["date"], code.upper(), cls.upper(), lesson)
+            if key in override_index:
+                raise ValueError(f"Duplicate workbook override target: {key}")
+            override_index[key] = event
+
+    for index, item in enumerate(override_data.get("overrides", []), 1):
+        key = (
+            item["date"],
+            str(item["course_code"]).upper(),
+            str(item["class"]).upper(),
+            int(item["lesson"]),
+        )
+        event = override_index.get(key)
+        if event is None:
+            raise ValueError(f"Override entry {index} has no workbook lesson: {key}")
+        text = norm_text(item["text"])
+        code, cls, lesson, _start = course_sort_parts(text)
+        if (event["date"], code.upper(), cls.upper(), lesson) != key:
+            raise ValueError(f"Override entry {index} text does not match its key: {key}")
+        title, detail = split_title(text)
+        cat, cat_label = category(text)
+        event.update({
+            "text": text,
+            "title": title,
+            "detail": detail,
+            "category": cat,
+            "category_label": cat_label,
+            "html": html.escape(text, quote=True),
+            "title_html": html.escape(title, quote=True),
+            "detail_html": html.escape(detail, quote=True),
+            "red": False,
+            "teacher": item.get("teacher", ""),
+            "source": item.get("source", ""),
+        })
+
 if CONTEXT_SRC.exists():
     raw_context = json.loads(CONTEXT_SRC.read_text(encoding="utf-8"))
     baseline_keys = {
@@ -409,6 +453,7 @@ CSS = r'''
 '''
 
 CSS += r'''
+.foot{overflow-wrap:anywhere}
 @media (min-width:821px){.wrap{width:100%;max-width:none;margin:0;padding:28px clamp(16px,1.6vw,36px) 70px}}
 .title,.month h2{letter-spacing:0}
 .layer-controls{margin:16px 0 2px}.layer-controls .section-h{margin:0 0 8px}.layer-switch{display:inline-grid;grid-template-columns:repeat(3,minmax(104px,1fr));padding:3px;border:1px solid #cfd8e5;border-radius:8px;background:#e5eaf1;box-shadow:0 1px 2px rgba(20,30,50,.06)}.mode-filter{min-height:34px;border:0;border-radius:6px;padding:6px 11px;background:transparent;color:#4c5a6b;font:inherit;font-size:12px;font-weight:800;cursor:pointer}.mode-filter.active{background:#fff;color:#145f63;box-shadow:0 1px 3px rgba(20,30,50,.18)}.sample.class-layer{border:2px solid #8b80aa;background:#fff1e6;box-shadow:inset 4px 0 0 #a99bc7}.chip.layer-class.confirmed{box-shadow:inset 3px 0 0 #a99bc7,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.unconfirmed{box-shadow:inset 3px 0 0 #a99bc7,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.modal-source{margin-top:14px;padding-top:10px;border-top:1px solid #e4e9f0;color:#6c7786;font-size:12px}.pill.class-layer{background:#eeeaf7;color:#5d537a}
@@ -709,7 +754,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="section-h">ERB course codes</div><div class="course-code-legend">{erb_code_legend}</div>
 <div class="section-h">Filter by course / class</div><div class="filters"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{cat_filters}</div>
 {months_html}
-<div class="foot">Sources: <b>{ehtml(SRC.name)}</b> plus <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
+<div class="foot">Sources: <b>{ehtml(SRC.name)}</b>, <b>{ehtml(OVERRIDES_SRC.name)}</b>, and <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
 </main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view and navigation"><button id="floatingToday" class="today-option" type="button" aria-label="Go to today" title="Go to today"><span class="mode-main">TODAY</span></button><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All: full timetable" title="All: full timetable"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div><div id="installGuide" class="install-guide" hidden><div class="install-sheet" role="dialog" aria-modal="true" aria-labelledby="installTitle"><button class="install-close" type="button" aria-label="Close install guide">×</button><div class="install-head"><img class="install-icon" src="icon-180.png" alt="Garett's ERB app icon"><div><h2 id="installTitle" class="install-title">Add Garett's ERB</h2><p class="install-copy">Keep the timetable on your iPhone Home Screen.</p></div></div><div class="install-steps"><div class="install-step safari-only"><b>1</b><span>Tap <strong>Share</strong> in Safari.</span></div><div class="install-step safari-only"><b>2</b><span>Choose <strong>Add to Home Screen</strong>.</span></div><div class="install-step safari-only"><b>3</b><span>Turn on <strong>Open as Web App</strong>, then tap <strong>Add</strong>.</span></div><div class="install-step open-safari" hidden><b>1</b><span>Open this link in <strong>Safari</strong>, then use Share → Add to Home Screen.</span></div></div><button class="install-action" type="button">Got it</button><p class="install-note">This guide appears only once.</p></div></div><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
 <script>
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){{window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?build='+window.ERB_BUILD_ID).then(r=>r.update()).catch(()=>{{}}));}}
@@ -894,7 +939,7 @@ self.addEventListener('fetch', event => {{
 (OUTDIR / '.nojekyll').write_text('', encoding='utf-8')
 (OUTDIR / 'sw.js').write_text(SW, encoding='utf-8')
 (OUTDIR / 'events.json').write_text(json.dumps(events, ensure_ascii=False, indent=2), encoding='utf-8')
-(OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
+(OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "override_source": str(OVERRIDES_SRC), "override_revision": override_revision, "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
 (OUTDIR / 'manifest.webmanifest').write_text(json.dumps({"id":"./","name":"Garett's ERB","short_name":"Garett's ERB","description":"Garett's ERB teaching timetable","start_url":"./?v=redtext1&build=" + BUILD_ID,"scope":"./","display":"standalone","background_color":"#eef1f6","theme_color":"#0f7074","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}, ensure_ascii=False, indent=2), encoding='utf-8')
 try:
     from PIL import Image, ImageDraw, ImageFont
