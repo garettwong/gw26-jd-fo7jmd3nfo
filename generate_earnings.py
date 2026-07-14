@@ -119,7 +119,7 @@ report = {
     "name": "Garett Wong",
     "period": "June to December 2026",
     "generated": date.today().isoformat(),
-    "version": "2026-07-14 - R03",
+    "version": "2026-07-14 - R04",
     "rates": {"ERB and SEN": "HKD 300/hour", "DGS": "HKD 900/hour, 4 hours/day"},
     "confirmed": calculate({"confirmed"}),
     "confirmed_and_unconfirmed": calculate({"confirmed", "unconfirmed"}),

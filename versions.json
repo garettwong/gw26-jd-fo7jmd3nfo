@@ -1,9 +1,14 @@
 [
   {
+    "id": "2026-07-14-R04",
+    "label": "2026-07-14 - R04",
+    "summary": "Added a floating back-to-filters button; schedule data unchanged.",
+    "latest": true
+  },
+  {
     "id": "2026-07-14-R03",
     "label": "2026-07-14 - R03",
-    "summary": "Instructor name corrected to Calvin; confirmed HK244EG Class CW retained.",
-    "latest": true
+    "summary": "Instructor name corrected to Calvin; confirmed HK244EG Class CW retained."
   },
   {
     "id": "2026-07-14-R02",
