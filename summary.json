@@ -1,13 +1,14 @@
 {
   "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 09_20260712_R05_HK281DSCW7_MC0106DS_Colored.xlsx",
   "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
-  "override_revision": "HK244EG(CW)_R2_20260713_R01",
+  "override_revision": "HK244EG(CW)_R2_20260714_R02",
+  "override_confirmation": "Calvin confirmed the HK244EG Class CW schedule on 2026-07-14",
   "events": 208,
   "display_events": 298,
   "context_events": 90,
   "counts": {
-    "confirmed": 152,
-    "unconfirmed": 139,
+    "confirmed": 170,
+    "unconfirmed": 121,
     "note": 7
   },
   "layers": {

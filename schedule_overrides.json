@@ -1,6 +1,8 @@
 {
-  "revision": "HK244EG(CW)_R2_20260713_R01",
+  "revision": "HK244EG(CW)_R2_20260714_R02",
   "source": "HK244EG(CW )_R2.doc",
+  "confirmation": "Calvin confirmed the HK244EG Class CW schedule on 2026-07-14",
+  "default_status": "confirmed",
   "overrides": [
     {
       "date": "2026-08-24",

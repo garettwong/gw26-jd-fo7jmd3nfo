@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checking09-hk244eg-cw-r2-20260713-r01"
+BUILD_ID = "checking09-hk244eg-cw-r2-confirmed-20260714-r02"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 
@@ -337,9 +337,14 @@ for sheet in MONTH_SHEETS:
             by_date.setdefault(dt.isoformat(), []).append(ev)
 
 override_revision = ""
+override_confirmation = ""
 if OVERRIDES_SRC.exists():
     override_data = json.loads(OVERRIDES_SRC.read_text(encoding="utf-8"))
     override_revision = str(override_data.get("revision", ""))
+    override_confirmation = str(override_data.get("confirmation", ""))
+    override_default_status = override_data.get("default_status")
+    if override_default_status not in {None, "confirmed", "unconfirmed", "note"}:
+        raise ValueError(f"Invalid override default status: {override_default_status}")
     override_index = {}
     for event in events:
         code, cls, lesson, _start = course_sort_parts(event["text"])
@@ -365,6 +370,9 @@ if OVERRIDES_SRC.exists():
             raise ValueError(f"Override entry {index} text does not match its key: {key}")
         title, detail = split_title(text)
         cat, cat_label = category(text)
+        status = item.get("status", override_default_status or event["status"])
+        if status not in {"confirmed", "unconfirmed", "note"}:
+            raise ValueError(f"Override entry {index} has invalid status: {status}")
         event.update({
             "text": text,
             "title": title,
@@ -375,6 +383,7 @@ if OVERRIDES_SRC.exists():
             "title_html": html.escape(title, quote=True),
             "detail_html": html.escape(detail, quote=True),
             "red": False,
+            "status": status,
             "teacher": item.get("teacher", ""),
             "source": item.get("source", ""),
         })
@@ -939,7 +948,7 @@ self.addEventListener('fetch', event => {{
 (OUTDIR / '.nojekyll').write_text('', encoding='utf-8')
 (OUTDIR / 'sw.js').write_text(SW, encoding='utf-8')
 (OUTDIR / 'events.json').write_text(json.dumps(events, ensure_ascii=False, indent=2), encoding='utf-8')
-(OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "override_source": str(OVERRIDES_SRC), "override_revision": override_revision, "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
+(OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "override_source": str(OVERRIDES_SRC), "override_revision": override_revision, "override_confirmation": override_confirmation, "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
 (OUTDIR / 'manifest.webmanifest').write_text(json.dumps({"id":"./","name":"Garett's ERB","short_name":"Garett's ERB","description":"Garett's ERB teaching timetable","start_url":"./?v=redtext1&build=" + BUILD_ID,"scope":"./","display":"standalone","background_color":"#eef1f6","theme_color":"#0f7074","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}, ensure_ascii=False, indent=2), encoding='utf-8')
 try:
     from PIL import Image, ImageDraw, ImageFont
