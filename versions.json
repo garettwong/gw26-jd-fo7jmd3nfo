@@ -1,9 +1,14 @@
 [
   {
+    "id": "2026-07-14-V05b",
+    "label": "2026-07-14 - V05b",
+    "summary": "Online travel audit: flagged five Sheung Shui to Four Seas transfers and the Oct 7 Four Seas to Choi Wan transfer as tight; lesson data unchanged.",
+    "latest": true
+  },
+  {
     "id": "2026-07-14-V05a",
     "label": "2026-07-14 - V05a",
-    "summary": "Content-ledger audit: corrected all six confirmed HK239HG SS lessons to 08:30-12:30.",
-    "latest": true
+    "summary": "Content-ledger audit: corrected all six confirmed HK239HG SS lessons to 08:30-12:30."
   },
   {
     "id": "2026-07-14-R05",

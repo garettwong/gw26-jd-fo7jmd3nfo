@@ -139,6 +139,10 @@ for row in ss:
     assert row["date"] == ss_expected_dates[number]
     assert match.groups() == ("0830", "1230")
     assert "上水彩園" in row["text"]
+    if number <= 5:
+        assert "TIGHT TRAVEL ~55-61m" in row["text"]
+    else:
+        assert "TIGHT TRAVEL" not in row["text"]
 assert not rows_with("人工智能知識2應用")
 
 hk265 = rows_with("HK265HG", "Class FS", rows=EVENTS)
@@ -146,6 +150,9 @@ assert len(hk265) == 24
 assert Counter(lesson(row) for row in hk265) == Counter({number: 2 for number in range(1, 13)})
 assert all(row["status"] == "confirmed" for row in hk265)
 assert sum("1420-1720" in row["text"] for row in hk265) == 2
+oct7_hk265_l9 = [row for row in hk265 if row["date"] == "2026-10-07" and lesson(row) == 9]
+assert len(oct7_hk265_l9) == 1
+assert "TIGHT TRAVEL ~40-47m" in oct7_hk265_l9[0]["text"]
 
 # Latest Excel-based proposals: Garett selections plus all currently assigned class context.
 hk281 = rows_with("HK281DS", "CW7")
