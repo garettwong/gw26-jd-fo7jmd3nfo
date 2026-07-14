@@ -124,6 +124,21 @@ assert_lessons(lt, range(1, 7), "HK239HG LT")
 assert_status(ss, "confirmed", "HK239HG SS")
 assert_status(st, "unconfirmed", "HK239HG ST")
 assert_status(lt, "unconfirmed", "HK239HG LT")
+ss_expected_dates = {
+    1: "2026-09-16",
+    2: "2026-09-23",
+    3: "2026-09-30",
+    4: "2026-10-07",
+    5: "2026-10-14",
+    6: "2026-10-21",
+}
+for row in ss:
+    number = lesson(row)
+    match = TIME_RE.search(row["text"])
+    assert match
+    assert row["date"] == ss_expected_dates[number]
+    assert match.groups() == ("0830", "1230")
+    assert "上水彩園" in row["text"]
 assert not rows_with("人工智能知識2應用")
 
 hk265 = rows_with("HK265HG", "Class FS", rows=EVENTS)
