@@ -13,9 +13,12 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "online-travel-audited-tight-transfers-20260714-v05b"
+BUILD_ID = "v04-change-markers-comparison-filter-20260714-v05c"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-14-R04"
+COMPARE_LABEL = "V04"
+EXPECTED_COMPARISON_CHANGES = 52
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
@@ -448,6 +451,40 @@ if CONTEXT_SRC.exists():
 
 display_events = events + context_events
 
+baseline_events = json.loads((COMPARE_BASELINE / "events.json").read_text(encoding="utf-8"))
+baseline_context = json.loads((COMPARE_BASELINE / "class_context.json").read_text(encoding="utf-8"))
+
+def workbook_identity(item):
+    return tuple(item.get(key) for key in ("date", "month", "row", "col", "cell"))
+
+def context_identity(item):
+    return item.get("date"), item.get("source", "")
+
+baseline_event_map = {workbook_identity(item): item for item in baseline_events}
+baseline_context_map = {context_identity(item): item for item in baseline_context}
+
+for current in events:
+    previous = baseline_event_map.get(workbook_identity(current))
+    changed = previous is None or any(current.get(key) != previous.get(key) for key in ("text", "status"))
+    current["changed_since_r04"] = changed
+    current["change_kind"] = "new" if previous is None else "changed" if changed else ""
+    current["previous_text"] = previous.get("text", "") if previous else ""
+    current["previous_status"] = previous.get("status", "") if previous else ""
+
+for current in context_events:
+    previous = baseline_context_map.get(context_identity(current))
+    changed = previous is None or any(current.get(key) != previous.get(key) for key in ("text", "status", "teacher"))
+    current["changed_since_r04"] = changed
+    current["change_kind"] = "new" if previous is None else "changed" if changed else ""
+    current["previous_text"] = previous.get("text", "") if previous else ""
+    current["previous_status"] = previous.get("status", "") if previous else ""
+
+changed_events = [event for event in display_events if event.get("changed_since_r04")]
+if len(changed_events) != EXPECTED_COMPARISON_CHANGES:
+    raise ValueError(
+        f"Expected {EXPECTED_COMPARISON_CHANGES} changes since {COMPARE_LABEL}, found {len(changed_events)}"
+    )
+
 for ds in by_date:
     by_date[ds].sort(key=event_sort_key)
 
@@ -531,6 +568,12 @@ CSS += r'''
 
 CSS += r'''
 .install-guide{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;padding:18px;background:rgba(20,29,41,.56)}.install-guide[hidden]{display:none}.install-sheet{position:relative;width:min(100%,430px);border:1px solid #dce3eb;border-radius:16px;background:#fff;padding:18px;box-shadow:0 18px 50px rgba(12,22,36,.32)}.install-head{display:grid;grid-template-columns:62px 1fr;gap:13px;align-items:center;padding-right:24px}.install-icon{width:62px;height:62px;border-radius:14px;box-shadow:0 2px 8px rgba(15,30,45,.20)}.install-title{margin:0;font-size:19px;font-weight:900;color:#172232}.install-copy{margin:3px 0 0;color:#627080;font-size:12.5px}.install-close{position:absolute;top:9px;right:10px;width:32px;height:32px;border:0;border-radius:50%;background:#eef2f6;color:#596676;font-size:22px;line-height:1;cursor:pointer}.install-steps{display:grid;gap:9px;margin:16px 0}.install-step{display:grid;grid-template-columns:26px 1fr;gap:9px;align-items:start;color:#344153;font-size:13px;line-height:1.35}.install-step[hidden]{display:none}.install-step b{display:flex;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;background:#0f7074;color:#fff;font-size:11px}.install-action{width:100%;min-height:42px;border:0;border-radius:8px;background:#0f7074;color:#fff;font:inherit;font-size:13px;font-weight:850;cursor:pointer}.install-action:hover{background:#0b5f63}.install-note{margin:10px 0 0;color:#7a8492;font-size:11px;text-align:center}@media (min-width:821px){.install-guide{align-items:center}}@media print{.install-guide{display:none!important}}
+'''
+
+CSS += r'''
+.chip.changed-since-r04{position:relative;outline:3px solid #f2a900;outline-offset:1px}.change-badge{position:absolute;z-index:3;top:4px;left:5px;padding:1px 4px;border:1px solid #8a5200;border-radius:3px;background:#ffd84d;color:#312300;font-size:7.5px;font-weight:950;line-height:1.15;white-space:nowrap;box-shadow:0 1px 2px rgba(35,27,0,.22)}.chip.erb-compact.changed-since-r04 .class-id{max-width:calc(100% - 76px)}.sample.changed-sample{border:3px solid #f2a900;background:#ffd84d}.filter.change-filter{border-color:#a96700;background:#fff4bd;color:#684000}.filter.change-filter.active{border-color:#6c4200;background:#f2a900;color:#241800}.pill.changed-pill{background:#ffd84d;color:#4d3200}.comparison-old{margin-top:16px;padding:12px;border:2px solid #e3aa24;border-radius:7px;background:#fff8d8;color:#3a3428;white-space:normal}.comparison-old strong{display:block;margin-bottom:5px;color:#6b4500}.comparison-old .old-status{margin-top:7px;color:#75694e;font-size:12px}.comparison-new{font-weight:800;color:#8a5300}.modal-current-label{display:block;margin-bottom:5px;color:#566273;font-size:11px;font-weight:850;text-transform:uppercase}.modal-current{white-space:pre-wrap}
+@media (orientation:landscape) and (max-height:540px){.chip.changed-since-r04{outline-width:1.5px}.change-badge{top:2px;left:2px;padding:0 2px;border-width:1px;font-size:4.7px}.chip.erb-compact.changed-since-r04 .class-id{max-width:calc(100% - 38px)}}
+@media print{.change-badge{background:#ffd84d!important}.chip.changed-since-r04{outline-color:#a96700}}
 '''
 
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
@@ -685,13 +728,22 @@ def chip(ev):
     layer_attrs = (f' data-layer="{layer}" data-erb="{1 if ev["category"] == "erb" else 0}"'
                    f' data-course="{1 if ev["category"] in {"erb", "methodist"} else 0}"'
                    f' data-source="{ehtml(ev.get("source", ""))}"')
+    changed = bool(ev.get("changed_since_r04"))
+    comparison_cls = " changed-since-r04" if changed else ""
+    comparison_attrs = (
+        f' data-changed="{1 if changed else 0}"'
+        f' data-change-kind="{ehtml(ev.get("change_kind", ""))}"'
+        f' data-previous="{ehtml(ev.get("previous_text", ""))}"'
+        f' data-previous-status="{ehtml(ev.get("previous_status", ""))}"'
+    )
+    comparison_badge = f'<span class="change-badge" title="Changed since {COMPARE_LABEL}">Δ {COMPARE_LABEL}</span>' if changed else ""
     if ev["category"] != "erb":
         teacher_suffix = ""
         if layer == "class" and ev.get("teacher"):
             teacher_suffix = f' / <span class="context-teacher">Teacher: {ehtml(ev["teacher"])}</span>'
-        return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}" tabindex="0" role="button" '
-                f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}>'
-                f'<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
+        return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}" tabindex="0" role="button" '
+                f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}>'
+                f'{comparison_badge}<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
                 f'<div class="ttl">{title_html}</div><div class="det">{detail_html}{teacher_suffix}</div><div class="fulltxt">{full_html}</div></div>')
 
     fields = event_fields(ev)
@@ -701,9 +753,9 @@ def chip(ev):
                      f'<span class="class-dot" aria-hidden="true"></span>{ehtml(class_label)}</div>')
     teacher_cls = " is-missing" if fields["teacher"] == "-" else " is-alert" if fields["teacher"] in {"Andy", "Calvin"} else ""
     note_html = "".join(f' <span class="card-note">[{ehtml(note)}]</span>' for note in fields["notes"])
-    return (f'<div class="chip erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}" tabindex="0" role="button" '
-            f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}>'
-            f'<span class="status" aria-label="{ehtml(st)}">{mark}</span>{identity_html}'
+    return (f'<div class="chip erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}" tabindex="0" role="button" '
+            f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}>'
+            f'{comparison_badge}<span class="status" aria-label="{ehtml(st)}">{mark}</span>{identity_html}'
             f'<div class="erb-meta"><span class="erb-location">{ehtml(fields["location"])}</span><span class="erb-sep">&middot;</span>'
             f'<span class="erb-teacher{teacher_cls}">Teacher: {ehtml(fields["teacher"])}</span></div>'
             f'<div class="erb-course">{ehtml(fields["course_name"])}</div>'
@@ -791,9 +843,9 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <style>{CSS}</style></head><body><main class="wrap">
 <div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
-<div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div><div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
+<div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div><div class="legend-card"><span class="sample changed-sample"></span> Changed since V04</div><div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
 <div class="section-h">ERB course codes</div><div class="course-code-legend">{erb_code_legend}</div>
-<div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filters"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{cat_filters}</div>
+<div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filters"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button><button class="filter course-filter change-filter" data-filter="changed" data-first-date="{min(event['date'] for event in changed_events)}">Changed since V04 ({len(changed_events)})</button>{cat_filters}</div>
 {months_html}
 <div class="foot">Sources: <b>{ehtml(SRC.name)}</b>, <b>{ehtml(OVERRIDES_SRC.name)}</b>, and <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
 </main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view and navigation"><button id="floatingToday" class="today-option" type="button" aria-label="Go to today" title="Go to today"><span class="mode-main">TODAY</span></button><button id="floatingTop" class="top-option" type="button" aria-label="Back to course filters" title="Back to course filters"><span class="mode-main" aria-hidden="true">&uarr;</span><span class="mode-sub">FILTER</span></button><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All: full timetable" title="All: full timetable"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div><div id="installGuide" class="install-guide" hidden><div class="install-sheet" role="dialog" aria-modal="true" aria-labelledby="installTitle"><button class="install-close" type="button" aria-label="Close install guide">×</button><div class="install-head"><img class="install-icon" src="icon-180.png" alt="Garett's ERB app icon"><div><h2 id="installTitle" class="install-title">Add Garett's ERB</h2><p class="install-copy">Keep the timetable on your iPhone Home Screen.</p></div></div><div class="install-steps"><div class="install-step safari-only"><b>1</b><span>Tap <strong>Share</strong> in Safari.</span></div><div class="install-step safari-only"><b>2</b><span>Choose <strong>Add to Home Screen</strong>.</span></div><div class="install-step safari-only"><b>3</b><span>Turn on <strong>Open as Web App</strong>, then tap <strong>Add</strong>.</span></div><div class="install-step open-safari" hidden><b>1</b><span>Open this link in <strong>Safari</strong>, then use Share → Add to Home Screen.</span></div></div><button class="install-action" type="button">Got it</button><p class="install-note">This guide appears only once.</p></div></div><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
@@ -820,9 +872,13 @@ const installGuide=document.getElementById('installGuide');
 const modal=document.getElementById('modal');
 function openChip(el){{
   const st=el.dataset.status, cat=el.dataset.cat, txt=el.dataset.text, html=el.dataset.html||'', date=el.dataset.date, source=el.dataset.source||'', layer=el.dataset.layer;
+  const changed=el.dataset.changed==='1', previous=el.dataset.previous||'', previousStatus=el.dataset.previousStatus||'', changeKind=el.dataset.changeKind||'';
+  const esc=value=>String(value||'').replace(/[&<>"']/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[c]));
   modal.querySelector('.modal-h').textContent=cat;
-  modal.querySelector('.modal-date').innerHTML=date+' · <span class="pill '+st+'">'+(st==='confirmed'?'Confirmed / 已確認':st==='unconfirmed'?'Unconfirmed / 未確認':'Note / 備註')+'</span>'+(layer==='class'?' <span class="pill class-layer">Full class context</span>':'');
-  modal.querySelector('.modal-body').innerHTML=(html||txt)+(source?'<div class="modal-source">Source: '+source.replace(/[&<>"']/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[c]))+'</div>':'');
+  modal.querySelector('.modal-date').innerHTML=date+' · <span class="pill '+st+'">'+(st==='confirmed'?'Confirmed / 已確認':st==='unconfirmed'?'Unconfirmed / 未確認':'Note / 備註')+'</span>'+(layer==='class'?' <span class="pill class-layer">Full class context</span>':'')+(changed?' <span class="pill changed-pill">Changed since V04</span>':'');
+  const oldContent=changeKind==='new'?'<span class="comparison-new">Not present in V04</span>':esc(previous)+(previousStatus?'<div class="old-status">Status in V04: '+esc(previousStatus)+'</div>':'');
+  const comparison=changed?'<div class="comparison-old"><strong>V04 content</strong><div>'+oldContent+'</div></div>':'';
+  modal.querySelector('.modal-body').innerHTML='<span class="modal-current-label">Current V05c content</span><div class="modal-current">'+(html||txt)+'</div>'+comparison+(source?'<div class="modal-source">Source: '+esc(source)+'</div>':'');
   modal.hidden=false;
 }}
 document.querySelectorAll('.chip').forEach(el=>{{el.addEventListener('click',()=>openChip(el));el.addEventListener('keydown',e=>{{if(e.key==='Enter'||e.key===' '){{e.preventDefault();openChip(el)}}}})}});
@@ -830,7 +886,7 @@ modal.querySelector('.modal-x').onclick=()=>modal.hidden=true; modal.addEventLis
 function isPortraitAgenda(){{return window.matchMedia('(orientation: portrait) and (max-width: 820px)').matches;}}
 function jumpToFilter(btn){{
   const f=btn.dataset.filter;
-  const candidates=Array.from(document.querySelectorAll('.chip.grp-'+f)).filter(ch=>ch.style.display!=='none');
+  const candidates=Array.from(document.querySelectorAll(f==='changed'?'.chip[data-changed="1"]':'.chip.grp-'+f)).filter(ch=>ch.style.display!=='none');
   const preferred=candidates.find(ch=>isPortraitAgenda()?ch.closest('.agenda'):ch.closest('.grid'))||candidates[0];
   const ds=preferred&&preferred.dataset.date;
   if(!ds) return;
@@ -851,7 +907,7 @@ function applyFilters(){{
   const f=window.__courseFilter, mode=window.__layerMode;
   window.__filterActive = f !== 'all';
   document.querySelectorAll('.chip').forEach(ch=>{{
-    const courseMatch=f==='all'||ch.classList.contains('grp-'+f);
+    const courseMatch=f==='all'||(f==='changed'?ch.dataset.changed==='1':ch.classList.contains('grp-'+f));
     const isMike=ch.dataset.cat==='Mike Sir';
     const isHoliday=ch.dataset.cat==='Holiday';
     const isMine=ch.dataset.layer==='mine';
@@ -981,7 +1037,7 @@ self.addEventListener('fetch', event => {{
 (OUTDIR / '.nojekyll').write_text('', encoding='utf-8')
 (OUTDIR / 'sw.js').write_text(SW, encoding='utf-8')
 (OUTDIR / 'events.json').write_text(json.dumps(events, ensure_ascii=False, indent=2), encoding='utf-8')
-(OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "override_source": str(OVERRIDES_SRC), "override_revision": override_revision, "override_confirmation": override_confirmation, "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
+(OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "override_source": str(OVERRIDES_SRC), "override_revision": override_revision, "override_confirmation": override_confirmation, "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "comparison_baseline": str(COMPARE_BASELINE), "comparison_label": COMPARE_LABEL, "changed_since_r04": len(changed_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
 (OUTDIR / 'manifest.webmanifest').write_text(json.dumps({"id":"./","name":"Garett's ERB","short_name":"Garett's ERB","description":"Garett's ERB teaching timetable","start_url":"./?v=redtext1&build=" + BUILD_ID,"scope":"./","display":"standalone","background_color":"#eef1f6","theme_color":"#0f7074","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}, ensure_ascii=False, indent=2), encoding='utf-8')
 try:
     from PIL import Image, ImageDraw, ImageFont

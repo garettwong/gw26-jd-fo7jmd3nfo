@@ -1,9 +1,14 @@
 [
   {
+    "id": "2026-07-14-V05c",
+    "label": "2026-07-14 - V05c",
+    "summary": "Comparison view: 52 cards changed since V04 are highlighted, filterable, and show their previous content; schedule data unchanged from V05b.",
+    "latest": true
+  },
+  {
     "id": "2026-07-14-V05b",
     "label": "2026-07-14 - V05b",
-    "summary": "Online travel audit: flagged five Sheung Shui to Four Seas transfers and the Oct 7 Four Seas to Choi Wan transfer as tight; lesson data unchanged.",
-    "latest": true
+    "summary": "Online travel audit: flagged five Sheung Shui to Four Seas transfers and the Oct 7 Four Seas to Choi Wan transfer as tight; lesson data unchanged."
   },
   {
     "id": "2026-07-14-V05a",
