@@ -1,9 +1,9 @@
 {
   "id": "./",
-  "name": "Garett's ERB",
+  "name": "Garett's ERB Timetable",
   "short_name": "Garett's ERB",
-  "description": "Garett's ERB teaching timetable",
-  "start_url": "./?v=redtext1&build=checking09-hk244eg-cw-r2-confirmed-calvin-20260714-r03",
+  "description": "Version selector for Garett's ERB timetable",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef1f6",
