@@ -1,9 +1,14 @@
 [
   {
+    "id": "2026-07-14-R05",
+    "label": "2026-07-14 - R05",
+    "summary": "Full source audit: corrected lesson codes, times and numbering; completed FS-1 context.",
+    "latest": true
+  },
+  {
     "id": "2026-07-14-R04",
     "label": "2026-07-14 - R04",
-    "summary": "Added a floating back-to-filters button; schedule data unchanged.",
-    "latest": true
+    "summary": "Added a floating back-to-filters button; schedule data unchanged."
   },
   {
     "id": "2026-07-14-R03",

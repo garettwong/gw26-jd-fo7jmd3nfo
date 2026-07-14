@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "checking09-hk244eg-cw-r2-confirmed-calvin-filter-jump-20260714-r04"
+BUILD_ID = "source-audited-full-class-context-20260714-r05"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 
@@ -209,8 +209,30 @@ def category(text):
         return "school", "School"
     return "other", "Other"
 
+def slash_parts(text):
+    parts = []
+    current = []
+    depth = 0
+    for char in str(text or ""):
+        if char in "([":
+            depth += 1
+        elif char in ")]" and depth:
+            depth -= 1
+        if char == "/" and depth == 0:
+            value = "".join(current).strip()
+            if value:
+                parts.append(value)
+            current = []
+        else:
+            current.append(char)
+    value = "".join(current).strip()
+    if value:
+        parts.append(value)
+    return parts
+
+
 def split_title(text):
-    parts = [p.strip() for p in text.split("/") if p.strip()]
+    parts = slash_parts(text)
     if not parts:
         return text, ""
     return parts[0], " / ".join(parts[1:])
@@ -348,26 +370,34 @@ if OVERRIDES_SRC.exists():
     override_index = {}
     for event in events:
         code, cls, lesson, _start = course_sort_parts(event["text"])
-        if code and cls and lesson != 999:
+        if code and cls:
             key = (event["date"], code.upper(), cls.upper(), lesson)
             if key in override_index:
                 raise ValueError(f"Duplicate workbook override target: {key}")
             override_index[key] = event
 
     for index, item in enumerate(override_data.get("overrides", []), 1):
+        match_lesson = item.get("match_lesson", item.get("lesson"))
         key = (
             item["date"],
-            str(item["course_code"]).upper(),
-            str(item["class"]).upper(),
-            int(item["lesson"]),
+            str(item.get("match_course_code", item["course_code"])).upper(),
+            str(item.get("match_class", item["class"])).upper(),
+            999 if match_lesson is None else int(match_lesson),
         )
         event = override_index.get(key)
         if event is None:
             raise ValueError(f"Override entry {index} has no workbook lesson: {key}")
         text = norm_text(item["text"])
         code, cls, lesson, _start = course_sort_parts(text)
-        if (event["date"], code.upper(), cls.upper(), lesson) != key:
-            raise ValueError(f"Override entry {index} text does not match its key: {key}")
+        output_lesson = item.get("lesson")
+        output_key = (
+            item["date"],
+            str(item["course_code"]).upper(),
+            str(item["class"]).upper(),
+            999 if output_lesson is None else int(output_lesson),
+        )
+        if (event["date"], code.upper(), cls.upper(), lesson) != output_key:
+            raise ValueError(f"Override entry {index} text does not match its output key: {output_key}")
         title, detail = split_title(text)
         cat, cat_label = category(text)
         status = item.get("status", override_default_status or event["status"])
@@ -557,7 +587,7 @@ def event_fields(ev):
     text = str(ev.get("text") or "")
     title = str(ev.get("title") or "")
     category = ev.get("category")
-    parts = [part.strip() for part in text.split(" / ") if part.strip()]
+    parts = slash_parts(text)
 
     teacher_m = TEACHER_RE.search(text)
     teacher = str(ev.get("teacher") or (teacher_m.group(1) if teacher_m else "-"))
@@ -734,13 +764,14 @@ for e in display_events:
 layer_counts = {"mine": 0, "class": 0, "other": 0}
 for e in display_events:
     layer_counts[event_layer(e)] += 1
-months_html = ''.join(month_html(YEAR, m) for m in range(6, 13))
+months_html = ''.join(month_html(YEAR, m) for m in range(5, 13))
 cat_filters = ''.join(f'<button class="filter course-filter {ehtml(group_status)}" data-filter="{ehtml(slug)}" data-first-date="{ehtml(first_date)}" data-status-summary="{ehtml(group_status)}" title="{ehtml(label)} · {ehtml(group_status)}">{ehtml(label)} ({sum(1 for e in display_events if e["group"] == slug)})</button>' for label, slug, group_status, first_date in GROUPS)
 erb_code_legend = ''.join(
     f'<div class="code-key"><b>{ehtml(code)}</b><span>{ehtml(name)}</span></div>'
     for code, name in [
         ("HK239HG", "人工智能知識及應用證書（兼讀制）"),
         ("HK244EG", "人工智能創作營銷社交媒體內容技巧證書（兼讀制）"),
+        ("HK244HG", "人工智能創作營銷社交媒體內容技巧證書（兼讀制）"),
         ("HK265HG", "Certificate in AI-enhanced Social Media Content"),
         ("HK281DS", "創意數碼媒體設計及製作助理證書"),
     ]
@@ -749,7 +780,7 @@ erb_code_legend = ''.join(
 HTML = f'''<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=6, user-scalable=yes">
 <title>Garett's ERB — Super Timetable</title>
-<meta name="description" content="ERB / YMCA / school teaching timetable, June to December 2026. Solid frame = confirmed; dotted frame = unconfirmed.">
+<meta name="description" content="ERB / YMCA / school teaching timetable, May to December 2026. Solid frame = confirmed; dotted frame = unconfirmed.">
 <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Garett's ERB"><meta name="application-name" content="Garett's ERB"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0f7074">
 <meta name="erb-build" content="{BUILD_ID}">
@@ -758,7 +789,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <meta http-equiv="Expires" content="0">
 <script>window.ERB_BUILD_ID='{BUILD_ID}';(function(){{if(!/^https?:$/.test(location.protocol))return;var p=new URLSearchParams(location.search);if(p.get('build')!==window.ERB_BUILD_ID){{p.set('build',window.ERB_BUILD_ID);location.replace(location.pathname+'?'+p.toString()+location.hash);}}}})();</script>
 <style>{CSS}</style></head><body><main class="wrap">
-<div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">June–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
+<div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
 <div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div><div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
 <div class="section-h">ERB course codes</div><div class="course-code-legend">{erb_code_legend}</div>
