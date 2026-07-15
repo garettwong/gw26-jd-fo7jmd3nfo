@@ -170,7 +170,16 @@ assert all(row["status"] == "unconfirmed" for row in mc)
 # Rejected, reassigned, or not-yet-accepted proposals must not enter the active timetable.
 for excluded in ("HK280HG", "BK151HG", "BK155HG"):
     assert not rows_with(excluded), f"Unexpected active timetable entry: {excluded}"
-assert not rows_with("HK239HG", "Class CW")
+hk239_cw10 = rows_with("HK239HG", "Class CW10", rows=EVENTS)
+assert len(hk239_cw10) == 1
+assert hk239_cw10[0]["date"] == "2026-08-27"
+assert hk239_cw10[0]["status"] == "unconfirmed"
+assert teacher(hk239_cw10[0]) == "Garett"
+assert "0900-1200" in hk239_cw10[0]["text"]
+assert not any(
+    re.search(r"Class CW(?!10\b)", row["text"])
+    for row in rows_with("HK239HG")
+)
 
 index = (ROOT / "index.html").read_text(encoding="utf-8")
 assert "May 2026" in index and "HK244HG" in index

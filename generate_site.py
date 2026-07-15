@@ -8,17 +8,17 @@ try:
 except (AttributeError, OSError):
     pass
 
-SRC = Path(r"C:/Users/garet/OneDrive/桌面/Timetable/ERB Super Timetable 04_checking 09_20260712_R05_HK281DSCW7_MC0106DS_Colored.xlsx")
+SRC = Path(r"C:/Users/garet/OneDrive/桌面/Timetable/ERB Super Timetable 04_checking 10_20260715_V07_HK239HGCW10.xlsx")
 OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "version-selector-six-button-grid-20260715-v06"
+BUILD_ID = "hk239hg-cw10-checked-20260715-v07"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-14-V04"
 COMPARE_LABEL = "V04"
-EXPECTED_COMPARISON_CHANGES = 52
+EXPECTED_COMPARISON_CHANGES = 53
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [

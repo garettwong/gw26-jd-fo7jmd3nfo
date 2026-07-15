@@ -1,9 +1,14 @@
 [
   {
+    "id": "2026-07-15-V07",
+    "label": "2026-07-15 - V07",
+    "summary": "Added the clean Aug 27 HK239HG Class CW10 lesson as pending after checking all six proposed dates; rejected conflicts remain outside the active timetable.",
+    "latest": true
+  },
+  {
     "id": "2026-07-15-V06",
     "label": "2026-07-15 - V06",
-    "summary": "Added a version-selector shortcut and arranged the six floating controls in a 3 by 2 grid; schedule data unchanged from V05c.",
-    "latest": true
+    "summary": "Added a version-selector shortcut and arranged the six floating controls in a 3 by 2 grid; schedule data unchanged from V05c."
   },
   {
     "id": "2026-07-14-V05c",
