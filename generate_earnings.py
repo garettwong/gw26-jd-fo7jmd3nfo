@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import base64
+import html
 import json
 import os
 import re
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
+from string import Template
 
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
@@ -14,11 +16,15 @@ from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "earnings"
 KEY_FILE = ROOT / "private_earnings_key.txt"
-EVENTS = json.loads((ROOT / "events.json").read_text(encoding="utf-8"))
-TIME_RE = re.compile(r"(?<!\d)(\d{1,2})(?::?(\d{2}))?\s*(?:[AaPp][Mm])?\s*[-–]\s*(\d{1,2})(?::?(\d{2}))?\s*(?:[AaPp][Mm])?(?!\d)")
+VERSIONS = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
+TIME_RE = re.compile(
+    r"(?<!\d)(\d{1,2})(?::?(\d{2}))?\s*(?:[AaPp][Mm])?\s*[-\u2013]\s*"
+    r"(\d{1,2})(?::?(\d{2}))?\s*(?:[AaPp][Mm])?(?!\d)"
+)
 CANCELLED_RE = re.compile(r"cancel(?:led|ed)", re.I)
 GARETT_RE = re.compile(r"\bGar(?:e|r)tt\b", re.I)
 MONTHS = ("June", "July", "August", "September", "October", "November", "December")
+AAD = b"erb-earnings-v1"
 
 
 def event_interval(text: str) -> tuple[int, int] | None:
@@ -56,11 +62,11 @@ def merge_minutes(intervals: list[tuple[int, int]]) -> int:
     return sum(end - start for start, end in merged)
 
 
-def calculate(statuses: set[str]) -> dict:
+def calculate(events: list[dict], statuses: set[str]) -> dict:
     regular_by_date: dict[str, list[tuple[int, int]]] = defaultdict(list)
     dgs_dates: set[str] = set()
     counted_events = 0
-    for event in EVENTS:
+    for event in events:
         event_date = event["date"]
         if not ("2026-06-01" <= event_date <= "2026-12-31"):
             continue
@@ -109,49 +115,127 @@ def encode(value: bytes) -> str:
     return base64.urlsafe_b64encode(value).decode("ascii").rstrip("=")
 
 
-if KEY_FILE.exists():
-    key = base64.urlsafe_b64decode(KEY_FILE.read_text(encoding="ascii").strip() + "==")
-else:
-    key = AESGCM.generate_key(bit_length=256)
-    KEY_FILE.write_text(encode(key), encoding="ascii")
+def encrypt_report(report: dict, key: bytes) -> dict:
+    plaintext = json.dumps(report, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    nonce = os.urandom(12)
+    ciphertext = AESGCM(key).encrypt(nonce, plaintext, AAD)
+    return {"version": 1, "nonce": encode(nonce), "ciphertext": encode(ciphertext)}
 
-report = {
-    "name": "Garett Wong",
-    "period": "June to December 2026",
-    "generated": date.today().isoformat(),
-    "version": "2026-07-15 - V07",
-    "rates": {"ERB and SEN": "HKD 300/hour", "DGS": "HKD 900/hour, 4 hours/day"},
-    "confirmed": calculate({"confirmed"}),
-    "confirmed_and_unconfirmed": calculate({"confirmed", "unconfirmed"}),
-    "notes": [
-        "Only Garett's lessons are counted; YMCA SEN and DGS are treated as Garett's lessons.",
-        "June 3, Mike Sir, cancelled lessons, holidays, and other teachers are excluded.",
-        "Overlapping time ranges on the same date are merged to prevent double payment.",
-        "The June 18 afternoon SEN entry is included because the source says black rain but does not say cancelled.",
-    ],
-}
-plaintext = json.dumps(report, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
-nonce = os.urandom(12)
-ciphertext = AESGCM(key).encrypt(nonce, plaintext, b"erb-earnings-v1")
-OUT.mkdir(exist_ok=True)
-(OUT / "earnings.enc.json").write_text(json.dumps({
-    "version": 1,
-    "nonce": encode(nonce),
-    "ciphertext": encode(ciphertext),
-}), encoding="utf-8")
 
-page = r'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#0f7074"><title>Private earnings</title>
+def build_report(item: dict, events: list[dict]) -> dict:
+    return {
+        "name": "Garett Wong",
+        "period": "June to December 2026",
+        "generated": date.today().isoformat(),
+        "version": item["label"],
+        "version_id": item["id"],
+        "rates": {"ERB and SEN": "HKD 300/hour", "DGS": "HKD 900/hour, 4 hours/day"},
+        "confirmed": calculate(events, {"confirmed"}),
+        "confirmed_and_unconfirmed": calculate(events, {"confirmed", "unconfirmed"}),
+        "notes": [
+            "Only Garett's lessons are counted; YMCA SEN and DGS are treated as Garett's lessons.",
+            "June 3, Mike Sir, cancelled lessons, holidays, and other teachers are excluded.",
+            "Overlapping time ranges on the same date are merged to prevent double payment.",
+            "The June 18 afternoon SEN entry is included because the source says black rain but does not say cancelled.",
+        ],
+    }
+
+
+SELECTOR_PAGE = Template(r'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"><meta name="theme-color" content="#0f7074"><link rel="icon" href="../favicon-32.png"><title>Private salary versions</title>
 <style>
-:root{--ink:#1d2734;--muted:#667387;--line:#d7dee8;--paper:#fff;--bg:#eef1f6;--teal:#0f7074;--orange:#f2a33a;--red:#b42318}*{box-sizing:border-box}html{background:var(--bg);color:var(--ink);font:15px/1.4 "Segoe UI",Arial,sans-serif;letter-spacing:0}body{margin:0}header{background:#fff;border-bottom:1px solid var(--line);border-top:6px solid var(--teal)}.bar,main{max-width:1040px;margin:auto;padding-left:20px;padding-right:20px}.bar{padding-top:18px;padding-bottom:18px}h1{font-size:24px;margin:0}.sub{color:var(--muted);margin:4px 0 0}.modes{display:flex;gap:6px;margin:22px 0 14px}.modes button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:6px;font:inherit;font-weight:700}.modes button.active{background:var(--teal);border-color:var(--teal);color:#fff}.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);background:#fff;border-radius:8px;margin-bottom:16px}.metric{padding:15px;border-right:1px solid var(--line)}.metric:last-child{border-right:0}.metric small{display:block;color:var(--muted);font-weight:700}.metric strong{display:block;font-size:24px;margin-top:4px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#fff}table{width:100%;border-collapse:collapse;min-width:720px}th,td{text-align:right;padding:11px 12px;border-bottom:1px solid var(--line)}th{font-size:12px;color:var(--muted);background:#f7f9fb}th:first-child,td:first-child{text-align:left}tbody tr:last-child td{border-bottom:0}td.total{font-weight:850;color:var(--teal)}.notes{margin:18px 0 40px;color:var(--muted)}.notes h2{font-size:14px;color:var(--ink)}.notes li{margin:5px 0}.locked{max-width:520px;margin:15vh auto;background:#fff;border:1px solid var(--line);border-top:6px solid var(--red);padding:24px;border-radius:8px}.hidden{display:none}@media(max-width:620px){.bar,main{padding-left:12px;padding-right:12px}.summary{grid-template-columns:1fr}.metric{border-right:0;border-bottom:1px solid var(--line)}.metric:last-child{border-bottom:0}.metric strong{font-size:21px}.modes{display:grid;grid-template-columns:1fr 1fr}.modes button{padding:10px 6px;font-size:13px}}
-</style></head><body><div id="locked" class="locked"><h1>Private link required</h1><p>This earnings page needs the complete private URL, including the key after <strong>#</strong>.</p></div><div id="app" class="hidden"><header><div class="bar"><h1 id="title"></h1><p class="sub" id="subtitle"></p></div></header><main><div class="modes"><button type="button" data-mode="confirmed" class="active">Confirmed</button><button type="button" data-mode="confirmed_and_unconfirmed">Confirmed + unconfirmed</button></div><section class="summary"><div class="metric"><small>Total earnings</small><strong id="grand"></strong></div><div class="metric"><small>Counted source entries</small><strong id="events"></strong></div><div class="metric"><small>Rates</small><strong style="font-size:15px" id="rates"></strong></div></section><div class="table-wrap"><table><thead><tr><th>Month</th><th>ERB/SEN hours</th><th>ERB/SEN pay</th><th>DGS hours</th><th>DGS pay</th><th>Total</th></tr></thead><tbody id="rows"></tbody></table></div><section class="notes"><h2>Calculation rules</h2><ul id="notes"></ul></section></main></div>
+:root{--ink:#1d2734;--muted:#667387;--line:#d7dee8;--paper:#fff;--bg:#eef1f6;--teal:#0f7074;--orange:#f2a33a;--red:#b42318}*{box-sizing:border-box}html{background:var(--bg);color:var(--ink);font:15px/1.4 "Segoe UI",Arial,sans-serif;letter-spacing:0}body{margin:0;min-height:100vh}header{background:#fff;border-top:6px solid var(--teal);border-bottom:1px solid var(--line)}.bar,main{max-width:980px;margin:auto;padding-left:20px;padding-right:20px}.bar{padding-top:18px;padding-bottom:18px;display:flex;align-items:center;gap:14px}.mark{width:48px;height:48px;border-radius:8px;background:var(--teal);display:grid;place-items:center;color:#fff;font-size:22px;font-weight:900;box-shadow:inset 0 9px 0 var(--orange)}.copy{flex:1;min-width:0}h1{font-size:23px;line-height:1.15;margin:0}.sub{color:var(--muted);margin:4px 0 0}.nav{display:flex;gap:7px}.nav a,.nav button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);font:inherit;font-weight:800;text-decoration:none;white-space:nowrap}.nav a:hover,.nav button:hover,.nav a:focus-visible,.nav button:focus-visible{background:#e9f5f4;outline:0}main{padding-top:24px;padding-bottom:48px}h2{font-size:13px;text-transform:uppercase;color:var(--muted);margin:0 0 10px}.versions{border:1px solid var(--line);background:var(--paper);border-radius:8px;overflow:hidden}.version{width:100%;min-height:78px;padding:14px 16px;display:flex;align-items:center;gap:14px;border:0;border-bottom:1px solid var(--line);background:#fff;color:inherit;text-align:left;font:inherit;cursor:pointer}.version:last-child{border-bottom:0}.version:hover,.version:focus-visible{background:#f5faf9;outline:0}.version-main{display:flex;align-items:center;gap:9px;flex:1;min-width:0;flex-wrap:wrap}.version strong{font-size:17px}.version small{flex-basis:100%;color:var(--muted);font-size:13px}.latest{background:var(--teal);color:#fff;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:800}.open{font-size:28px;color:var(--teal)}.locked{max-width:520px;margin:15vh auto;background:#fff;border:1px solid var(--line);border-top:6px solid var(--red);padding:24px;border-radius:8px}.locked h1{font-size:23px}.locked p{color:var(--muted)}.hidden{display:none}@media(max-width:620px){.bar{padding:14px 12px;align-items:flex-start;flex-wrap:wrap}.mark{width:42px;height:42px}.copy{width:calc(100% - 58px)}h1{font-size:20px}.nav{width:100%;display:grid;grid-template-columns:1fr 1fr}.nav a,.nav button{width:100%}main{padding:18px 12px 36px}.version{padding:13px 12px}.version strong{font-size:16px}}
+</style></head><body><div id="locked" class="locked"><h1>Private salary link required</h1><p>Open the complete private salary URL once on this device. The shareable timetable never contains your access key.</p></div><div id="app" class="hidden"><header><div class="bar"><div class="mark" aria-hidden="true">&#36;</div><div class="copy"><h1>Garett's Salary</h1><p class="sub">Select a saved timetable version.</p></div><div class="nav"><a href="../master/?v=redtext1">Timetable</a><button id="lock" type="button">Lock</button></div></div></header><main><h2>Salary Versions</h2><div class="versions">$version_rows</div></main></div>
 <script>
+const STORAGE_KEY='garetts-erb-earnings-key-v1';
+const dec=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return Uint8Array.from(atob(s),c=>c.charCodeAt(0))};
+function candidate(){const hash=location.hash.slice(1);const fromHash=hash.replace(/^key=/,'');return fromHash||localStorage.getItem(STORAGE_KEY)||''}
+async function decrypt(path,raw){const key=await crypto.subtle.importKey('raw',dec(raw),'AES-GCM',false,['decrypt']);const enc=await fetch(path,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('Missing encrypted report');return r.json()});const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:dec(enc.nonce),additionalData:new TextEncoder().encode('erb-earnings-v1')},key,dec(enc.ciphertext));return JSON.parse(new TextDecoder().decode(plain))}
+async function start(){const raw=candidate();if(!raw)return;try{await decrypt('versions/$latest_id/earnings.enc.json',raw);localStorage.setItem(STORAGE_KEY,raw);document.getElementById('locked').remove();document.getElementById('app').classList.remove('hidden');document.querySelectorAll('[data-version]').forEach(button=>button.addEventListener('click',()=>location.assign('versions/'+button.dataset.version+'/#key='+raw)));document.getElementById('lock').addEventListener('click',()=>{localStorage.removeItem(STORAGE_KEY);history.replaceState(null,'',location.pathname);location.reload()})}catch(error){document.querySelector('#locked p').textContent='This private link is invalid or the encrypted salary data could not be opened.'}}
+start();window.addEventListener('hashchange',start);
+</script></body></html>''')
+
+
+REPORT_PAGE = r'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"><meta name="theme-color" content="#0f7074"><link rel="icon" href="../../../favicon-32.png"><title>Private salary report</title>
+<style>
+:root{--ink:#1d2734;--muted:#667387;--line:#d7dee8;--paper:#fff;--bg:#eef1f6;--teal:#0f7074;--orange:#f2a33a;--red:#b42318}*{box-sizing:border-box}html{background:var(--bg);color:var(--ink);font:15px/1.4 "Segoe UI",Arial,sans-serif;letter-spacing:0}body{margin:0}header{background:#fff;border-bottom:1px solid var(--line);border-top:6px solid var(--teal)}.bar,main{max-width:1040px;margin:auto;padding-left:20px;padding-right:20px}.bar{padding-top:18px;padding-bottom:18px;display:flex;align-items:center;gap:14px}.copy{flex:1;min-width:0}h1{font-size:24px;margin:0}.sub{color:var(--muted);margin:4px 0 0}.nav{display:flex;gap:7px}.nav a,.nav button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);font:inherit;font-weight:800;text-decoration:none;white-space:nowrap}.nav a:hover,.nav button:hover,.nav a:focus-visible,.nav button:focus-visible{background:#e9f5f4;outline:0}.modes{display:flex;gap:6px;margin:22px 0 14px}.modes button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:6px;font:inherit;font-weight:700}.modes button.active{background:var(--teal);border-color:var(--teal);color:#fff}.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);background:#fff;border-radius:8px;margin-bottom:16px}.metric{padding:15px;border-right:1px solid var(--line)}.metric:last-child{border-right:0}.metric small{display:block;color:var(--muted);font-weight:700}.metric strong{display:block;font-size:24px;margin-top:4px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#fff}table{width:100%;border-collapse:collapse;min-width:720px}th,td{text-align:right;padding:11px 12px;border-bottom:1px solid var(--line)}th{font-size:12px;color:var(--muted);background:#f7f9fb}th:first-child,td:first-child{text-align:left}tbody tr:last-child td{border-bottom:0}td.total{font-weight:850;color:var(--teal)}.notes{margin:18px 0 40px;color:var(--muted)}.notes h2{font-size:14px;color:var(--ink)}.notes li{margin:5px 0}.locked{max-width:520px;margin:15vh auto;background:#fff;border:1px solid var(--line);border-top:6px solid var(--red);padding:24px;border-radius:8px}.hidden{display:none}@media(max-width:620px){.bar,main{padding-left:12px;padding-right:12px}.bar{align-items:flex-start;flex-wrap:wrap}.copy{width:100%}.nav{width:100%;display:grid;grid-template-columns:1fr 1fr}.nav a,.nav button{width:100%}.summary{grid-template-columns:1fr}.metric{border-right:0;border-bottom:1px solid var(--line)}.metric:last-child{border-bottom:0}.metric strong{font-size:21px}.modes{display:grid;grid-template-columns:1fr 1fr}.modes button{padding:10px 6px;font-size:13px}}
+</style></head><body><div id="locked" class="locked"><h1>Private salary link required</h1><p>This report needs the private salary link or a key already saved on this device.</p></div><div id="app" class="hidden"><header><div class="bar"><div class="copy"><h1 id="title"></h1><p class="sub" id="subtitle"></p></div><div class="nav"><a href="../../">Versions</a><button id="lock" type="button">Lock</button></div></div></header><main><div class="modes"><button type="button" data-mode="confirmed" class="active">Confirmed</button><button type="button" data-mode="confirmed_and_unconfirmed">Confirmed + unconfirmed</button></div><section class="summary"><div class="metric"><small>Total earnings</small><strong id="grand"></strong></div><div class="metric"><small>Counted source entries</small><strong id="events"></strong></div><div class="metric"><small>Rates</small><strong style="font-size:15px" id="rates"></strong></div></section><div class="table-wrap"><table><thead><tr><th>Month</th><th>ERB/SEN hours</th><th>ERB/SEN pay</th><th>DGS hours</th><th>DGS pay</th><th>Total</th></tr></thead><tbody id="rows"></tbody></table></div><section class="notes"><h2>Calculation rules</h2><ul id="notes"></ul></section></main></div>
+<script>
+const STORAGE_KEY='garetts-erb-earnings-key-v1';
 const dec=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return Uint8Array.from(atob(s),c=>c.charCodeAt(0))};
 const money=n=>new Intl.NumberFormat('en-HK',{style:'currency',currency:'HKD',maximumFractionDigits:0}).format(n);
 const hours=n=>Number.isInteger(n)?String(n):n.toFixed(2).replace(/0+$/,'').replace(/\.$/,'');
-async function start(){try{const raw=location.hash.slice(1).replace(/^key=/,'');if(!raw)return;const key=await crypto.subtle.importKey('raw',dec(raw),'AES-GCM',false,['decrypt']);const enc=await fetch('earnings.enc.json',{cache:'no-store'}).then(r=>r.json());const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:dec(enc.nonce),additionalData:new TextEncoder().encode('erb-earnings-v1')},key,dec(enc.ciphertext));const data=JSON.parse(new TextDecoder().decode(plain));document.getElementById('locked').remove();document.getElementById('app').classList.remove('hidden');document.getElementById('title').textContent=data.name+' — Earnings';document.getElementById('subtitle').textContent=data.period+' · '+data.version+' · Updated '+data.generated;document.getElementById('rates').textContent=Object.values(data.rates).join(' · ');document.getElementById('notes').innerHTML=data.notes.map(x=>'<li>'+x.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))+'</li>').join('');function render(mode){const d=data[mode];document.getElementById('grand').textContent=money(d.grand_total);document.getElementById('events').textContent=d.counted_events;document.getElementById('rows').innerHTML=d.months.map(r=>`<tr><td>${r.month}</td><td>${hours(r.regular_hours)}</td><td>${money(r.regular_pay)}</td><td>${hours(r.dgs_hours)}</td><td>${money(r.dgs_pay)}</td><td class="total">${money(r.total)}</td></tr>`).join('');document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode))}document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>render(b.dataset.mode));render('confirmed')}catch(e){document.querySelector('#locked p').textContent='This private link is invalid or the encrypted data could not be opened.'}}start();
+function candidate(){const hash=location.hash.slice(1);const fromHash=hash.replace(/^key=/,'');return fromHash||localStorage.getItem(STORAGE_KEY)||''}
+async function start(){try{const raw=candidate();if(!raw)return;const key=await crypto.subtle.importKey('raw',dec(raw),'AES-GCM',false,['decrypt']);const enc=await fetch('earnings.enc.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('Missing encrypted report');return r.json()});const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:dec(enc.nonce),additionalData:new TextEncoder().encode('erb-earnings-v1')},key,dec(enc.ciphertext));const data=JSON.parse(new TextDecoder().decode(plain));localStorage.setItem(STORAGE_KEY,raw);document.getElementById('locked').remove();document.getElementById('app').classList.remove('hidden');document.getElementById('title').textContent=data.name+' - Salary';document.getElementById('subtitle').textContent=data.period+' · '+data.version+' · Updated '+data.generated;document.getElementById('rates').textContent=Object.values(data.rates).join(' · ');document.getElementById('notes').innerHTML=data.notes.map(x=>'<li>'+x.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))+'</li>').join('');function render(mode){const d=data[mode];document.getElementById('grand').textContent=money(d.grand_total);document.getElementById('events').textContent=d.counted_events;document.getElementById('rows').innerHTML=d.months.map(r=>'<tr><td>'+r.month+'</td><td>'+hours(r.regular_hours)+'</td><td>'+money(r.regular_pay)+'</td><td>'+hours(r.dgs_hours)+'</td><td>'+money(r.dgs_pay)+'</td><td class="total">'+money(r.total)+'</td></tr>').join('');document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode))}document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>render(b.dataset.mode));document.getElementById('lock').addEventListener('click',()=>{localStorage.removeItem(STORAGE_KEY);location.replace('../../')});render('confirmed')}catch(error){document.querySelector('#locked p').textContent='This private link is invalid or the encrypted salary data could not be opened.'}}
+start();
 </script></body></html>'''
-(OUT / "index.html").write_text(page, encoding="utf-8")
-print(OUT)
-print("PRIVATE_URL_FRAGMENT=" + encode(key))
-print(json.dumps({k: v["grand_total"] for k, v in report.items() if isinstance(v, dict) and "grand_total" in v}, indent=2))
+
+
+def version_row(item: dict) -> str:
+    latest = '<span class="latest">Latest</span>' if item.get("latest") else ""
+    return (
+        f'<button class="version" type="button" data-version="{html.escape(item["id"], quote=True)}">'
+        f'<span class="version-main"><strong>{html.escape(item["label"])}</strong>{latest}'
+        f'<small>{html.escape(item["summary"])}</small></span>'
+        f'<span class="open" aria-hidden="true">&rsaquo;</span></button>'
+    )
+
+
+def load_or_create_key() -> bytes:
+    if KEY_FILE.exists():
+        stored = KEY_FILE.read_text(encoding="ascii").strip()
+        return base64.urlsafe_b64decode(stored + "=" * (-len(stored) % 4))
+    key = AESGCM.generate_key(bit_length=256)
+    KEY_FILE.write_text(encode(key), encoding="ascii")
+    return key
+
+
+def main() -> None:
+    key = load_or_create_key()
+    OUT.mkdir(exist_ok=True)
+    versions_out = OUT / "versions"
+    versions_out.mkdir(exist_ok=True)
+    totals: dict[str, dict[str, float]] = {}
+    latest_payload = None
+
+    for item in VERSIONS:
+        source = ROOT / "versions" / item["id"] / "events.json"
+        if not source.exists():
+            raise FileNotFoundError(f"Missing version event ledger: {source}")
+        events = json.loads(source.read_text(encoding="utf-8"))
+        report = build_report(item, events)
+        payload = encrypt_report(report, key)
+        destination = versions_out / item["id"]
+        destination.mkdir(exist_ok=True)
+        (destination / "earnings.enc.json").write_text(
+            json.dumps(payload, separators=(",", ":")), encoding="utf-8"
+        )
+        (destination / "index.html").write_text(REPORT_PAGE, encoding="utf-8")
+        totals[item["id"]] = {
+            "confirmed": report["confirmed"]["grand_total"],
+            "confirmed_and_unconfirmed": report["confirmed_and_unconfirmed"]["grand_total"],
+        }
+        if item.get("latest"):
+            latest_payload = payload
+
+    latest = next(item for item in VERSIONS if item.get("latest"))
+    rows = "".join(version_row(item) for item in VERSIONS)
+    selector = SELECTOR_PAGE.substitute(version_rows=rows, latest_id=latest["id"])
+    (OUT / "index.html").write_text(selector, encoding="utf-8")
+    (OUT / "versions.json").write_text(
+        json.dumps(VERSIONS, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    if latest_payload is None:
+        raise ValueError("versions.json has no latest earnings version")
+    (OUT / "earnings.enc.json").write_text(
+        json.dumps(latest_payload, separators=(",", ":")), encoding="utf-8"
+    )
+
+    print(OUT)
+    print("PRIVATE_URL_FRAGMENT=" + encode(key))
+    print(json.dumps(totals, indent=2))
+
+
+if __name__ == "__main__":
+    main()

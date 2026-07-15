@@ -13,12 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "hk239hg-cw10-priority-redo-20260715-v07"
+BUILD_ID = "hk239hg-cw10-weekday-alternatives-20260715-v07a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-15-V06"
-COMPARE_LABEL = "V07"
-EXPECTED_COMPARISON_CHANGES = 7
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-15-V07"
+COMPARE_LABEL = "V07a"
+COMPARE_BASELINE_LABEL = "V07"
+EXPECTED_COMPARISON_CHANGES = 2
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
@@ -437,13 +438,16 @@ if CONTEXT_SRC.exists():
         if key in baseline_keys:
             raise ValueError(f"Context entry {index} duplicates a workbook lesson: {key}")
         title, detail = split_title(text)
+        layer = item.get("layer", "class")
+        if layer not in {"mine", "class"}:
+            raise ValueError(f"Context entry {index} has invalid layer: {layer}")
         ev = {
             "date": dt.isoformat(), "month": calendar.month_name[dt.month], "row": 999, "col": 999,
             "cell": f"context-{index}", "text": text, "title": title, "detail": detail,
             "status": item.get("status", "unconfirmed"), "fill": "", "category": cat,
             "category_label": cat_label, "html": html.escape(text, quote=True),
             "title_html": html.escape(title, quote=True), "detail_html": html.escape(detail, quote=True),
-            "red": False, "layer": "class",
+            "red": bool(item.get("red", False)), "layer": layer,
             "teacher": item.get("teacher", "Other tutor / TBC"), "source": item.get("source", ""),
         }
         context_events.append(ev)
@@ -484,6 +488,17 @@ if len(changed_events) != EXPECTED_COMPARISON_CHANGES:
     raise ValueError(
         f"Expected {EXPECTED_COMPARISON_CHANGES} changes in {COMPARE_LABEL}, found {len(changed_events)}"
     )
+
+comparison_legend_html = (
+    f'<div class="legend-card"><span class="sample changed-sample"></span> Changed in {COMPARE_LABEL}</div>'
+    if changed_events else ""
+)
+comparison_filter_html = (
+    f'<button class="filter course-filter change-filter" data-filter="changed" '
+    f'data-first-date="{min(event["date"] for event in changed_events)}">'
+    f'Changed in {COMPARE_LABEL} ({len(changed_events)})</button>'
+    if changed_events else ""
+)
 
 for ds in by_date:
     by_date[ds].sort(key=event_sort_key)
@@ -867,9 +882,9 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <style>{CSS}</style></head><body><main class="wrap">
 <div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
-<div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div><div class="legend-card"><span class="sample changed-sample"></span> Changed in {COMPARE_LABEL}</div><div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
+<div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div>{comparison_legend_html}<div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
 <div class="section-h">ERB course codes</div><div class="course-code-legend">{erb_code_legend}</div>
-<div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filters"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button><button class="filter course-filter change-filter" data-filter="changed" data-first-date="{min(event['date'] for event in changed_events)}">Changed in {COMPARE_LABEL} ({len(changed_events)})</button>{cat_filters}</div>
+<div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filters"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{comparison_filter_html}{cat_filters}</div>
 {months_html}
 <div class="foot">Sources: <b>{ehtml(SRC.name)}</b>, <b>{ehtml(OVERRIDES_SRC.name)}</b>, and <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
 </main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view and navigation"><button id="floatingToday" class="today-option" type="button" aria-label="Go to today" title="Go to today"><span class="mode-main">TODAY</span></button><button id="floatingTop" class="top-option" type="button" aria-label="Back to course filters" title="Back to course filters"><span class="mode-main" aria-hidden="true">&uarr;</span><span class="mode-sub">FILTER</span></button><button id="floatingVersions" class="version-option" type="button" aria-label="Back to version selector" title="Back to version selector"><span class="mode-main" aria-hidden="true">&#9776;</span><span class="mode-sub">VERS</span></button><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All: full timetable" title="All: full timetable"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div><div id="installGuide" class="install-guide" hidden><div class="install-sheet" role="dialog" aria-modal="true" aria-labelledby="installTitle"><button class="install-close" type="button" aria-label="Close install guide">×</button><div class="install-head"><img class="install-icon" src="icon-180.png" alt="Garett's ERB app icon"><div><h2 id="installTitle" class="install-title">Add Garett's ERB</h2><p class="install-copy">Keep the timetable on your iPhone Home Screen.</p></div></div><div class="install-steps"><div class="install-step safari-only"><b>1</b><span>Tap <strong>Share</strong> in Safari.</span></div><div class="install-step safari-only"><b>2</b><span>Choose <strong>Add to Home Screen</strong>.</span></div><div class="install-step safari-only"><b>3</b><span>Turn on <strong>Open as Web App</strong>, then tap <strong>Add</strong>.</span></div><div class="install-step open-safari" hidden><b>1</b><span>Open this link in <strong>Safari</strong>, then use Share → Add to Home Screen.</span></div></div><button class="install-action" type="button">Got it</button><p class="install-note">This guide appears only once.</p></div></div><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
@@ -900,8 +915,8 @@ function openChip(el){{
   const esc=value=>String(value||'').replace(/[&<>"']/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[c]));
   modal.querySelector('.modal-h').textContent=cat;
   modal.querySelector('.modal-date').innerHTML=date+' · <span class="pill '+st+'">'+(st==='confirmed'?'Confirmed / 已確認':st==='unconfirmed'?'Unconfirmed / 未確認':'Note / 備註')+'</span>'+(layer==='class'?' <span class="pill class-layer">Full class context</span>':'')+(changed?' <span class="pill changed-pill">Changed in {COMPARE_LABEL}</span>':'');
-  const oldContent=changeKind==='new'?'<span class="comparison-new">Not present in V06</span>':esc(previous)+(previousStatus?'<div class="old-status">Status in V06: '+esc(previousStatus)+'</div>':'');
-  const comparison=changed?'<div class="comparison-old"><strong>V06 content</strong><div>'+oldContent+'</div></div>':'';
+  const oldContent=changeKind==='new'?'<span class="comparison-new">Not present in {COMPARE_BASELINE_LABEL}</span>':esc(previous)+(previousStatus?'<div class="old-status">Status in {COMPARE_BASELINE_LABEL}: '+esc(previousStatus)+'</div>':'');
+  const comparison=changed?'<div class="comparison-old"><strong>{COMPARE_BASELINE_LABEL} content</strong><div>'+oldContent+'</div></div>':'';
   modal.querySelector('.modal-body').innerHTML='<span class="modal-current-label">Current {COMPARE_LABEL} content</span><div class="modal-current">'+(html||txt)+'</div>'+comparison+(source?'<div class="modal-source">Source: '+esc(source)+'</div>':'');
   modal.hidden=false;
 }}
