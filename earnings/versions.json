@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-16-V07b",
+    "label": "2026-07-16 - V07b",
+    "summary": "Added Garett's eight 09:00-12:00 HK239HG CW10 replacement options: 24, 26 and 29 August; 5, 7, 9, 10 and 12 September. All remain unconfirmed, lesson number TBC, and excluded from salary.",
+    "latest": true
+  },
+  {
     "id": "2026-07-15-V07a",
     "label": "2026-07-15 - V07a",
     "summary": "Added two weekday 09:00-12:00 proposed HK239HG CW10 replacement slots on 24 and 26 August. Both are followed by a confirmed 14:00 class at the same Choi Wan centre; no Saturday is proposed.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-15-V07",

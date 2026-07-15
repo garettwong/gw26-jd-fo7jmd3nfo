@@ -205,12 +205,16 @@ def main() -> None:
             raise FileNotFoundError(f"Missing version event ledger: {source}")
         events = json.loads(source.read_text(encoding="utf-8"))
         report = build_report(item, events)
-        payload = encrypt_report(report, key)
         destination = versions_out / item["id"]
         destination.mkdir(exist_ok=True)
-        (destination / "earnings.enc.json").write_text(
-            json.dumps(payload, separators=(",", ":")), encoding="utf-8"
-        )
+        encrypted_report = destination / "earnings.enc.json"
+        if encrypted_report.exists():
+            payload = json.loads(encrypted_report.read_text(encoding="utf-8"))
+        else:
+            payload = encrypt_report(report, key)
+            encrypted_report.write_text(
+                json.dumps(payload, separators=(",", ":")), encoding="utf-8"
+            )
         (destination / "index.html").write_text(REPORT_PAGE, encoding="utf-8")
         totals[item["id"]] = {
             "confirmed": report["confirmed"]["grand_total"],
