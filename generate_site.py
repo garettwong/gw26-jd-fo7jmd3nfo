@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "hk239hg-cw10-weekday-alternatives-20260715-v07a"
+BUILD_ID = "hk239hg-cw10-additional-alternatives-20260716-v07b"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-15-V07"
-COMPARE_LABEL = "V07a"
-COMPARE_BASELINE_LABEL = "V07"
-EXPECTED_COMPARISON_CHANGES = 2
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-15-V07a"
+COMPARE_LABEL = "V07b"
+COMPARE_BASELINE_LABEL = "V07a"
+EXPECTED_COMPARISON_CHANGES = 8
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
