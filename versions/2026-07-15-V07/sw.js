@@ -1,4 +1,4 @@
-const BUILD_ID = 'hk239hg-cw10-checked-20260715-v07';
+const BUILD_ID = 'hk239hg-cw10-priority-redo-20260715-v07';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

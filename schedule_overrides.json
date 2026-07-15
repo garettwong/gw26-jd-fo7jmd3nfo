@@ -1,7 +1,7 @@
 {
-  "revision": "20260715_V07_HK239HG_CW10_CHECK",
+  "revision": "20260715_V07_REDO_PRIORITY_TRAVEL",
   "source": "Latest personal workbook plus Calvin final schedules and WhatsApp confirmations through 2026-07-14",
-  "confirmation": "V07 adds only the clean 2026-08-27 HK239HG Class CW10 lesson as Garett pending. The other five proposed dates were excluded after confirmed-SEN and pending-HK281DS conflict checks.",
+  "confirmation": "V07 accepts HK239HG Class CW10 lessons 1, 3, 5 and 6 as Garett pending. Lessons 2 and 4 remain rejected because confirmed YMCA SEN cannot be replaced. Pending HK281DS CW7 lessons 6, 10 and 12 were released after confirming the replacement lessons are at the same Choi Wan centre with a two-hour gap before the confirmed 1400 class.",
   "default_status": "confirmed",
   "overrides": [
     {
@@ -490,8 +490,38 @@
       "lesson": 1,
       "teacher": "Garett",
       "status": "unconfirmed",
-      "source": "HK239HG(CW10)_R2 image received 2026-07-15, lesson 1; checked reply V01",
+      "source": "HK239HG(CW10)_R2 image received 2026-07-15, lesson 1; checked reply V02",
       "text": "勵行-彩雲 (Garett) - HK239HG, Class CW10 / 人工智能知識及應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 0900-1200 - L1"
+    },
+    {
+      "date": "2026-08-31",
+      "course_code": "HK239HG",
+      "class": "CW10",
+      "lesson": 3,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HG(CW10)_R2 image received 2026-07-15, lesson 3; checked reply V02",
+      "text": "勵行-彩雲 (Garett) - HK239HG, Class CW10 / 人工智能知識及應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 0900-1200 - L3"
+    },
+    {
+      "date": "2026-09-02",
+      "course_code": "HK239HG",
+      "class": "CW10",
+      "lesson": 5,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HG(CW10)_R2 image received 2026-07-15, lesson 5; checked reply V02",
+      "text": "勵行-彩雲 (Garett) - HK239HG, Class CW10 / 人工智能知識及應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 0900-1200 - L5 [持續評估 / 小組討論及專題報告]"
+    },
+    {
+      "date": "2026-09-03",
+      "course_code": "HK239HG",
+      "class": "CW10",
+      "lesson": 6,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HG(CW10)_R2 image received 2026-07-15, lesson 6; checked reply V02",
+      "text": "勵行-彩雲 (Garett) - HK239HG, Class CW10 / 人工智能知識及應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 0900-1200 - L6 [期末筆試 1030-1130]"
     }
   ]
 }
