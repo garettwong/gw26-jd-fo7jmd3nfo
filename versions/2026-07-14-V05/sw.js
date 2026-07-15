@@ -1,4 +1,4 @@
-const BUILD_ID = 'version-selector-six-button-grid-20260715-v06';
+const BUILD_ID = 'source-audited-full-class-context-20260714-r05';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

@@ -1,28 +1,25 @@
 {
   "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 09_20260712_R05_HK281DSCW7_MC0106DS_Colored.xlsx",
   "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
-  "override_revision": "20260715_V06_VERSION_SELECTOR_GRID",
-  "override_confirmation": "V06 adds a version-selector shortcut, standardizes the floating controls to a 3 by 2 grid, and standardizes visible version names to Vxx. Schedule facts are unchanged from V05c.",
+  "override_revision": "HK244EG(CW)_R2_20260714_R03_NAME_CORRECTION",
+  "override_confirmation": "Calvin confirmed the HK244EG Class CW schedule on 2026-07-14",
   "events": 208,
-  "display_events": 304,
-  "context_events": 96,
-  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-07-14-V04",
-  "comparison_label": "V04",
-  "changed_since_r04": 52,
+  "display_events": 298,
+  "context_events": 90,
   "counts": {
     "confirmed": 170,
-    "unconfirmed": 127,
+    "unconfirmed": 121,
     "note": 7
   },
   "layers": {
     "mine": 196,
-    "class": 105,
+    "class": 99,
     "other": 3
   },
   "categories": {
     "YMCA SEN": 61,
     "School": 1,
-    "勵行 / ERB": 187,
+    "勵行 / ERB": 181,
     "Holiday": 6,
     "Mike Sir": 3,
     "DGS / UE": 2,

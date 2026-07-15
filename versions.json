@@ -1,9 +1,14 @@
 [
   {
+    "id": "2026-07-15-V06",
+    "label": "2026-07-15 - V06",
+    "summary": "Added a version-selector shortcut and arranged the six floating controls in a 3 by 2 grid; schedule data unchanged from V05c.",
+    "latest": true
+  },
+  {
     "id": "2026-07-14-V05c",
     "label": "2026-07-14 - V05c",
-    "summary": "Comparison view: 52 cards changed since V04 are highlighted, filterable, and show their previous content; schedule data unchanged from V05b.",
-    "latest": true
+    "summary": "Comparison view: 52 cards changed since V04 are highlighted, filterable, and show their previous content; schedule data unchanged from V05b."
   },
   {
     "id": "2026-07-14-V05b",
@@ -16,28 +21,28 @@
     "summary": "Content-ledger audit: corrected all six confirmed HK239HG SS lessons to 08:30-12:30."
   },
   {
-    "id": "2026-07-14-R05",
-    "label": "2026-07-14 - R05",
+    "id": "2026-07-14-V05",
+    "label": "2026-07-14 - V05",
     "summary": "Full source audit: corrected lesson codes, times and numbering; completed FS-1 context."
   },
   {
-    "id": "2026-07-14-R04",
-    "label": "2026-07-14 - R04",
+    "id": "2026-07-14-V04",
+    "label": "2026-07-14 - V04",
     "summary": "Added a floating back-to-filters button; schedule data unchanged."
   },
   {
-    "id": "2026-07-14-R03",
-    "label": "2026-07-14 - R03",
+    "id": "2026-07-14-V03",
+    "label": "2026-07-14 - V03",
     "summary": "Instructor name corrected to Calvin; confirmed HK244EG Class CW retained."
   },
   {
-    "id": "2026-07-14-R02",
-    "label": "2026-07-14 - R02",
+    "id": "2026-07-14-V02",
+    "label": "2026-07-14 - V02",
     "summary": "HK244EG Class CW marked confirmed."
   },
   {
-    "id": "2026-07-13-R01",
-    "label": "2026-07-13 - R01",
-    "summary": "HK244EG Class CW R2 schedule added for checking."
+    "id": "2026-07-13-V01",
+    "label": "2026-07-13 - V01",
+    "summary": "Calvin's HK244EG Class CW schedule added for checking."
   }
 ]

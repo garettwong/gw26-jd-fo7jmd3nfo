@@ -26,7 +26,7 @@ SNAPSHOT_FILES = (
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Create an immutable timetable version snapshot.")
-    parser.add_argument("version", help="Version folder name, for example 2026-07-14-R03")
+    parser.add_argument("version", help="Version folder name, for example 2026-07-15-V06")
     parser.add_argument("--commit", help="Read the snapshot files from this Git commit")
     args = parser.parse_args()
 

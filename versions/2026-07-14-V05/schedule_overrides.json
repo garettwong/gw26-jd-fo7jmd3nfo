@@ -1,7 +1,7 @@
 {
-  "revision": "20260715_V06_VERSION_SELECTOR_GRID",
+  "revision": "20260714_R05_FULL_SOURCE_AUDIT",
   "source": "Latest personal workbook plus Calvin final schedules and WhatsApp confirmations through 2026-07-14",
-  "confirmation": "V06 adds a version-selector shortcut, standardizes the floating controls to a 3 by 2 grid, and standardizes visible version names to Vxx. Schedule facts are unchanged from V05c.",
+  "confirmation": "Cross-checked against deduplicated Word/Excel schedules and the complete Calvin WhatsApp export",
   "default_status": "confirmed",
   "overrides": [
     {
@@ -178,15 +178,6 @@
       "text": "勵行-四海 (Garett) - HK265HG, Class FS - L12 / Certificate in AI-enhanced Social Media Content / 1400 - 1745 [Final Practical Exam 1420-1720]"
     },
     {
-      "date": "2026-10-07",
-      "course_code": "HK265HG",
-      "class": "FS",
-      "lesson": 9,
-      "status": "confirmed",
-      "source": "Latest personal workbook; Google Maps public-transit check 2026-07-14: Fourseas Building to Choi Wan 40-47 minutes within the 17:45-19:00 75-minute gap",
-      "text": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L9 [TIGHT TRAVEL ~40-47m]"
-    },
-    {
       "date": "2026-08-06",
       "match_course_code": "HK244EG",
       "course_code": "HK244HG",
@@ -305,66 +296,6 @@
       "teacher": "Calvin",
       "source": "HK244HG(CW8)_R3_final.docx and WhatsApp 2026-07-03, lesson 12",
       "text": "勵行-彩雲 (Calvin) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L12 [期末實務試 1515-1715]"
-    },
-    {
-      "date": "2026-09-16",
-      "course_code": "HK239HG",
-      "class": "SS",
-      "lesson": 1,
-      "teacher": "Garett",
-      "status": "confirmed",
-      "source": "上課地點SS.docx and WhatsApp 2026-06-19 explicit confirmation, SS lesson 1; Google Maps public-transit check 2026-07-14: Choi Yuen to Fourseas Building 55-61 minutes within the 12:30-14:00 90-minute gap",
-      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0830-1230 - L1 [TIGHT TRAVEL ~55-61m]"
-    },
-    {
-      "date": "2026-09-23",
-      "course_code": "HK239HG",
-      "class": "SS",
-      "lesson": 2,
-      "teacher": "Garett",
-      "status": "confirmed",
-      "source": "上課地點SS.docx and WhatsApp 2026-06-19 explicit confirmation, SS lesson 2; Google Maps public-transit check 2026-07-14: Choi Yuen to Fourseas Building 55-61 minutes within the 12:30-14:00 90-minute gap",
-      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0830-1230 - L2 [TIGHT TRAVEL ~55-61m]"
-    },
-    {
-      "date": "2026-09-30",
-      "course_code": "HK239HG",
-      "class": "SS",
-      "lesson": 3,
-      "teacher": "Garett",
-      "status": "confirmed",
-      "source": "上課地點SS.docx and WhatsApp 2026-06-19 explicit confirmation, SS lesson 3; Google Maps public-transit check 2026-07-14: Choi Yuen to Fourseas Building 55-61 minutes within the 12:30-14:00 90-minute gap",
-      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0830-1230 - L3 [TIGHT TRAVEL ~55-61m]"
-    },
-    {
-      "date": "2026-10-07",
-      "course_code": "HK239HG",
-      "class": "SS",
-      "lesson": 4,
-      "teacher": "Garett",
-      "status": "confirmed",
-      "source": "上課地點SS.docx and WhatsApp 2026-06-19 explicit confirmation, SS lesson 4; Google Maps public-transit check 2026-07-14: Choi Yuen to Fourseas Building 55-61 minutes within the 12:30-14:00 90-minute gap",
-      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0830-1230 - L4 [TIGHT TRAVEL ~55-61m]"
-    },
-    {
-      "date": "2026-10-14",
-      "course_code": "HK239HG",
-      "class": "SS",
-      "lesson": 5,
-      "teacher": "Garett",
-      "status": "confirmed",
-      "source": "上課地點SS.docx and WhatsApp 2026-06-19 explicit confirmation, SS lesson 5; Google Maps public-transit check 2026-07-14: Choi Yuen to Fourseas Building 55-61 minutes within the 12:30-14:00 90-minute gap",
-      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0830-1230 - L5 [持續評估 / 小組討論及專題報告] [TIGHT TRAVEL ~55-61m]"
-    },
-    {
-      "date": "2026-10-21",
-      "course_code": "HK239HG",
-      "class": "SS",
-      "lesson": 6,
-      "teacher": "Garett",
-      "status": "confirmed",
-      "source": "上課地點SS.docx and WhatsApp 2026-06-19 explicit confirmation, SS lesson 6",
-      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0830-1230 - L6 [期末筆試 1030-1130]"
     },
     {
       "date": "2026-10-10",
