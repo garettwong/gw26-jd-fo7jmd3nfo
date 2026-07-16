@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-16-V09",
+    "label": "2026-07-16 - V09",
+    "summary": "Added a reversible in-card ERB course/class filter that preserves ME CONF, ME ALL, or ALL FULL. Schedule and salary data are unchanged from V08.",
+    "latest": true
+  },
+  {
     "id": "2026-07-16-V08",
     "label": "2026-07-16 - V08",
     "summary": "Confirmed all six HK239HG CW10 lessons from R3: 27, 29 and 31 August; 2, 3 and 7 September, 09:00-12:00. Corrected L4-L6 sequencing, replaced two dotted HK281DS morning holds, and removed obsolete proposal cards.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-16-V07b",

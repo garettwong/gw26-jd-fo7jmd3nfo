@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "hk239hg-cw10-confirmed-20260716-v08"
+BUILD_ID = "card-class-filter-20260716-v09"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-16-V07b"
-COMPARE_LABEL = "V08"
-COMPARE_BASELINE_LABEL = "V07b"
-EXPECTED_COMPARISON_CHANGES = 8
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-16-V08"
+COMPARE_LABEL = "V09"
+COMPARE_BASELINE_LABEL = "V08"
+EXPECTED_COMPARISON_CHANGES = 0
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
@@ -560,7 +560,8 @@ CSS += r'''
 .layer-controls{margin:16px 0 2px}.layer-controls .section-h{margin:0 0 8px}.layer-switch{display:inline-grid;grid-template-columns:repeat(3,minmax(104px,1fr));padding:3px;border:1px solid #cfd8e5;border-radius:8px;background:#e5eaf1;box-shadow:0 1px 2px rgba(20,30,50,.06)}.mode-filter{min-height:34px;border:0;border-radius:6px;padding:6px 11px;background:transparent;color:#4c5a6b;font:inherit;font-size:12px;font-weight:800;cursor:pointer}.mode-filter.active{background:#fff;color:#145f63;box-shadow:0 1px 3px rgba(20,30,50,.18)}.sample.class-layer{border:2px solid #8b80aa;background:#fff1e6;box-shadow:inset 4px 0 0 #a99bc7}.chip.layer-class.confirmed{box-shadow:inset 3px 0 0 #a99bc7,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.unconfirmed{box-shadow:inset 3px 0 0 #a99bc7,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.modal-source{margin-top:14px;padding-top:10px;border-top:1px solid #e4e9f0;color:#6c7786;font-size:12px}.pill.class-layer{background:#eeeaf7;color:#5d537a}
 .chip.erb-compact{position:relative;display:grid;justify-items:center;gap:2px;padding:6px 7px 7px;text-align:center}
 .chip.erb-compact .status{position:absolute;top:4px;right:6px;z-index:1}
-.chip.erb-compact .class-id{display:inline-flex;align-items:center;align-self:center;justify-content:center;gap:4px;max-width:calc(100% - 24px);min-height:18px;margin:0;padding:2px 6px;border:2px solid hsl(var(--class-hue),72%,38%);border-radius:4px;background:#fff;color:hsl(var(--class-hue),72%,24%);font-size:9.3px;font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 2px rgba(12,18,28,.12)}
+.chip.erb-compact .class-id{display:inline-flex;align-items:center;align-self:center;justify-content:center;gap:4px;max-width:calc(100% - 24px);min-height:18px;margin:0;padding:2px 6px;border:2px solid hsl(var(--class-hue),72%,38%);border-radius:4px;background:#fff;color:hsl(var(--class-hue),72%,24%);font-size:9.3px;font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 2px rgba(12,18,28,.12);cursor:pointer}
+.chip.erb-compact .class-id:hover,.chip.erb-compact .class-id:focus-visible{background:hsl(var(--class-hue),72%,94%);outline:2px solid #ffc857;outline-offset:1px}.chip.erb-compact .class-id.card-filter-active{background:hsl(var(--class-hue),72%,38%);color:#fff}.chip.erb-compact .class-id.card-filter-active .class-dot{background:#fff}
 .chip.erb-compact .class-dot{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:hsl(var(--class-hue),72%,38%);box-shadow:none}
 .erb-meta,.erb-course,.erb-foot{width:100%;text-align:center;overflow-wrap:anywhere}
 .erb-meta{font-size:10px;font-weight:850;line-height:1.15;color:#172232}
@@ -794,8 +795,11 @@ def chip(ev):
     fields = event_fields(ev)
     class_label = fields["class_label"]
     class_hue = zlib.crc32(class_label.encode("utf-8")) % 360
-    identity_html = (f'<div class="class-id" style="--class-hue:{class_hue}" title="Course / class: {ehtml(class_label)}">'
-                     f'<span class="class-dot" aria-hidden="true"></span>{ehtml(class_label)}</div>')
+    identity_html = (f'<span class="class-id card-course-filter" role="button" tabindex="0" '
+                     f'data-card-group="{ehtml(ev["group"])}" style="--class-hue:{class_hue}" '
+                     f'title="Show only {ehtml(class_label)}; click again to restore" '
+                     f'aria-label="Show only {ehtml(class_label)} lessons; activate again to restore the previous filter">'
+                     f'<span class="class-dot" aria-hidden="true"></span>{ehtml(class_label)}</span>')
     teacher_cls = " is-missing" if fields["teacher"] == "-" else " is-alert" if fields["teacher"] in {"Andy", "Calvin"} else ""
     note_html = "".join(f' <span class="card-note">[{ehtml(note)}]</span>' for note in fields["notes"])
     return (f'<div class="chip erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}" tabindex="0" role="button" '
@@ -930,6 +934,12 @@ function jumpToFilter(btn){{
 }}
 window.__courseFilter='all';
 window.__layerMode='both';
+window.__cardCourseFilter=null;
+function syncCourseFilterUI(){{
+  document.querySelectorAll('.course-filter').forEach(btn=>btn.classList.toggle('active',btn.dataset.filter===window.__courseFilter));
+  const activeGroup=window.__cardCourseFilter&&window.__cardCourseFilter.group;
+  document.querySelectorAll('.card-course-filter').forEach(tag=>tag.classList.toggle('card-filter-active',tag.dataset.cardGroup===activeGroup));
+}}
 function applyFilters(){{
   const f=window.__courseFilter, mode=window.__layerMode;
   window.__filterActive = f !== 'all';
@@ -949,12 +959,42 @@ function applyFilters(){{
   document.querySelectorAll('.aday').forEach(day=>{{ const chips=Array.from(day.querySelectorAll('.chip')); if(chips.length) day.style.display=chips.some(ch=>ch.style.display!=='none')?'':'none'; }});
 }}
 document.querySelectorAll('.course-filter').forEach(btn=>btn.addEventListener('click',()=>{{
-  document.querySelectorAll('.course-filter').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
   const f=btn.dataset.filter;
+  window.__cardCourseFilter=null;
   window.__courseFilter=f;
+  syncCourseFilterUI();
   applyFilters();
   if(f!=='all') jumpToFilter(btn);
 }}));
+function captureCardAnchor(tag){{
+  const target=tag.closest(isPortraitAgenda()?'.aday':'.cell')||tag.closest('.aday')||tag.closest('.cell');
+  return target?{{id:target.id,top:target.getBoundingClientRect().top}}:null;
+}}
+function toggleCardCourseFilter(tag){{
+  const group=tag.dataset.cardGroup;
+  const anchor=captureCardAnchor(tag);
+  const current=window.__cardCourseFilter;
+  if(current&&current.group===group){{
+    window.__courseFilter=current.previousFilter;
+    window.__cardCourseFilter=null;
+  }} else if(current){{
+    current.group=group;
+    window.__courseFilter=group;
+  }} else {{
+    window.__cardCourseFilter={{group,previousFilter:window.__courseFilter}};
+    window.__courseFilter=group;
+  }}
+  syncCourseFilterUI();
+  window.__restoringModeAnchor=true;
+  applyFilters();
+  restoreModeAnchor(anchor);
+}}
+document.querySelectorAll('.card-course-filter').forEach(tag=>{{
+  tag.addEventListener('click',event=>{{event.stopPropagation();toggleCardCourseFilter(tag);}});
+  tag.addEventListener('keydown',event=>{{
+    if(event.key==='Enter'||event.key===' '){{event.preventDefault();event.stopPropagation();toggleCardCourseFilter(tag);}}
+  }});
+}});
 function captureModeAnchor(){{
   const selector=isPortraitAgenda()?'.agenda .aday':'.grid .cell:not(.out)';
   const candidates=Array.from(document.querySelectorAll(selector)).filter(el=>{{
@@ -999,6 +1039,7 @@ document.querySelectorAll('.mode-option').forEach(btn=>btn.addEventListener('cli
   applyFilters();
   restoreModeAnchor(anchor);
 }}));
+syncCourseFilterUI();
 applyFilters();
 (function(){{
  const pad=n=>String(n).padStart(2,'0');
