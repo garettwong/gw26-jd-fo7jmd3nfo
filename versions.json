@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-16-V16",
+    "label": "2026-07-16 - V16",
+    "summary": "Proposed five dotted HK280HS SS lessons in Sheung Shui; released pending HK281DS CW7 L30-L31 first and requested replacements for HK244EG CW L10 and HK265HG FS L1-L3. Existing confirmed ERB lessons remain Garett assignments until Calvin accepts. The floating version button now reads VER.",
+    "latest": true
+  },
+  {
     "id": "2026-07-16-V15",
     "label": "2026-07-16 - V15",
     "summary": "Corrected HK239HG Class FS L1-L4 so the confirmed Garett lessons on 14 and 19 August appear in ME CONF and ME ALL. HK244HG CW8 L3 remains Calvin's confirmed substitution; HK280HS SS remains a dotted enquiry.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-16-V14",
@@ -20,25 +26,25 @@
   {
     "id": "2026-07-16-V12",
     "label": "2026-07-16 - V12",
-    "summary": "Rebuilt Class spans for zoom and scrolling: uniform grid lines, page-level desktop scrolling, timeline zoom, hideable course names, per-course switches, and separate capsules for repeated cohorts such as the July and September HK265HG FS classes. Calendar and salary data are unchanged from V11.",
+    "summary": "Rebuilt Class spans for zoom and scrolling: uniform grid lines, page-level desktop scrolling, timeline zoom, hideable course names, per-course switches, and separate capsules for repeated cohorts such as the July and September HK265HG FS classes. Timetable data are unchanged from V11.",
     "latest": false
   },
   {
     "id": "2026-07-16-V11",
     "label": "2026-07-16 - V11",
-    "summary": "Expanded Class spans with separate PFSA2 and QAT7 SEN rows, Chinese course names, synchronized ME CONF / ME ALL / ALL FULL filters, and desktop zoom sizing that no longer switches to phone-scale text. Schedule and salary data are unchanged from V10.",
+    "summary": "Expanded Class spans with separate PFSA2 and QAT7 SEN rows, Chinese course names, synchronized ME CONF / ME ALL / ALL FULL filters, and desktop zoom sizing that no longer switches to phone-scale text. Timetable data are unchanged from V10.",
     "latest": false
   },
   {
     "id": "2026-07-16-V10",
     "label": "2026-07-16 - V10",
-    "summary": "Added a Class spans tab with one May-to-December timeline capsule per tracked ERB/Methodist class. Dark lesson markers are Garett's teaching dates; lighter markers are other-tutor or TBC dates. Calendar and salary data are unchanged from V09.",
+    "summary": "Added a Class spans tab with one May-to-December timeline capsule per tracked ERB/Methodist class. Dark lesson markers are Garett's teaching dates; lighter markers are other-tutor or TBC dates. Timetable data are unchanged from V09.",
     "latest": false
   },
   {
     "id": "2026-07-16-V09",
     "label": "2026-07-16 - V09",
-    "summary": "Added a reversible in-card ERB course/class filter that preserves ME CONF, ME ALL, or ALL FULL. Schedule and salary data are unchanged from V08.",
+    "summary": "Added a reversible in-card ERB course/class filter that preserves ME CONF, ME ALL, or ALL FULL. Timetable data are unchanged from V08.",
     "latest": false
   },
   {
@@ -50,7 +56,7 @@
   {
     "id": "2026-07-16-V07b",
     "label": "2026-07-16 - V07b",
-    "summary": "Added Garett's eight 09:00-12:00 HK239HG CW10 replacement options: 24, 26 and 29 August; 5, 7, 9, 10 and 12 September. All remain unconfirmed, lesson number TBC, and excluded from salary.",
+    "summary": "Added Garett's eight 09:00-12:00 HK239HG CW10 replacement options: 24, 26 and 29 August; 5, 7, 9, 10 and 12 September. All remain unconfirmed, with lesson numbers TBC.",
     "latest": false
   },
   {

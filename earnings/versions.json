@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-16-V16",
+    "label": "2026-07-16 - V16",
+    "summary": "Proposed five dotted HK280HS SS lessons in Sheung Shui; released pending HK281DS CW7 L30-L31 first and requested replacements for HK244EG CW L10 and HK265HG FS L1-L3. Existing confirmed ERB lessons remain Garett assignments until Calvin accepts. The floating version button now reads VER.",
+    "latest": true
+  },
+  {
     "id": "2026-07-16-V15",
     "label": "2026-07-16 - V15",
     "summary": "Corrected HK239HG Class FS L1-L4 so the confirmed Garett lessons on 14 and 19 August appear in ME CONF and ME ALL. HK244HG CW8 L3 remains Calvin's confirmed substitution; HK280HS SS remains a dotted enquiry.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-16-V14",

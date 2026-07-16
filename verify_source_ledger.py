@@ -155,16 +155,28 @@ assert len(oct7_hk265_l9) == 1
 assert "TIGHT TRAVEL ~40-47m" in oct7_hk265_l9[0]["text"]
 
 # Latest Excel-based proposals: Garett selections plus all currently assigned class context.
-hk281 = rows_with("HK281DS", "CW7")
+# Exclude HK280HS proposal notes that merely name the HK281DS lessons being released.
+hk281 = [
+    row for row in rows_with("HK281DS", "CW7")
+    if "PROPOSED availability only" not in row["text"]
+]
 assert len(hk281) == 54
 assert_lessons(hk281, range(1, 55), "HK281DS CW7")
-assert sum(teacher(row) == "Garett" for row in hk281) == 12
+assert sum(teacher(row) == "Garett" for row in hk281) == 10
 assert all(row["status"] == "unconfirmed" for row in hk281)
 hk281_reassigned = [row for row in hk281 if lesson(row) in {4, 18}]
 assert [(row["date"], lesson(row), teacher(row), row.get("layer")) for row in hk281_reassigned] == [
     ("2026-08-29", 4, "Other tutor / TBC", "class"),
     ("2026-09-07", 18, "Other tutor / TBC", "class"),
 ]
+hk281_v16_released = [row for row in hk281 if lesson(row) in {30, 31}]
+assert [(row["date"], lesson(row), teacher(row)) for row in hk281_v16_released] == [
+    ("2026-09-14", 30, "Other tutor / TBC"),
+    ("2026-09-14", 31, "Other tutor / TBC"),
+]
+assert all("GARETT RELEASE REQUEST" in row["text"] for row in hk281_v16_released)
+assert all("Calvin reply pending" in row["text"] for row in hk281_v16_released)
+assert all(row.get("red") for row in hk281_v16_released)
 
 mc = rows_with("MC0106DS", "Class 第2班")
 assert len(mc) == 44
@@ -214,14 +226,44 @@ for row in hk239_fs:
         f"HK239HG FS L{number}: layer {row.get('layer')!r}, expected {expected_layer!r}"
     )
 
-# HK280HS SS enquiry: availability only, never a confirmed assignment.
+# HK280HS SS enquiry: five availability proposals, never confirmed assignments.
 hk280hs_ss = rows_with("HK280HS", "Class SS")
-assert len(hk280hs_ss) == 1
-assert hk280hs_ss[0]["date"] == "2026-09-14"
-assert hk280hs_ss[0]["status"] == "unconfirmed"
-assert teacher(hk280hs_ss[0]) == "Garett"
-assert hk280hs_ss[0].get("layer") == "mine"
-assert "PROPOSED availability only" in hk280hs_ss[0]["text"]
+assert len(hk280hs_ss) == 5
+assert_lessons(hk280hs_ss, range(1, 6), "HK280HS SS")
+assert [(row["date"], lesson(row)) for row in hk280hs_ss] == [
+    ("2026-09-14", 1),
+    ("2026-09-14", 2),
+    ("2026-09-16", 3),
+    ("2026-09-17", 4),
+    ("2026-09-21", 5),
+]
+assert all(row["status"] == "unconfirmed" for row in hk280hs_ss)
+assert all(teacher(row) == "Garett" for row in hk280hs_ss)
+assert all(row.get("layer") == "mine" for row in hk280hs_ss)
+assert all("PROPOSED availability only" in row["text"] for row in hk280hs_ss)
+assert all(row.get("red") for row in hk280hs_ss)
+assert "0900 - 1300" in hk280hs_ss[0]["text"]
+assert "0900 - 1230" in hk280hs_ss[4]["text"]
+assert all("PM TIME TBC" in row["text"] for row in hk280hs_ss[1:4])
+assert all("1400-1730 is Garett's proposal" in row["text"] for row in hk280hs_ss[1:4])
+
+# Requested ERB replacements remain confirmed Garett salary until Calvin accepts them.
+hk244_cw_l10 = next(row for row in cw if lesson(row) == 10)
+assert hk244_cw_l10["status"] == "confirmed"
+assert teacher(hk244_cw_l10) == "Garett"
+assert "REPLACEMENT REQUESTED" in hk244_cw_l10["text"]
+assert "Calvin reply pending" in hk244_cw_l10["text"]
+assert hk244_cw_l10.get("red")
+hk265_sep_l1_l3 = [
+    row for row in hk265
+    if row["date"] >= "2026-09-01" and lesson(row) in {1, 2, 3}
+]
+assert len(hk265_sep_l1_l3) == 3
+assert all(row["status"] == "confirmed" for row in hk265_sep_l1_l3)
+assert all(teacher(row) == "Garett" for row in hk265_sep_l1_l3)
+assert all("REPLACEMENT REQUESTED" in row["text"] for row in hk265_sep_l1_l3)
+assert all("Calvin reply pending" in row["text"] for row in hk265_sep_l1_l3)
+assert all(row.get("red") for row in hk265_sep_l1_l3)
 assert not any("PROPOSED replacement option" in row["text"] for row in ALL)
 assert not any(
     re.search(r"Class CW(?!10\b)", row["text"])
@@ -254,5 +296,8 @@ assert '.span-month:first-child{border-left:0}' in index
 assert 'id="transitNotice"' in index
 assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
+assert '<span class="mode-main">VER</span>' in index
+assert "&#9776;" not in index
+assert "hk280hs-five-session-change-request-20260716-v16" in index
 print("source ledger verification passed")
 print(f"events={len(EVENTS)} context={len(CONTEXT)} display={len(ALL)}")
