@@ -1,7 +1,7 @@
 {
-  "revision": "20260717_V17B_HK280HS_SS_SINGLE_SAFE_SLOT",
-  "source": "V17A confirmed baseline plus Calvin's HK280HSSS_R3.docx enquiry and direct WhatsApp review. Only 2026-09-14 09:00-13:00 fits after releasing pending HK281DS CW7 L30-L31.",
-  "confirmation": "HK280HS SS remains unconfirmed and dotted. The proposal assigns L1 only on 2026-09-14 09:00-13:00 and requests four more dates. HK281DS CW7 L30-L31 are pending holds proposed for release. Confirmed SEN and ERB lessons are unchanged.",
+  "revision": "20260717_V17A_CONFIRMED_BASELINE",
+  "source": "V15 reconciled ledger plus direct Calvin WhatsApp review through 2026-07-17. This clean comparison baseline contains the accepted schedule only.",
+  "confirmation": "Calvin confirmed HK239HG FS L1-L4 for Garett on 2026-08-14 and 2026-08-19. Calvin substitutes Garett for HK244HG CW8 L3 on 2026-08-14. HK280HS SS is not included in this clean baseline because it remains an enquiry.",
   "default_status": "confirmed",
   "overrides": [
     {
@@ -546,30 +546,6 @@
       "source": "HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 6",
       "text": "勵行-彩雲 (Garett) - HK239HG, Class CW10 / 人工智能知識及應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 0900-1200 - L6 [期末筆試10:30-11:30]",
       "match_cell": "E12"
-    },
-    {
-      "date": "2026-09-14",
-      "match_cell": "E17",
-      "course_code": "HK281DS",
-      "class": "CW7",
-      "lesson": 30,
-      "teacher": "Other tutor / TBC",
-      "status": "unconfirmed",
-      "source": "HK281DS_CW7__PROPOSED_RELEASE_L30_L31_FOR_HK280HS_SS.xlsx, lesson 30; proposed release for HK280HS SS",
-      "red": true,
-      "text": "勵行-彩雲邨 HK281DS, Class CW7 / 創意數碼媒體設計及製作助理證書 / 0900-1300 - L30 - Other tutor / TBC [PROPOSED RELEASE FOR HK280HS SS; Calvin reply pending]"
-    },
-    {
-      "date": "2026-09-14",
-      "match_cell": "E18",
-      "course_code": "HK281DS",
-      "class": "CW7",
-      "lesson": 31,
-      "teacher": "Other tutor / TBC",
-      "status": "unconfirmed",
-      "source": "HK281DS_CW7__PROPOSED_RELEASE_L30_L31_FOR_HK280HS_SS.xlsx, lesson 31; proposed release because the 65-minute Sheung Shui to Choi Wan journey cannot meet the 14:00 start",
-      "red": true,
-      "text": "勵行-彩雲邨 HK281DS, Class CW7 / 創意數碼媒體設計及製作助理證書 / 1400-1800 - L31 - Other tutor / TBC [PROPOSED RELEASE - 65m TRAVEL FROM HK280HS; Calvin reply pending]"
     }
   ]
 }

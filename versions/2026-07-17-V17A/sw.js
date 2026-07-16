@@ -1,4 +1,4 @@
-const BUILD_ID = 'hk280hs-sep14-single-safe-slot-20260717-v17b';
+const BUILD_ID = 'confirmed-baseline-20260717-v17a';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

@@ -3,7 +3,7 @@
   "name": "Garett's ERB",
   "short_name": "Garett's ERB",
   "description": "Garett's ERB teaching timetable",
-  "start_url": "./?v=redtext1&build=hk280hs-sep14-single-safe-slot-20260717-v17b",
+  "start_url": "./?v=redtext1&build=confirmed-baseline-20260717-v17a",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef1f6",
