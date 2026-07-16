@@ -158,8 +158,13 @@ assert "TIGHT TRAVEL ~40-47m" in oct7_hk265_l9[0]["text"]
 hk281 = rows_with("HK281DS", "CW7")
 assert len(hk281) == 54
 assert_lessons(hk281, range(1, 55), "HK281DS CW7")
-assert sum(teacher(row) == "Garett" for row in hk281) == 14
+assert sum(teacher(row) == "Garett" for row in hk281) == 12
 assert all(row["status"] == "unconfirmed" for row in hk281)
+hk281_reassigned = [row for row in hk281 if lesson(row) in {4, 18}]
+assert [(row["date"], lesson(row), teacher(row), row.get("layer")) for row in hk281_reassigned] == [
+    ("2026-08-29", 4, "Other tutor / TBC", "class"),
+    ("2026-09-07", 18, "Other tutor / TBC", "class"),
+]
 
 mc = rows_with("MC0106DS", "Class 第2班")
 assert len(mc) == 44
@@ -171,16 +176,20 @@ assert all(row["status"] == "unconfirmed" for row in mc)
 for excluded in ("HK280HG", "BK151HG", "BK155HG"):
     assert not rows_with(excluded), f"Unexpected active timetable entry: {excluded}"
 hk239_cw10 = rows_with("HK239HG", "Class CW10", rows=EVENTS)
-assert len(hk239_cw10) == 4
+assert len(hk239_cw10) == 6
 assert [(row["date"], lesson(row)) for row in hk239_cw10] == [
     ("2026-08-27", 1),
+    ("2026-08-29", 2),
     ("2026-08-31", 3),
-    ("2026-09-02", 5),
-    ("2026-09-03", 6),
+    ("2026-09-02", 4),
+    ("2026-09-03", 5),
+    ("2026-09-07", 6),
 ]
-assert all(row["status"] == "unconfirmed" for row in hk239_cw10)
+assert all(row["status"] == "confirmed" for row in hk239_cw10)
 assert all(teacher(row) == "Garett" for row in hk239_cw10)
 assert all("0900-1200" in row["text"] for row in hk239_cw10)
+assert all("HK239HG(CW10)_R3.docx" in row.get("source", "") for row in hk239_cw10)
+assert not any("PROPOSED replacement option" in row["text"] for row in ALL)
 assert not any(
     re.search(r"Class CW(?!10\b)", row["text"])
     for row in rows_with("HK239HG")

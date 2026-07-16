@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-16-V08",
+    "label": "2026-07-16 - V08",
+    "summary": "Confirmed all six HK239HG CW10 lessons from R3: 27, 29 and 31 August; 2, 3 and 7 September, 09:00-12:00. Corrected L4-L6 sequencing, replaced two dotted HK281DS morning holds, and removed obsolete proposal cards.",
+    "latest": true
+  },
+  {
     "id": "2026-07-16-V07b",
     "label": "2026-07-16 - V07b",
     "summary": "Added Garett's eight 09:00-12:00 HK239HG CW10 replacement options: 24, 26 and 29 August; 5, 7, 9, 10 and 12 September. All remain unconfirmed, lesson number TBC, and excluded from salary.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-15-V07a",

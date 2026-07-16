@@ -13,12 +13,12 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "hk239hg-cw10-additional-alternatives-20260716-v07b"
+BUILD_ID = "hk239hg-cw10-confirmed-20260716-v08"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-15-V07a"
-COMPARE_LABEL = "V07b"
-COMPARE_BASELINE_LABEL = "V07a"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-16-V07b"
+COMPARE_LABEL = "V08"
+COMPARE_BASELINE_LABEL = "V07b"
 EXPECTED_COMPARISON_CHANGES = 8
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
@@ -372,7 +372,12 @@ if OVERRIDES_SRC.exists():
     if override_default_status not in {None, "confirmed", "unconfirmed", "note"}:
         raise ValueError(f"Invalid override default status: {override_default_status}")
     override_index = {}
+    override_cell_index = {}
     for event in events:
+        cell_key = (event["date"], event["cell"].upper())
+        if cell_key in override_cell_index:
+            raise ValueError(f"Duplicate workbook cell override target: {cell_key}")
+        override_cell_index[cell_key] = event
         code, cls, lesson, _start = course_sort_parts(event["text"])
         if code and cls:
             key = (event["date"], code.upper(), cls.upper(), lesson)
@@ -381,14 +386,19 @@ if OVERRIDES_SRC.exists():
             override_index[key] = event
 
     for index, item in enumerate(override_data.get("overrides", []), 1):
-        match_lesson = item.get("match_lesson", item.get("lesson"))
-        key = (
-            item["date"],
-            str(item.get("match_course_code", item["course_code"])).upper(),
-            str(item.get("match_class", item["class"])).upper(),
-            999 if match_lesson is None else int(match_lesson),
-        )
-        event = override_index.get(key)
+        match_cell = str(item.get("match_cell", "")).strip().upper()
+        if match_cell:
+            key = (item["date"], match_cell)
+            event = override_cell_index.get(key)
+        else:
+            match_lesson = item.get("match_lesson", item.get("lesson"))
+            key = (
+                item["date"],
+                str(item.get("match_course_code", item["course_code"])).upper(),
+                str(item.get("match_class", item["class"])).upper(),
+                999 if match_lesson is None else int(match_lesson),
+            )
+            event = override_index.get(key)
         if event is None:
             raise ValueError(f"Override entry {index} has no workbook lesson: {key}")
         text = norm_text(item["text"])
