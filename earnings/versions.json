@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-16-V15",
+    "label": "2026-07-16 - V15",
+    "summary": "Corrected HK239HG Class FS L1-L4 so the confirmed Garett lessons on 14 and 19 August appear in ME CONF and ME ALL. HK244HG CW8 L3 remains Calvin's confirmed substitution; HK280HS SS remains a dotted enquiry.",
+    "latest": true
+  },
+  {
     "id": "2026-07-16-V14",
     "label": "2026-07-16 - V14",
     "summary": "Added ME CONF/ME ALL transit reminders with red no-meal warnings. Added one dotted HK280HS Class SS enquiry option for 14 September morning; all other proposed dates conflict with confirmed work or travel.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-16-V13",

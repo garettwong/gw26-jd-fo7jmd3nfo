@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "transit-reminder-hk280hs-ss-enquiry-20260716-v14"
+BUILD_ID = "hk239hg-fs-personal-layer-audit-20260716-v15"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-16-V13"
-COMPARE_LABEL = "V14"
-COMPARE_BASELINE_LABEL = "V13"
-EXPECTED_COMPARISON_CHANGES = 1
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-16-V14"
+COMPARE_LABEL = "V15"
+COMPARE_BASELINE_LABEL = "V14"
+EXPECTED_COMPARISON_CHANGES = 4
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -459,9 +459,15 @@ if CONTEXT_SRC.exists():
         if key in baseline_keys:
             raise ValueError(f"Context entry {index} duplicates a workbook lesson: {key}")
         title, detail = split_title(text)
-        layer = item.get("layer", "class")
+        teacher = str(item.get("teacher", "Other tutor / TBC")).strip()
+        is_garett_teacher = bool(re.search(r"\bGar(?:e|r)tt\b", teacher, re.I))
+        layer = item.get("layer", "mine" if is_garett_teacher else "class")
         if layer not in {"mine", "class"}:
             raise ValueError(f"Context entry {index} has invalid layer: {layer}")
+        if is_garett_teacher and layer != "mine":
+            raise ValueError(
+                f"Context entry {index} assigns Garett to the hidden class layer: {text}"
+            )
         ev = {
             "date": dt.isoformat(), "month": calendar.month_name[dt.month], "row": 999, "col": 999,
             "cell": f"context-{index}", "text": text, "title": title, "detail": detail,
@@ -469,7 +475,7 @@ if CONTEXT_SRC.exists():
             "category_label": cat_label, "html": html.escape(text, quote=True),
             "title_html": html.escape(title, quote=True), "detail_html": html.escape(detail, quote=True),
             "red": bool(item.get("red", False)), "layer": layer,
-            "teacher": item.get("teacher", "Other tutor / TBC"), "source": item.get("source", ""),
+            "teacher": teacher, "source": item.get("source", ""),
         }
         context_events.append(ev)
         by_date.setdefault(dt.isoformat(), []).append(ev)
@@ -488,6 +494,10 @@ def context_identity(item):
 baseline_event_map = {workbook_identity(item): item for item in baseline_events}
 baseline_context_map = {context_identity(item): item for item in baseline_context}
 
+def effective_context_layer(item):
+    # Published snapshots before V15 used class as the implicit context layer.
+    return item.get("layer", "class")
+
 for current in events:
     previous = baseline_event_map.get(workbook_identity(current))
     changed = previous is None or any(current.get(key) != previous.get(key) for key in ("text", "status"))
@@ -498,7 +508,11 @@ for current in events:
 
 for current in context_events:
     previous = baseline_context_map.get(context_identity(current))
-    changed = previous is None or any(current.get(key) != previous.get(key) for key in ("text", "status", "teacher"))
+    changed = (
+        previous is None
+        or any(current.get(key) != previous.get(key) for key in ("text", "status", "teacher"))
+        or current.get("layer") != effective_context_layer(previous)
+    )
     current["changed_in_version"] = changed
     current["change_kind"] = "new" if previous is None else "changed" if changed else ""
     current["previous_text"] = previous.get("text", "") if previous else ""

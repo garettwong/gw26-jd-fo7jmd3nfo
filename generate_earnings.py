@@ -6,7 +6,6 @@ import json
 import os
 import re
 from collections import defaultdict
-from datetime import date
 from pathlib import Path
 from string import Template
 
@@ -121,6 +120,10 @@ def encode(value: bytes) -> str:
     return base64.urlsafe_b64encode(value).decode("ascii").rstrip("=")
 
 
+def decode(value: str) -> bytes:
+    return base64.urlsafe_b64decode(value + "=" * (-len(value) % 4))
+
+
 def encrypt_report(report: dict, key: bytes) -> dict:
     plaintext = json.dumps(report, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
     nonce = os.urandom(12)
@@ -128,11 +131,18 @@ def encrypt_report(report: dict, key: bytes) -> dict:
     return {"version": 1, "nonce": encode(nonce), "ciphertext": encode(ciphertext)}
 
 
+def decrypt_report(payload: dict, key: bytes) -> dict:
+    plaintext = AESGCM(key).decrypt(
+        decode(payload["nonce"]), decode(payload["ciphertext"]), AAD
+    )
+    return json.loads(plaintext.decode("utf-8"))
+
+
 def build_report(item: dict, events: list[dict]) -> dict:
     return {
         "name": "Garett Wong",
         "period": "June to December 2026",
-        "generated": date.today().isoformat(),
+        "generated": item["id"][:10],
         "version": item["label"],
         "version_id": item["id"],
         "rates": {"ERB and SEN": "HKD 300/hour", "DGS": "HKD 900/hour, 4 hours/day"},
@@ -224,6 +234,15 @@ def main() -> None:
         encrypted_report = destination / "earnings.enc.json"
         if encrypted_report.exists():
             payload = json.loads(encrypted_report.read_text(encoding="utf-8"))
+            try:
+                saved_report = decrypt_report(payload, key)
+            except (KeyError, ValueError):
+                saved_report = None
+            if saved_report != report:
+                payload = encrypt_report(report, key)
+                encrypted_report.write_text(
+                    json.dumps(payload, separators=(",", ":")), encoding="utf-8"
+                )
         else:
             payload = encrypt_report(report, key)
             encrypted_report.write_text(

@@ -209,6 +209,10 @@ for row in hk239_fs:
     assert (row["date"], match.group(1), match.group(2), teacher(row)) == hk239_fs_expected[number]
     assert row["status"] == "confirmed"
     assert "四海大廈" in row["text"]
+    expected_layer = "mine" if number <= 4 else "class"
+    assert row.get("layer") == expected_layer, (
+        f"HK239HG FS L{number}: layer {row.get('layer')!r}, expected {expected_layer!r}"
+    )
 
 # HK280HS SS enquiry: availability only, never a confirmed assignment.
 hk280hs_ss = rows_with("HK280HS", "Class SS")
