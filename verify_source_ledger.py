@@ -78,7 +78,7 @@ assert_lessons(cw8, range(1, 13), "HK244HG CW8")
 cw8_expected = {
     1: ("2026-08-06", "1400", "1800", "Garett"),
     2: ("2026-08-13", "1400", "1730", "Garett"),
-    3: ("2026-08-14", "1400", "1800", "Garett"),
+    3: ("2026-08-14", "1400", "1800", "Calvin"),
     4: ("2026-08-24", "1400", "1800", "Garett"),
     5: ("2026-08-26", "1400", "1800", "Garett"),
     6: ("2026-08-27", "1400", "1730", "Garett"),
@@ -189,6 +189,35 @@ assert all(row["status"] == "confirmed" for row in hk239_cw10)
 assert all(teacher(row) == "Garett" for row in hk239_cw10)
 assert all("0900-1200" in row["text"] for row in hk239_cw10)
 assert all("HK239HG(CW10)_R3.docx" in row.get("source", "") for row in hk239_cw10)
+
+# HK239HG FS: confirmed Garett substitution on Aug 14 and 19; another tutor covers Aug 21.
+hk239_fs = rows_with("HK239HG", "Class FS")
+assert len(hk239_fs) == 6
+assert_lessons(hk239_fs, range(1, 7), "HK239HG FS")
+hk239_fs_expected = {
+    1: ("2026-08-14", "1000", "1300", "Garett"),
+    2: ("2026-08-14", "1400", "1700", "Garett"),
+    3: ("2026-08-19", "1000", "1300", "Garett"),
+    4: ("2026-08-19", "1400", "1700", "Garett"),
+    5: ("2026-08-21", "1000", "1300", "Other tutor / TBC"),
+    6: ("2026-08-21", "1400", "1700", "Other tutor / TBC"),
+}
+for row in hk239_fs:
+    number = lesson(row)
+    match = TIME_RE.search(row["text"])
+    assert match
+    assert (row["date"], match.group(1), match.group(2), teacher(row)) == hk239_fs_expected[number]
+    assert row["status"] == "confirmed"
+    assert "四海大廈" in row["text"]
+
+# HK280HS SS enquiry: availability only, never a confirmed assignment.
+hk280hs_ss = rows_with("HK280HS", "Class SS")
+assert len(hk280hs_ss) == 1
+assert hk280hs_ss[0]["date"] == "2026-09-14"
+assert hk280hs_ss[0]["status"] == "unconfirmed"
+assert teacher(hk280hs_ss[0]) == "Garett"
+assert hk280hs_ss[0].get("layer") == "mine"
+assert "PROPOSED availability only" in hk280hs_ss[0]["text"]
 assert not any("PROPOSED replacement option" in row["text"] for row in ALL)
 assert not any(
     re.search(r"Class CW(?!10\b)", row["text"])
@@ -197,11 +226,12 @@ assert not any(
 
 index = (ROOT / "index.html").read_text(encoding="utf-8")
 assert "May 2026" in index and "HK244HG" in index
-assert index.count('class="span-row"') == 16
-assert 'data-span-group="g12-c1" data-base-group="g12" data-first="2026-07-24" data-last="2026-08-12"' in index
-assert 'data-span-group="g12-c2" data-base-group="g12" data-first="2026-09-16" data-last="2026-10-14"' in index
+assert index.count('class="span-row"') == 18
+assert 'data-span-group="g13-c1" data-base-group="g13" data-first="2026-07-24" data-last="2026-08-12"' in index
+assert 'data-span-group="g13-c2" data-base-group="g13" data-first="2026-09-16" data-last="2026-10-14"' in index
+assert 'data-span-group="g03" data-base-group="g03" data-first="2026-08-14" data-last="2026-08-21"' in index
 assert "HK265HG · FS · JUL 2026" in index and "HK265HG · FS · SEP 2026" in index
-assert index.count('data-span-course="') == 16
+assert index.count('data-span-course="') == 18
 assert all(control in index for control in (
     'id="spanLabelsToggle"', 'id="spanZoomOut"', 'id="spanZoomReset"', 'id="spanZoomIn"',
     'data-span-course-action="all"', 'data-span-course-action="none"',
@@ -217,5 +247,8 @@ erb_codes = re.findall(r'>(HK\d+[A-Z]+)', erb_filter_section)
 assert erb_codes == sorted(erb_codes)
 assert '@media (pointer:fine) and (min-width:821px)' in index
 assert '.span-month:first-child{border-left:0}' in index
+assert 'id="transitNotice"' in index
+assert 'NO MEAL BUFFER' in index
+assert "'sheung_shui|four_seas':64" in index
 print("source ledger verification passed")
 print(f"events={len(EVENTS)} context={len(CONTEXT)} display={len(ALL)}")

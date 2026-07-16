@@ -22,6 +22,7 @@ TIME_RE = re.compile(
     r"(\d{1,2})(?::?(\d{2}))?\s*(?:[AaPp][Mm])?(?!\d)"
 )
 CANCELLED_RE = re.compile(r"cancel(?:led|ed)", re.I)
+PROPOSED_AVAILABILITY_RE = re.compile(r"PROPOSED availability only", re.I)
 GARETT_RE = re.compile(r"\bGar(?:e|r)tt\b", re.I)
 MONTHS = ("June", "July", "August", "September", "October", "November", "December")
 AAD = b"erb-earnings-v1"
@@ -48,7 +49,10 @@ def is_garetts(event: dict) -> bool:
     if category in {"ymca", "dgs"}:
         return True
     if category in {"erb", "methodist"}:
-        return bool(GARETT_RE.search(event["text"] + " " + str(event.get("teacher", ""))))
+        explicit_teacher = str(event.get("teacher", "")).strip()
+        if explicit_teacher:
+            return bool(GARETT_RE.search(explicit_teacher))
+        return bool(GARETT_RE.search(event["text"]))
     return False
 
 
@@ -71,6 +75,8 @@ def calculate(events: list[dict], statuses: set[str]) -> dict:
         if not ("2026-06-01" <= event_date <= "2026-12-31"):
             continue
         if event["status"] not in statuses or event_date == "2026-06-03":
+            continue
+        if PROPOSED_AVAILABILITY_RE.search(event["text"]):
             continue
         if not is_garetts(event) or CANCELLED_RE.search(event["text"]):
             continue
@@ -204,6 +210,14 @@ def main() -> None:
         if not source.exists():
             raise FileNotFoundError(f"Missing version event ledger: {source}")
         events = json.loads(source.read_text(encoding="utf-8"))
+        context_source = ROOT / "versions" / item["id"] / "class_context.json"
+        if context_source.exists():
+            context_events = json.loads(context_source.read_text(encoding="utf-8"))
+            for event in context_events:
+                if "category" not in event:
+                    text = str(event.get("text", ""))
+                    event["category"] = "methodist" if "循道" in text or "MC0106" in text else "erb"
+            events.extend(context_events)
         report = build_report(item, events)
         destination = versions_out / item["id"]
         destination.mkdir(exist_ok=True)

@@ -1,4 +1,4 @@
-const BUILD_ID = 'transit-reminder-hk280hs-ss-enquiry-20260716-v14';
+const BUILD_ID = 'hk239hg-fs-substitution-20260716-v13';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

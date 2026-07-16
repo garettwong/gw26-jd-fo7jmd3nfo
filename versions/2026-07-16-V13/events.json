@@ -1516,9 +1516,9 @@
     "red": false,
     "teacher": "Calvin",
     "source": "HK244HG(CW8)_R3_final.docx, lesson 3; Calvin WhatsApp confirmation 2026-07-16: Calvin substitutes Garett",
-    "changed_in_version": false,
-    "change_kind": "",
-    "previous_text": "勵行-彩雲 (Calvin) [substitute for Garett] / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L3",
+    "changed_in_version": true,
+    "change_kind": "changed",
+    "previous_text": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L3",
     "previous_status": "confirmed",
     "group_label": "HK244HG · CW8",
     "group": "g12"

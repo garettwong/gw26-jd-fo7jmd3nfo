@@ -13,19 +13,20 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "class-spans-scroll-controls-20260716-v12"
+BUILD_ID = "transit-reminder-hk280hs-ss-enquiry-20260716-v14"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-16-V11"
-COMPARE_LABEL = "V12"
-COMPARE_BASELINE_LABEL = "V11"
-EXPECTED_COMPARISON_CHANGES = 0
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-16-V13"
+COMPARE_LABEL = "V14"
+COMPARE_BASELINE_LABEL = "V13"
+EXPECTED_COMPARISON_CHANGES = 1
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
     "HK244EG": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
     "HK244HG": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
     "HK265HG": "人工智能強化營銷社交媒體內容創作證書（英文授課／兼讀制）",
+    "HK280HS": "生成式人工智能商務應用證書（兼讀制）",
     "HK281DS": "創意數碼媒體設計及製作助理證書",
     "MC0106DS": "創意數碼媒體設計及製作助理證書",
 }
@@ -535,7 +536,39 @@ INFERRED_CLASS_BY_CODE = {
 }
 
 _group_labels = sorted({course_group_label(e["text"], e["category_label"]) for e in display_events}, key=lambda label: (0 if COURSE_CODE_RE.fullmatch(label.split(" · ", 1)[0]) or label == "DGS" else 1, natural_key(label.split(" · ", 1)[0]), natural_key(label.split(" · ", 1)[1] if " · " in label else ""), label))
-_group_slugs = {label: f"g{i:02d}" for i, label in enumerate(_group_labels, 1)}
+
+# Preserve existing filter IDs across releases. A newly introduced course must not
+# renumber unrelated workbook events or invalidate the immutable baseline hash.
+_baseline_group_slugs = {
+    item["group_label"]: item["group"]
+    for item in baseline_events
+    if item.get("group_label") and item.get("group")
+}
+_baseline_index = (COMPARE_BASELINE / "index.html").read_text(encoding="utf-8")
+for match in re.finditer(r'data-group="([^"]+)" data-group-label="([^"]+)"', _baseline_index):
+    slug, label = html.unescape(match.group(1)), html.unescape(match.group(2))
+    _baseline_group_slugs.setdefault(label, slug)
+
+_group_slugs = {}
+_used_group_slugs = set()
+for label in _group_labels:
+    slug = _baseline_group_slugs.get(label)
+    if slug and slug not in _used_group_slugs:
+        _group_slugs[label] = slug
+        _used_group_slugs.add(slug)
+_next_group_number = max(
+    [int(match.group(1)) for slug in _used_group_slugs if (match := re.fullmatch(r"g(\d+)", slug))]
+    or [0]
+) + 1
+for label in _group_labels:
+    if label in _group_slugs:
+        continue
+    while f"g{_next_group_number:02d}" in _used_group_slugs:
+        _next_group_number += 1
+    slug = f"g{_next_group_number:02d}"
+    _group_slugs[label] = slug
+    _used_group_slugs.add(slug)
+    _next_group_number += 1
 for ev in display_events:
     ev["group_label"] = course_group_label(ev["text"], ev["category_label"])
     ev["group"] = _group_slugs[ev["group_label"]]
@@ -648,10 +681,11 @@ CSS += r'''
 
 CSS += r'''
 html{overflow-x:auto;overflow-y:scroll}
+.time-slot{display:contents}.time-slot.slot-hidden{display:none}.transit-notice{margin:10px 0 12px;padding:8px 10px;border:1px solid #9fc7c6;border-left:5px solid #0f7074;border-radius:5px;background:#f4fbfa;color:#36545a;font-size:11.5px;font-weight:750}.transit-bar{margin:3px 0;padding:3px 6px;border:1px solid #91bab8;border-radius:3px;background:#edf8f7;color:#255b5d;font-size:8.5px;font-weight:850;line-height:1.2;text-align:center}.transit-bar.tight{border-color:#c9342d;background:#fff0ee;color:#951f1a}.transit-bar strong{font-weight:950}
 .filter-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-top:22px}.filter-heading .section-h{margin:0}.filter-master{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.filter-groups{display:grid;gap:7px;margin:10px 0 16px}.filter-group{display:grid;grid-template-columns:92px minmax(0,1fr);align-items:start;gap:10px;padding-top:7px;border-top:1px solid #dbe2ec}.filter-group:first-child{border-top:0}.filter-group-label{padding:8px 0;color:#657285;font-size:11px;font-weight:900;text-transform:uppercase}.filter-group-buttons{display:flex;gap:7px;flex-wrap:wrap}.filter-group .filter{padding:6px 10px}
 .span-shell{--span-label-width:280px;--span-timeline-width:1760px;margin-top:16px}.span-head{display:block;max-width:980px;margin-bottom:10px}.span-head p{max-width:900px}.span-control-bar{position:sticky;left:16px;z-index:8;display:flex;align-items:flex-start;gap:8px;max-width:calc(100vw - 52px);margin-bottom:10px;flex-wrap:wrap}.span-tools{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:8px;flex-wrap:wrap}.span-tool-button,.span-zoom button,.span-course-picker summary,.span-course-actions button{min-height:40px;border:1px solid #cfd8e5;border-radius:6px;background:#fff;color:#405064;font:inherit;font-size:11px;font-weight:850;cursor:pointer}.span-tool-button{padding:7px 10px}.span-tool-button[aria-pressed="false"]{background:#405064;color:#fff}.span-zoom{display:grid;grid-template-columns:40px 64px 40px;gap:3px}.span-zoom button{padding:0;font-size:19px}.span-zoom .span-zoom-value{font-size:10px}.span-tool-button:focus-visible,.span-zoom button:focus-visible,.span-course-picker summary:focus-visible,.span-course-actions button:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.span-course-picker{position:relative}.span-course-picker summary{display:flex;align-items:center;gap:7px;padding:7px 10px;list-style:none}.span-course-picker summary::-webkit-details-marker{display:none}.span-course-picker summary::before{content:"+";font-size:15px}.span-course-picker[open] summary::before{content:"−"}.span-course-picker-body{position:absolute;top:46px;left:0;z-index:20;width:min(680px,calc(100vw - 48px));padding:10px;border:1px solid #cfd8e5;border-radius:7px;background:#fff;box-shadow:0 8px 24px rgba(20,30,50,.20)}.span-course-actions{display:flex;gap:6px;margin-bottom:8px}.span-course-actions button{min-height:32px;padding:4px 9px}.span-course-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:min(52vh,440px);overflow:auto;border-top:1px solid #e2e7ef}.span-course-toggle{display:flex;align-items:flex-start;gap:8px;min-width:0;padding:8px;border-bottom:1px solid #e8edf3;cursor:pointer}.span-course-toggle:nth-child(odd){border-right:1px solid #e8edf3}.span-course-toggle input{width:17px;height:17px;margin:1px 0 0;accent-color:#0f7074;flex:0 0 auto}.span-course-toggle span{display:flex;min-width:0;flex-direction:column}.span-course-toggle strong{font-size:10.5px;line-height:1.2}.span-course-toggle small{margin-top:2px;color:#748092;font-size:9px}.span-legend{justify-content:flex-start}.span-scroll{width:max-content;min-width:100%;overflow:visible;border:1px solid #dbe2ec;border-radius:8px;scrollbar-gutter:auto}.span-table{width:calc(var(--span-label-width) + var(--span-timeline-width));min-width:calc(var(--span-label-width) + var(--span-timeline-width))}.span-axis,.span-row{grid-template-columns:var(--span-label-width) var(--span-timeline-width)}.span-axis{border-bottom:1px solid #dbe2ec}.span-row{border-bottom:1px solid #dbe2ec}.span-axis-label,.span-label{border-right:1px solid #dbe2ec}.span-month{border-left:1px solid #dbe2ec}.span-month:first-child{border-left:0}.span-month:last-child{border-right:0}.span-guide{border-left:1px solid #dbe2ec}.span-shell.hide-span-labels{--span-label-width:0px}.span-shell.hide-span-labels .span-axis-label,.span-shell.hide-span-labels .span-label{display:none}.span-row[data-course-hidden="1"]{display:none!important}
 @media (pointer:fine) and (min-width:821px){body.span-view-active .wrap{overflow:visible}.span-view-active .span-scroll{width:max-content;min-width:100%;overflow:visible}.span-view-active .span-control-bar{position:sticky;left:16px}}
-@media (max-width:820px){html{overflow-x:hidden}.filter-heading{align-items:flex-start}.filter-groups{gap:5px}.filter-group{grid-template-columns:62px minmax(0,1fr);gap:6px}.filter-group-label{font-size:10px}.span-shell{--span-label-width:230px;--span-timeline-width:1640px}.span-control-bar{position:static;display:block;max-width:none}.span-tools{align-items:stretch}.span-mode-switch{width:100%}.span-zoom{width:100%;grid-template-columns:44px minmax(72px,1fr) 44px}.span-tool-button,.span-course-picker{width:100%}.span-course-picker summary{justify-content:center}.span-course-picker-body{position:fixed;top:76px;left:12px;right:12px;width:auto;max-height:calc(100vh - 94px);overflow:auto}.span-course-options{grid-template-columns:1fr;max-height:none}.span-course-toggle:nth-child(odd){border-right:0}.span-scroll{width:100%;min-width:0;overflow-x:auto;overflow-y:visible;overscroll-behavior-inline:contain;scrollbar-gutter:stable}.span-table{width:calc(var(--span-label-width) + var(--span-timeline-width));min-width:calc(var(--span-label-width) + var(--span-timeline-width))}.span-axis,.span-row{grid-template-columns:var(--span-label-width) var(--span-timeline-width)}}
+@media (max-width:820px){html{overflow-x:hidden}.transit-notice{font-size:10.5px}.transit-bar{font-size:8px}.filter-heading{align-items:flex-start}.filter-groups{gap:5px}.filter-group{grid-template-columns:62px minmax(0,1fr);gap:6px}.filter-group-label{font-size:10px}.span-shell{--span-label-width:230px;--span-timeline-width:1640px}.span-control-bar{position:static;display:block;max-width:none}.span-tools{align-items:stretch}.span-mode-switch{width:100%}.span-zoom{width:100%;grid-template-columns:44px minmax(72px,1fr) 44px}.span-tool-button,.span-course-picker{width:100%}.span-course-picker summary{justify-content:center}.span-course-picker-body{position:fixed;top:76px;left:12px;right:12px;width:auto;max-height:calc(100vh - 94px);overflow:auto}.span-course-options{grid-template-columns:1fr;max-height:none}.span-course-toggle:nth-child(odd){border-right:0}.span-scroll{width:100%;min-width:0;overflow-x:auto;overflow-y:visible;overscroll-behavior-inline:contain;scrollbar-gutter:stable}.span-table{width:calc(var(--span-label-width) + var(--span-timeline-width));min-width:calc(var(--span-label-width) + var(--span-timeline-width))}.span-axis,.span-row{grid-template-columns:var(--span-label-width) var(--span-timeline-width)}}
 @media (orientation:landscape) and (max-height:700px) and (max-width:1400px) and (pointer:coarse){.filter-heading,.filter-groups{display:none}.span-shell{--span-label-width:205px;--span-timeline-width:1540px}.span-control-bar{display:flex}.span-tools{gap:4px}.span-tool-button,.span-zoom button,.span-course-picker summary{min-height:30px;font-size:8px}.span-zoom{width:auto;grid-template-columns:30px 48px 30px}.span-course-picker{width:auto}.span-course-picker-body{top:44px}.span-course-options{grid-template-columns:repeat(2,minmax(0,1fr))}.span-scroll{width:100%;min-width:0;overflow-x:auto;overflow-y:visible;overscroll-behavior-inline:contain;scrollbar-gutter:stable}}
 @media print{html{overflow:visible}.filter-heading,.filter-groups,.span-control-bar{display:none}.span-scroll{width:100%;overflow:visible}.span-table{width:100%;min-width:0}.span-axis,.span-row{grid-template-columns:180px minmax(0,1fr)}}
 '''
@@ -796,6 +830,26 @@ def event_slot(ev):
     return "night"
 
 
+def centre_code(ev):
+    text = str(ev.get("text") or "")
+    category = ev.get("category")
+    if category == "ymca":
+        return "ymca_yau_ma_tei"
+    if "上水彩園" in text or "彩園邨彩湖樓" in text:
+        return "sheung_shui"
+    if "四海" in text:
+        return "four_seas"
+    if "彩雲" in text:
+        return "choi_wan"
+    if "灣仔" in text or "循道" in text:
+        return "wan_chai"
+    if "藍田" in text:
+        return "lam_tin"
+    if "順天" in text:
+        return "shun_tin"
+    return ""
+
+
 def chip(ev):
     st = ev['status']
     mark = '✓' if st == 'confirmed' else '?' if st == 'unconfirmed' else '•'
@@ -805,8 +859,14 @@ def chip(ev):
     red_cls = " has-red" if ev.get("red") else ""
     layer = event_layer(ev)
     layer_cls = f" layer-{layer}"
+    interval = event_interval(ev)
+    interval_attrs = (
+        f' data-start="{interval[0]}" data-end="{interval[1]}"'
+        if interval else ' data-start="" data-end=""'
+    )
     layer_attrs = (f' data-layer="{layer}" data-erb="{1 if ev["category"] == "erb" else 0}"'
                    f' data-course="{1 if ev["category"] in {"erb", "methodist"} else 0}"'
+                   f' data-centre="{ehtml(centre_code(ev))}"{interval_attrs}'
                    f' data-source="{ehtml(ev.get("source", ""))}"')
     changed = bool(ev.get("changed_in_version"))
     comparison_cls = " changed-in-version" if changed else ""
@@ -858,12 +918,13 @@ def render_day_events(day_events):
         if not group:
             continue
         if len(group) == 1:
-            rendered.append(chip(group[0]))
-            continue
-        ordered = sorted(group, key=lambda ev: (0 if event_layer(ev) == "mine" else 1, event_sort_key(ev)))
-        rendered.append('<div class="overlap-group overlap-active slot-{}" data-slot="{}" data-overlap-count="{}">{}</div>'.format(
-            slot, slot, len(ordered), ''.join(chip(ev) for ev in ordered)
-        ))
+            content = chip(group[0])
+        else:
+            ordered = sorted(group, key=lambda ev: (0 if event_layer(ev) == "mine" else 1, event_sort_key(ev)))
+            content = '<div class="overlap-group overlap-active" data-overlap-count="{}">{}</div>'.format(
+                len(ordered), ''.join(chip(ev) for ev in ordered)
+            )
+        rendered.append(f'<div class="time-slot slot-{slot}" data-slot="{slot}">{content}</div>')
     return ''.join(rendered)
 
 def month_html(year, month):
@@ -1126,6 +1187,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <section id="calendarView" class="view-panel" role="tabpanel" aria-labelledby="calendarTab">
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
 <div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div>{comparison_legend_html}<div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
+<div id="transitNotice" class="transit-notice" hidden>Transit reminders appear between your lesson slots. Red means less than 30 minutes remains after travel, so there is no reliable meal break.</div>
 <div class="section-h">ERB course codes</div><div class="course-code-legend">{erb_code_legend}</div>
 <div class="filter-heading"><div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filter-master"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{comparison_filter_html}</div></div><div class="filter-groups">{filter_groups_html}</div>
 {months_html}
@@ -1277,6 +1339,55 @@ function applySpanFilters(){{
     row.hidden=!courseEnabled||visible===0;
   }});
 }}
+const transitMinutes={{
+  'sheung_shui|four_seas':64,'four_seas|sheung_shui':64,
+  'four_seas|choi_wan':40,'choi_wan|four_seas':40,
+  'ymca_yau_ma_tei|choi_wan':37,'choi_wan|ymca_yau_ma_tei':37,
+  'ymca_yau_ma_tei|four_seas':12,'four_seas|ymca_yau_ma_tei':12,
+  'sheung_shui|choi_wan':65,'choi_wan|sheung_shui':65
+}};
+const centreLabels={{sheung_shui:'Sheung Shui',four_seas:'Four Seas',choi_wan:'Choi Wan',ymca_yau_ma_tei:'YMCA',wan_chai:'Wan Chai',lam_tin:'Lam Tin',shun_tin:'Shun Tin'}};
+function visibleMineChips(slot){{
+  return Array.from(slot.querySelectorAll('.chip')).filter(ch=>ch.style.display!=='none'&&ch.dataset.layer==='mine'&&ch.dataset.start&&ch.dataset.end&&ch.dataset.centre);
+}}
+function refreshTransitBars(){{
+  document.querySelectorAll('.transit-bar').forEach(bar=>bar.remove());
+  const notice=document.getElementById('transitNotice');
+  const personal=window.__layerMode==='mine-confirmed'||window.__layerMode==='mine-all';
+  notice.hidden=!personal;
+  if(!personal) return;
+  document.querySelectorAll('.cell,.achips').forEach(container=>{{
+    const slots=Array.from(container.querySelectorAll(':scope > .time-slot')).filter(slot=>!slot.classList.contains('slot-hidden'));
+    for(let index=0;index<slots.length-1;index+=1){{
+      const fromSlot=slots[index],toSlot=slots[index+1];
+      const fromChips=visibleMineChips(fromSlot),toChips=visibleMineChips(toSlot);
+      if(!fromChips.length||!toChips.length) continue;
+      const fromEnd=Math.max(...fromChips.map(ch=>Number(ch.dataset.end)));
+      const toStart=Math.min(...toChips.map(ch=>Number(ch.dataset.start)));
+      const gap=toStart-fromEnd;
+      if(gap<=0) continue;
+      const routes=[];
+      const seen=new Set();
+      fromChips.filter(ch=>Number(ch.dataset.end)===fromEnd).forEach(from=>toChips.filter(ch=>Number(ch.dataset.start)===toStart).forEach(to=>{{
+        const a=from.dataset.centre,b=to.dataset.centre,key=a+'|'+b;
+        if(seen.has(key)) return;
+        seen.add(key);
+        const travel=a===b?0:transitMinutes[key];
+        if(travel===undefined) return;
+        routes.push({{a,b,travel,spare:gap-travel}});
+      }}));
+      if(!routes.length) continue;
+      routes.sort((a,b)=>a.spare-b.spare||b.travel-a.travel);
+      const route=routes[0],tight=route.spare<30;
+      const bar=document.createElement('div');
+      bar.className='transit-bar'+(tight?' tight':'');
+      const routeLabel=route.a===route.b?'Same centre':(centreLabels[route.a]||route.a)+' to '+(centreLabels[route.b]||route.b);
+      const timing=route.spare<0?Math.abs(route.spare)+'m short':route.spare+'m spare';
+      bar.innerHTML='<strong>'+routeLabel+'</strong> · '+route.travel+'m transit · '+timing+(tight?' · NO MEAL BUFFER':'');
+      fromSlot.after(bar);
+    }}
+  }});
+}}
 function applyFilters(){{
   const f=window.__courseFilter, mode=window.__layerMode;
   window.__filterActive = f !== 'all';
@@ -1292,8 +1403,13 @@ function applyFilters(){{
     const visible=Array.from(group.querySelectorAll('.chip')).filter(ch=>ch.style.display!=='none').length;
     group.classList.toggle('overlap-active',visible>=2);
   }});
+  document.querySelectorAll('.time-slot').forEach(slot=>{{
+    const visible=Array.from(slot.querySelectorAll('.chip')).some(ch=>ch.style.display!=='none');
+    slot.classList.toggle('slot-hidden',!visible);
+  }});
   document.querySelectorAll('.cell').forEach(cell=>{{ const visible=Array.from(cell.querySelectorAll('.chip')).some(ch=>ch.style.display!=='none'); if(cell.querySelector('.chip')) cell.classList.toggle('has', visible); }});
   document.querySelectorAll('.aday').forEach(day=>{{ const chips=Array.from(day.querySelectorAll('.chip')); if(chips.length) day.style.display=chips.some(ch=>ch.style.display!=='none')?'':'none'; }});
+  refreshTransitBars();
   applySpanFilters();
 }}
 document.querySelectorAll('.course-filter').forEach(btn=>btn.addEventListener('click',()=>{{

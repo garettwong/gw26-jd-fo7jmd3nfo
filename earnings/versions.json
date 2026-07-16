@@ -1,9 +1,21 @@
 [
   {
+    "id": "2026-07-16-V14",
+    "label": "2026-07-16 - V14",
+    "summary": "Added ME CONF/ME ALL transit reminders with red no-meal warnings. Added one dotted HK280HS Class SS enquiry option for 14 September morning; all other proposed dates conflict with confirmed work or travel.",
+    "latest": true
+  },
+  {
+    "id": "2026-07-16-V13",
+    "label": "2026-07-16 - V13",
+    "summary": "Confirmed HK239HG Class FS substitution: Garett teaches L1-L4 at Four Seas Building on 14 and 19 August; another tutor covers L5-L6 on 21 August. Calvin replaces Garett for HK244HG Class CW8 L3 on 14 August.",
+    "latest": false
+  },
+  {
     "id": "2026-07-16-V12",
     "label": "2026-07-16 - V12",
     "summary": "Rebuilt Class spans for zoom and scrolling: uniform grid lines, page-level desktop scrolling, timeline zoom, hideable course names, per-course switches, and separate capsules for repeated cohorts such as the July and September HK265HG FS classes. Calendar and salary data are unchanged from V11.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-16-V11",
