@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-16-V11",
+    "label": "2026-07-16 - V11",
+    "summary": "Expanded Class spans with separate PFSA2 and QAT7 SEN rows, Chinese course names, synchronized ME CONF / ME ALL / ALL FULL filters, and desktop zoom sizing that no longer switches to phone-scale text. Schedule and salary data are unchanged from V10.",
+    "latest": true
+  },
+  {
     "id": "2026-07-16-V10",
     "label": "2026-07-16 - V10",
     "summary": "Added a Class spans tab with one May-to-December timeline capsule per tracked ERB/Methodist class. Dark lesson markers are Garett's teaching dates; lighter markers are other-tutor or TBC dates. Calendar and salary data are unchanged from V09.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-16-V09",

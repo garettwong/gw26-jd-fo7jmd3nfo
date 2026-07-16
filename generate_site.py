@@ -13,13 +13,23 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "class-spans-20260716-v10"
+BUILD_ID = "class-spans-sen-filters-20260716-v11"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-16-V09"
-COMPARE_LABEL = "V10"
-COMPARE_BASELINE_LABEL = "V09"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-16-V10"
+COMPARE_LABEL = "V11"
+COMPARE_BASELINE_LABEL = "V10"
 EXPECTED_COMPARISON_CHANGES = 0
+
+COURSE_CHINESE_NAMES = {
+    "HK239HG": "人工智能知識及應用證書（兼讀制）",
+    "HK244EG": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
+    "HK244HG": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
+    "HK265HG": "人工智能強化營銷社交媒體內容創作證書（英文授課／兼讀制）",
+    "HK281DS": "創意數碼媒體設計及製作助理證書",
+    "MC0106DS": "創意數碼媒體設計及製作助理證書",
+}
+SEN_CODE_RE = re.compile(r"\((PFSA2|QAT7)\)", re.I)
 
 wb = load_workbook(SRC, data_only=False, rich_text=True)
 GROUPS = [
@@ -625,9 +635,10 @@ CSS += r'''
 CSS += r'''
 .view-tabs{position:sticky;top:0;z-index:35;display:inline-grid;grid-template-columns:repeat(2,minmax(126px,1fr));gap:3px;margin:18px 0 2px;padding:4px;border:1px solid #cfd8e5;border-radius:8px;background:rgba(229,234,241,.96);box-shadow:0 2px 8px rgba(20,30,50,.10);backdrop-filter:blur(8px)}
 .view-tab{min-height:38px;border:0;border-radius:6px;padding:7px 14px;background:transparent;color:#4c5a6b;font:inherit;font-size:13px;font-weight:850;cursor:pointer}.view-tab:hover{background:#f4f8fa}.view-tab:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.view-tab.active{background:#fff;color:#0f6868;box-shadow:0 1px 3px rgba(20,30,50,.18)}.view-panel[hidden]{display:none!important}
-.span-shell{margin-top:16px}.span-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:12px}.span-head h2{margin:0;font-size:20px;font-weight:850}.span-head p{max-width:780px;margin:4px 0 0;color:#667387;font-size:13px}.span-legend{display:flex;flex-wrap:wrap;gap:8px}.span-legend-item{display:flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid #dce3ec;border-radius:6px;background:#fff;color:#566273;font-size:11.5px;font-weight:750;white-space:nowrap}.span-key{width:9px;height:22px;border-radius:999px;background:#244b50}.span-key.other{height:16px;background:#b9c4ce}.span-scroll{overflow-x:auto;overflow-y:visible;border:1px solid #dbe2ec;border-radius:8px;background:#fff;box-shadow:0 1px 3px rgba(20,30,50,.06);overscroll-behavior-inline:contain;scrollbar-gutter:stable}.span-table{min-width:2050px}.span-axis,.span-row{display:grid;grid-template-columns:260px minmax(1760px,1fr)}.span-axis{min-height:48px;border-bottom:1px solid #dbe2ec;background:#f7f9fc}.span-axis-label,.span-label{position:sticky;left:0;z-index:4;border-right:1px solid #dbe2ec;background:#fff}.span-axis-label{display:flex;align-items:center;padding:9px 13px;background:#f7f9fc;color:#697586;font-size:11px;font-weight:850;text-transform:uppercase}.span-axis-track,.span-track{position:relative;min-width:0}.span-axis-track{height:48px}.span-month{position:absolute;inset-block:0 auto;display:flex;align-items:center;justify-content:center;border-left:1px solid #cad4df;color:#5f6b7b;font-size:11px;font-weight:850;text-transform:uppercase}.span-month:last-child{border-right:1px solid #cad4df}.span-row{min-height:66px;border-bottom:1px solid #e5eaf0}.span-row:last-child{border-bottom:0}.span-label{display:flex;flex-direction:column;justify-content:center;padding:8px 13px}.span-label strong{color:#1d2734;font-size:12px;line-height:1.2}.span-label small{margin-top:3px;color:#738092;font-size:10px;line-height:1.25}.span-track{height:66px;background-image:linear-gradient(to right,rgba(225,231,238,.75) 1px,transparent 1px);background-size:calc(100% / 8) 100%}.span-bar{position:absolute;top:15px;height:36px;min-width:28px;border:2px solid hsl(var(--span-hue),55%,38%);border-radius:999px;background:hsl(var(--span-hue),64%,91%);box-shadow:inset 0 1px 1px rgba(255,255,255,.8),0 1px 2px rgba(25,36,52,.14)}.span-bar::before,.span-bar::after{position:absolute;top:50%;z-index:1;transform:translateY(-50%);padding:1px 4px;border-radius:3px;background:rgba(255,255,255,.88);color:#475365;font-size:8px;font-weight:850;line-height:1.2;white-space:nowrap;pointer-events:none}.span-bar::before{content:attr(data-first-label);left:5px}.span-bar::after{content:attr(data-last-label);right:5px}.span-marker{position:absolute;top:50%;z-index:2;width:7px;height:17px;transform:translate(-50%,-50%);border:1px solid rgba(43,54,68,.35);border-radius:999px;background:#b9c4ce;box-shadow:0 0 0 1px rgba(255,255,255,.72);cursor:help}.span-marker.mine{z-index:3;width:9px;height:28px;border-color:#193e43;background:#244b50;box-shadow:0 0 0 2px rgba(255,255,255,.82)}.span-marker.unconfirmed{border-style:dashed}.span-marker:focus-visible{outline:3px solid #ffc857;outline-offset:2px}.span-empty{padding:24px;color:#667387;text-align:center}.span-view-active .floating-mode-switch,.span-view-active .actions{display:none}
-@media (max-width:820px){.view-tabs{display:grid;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:14px}.view-tab{padding:7px 6px}.span-head{display:block}.span-legend{margin-top:10px}.span-scroll{width:100%}.span-table{min-width:1880px}.span-axis,.span-row{grid-template-columns:210px minmax(1640px,1fr)}.span-axis-label,.span-label{padding-left:10px;padding-right:10px}.span-label strong{font-size:11px}}
-@media (orientation:landscape) and (max-height:700px) and (max-width:1400px){.view-tabs{position:sticky;display:inline-grid;width:auto;margin:3px 0;padding:2px}.view-tab{min-height:28px;padding:4px 9px;font-size:10px}.span-shell{margin-top:5px}.span-head h2{font-size:15px}.span-head p{font-size:10px}.span-legend-item{padding:3px 6px;font-size:8px}.span-key{height:16px}.span-key.other{height:11px}.span-table{min-width:1760px}.span-axis,.span-row{grid-template-columns:190px minmax(1540px,1fr)}.span-row{min-height:52px}.span-track{height:52px}.span-bar{top:10px;height:32px}.span-label strong{font-size:9px}.span-label small{font-size:7px}}
+.span-shell{margin-top:16px}.span-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:12px}.span-head h2{margin:0;font-size:20px;font-weight:850}.span-head p{max-width:780px;margin:4px 0 0;color:#667387;font-size:13px}.span-tools{display:flex;flex-direction:column;align-items:flex-end;gap:8px}.span-mode-switch{display:inline-grid;grid-template-columns:repeat(3,minmax(76px,1fr));gap:3px;padding:3px;border:1px solid #cfd8e5;border-radius:8px;background:#e5eaf1}.span-mode-option{min-height:34px;border:0;border-radius:6px;padding:5px 8px;background:transparent;color:#4c5a6b;font:inherit;font-size:10px;font-weight:900;line-height:1.05;cursor:pointer}.span-mode-option:hover{background:#f4f8fa}.span-mode-option:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.span-mode-option.active{background:#0f7074;color:#fff;box-shadow:0 1px 3px rgba(20,30,50,.18)}.span-legend{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}.span-legend-item{display:flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid #dce3ec;border-radius:6px;background:#fff;color:#566273;font-size:11.5px;font-weight:750;white-space:nowrap}.span-key{width:9px;height:22px;border-radius:999px;background:#244b50}.span-key.other{height:16px;background:#b9c4ce}.span-scroll{overflow-x:auto;overflow-y:visible;border:1px solid #dbe2ec;border-radius:8px;background:#fff;box-shadow:0 1px 3px rgba(20,30,50,.06);overscroll-behavior-inline:contain;scrollbar-gutter:stable}.span-table{min-width:2050px}.span-axis,.span-row{display:grid;grid-template-columns:280px minmax(1760px,1fr)}.span-axis{min-height:48px;border-bottom:1px solid #dbe2ec;background:#f7f9fc}.span-axis-label,.span-label{position:sticky;left:0;z-index:4;border-right:1px solid #dbe2ec;background:#fff}.span-axis-label{display:flex;align-items:center;padding:9px 13px;background:#f7f9fc;color:#697586;font-size:11px;font-weight:850;text-transform:uppercase}.span-axis-track,.span-track{position:relative;min-width:0}.span-axis-track{height:48px}.span-month{position:absolute;inset-block:0 auto;display:flex;align-items:center;justify-content:center;border-left:1px solid #cad4df;color:#5f6b7b;font-size:11px;font-weight:850;text-transform:uppercase}.span-month:last-child{border-right:1px solid #cad4df}.span-row{min-height:74px;border-bottom:1px solid #e5eaf0}.span-row:last-child{border-bottom:0}.span-row[hidden],.span-marker[hidden]{display:none!important}.span-label{display:flex;flex-direction:column;justify-content:center;padding:8px 13px}.span-label strong{color:#1d2734;font-size:12px;line-height:1.2}.span-course-name{margin-top:2px;color:#435165;font-size:10.5px;font-weight:750;line-height:1.22}.span-label small{margin-top:3px;color:#738092;font-size:10px;line-height:1.25}.span-track{height:74px;background-image:linear-gradient(to right,rgba(225,231,238,.75) 1px,transparent 1px);background-size:calc(100% / 8) 100%}.span-bar{position:absolute;top:19px;height:36px;min-width:28px;border:2px solid hsl(var(--span-hue),55%,38%);border-radius:999px;background:hsl(var(--span-hue),64%,91%);box-shadow:inset 0 1px 1px rgba(255,255,255,.8),0 1px 2px rgba(25,36,52,.14)}.span-bar::before,.span-bar::after{position:absolute;top:50%;z-index:1;transform:translateY(-50%);padding:1px 4px;border-radius:3px;background:rgba(255,255,255,.88);color:#475365;font-size:8px;font-weight:850;line-height:1.2;white-space:nowrap;pointer-events:none}.span-bar::before{content:attr(data-first-label);left:5px}.span-bar::after{content:attr(data-last-label);right:5px}.span-marker{position:absolute;top:50%;z-index:2;width:7px;height:17px;transform:translate(-50%,-50%);border:1px solid rgba(43,54,68,.35);border-radius:999px;background:#b9c4ce;box-shadow:0 0 0 1px rgba(255,255,255,.72);cursor:help}.span-marker.mine{z-index:3;width:9px;height:28px;border-color:#193e43;background:#244b50;box-shadow:0 0 0 2px rgba(255,255,255,.82)}.span-marker.unconfirmed{border-style:dashed}.span-marker:focus-visible{outline:3px solid #ffc857;outline-offset:2px}.span-empty{padding:24px;color:#667387;text-align:center}.span-view-active .floating-mode-switch,.span-view-active .actions{display:none}
+@media (max-width:820px){.view-tabs{display:grid;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:14px}.view-tab{padding:7px 6px}.span-head{display:block}.span-tools{align-items:stretch;margin-top:10px}.span-mode-switch{width:100%}.span-legend{justify-content:flex-start}.span-scroll{width:100%}.span-table{min-width:1880px}.span-axis,.span-row{grid-template-columns:230px minmax(1640px,1fr)}.span-axis-label,.span-label{padding-left:10px;padding-right:10px}.span-label strong{font-size:11px}.span-course-name{font-size:9.5px}}
+@media (orientation:landscape) and (max-height:700px) and (max-width:1400px) and (pointer:coarse){.view-tabs{position:sticky;display:inline-grid;width:auto;margin:3px 0;padding:2px}.view-tab{min-height:28px;padding:4px 9px;font-size:10px}.span-shell{margin-top:5px}.span-head h2{font-size:15px}.span-head p{font-size:10px}.span-tools{gap:4px}.span-mode-switch{grid-template-columns:repeat(3,minmax(60px,1fr));padding:2px}.span-mode-option{min-height:28px;padding:3px 5px;font-size:8px}.span-legend-item{padding:3px 6px;font-size:8px}.span-key{height:16px}.span-key.other{height:11px}.span-table{min-width:1760px}.span-axis,.span-row{grid-template-columns:205px minmax(1540px,1fr)}.span-row{min-height:58px}.span-track{height:58px}.span-bar{top:13px;height:32px}.span-label strong{font-size:9px}.span-course-name{font-size:7.5px}.span-label small{font-size:7px}}
+@media (pointer:fine){.span-table{min-width:2050px}.span-axis,.span-row{grid-template-columns:280px minmax(1760px,1fr)}.span-row{min-height:74px}.span-track{height:74px}.span-bar{top:19px;height:36px}.span-label strong{font-size:12px}.span-course-name{font-size:10.5px}.span-label small{font-size:10px}}
 @media print{.view-tabs{display:none}.view-panel[hidden]{display:block!important}.span-scroll{overflow:visible}.span-table{min-width:0}.span-axis,.span-row{grid-template-columns:180px minmax(0,1fr)}}
 '''
 
@@ -908,11 +919,25 @@ span_guides = ''.join(
     for month in range(6, 13)
 )
 
+def span_identity(ev):
+    if ev["category"] == "ymca":
+        match = SEN_CODE_RE.search(ev["text"])
+        code = match.group(1).upper() if match else "SEN"
+        return f"sen-{code.lower()}", f"YMCA SEN · {code}", "特殊教育需要支援課程"
+    label = ev["group_label"]
+    name = next((name for code, name in COURSE_CHINESE_NAMES.items() if code in label.upper()), "")
+    return ev["group"], label, name
+
+
 span_group_map = {}
 for ev in display_events:
-    if ev["category"] not in {"erb", "methodist"}:
+    if ev["category"] not in {"erb", "methodist", "ymca"}:
         continue
-    span_group_map.setdefault(ev["group"], {"label": ev["group_label"], "events": []})["events"].append(ev)
+    slug, label, chinese_name = span_identity(ev)
+    span_group_map.setdefault(
+        slug,
+        {"label": label, "chinese_name": chinese_name, "events": []},
+    )["events"].append(ev)
 
 span_rows = []
 for slug, group in sorted(
@@ -935,6 +960,7 @@ for slug, group in sorted(
     for ds, day_events in sorted(events_by_day.items()):
         day = datetime.date.fromisoformat(ds)
         mine = any(event_layer(ev) == "mine" for ev in day_events)
+        mine_confirmed = any(event_layer(ev) == "mine" and ev["status"] == "confirmed" for ev in day_events)
         if mine:
             my_dates += 1
         status = "unconfirmed" if any(ev["status"] == "unconfirmed" for ev in day_events) else "confirmed"
@@ -948,7 +974,8 @@ for slug, group in sorted(
         tooltip = f'{short_date(day)}: ' + " / ".join(details)
         markers.append(
             f'<button class="span-marker {"mine" if mine else "other"} {status}" type="button" '
-            f'data-date="{ds}" data-mine="{1 if mine else 0}" data-group-label="{ehtml(group["label"])}" '
+            f'data-date="{ds}" data-mine="{1 if mine else 0}" data-mine-confirmed="{1 if mine_confirmed else 0}" '
+            f'data-group-label="{ehtml(group["label"])}" '
             f'data-details="{ehtml(tooltip)}" style="left:{relative:.5f}%" title="{ehtml(tooltip)}" '
             f'aria-label="{ehtml(tooltip)}; {"Garett teaches" if mine else "other tutor or TBC"}"></button>'
         )
@@ -958,6 +985,7 @@ for slug, group in sorted(
         f'<div class="span-row" data-group="{ehtml(slug)}" data-first="{first_day.isoformat()}" '
         f'data-last="{last_day.isoformat()}" data-lesson-dates="{len(events_by_day)}" data-my-dates="{my_dates}">'
         f'<div class="span-label"><strong>{ehtml(group["label"])}</strong>'
+        f'<span class="span-course-name">{ehtml(group["chinese_name"])}</span>'
         f'<small>{ehtml(range_label)} · My dates {my_dates}/{len(events_by_day)}</small></div>'
         f'<div class="span-track">{span_guides}<div class="span-bar" style="--span-hue:{class_hue};left:{bar_left:.5f}%;width:{bar_width:.5f}%" '
         f'data-first-label="{ehtml(short_date(first_day))}" data-last-label="{ehtml(short_date(last_day))}" '
@@ -968,17 +996,12 @@ span_timeline_html = (
     '<div class="span-scroll" tabindex="0" aria-label="Scrollable class timeline from May to December 2026">'
     '<div class="span-table"><div class="span-axis"><div class="span-axis-label">Course / class</div>'
     f'<div class="span-axis-track">{"".join(span_months)}</div></div>{"".join(span_rows)}</div></div>'
-    if span_rows else '<div class="span-empty">No tracked ERB classes.</div>'
+    if span_rows else '<div class="span-empty">No tracked classes.</div>'
 )
 erb_code_legend = ''.join(
     f'<div class="code-key"><b>{ehtml(code)}</b><span>{ehtml(name)}</span></div>'
-    for code, name in [
-        ("HK239HG", "人工智能知識及應用證書（兼讀制）"),
-        ("HK244EG", "人工智能創作營銷社交媒體內容技巧證書（兼讀制）"),
-        ("HK244HG", "人工智能創作營銷社交媒體內容技巧證書（兼讀制）"),
-        ("HK265HG", "Certificate in AI-enhanced Social Media Content"),
-        ("HK281DS", "創意數碼媒體設計及製作助理證書"),
-    ]
+    for code, name in COURSE_CHINESE_NAMES.items()
+    if code != "MC0106DS"
 )
 
 HTML = f'''<!doctype html><html lang="en"><head>
@@ -1003,7 +1026,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 {months_html}
 <div class="foot">Sources: <b>{ehtml(SRC.name)}</b>, <b>{ehtml(OVERRIDES_SRC.name)}</b>, and <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
 </section><section id="spansView" class="view-panel" role="tabpanel" aria-labelledby="spansTab" hidden>
-<div class="span-shell"><div class="span-head"><div><h2>Class spans</h2><p>Each capsule runs from that class's first lesson to its last lesson on one shared date axis, so concurrent classes line up. Select or hover a lesson marker for its date, lesson, teacher, and time.</p></div><div class="span-legend"><span class="span-legend-item"><span class="span-key"></span>Garett teaches</span><span class="span-legend-item"><span class="span-key other"></span>Other tutor / TBC</span></div></div>{span_timeline_html}</div>
+<div class="span-shell"><div class="span-head"><div><h2>Class spans</h2><p>Each capsule runs from that class's first lesson to its last lesson on one shared date axis, so concurrent classes line up. Select or hover a lesson marker for its date, lesson, teacher, and time.</p></div><div class="span-tools"><div class="span-mode-switch" role="group" aria-label="Class span lesson filter"><button class="span-mode-option" type="button" data-mode="mine-confirmed">ME CONF</button><button class="span-mode-option" type="button" data-mode="mine-all">ME ALL</button><button class="span-mode-option active" type="button" data-mode="both">ALL FULL</button></div><div class="span-legend"><span class="span-legend-item"><span class="span-key"></span>Garett teaches</span><span class="span-legend-item"><span class="span-key other"></span>Other tutor / TBC</span></div></div></div>{span_timeline_html}</div>
 </section>
 </main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view and navigation"><button id="floatingToday" class="today-option" type="button" aria-label="Go to today" title="Go to today"><span class="mode-main">TODAY</span></button><button id="floatingTop" class="top-option" type="button" aria-label="Back to course filters" title="Back to course filters"><span class="mode-main" aria-hidden="true">&uarr;</span><span class="mode-sub">FILTER</span></button><button id="floatingVersions" class="version-option" type="button" aria-label="Back to version selector" title="Back to version selector"><span class="mode-main" aria-hidden="true">&#9776;</span><span class="mode-sub">VERS</span></button><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All: full timetable" title="All: full timetable"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
 <script>
@@ -1080,6 +1103,21 @@ function syncCourseFilterUI(){{
   const activeGroup=window.__cardCourseFilter&&window.__cardCourseFilter.group;
   document.querySelectorAll('.card-course-filter').forEach(tag=>tag.classList.toggle('card-filter-active',tag.dataset.cardGroup===activeGroup));
 }}
+function syncLayerModeUI(){{
+  document.querySelectorAll('.mode-option,.span-mode-option').forEach(option=>option.classList.toggle('active',option.dataset.mode===window.__layerMode));
+}}
+function applySpanFilters(){{
+  const mode=window.__layerMode;
+  document.querySelectorAll('.span-row').forEach(row=>{{
+    let visible=0;
+    row.querySelectorAll('.span-marker').forEach(marker=>{{
+      const show=mode==='both'||(mode==='mine-all'&&marker.dataset.mine==='1')||(mode==='mine-confirmed'&&marker.dataset.mineConfirmed==='1');
+      marker.hidden=!show;
+      if(show) visible+=1;
+    }});
+    row.hidden=visible===0;
+  }});
+}}
 function applyFilters(){{
   const f=window.__courseFilter, mode=window.__layerMode;
   window.__filterActive = f !== 'all';
@@ -1097,6 +1135,7 @@ function applyFilters(){{
   }});
   document.querySelectorAll('.cell').forEach(cell=>{{ const visible=Array.from(cell.querySelectorAll('.chip')).some(ch=>ch.style.display!=='none'); if(cell.querySelector('.chip')) cell.classList.toggle('has', visible); }});
   document.querySelectorAll('.aday').forEach(day=>{{ const chips=Array.from(day.querySelectorAll('.chip')); if(chips.length) day.style.display=chips.some(ch=>ch.style.display!=='none')?'':'none'; }});
+  applySpanFilters();
 }}
 document.querySelectorAll('.course-filter').forEach(btn=>btn.addEventListener('click',()=>{{
   const f=btn.dataset.filter;
@@ -1173,13 +1212,20 @@ document.getElementById('floatingVersions').addEventListener('click',()=>{{
 document.querySelectorAll('.mode-option').forEach(btn=>btn.addEventListener('click',()=>{{
   const anchor=window.__modeCompareAnchor||captureModeAnchor();
   window.__modeCompareAnchor=anchor;
-  document.querySelectorAll('.mode-option').forEach(option=>option.classList.toggle('active',option===btn));
   window.__layerMode=btn.dataset.mode;
+  syncLayerModeUI();
   window.__restoringModeAnchor=true;
   applyFilters();
   restoreModeAnchor(anchor);
 }}));
+document.querySelectorAll('.span-mode-option').forEach(btn=>btn.addEventListener('click',()=>{{
+  window.__layerMode=btn.dataset.mode;
+  window.__modeCompareAnchor=null;
+  syncLayerModeUI();
+  applyFilters();
+}}));
 syncCourseFilterUI();
+syncLayerModeUI();
 applyFilters();
 (function(){{
  const pad=n=>String(n).padStart(2,'0');
