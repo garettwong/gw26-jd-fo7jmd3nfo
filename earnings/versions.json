@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-16-V12",
+    "label": "2026-07-16 - V12",
+    "summary": "Rebuilt Class spans for zoom and scrolling: uniform grid lines, page-level desktop scrolling, timeline zoom, hideable course names, per-course switches, and separate capsules for repeated cohorts such as the July and September HK265HG FS classes. Calendar and salary data are unchanged from V11.",
+    "latest": true
+  },
+  {
     "id": "2026-07-16-V11",
     "label": "2026-07-16 - V11",
     "summary": "Expanded Class spans with separate PFSA2 and QAT7 SEN rows, Chinese course names, synchronized ME CONF / ME ALL / ALL FULL filters, and desktop zoom sizing that no longer switches to phone-scale text. Schedule and salary data are unchanged from V10.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-16-V10",

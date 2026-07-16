@@ -13,12 +13,12 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "class-spans-sen-filters-20260716-v11"
+BUILD_ID = "class-spans-scroll-controls-20260716-v12"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-16-V10"
-COMPARE_LABEL = "V11"
-COMPARE_BASELINE_LABEL = "V10"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-16-V11"
+COMPARE_LABEL = "V12"
+COMPARE_BASELINE_LABEL = "V11"
 EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
@@ -646,6 +646,16 @@ CSS += r'''
 .span-track{background-image:none;background-size:auto}.span-guide{position:absolute;inset-block:0;border-left:1px solid rgba(216,224,233,.82);pointer-events:none}.span-marker{padding:0;cursor:pointer}
 '''
 
+CSS += r'''
+html{overflow-x:auto;overflow-y:scroll}
+.filter-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-top:22px}.filter-heading .section-h{margin:0}.filter-master{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.filter-groups{display:grid;gap:7px;margin:10px 0 16px}.filter-group{display:grid;grid-template-columns:92px minmax(0,1fr);align-items:start;gap:10px;padding-top:7px;border-top:1px solid #dbe2ec}.filter-group:first-child{border-top:0}.filter-group-label{padding:8px 0;color:#657285;font-size:11px;font-weight:900;text-transform:uppercase}.filter-group-buttons{display:flex;gap:7px;flex-wrap:wrap}.filter-group .filter{padding:6px 10px}
+.span-shell{--span-label-width:280px;--span-timeline-width:1760px;margin-top:16px}.span-head{display:block;max-width:980px;margin-bottom:10px}.span-head p{max-width:900px}.span-control-bar{position:sticky;left:16px;z-index:8;display:flex;align-items:flex-start;gap:8px;max-width:calc(100vw - 52px);margin-bottom:10px;flex-wrap:wrap}.span-tools{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:8px;flex-wrap:wrap}.span-tool-button,.span-zoom button,.span-course-picker summary,.span-course-actions button{min-height:40px;border:1px solid #cfd8e5;border-radius:6px;background:#fff;color:#405064;font:inherit;font-size:11px;font-weight:850;cursor:pointer}.span-tool-button{padding:7px 10px}.span-tool-button[aria-pressed="false"]{background:#405064;color:#fff}.span-zoom{display:grid;grid-template-columns:40px 64px 40px;gap:3px}.span-zoom button{padding:0;font-size:19px}.span-zoom .span-zoom-value{font-size:10px}.span-tool-button:focus-visible,.span-zoom button:focus-visible,.span-course-picker summary:focus-visible,.span-course-actions button:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.span-course-picker{position:relative}.span-course-picker summary{display:flex;align-items:center;gap:7px;padding:7px 10px;list-style:none}.span-course-picker summary::-webkit-details-marker{display:none}.span-course-picker summary::before{content:"+";font-size:15px}.span-course-picker[open] summary::before{content:"−"}.span-course-picker-body{position:absolute;top:46px;left:0;z-index:20;width:min(680px,calc(100vw - 48px));padding:10px;border:1px solid #cfd8e5;border-radius:7px;background:#fff;box-shadow:0 8px 24px rgba(20,30,50,.20)}.span-course-actions{display:flex;gap:6px;margin-bottom:8px}.span-course-actions button{min-height:32px;padding:4px 9px}.span-course-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:min(52vh,440px);overflow:auto;border-top:1px solid #e2e7ef}.span-course-toggle{display:flex;align-items:flex-start;gap:8px;min-width:0;padding:8px;border-bottom:1px solid #e8edf3;cursor:pointer}.span-course-toggle:nth-child(odd){border-right:1px solid #e8edf3}.span-course-toggle input{width:17px;height:17px;margin:1px 0 0;accent-color:#0f7074;flex:0 0 auto}.span-course-toggle span{display:flex;min-width:0;flex-direction:column}.span-course-toggle strong{font-size:10.5px;line-height:1.2}.span-course-toggle small{margin-top:2px;color:#748092;font-size:9px}.span-legend{justify-content:flex-start}.span-scroll{width:max-content;min-width:100%;overflow:visible;border:1px solid #dbe2ec;border-radius:8px;scrollbar-gutter:auto}.span-table{width:calc(var(--span-label-width) + var(--span-timeline-width));min-width:calc(var(--span-label-width) + var(--span-timeline-width))}.span-axis,.span-row{grid-template-columns:var(--span-label-width) var(--span-timeline-width)}.span-axis{border-bottom:1px solid #dbe2ec}.span-row{border-bottom:1px solid #dbe2ec}.span-axis-label,.span-label{border-right:1px solid #dbe2ec}.span-month{border-left:1px solid #dbe2ec}.span-month:first-child{border-left:0}.span-month:last-child{border-right:0}.span-guide{border-left:1px solid #dbe2ec}.span-shell.hide-span-labels{--span-label-width:0px}.span-shell.hide-span-labels .span-axis-label,.span-shell.hide-span-labels .span-label{display:none}.span-row[data-course-hidden="1"]{display:none!important}
+@media (pointer:fine) and (min-width:821px){body.span-view-active .wrap{overflow:visible}.span-view-active .span-scroll{width:max-content;min-width:100%;overflow:visible}.span-view-active .span-control-bar{position:sticky;left:16px}}
+@media (max-width:820px){html{overflow-x:hidden}.filter-heading{align-items:flex-start}.filter-groups{gap:5px}.filter-group{grid-template-columns:62px minmax(0,1fr);gap:6px}.filter-group-label{font-size:10px}.span-shell{--span-label-width:230px;--span-timeline-width:1640px}.span-control-bar{position:static;display:block;max-width:none}.span-tools{align-items:stretch}.span-mode-switch{width:100%}.span-zoom{width:100%;grid-template-columns:44px minmax(72px,1fr) 44px}.span-tool-button,.span-course-picker{width:100%}.span-course-picker summary{justify-content:center}.span-course-picker-body{position:fixed;top:76px;left:12px;right:12px;width:auto;max-height:calc(100vh - 94px);overflow:auto}.span-course-options{grid-template-columns:1fr;max-height:none}.span-course-toggle:nth-child(odd){border-right:0}.span-scroll{width:100%;min-width:0;overflow-x:auto;overflow-y:visible;overscroll-behavior-inline:contain;scrollbar-gutter:stable}.span-table{width:calc(var(--span-label-width) + var(--span-timeline-width));min-width:calc(var(--span-label-width) + var(--span-timeline-width))}.span-axis,.span-row{grid-template-columns:var(--span-label-width) var(--span-timeline-width)}}
+@media (orientation:landscape) and (max-height:700px) and (max-width:1400px) and (pointer:coarse){.filter-heading,.filter-groups{display:none}.span-shell{--span-label-width:205px;--span-timeline-width:1540px}.span-control-bar{display:flex}.span-tools{gap:4px}.span-tool-button,.span-zoom button,.span-course-picker summary{min-height:30px;font-size:8px}.span-zoom{width:auto;grid-template-columns:30px 48px 30px}.span-course-picker{width:auto}.span-course-picker-body{top:44px}.span-course-options{grid-template-columns:repeat(2,minmax(0,1fr))}.span-scroll{width:100%;min-width:0;overflow-x:auto;overflow-y:visible;overscroll-behavior-inline:contain;scrollbar-gutter:stable}}
+@media print{html{overflow:visible}.filter-heading,.filter-groups,.span-control-bar{display:none}.span-scroll{width:100%;overflow:visible}.span-table{width:100%;min-width:0}.span-axis,.span-row{grid-template-columns:180px minmax(0,1fr)}}
+'''
+
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
 TEACHER_RE = re.compile(r"\b(Garett|Garrett|Andy|Calvin|Mike(?:\s+Sir)?)\b", re.I)
 NOTE_WORD_RE = re.compile(r"test|exam|presentation|discussion|cancel|substitut", re.I)
@@ -890,7 +900,33 @@ layer_counts = {"mine": 0, "class": 0, "other": 0}
 for e in display_events:
     layer_counts[event_layer(e)] += 1
 months_html = ''.join(month_html(YEAR, m) for m in range(5, 13))
-cat_filters = ''.join(f'<button class="filter course-filter {ehtml(group_status)}" data-filter="{ehtml(slug)}" data-first-date="{ehtml(first_date)}" data-status-summary="{ehtml(group_status)}" title="{ehtml(label)} · {ehtml(group_status)}">{ehtml(label)} ({sum(1 for e in display_events if e["group"] == slug)})</button>' for label, slug, group_status, first_date in GROUPS)
+def calendar_filter_button(group):
+    label, slug, group_status, first_date = group
+    count = sum(1 for event in display_events if event["group"] == slug)
+    return (
+        f'<button class="filter course-filter {ehtml(group_status)}" data-filter="{ehtml(slug)}" '
+        f'data-first-date="{ehtml(first_date)}" data-status-summary="{ehtml(group_status)}" '
+        f'title="{ehtml(label)} · {ehtml(group_status)}">{ehtml(label)} ({count})</button>'
+    )
+
+
+calendar_filter_buckets = {"erb": [], "sen": [], "other": []}
+for group in GROUPS:
+    label, slug, _group_status, _first_date = group
+    categories = {event["category"] for event in display_events if event["group"] == slug}
+    if categories & {"erb", "methodist"}:
+        bucket = "erb"
+    elif categories == {"ymca"}:
+        bucket = "sen"
+    else:
+        bucket = "other"
+    calendar_filter_buckets[bucket].append(group)
+
+filter_groups_html = ''.join(
+    f'<div class="filter-group"><div class="filter-group-label">{label}</div>'
+    f'<div class="filter-group-buttons">{"".join(calendar_filter_button(group) for group in sorted(calendar_filter_buckets[key], key=lambda item: natural_key(item[0])))}</div></div>'
+    for key, label in (("erb", "ERB"), ("sen", "SEN"), ("other", "Other jobs"))
+)
 
 TIMELINE_START = datetime.date(YEAR, 5, 1)
 TIMELINE_END = datetime.date(YEAR, 12, 31)
@@ -929,6 +965,45 @@ def span_identity(ev):
     return ev["group"], label, name
 
 
+LESSON_NUMBER_RE = re.compile(r"\bL\s*(\d+)\b", re.I)
+
+
+def span_lesson_number(ev):
+    match = LESSON_NUMBER_RE.search(str(ev.get("text") or ""))
+    return int(match.group(1)) if match else None
+
+
+def split_span_instances(events):
+    """Split repeated cohorts when the lesson sequence restarts at L1/L2."""
+    events_by_date = {}
+    for event in sorted(events, key=lambda item: (item["date"], event_sort_key(item))):
+        events_by_date.setdefault(event["date"], []).append(event)
+
+    instances = []
+    current = []
+    previous_max_lesson = None
+    for _date, day_events in sorted(events_by_date.items()):
+        lesson_numbers = [number for number in (span_lesson_number(event) for event in day_events) if number is not None]
+        day_min = min(lesson_numbers) if lesson_numbers else None
+        starts_new_cohort = (
+            bool(current)
+            and day_min is not None
+            and previous_max_lesson is not None
+            and day_min <= 2
+            and day_min < previous_max_lesson
+        )
+        if starts_new_cohort:
+            instances.append(current)
+            current = []
+            previous_max_lesson = None
+        current.extend(day_events)
+        if lesson_numbers:
+            previous_max_lesson = max(previous_max_lesson or 0, max(lesson_numbers))
+    if current:
+        instances.append(current)
+    return instances
+
+
 span_group_map = {}
 for ev in display_events:
     if ev["category"] not in {"erb", "methodist", "ymca"}:
@@ -939,11 +1014,30 @@ for ev in display_events:
         {"label": label, "chinese_name": chinese_name, "events": []},
     )["events"].append(ev)
 
+span_instances = []
+for base_slug, group in span_group_map.items():
+    instances = split_span_instances(group["events"])
+    for index, instance_events in enumerate(instances, 1):
+        first_instance_day = datetime.date.fromisoformat(min(event["date"] for event in instance_events))
+        instance_slug = base_slug if len(instances) == 1 else f"{base_slug}-c{index}"
+        instance_label = group["label"]
+        if len(instances) > 1:
+            instance_label = f'{instance_label} · {calendar.month_abbr[first_instance_day.month].upper()} {YEAR}'
+        span_instances.append({
+            "slug": instance_slug,
+            "base_slug": base_slug,
+            "label": instance_label,
+            "chinese_name": group["chinese_name"],
+            "events": instance_events,
+        })
+
 span_rows = []
-for slug, group in sorted(
-    span_group_map.items(),
-    key=lambda item: (min(ev["date"] for ev in item[1]["events"]), natural_key(item[1]["label"])),
+span_controls = []
+for group in sorted(
+    span_instances,
+    key=lambda item: (min(ev["date"] for ev in item["events"]), natural_key(item["label"])),
 ):
+    slug = group["slug"]
     group_events = sorted(group["events"], key=lambda ev: (ev["date"], event_sort_key(ev)))
     first_day = datetime.date.fromisoformat(group_events[0]["date"])
     last_day = datetime.date.fromisoformat(group_events[-1]["date"])
@@ -981,8 +1075,9 @@ for slug, group in sorted(
         )
 
     range_label = f"{short_date(first_day)}–{short_date(last_day)}"
+    span_controls.append((slug, group["label"], range_label))
     span_rows.append(
-        f'<div class="span-row" data-group="{ehtml(slug)}" data-first="{first_day.isoformat()}" '
+        f'<div class="span-row" data-span-group="{ehtml(slug)}" data-base-group="{ehtml(group["base_slug"])}" data-first="{first_day.isoformat()}" '
         f'data-last="{last_day.isoformat()}" data-lesson-dates="{len(events_by_day)}" data-my-dates="{my_dates}">'
         f'<div class="span-label"><strong>{ehtml(group["label"])}</strong>'
         f'<span class="span-course-name">{ehtml(group["chinese_name"])}</span>'
@@ -997,6 +1092,16 @@ span_timeline_html = (
     '<div class="span-table"><div class="span-axis"><div class="span-axis-label">Course / class</div>'
     f'<div class="span-axis-track">{"".join(span_months)}</div></div>{"".join(span_rows)}</div></div>'
     if span_rows else '<div class="span-empty">No tracked classes.</div>'
+)
+span_course_toggles = ''.join(
+    f'<label class="span-course-toggle"><input type="checkbox" data-span-course="{ehtml(slug)}" checked>'
+    f'<span><strong>{ehtml(label)}</strong><small>{ehtml(range_label)}</small></span></label>'
+    for slug, label, range_label in span_controls
+)
+span_course_picker = (
+    f'<details id="spanCoursePicker" class="span-course-picker"><summary>Courses <span id="spanCourseCount">{len(span_controls)}/{len(span_controls)}</span></summary>'
+    f'<div class="span-course-picker-body"><div class="span-course-actions"><button type="button" data-span-course-action="all">All on</button>'
+    f'<button type="button" data-span-course-action="none">All off</button></div><div class="span-course-options">{span_course_toggles}</div></div></details>'
 )
 erb_code_legend = ''.join(
     f'<div class="code-key"><b>{ehtml(code)}</b><span>{ehtml(name)}</span></div>'
@@ -1022,11 +1127,11 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
 <div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div>{comparison_legend_html}<div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
 <div class="section-h">ERB course codes</div><div class="course-code-legend">{erb_code_legend}</div>
-<div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filters"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{comparison_filter_html}{cat_filters}</div>
+<div class="filter-heading"><div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filter-master"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{comparison_filter_html}</div></div><div class="filter-groups">{filter_groups_html}</div>
 {months_html}
 <div class="foot">Sources: <b>{ehtml(SRC.name)}</b>, <b>{ehtml(OVERRIDES_SRC.name)}</b>, and <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
 </section><section id="spansView" class="view-panel" role="tabpanel" aria-labelledby="spansTab" hidden>
-<div class="span-shell"><div class="span-head"><div><h2>Class spans</h2><p>Each capsule runs from that class's first lesson to its last lesson on one shared date axis, so concurrent classes line up. Select or hover a lesson marker for its date, lesson, teacher, and time.</p></div><div class="span-tools"><div class="span-mode-switch" role="group" aria-label="Class span lesson filter"><button class="span-mode-option" type="button" data-mode="mine-confirmed">ME CONF</button><button class="span-mode-option" type="button" data-mode="mine-all">ME ALL</button><button class="span-mode-option active" type="button" data-mode="both">ALL FULL</button></div><div class="span-legend"><span class="span-legend-item"><span class="span-key"></span>Garett teaches</span><span class="span-legend-item"><span class="span-key other"></span>Other tutor / TBC</span></div></div></div>{span_timeline_html}</div>
+<div id="spanShell" class="span-shell"><div class="span-head"><h2>Class spans</h2><p>Each capsule is one class, from its first lesson to its last lesson. Repeated cohorts with the same code are separated when the lesson sequence restarts.</p></div><div class="span-control-bar"><div class="span-tools"><div class="span-mode-switch" role="group" aria-label="Class span lesson filter"><button class="span-mode-option" type="button" data-mode="mine-confirmed">ME CONF</button><button class="span-mode-option" type="button" data-mode="mine-all">ME ALL</button><button class="span-mode-option active" type="button" data-mode="both">ALL FULL</button></div><button id="spanLabelsToggle" class="span-tool-button" type="button" aria-pressed="true">Course names ON</button><div class="span-zoom" role="group" aria-label="Class span timeline zoom"><button id="spanZoomOut" type="button" aria-label="Zoom timeline out" title="Zoom timeline out">−</button><button id="spanZoomReset" class="span-zoom-value" type="button" aria-label="Reset timeline zoom" title="Reset timeline zoom">100%</button><button id="spanZoomIn" type="button" aria-label="Zoom timeline in" title="Zoom timeline in">+</button></div>{span_course_picker}<div class="span-legend"><span class="span-legend-item"><span class="span-key"></span>Garett teaches</span><span class="span-legend-item"><span class="span-key other"></span>Other tutor / TBC</span></div></div></div>{span_timeline_html}</div>
 </section>
 </main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view and navigation"><button id="floatingToday" class="today-option" type="button" aria-label="Go to today" title="Go to today"><span class="mode-main">TODAY</span></button><button id="floatingTop" class="top-option" type="button" aria-label="Back to course filters" title="Back to course filters"><span class="mode-main" aria-hidden="true">&uarr;</span><span class="mode-sub">FILTER</span></button><button id="floatingVersions" class="version-option" type="button" aria-label="Back to version selector" title="Back to version selector"><span class="mode-main" aria-hidden="true">&#9776;</span><span class="mode-sub">VERS</span></button><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All: full timetable" title="All: full timetable"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
 <script>
@@ -1106,16 +1211,70 @@ function syncCourseFilterUI(){{
 function syncLayerModeUI(){{
   document.querySelectorAll('.mode-option,.span-mode-option').forEach(option=>option.classList.toggle('active',option.dataset.mode===window.__layerMode));
 }}
+const spanShell=document.getElementById('spanShell');
+const spanCourseInputs=Array.from(document.querySelectorAll('[data-span-course]'));
+const spanCourseCount=document.getElementById('spanCourseCount');
+function syncSpanCourseCount(){{
+  const enabled=spanCourseInputs.filter(input=>input.checked).length;
+  if(spanCourseCount) spanCourseCount.textContent=enabled+'/'+spanCourseInputs.length;
+}}
+let spanLabelsVisible=true;
+const spanLabelsToggle=document.getElementById('spanLabelsToggle');
+function syncSpanLabels(){{
+  spanShell.classList.toggle('hide-span-labels',!spanLabelsVisible);
+  spanLabelsToggle.setAttribute('aria-pressed',String(spanLabelsVisible));
+  spanLabelsToggle.textContent='Course names '+(spanLabelsVisible?'ON':'OFF');
+}}
+const spanZoomLevels=[0.75,1,1.25,1.5,2,2.5];
+let spanZoomIndex=1;
+function spanLayoutMetrics(){{
+  if(window.matchMedia('(orientation: landscape) and (max-height: 700px) and (max-width: 1400px) and (pointer: coarse)').matches) return {{label:205,minTimeline:1540,gutter:10}};
+  if(window.matchMedia('(max-width: 820px)').matches) return {{label:230,minTimeline:1640,gutter:10}};
+  return {{label:280,minTimeline:1760,gutter:72}};
+}}
+function applySpanZoom(preservePosition=false){{
+  const previousMax=Math.max(0,document.documentElement.scrollWidth-innerWidth);
+  const previousRatio=previousMax?scrollX/previousMax:0;
+  const metrics=spanLayoutMetrics();
+  const available=Math.max(0,innerWidth-(spanLabelsVisible?metrics.label:0)-metrics.gutter);
+  const base=Math.max(metrics.minTimeline,available);
+  const scale=spanZoomLevels[spanZoomIndex];
+  spanShell.style.setProperty('--span-label-width',(spanLabelsVisible?metrics.label:0)+'px');
+  spanShell.style.setProperty('--span-timeline-width',Math.round(base*scale)+'px');
+  document.getElementById('spanZoomReset').textContent=Math.round(scale*100)+'%';
+  document.getElementById('spanZoomOut').disabled=spanZoomIndex===0;
+  document.getElementById('spanZoomIn').disabled=spanZoomIndex===spanZoomLevels.length-1;
+  if(preservePosition) requestAnimationFrame(()=>{{
+    const nextMax=Math.max(0,document.documentElement.scrollWidth-innerWidth);
+    window.scrollTo(previousRatio*nextMax,scrollY);
+  }});
+}}
+spanLabelsToggle.addEventListener('click',()=>{{spanLabelsVisible=!spanLabelsVisible;syncSpanLabels();applySpanZoom(true);}});
+document.getElementById('spanZoomOut').addEventListener('click',()=>{{if(spanZoomIndex>0){{spanZoomIndex-=1;applySpanZoom(true);}}}});
+document.getElementById('spanZoomIn').addEventListener('click',()=>{{if(spanZoomIndex<spanZoomLevels.length-1){{spanZoomIndex+=1;applySpanZoom(true);}}}});
+document.getElementById('spanZoomReset').addEventListener('click',()=>{{spanZoomIndex=1;applySpanZoom(true);}});
+spanCourseInputs.forEach(input=>input.addEventListener('change',()=>{{syncSpanCourseCount();applySpanFilters();}}));
+document.querySelectorAll('[data-span-course-action]').forEach(button=>button.addEventListener('click',()=>{{
+  const checked=button.dataset.spanCourseAction==='all';
+  spanCourseInputs.forEach(input=>input.checked=checked);
+  syncSpanCourseCount();
+  applySpanFilters();
+}}));
+let spanResizeTimer=null;
+window.addEventListener('resize',()=>{{clearTimeout(spanResizeTimer);spanResizeTimer=setTimeout(()=>applySpanZoom(),100);}},{{passive:true}});
 function applySpanFilters(){{
   const mode=window.__layerMode;
   document.querySelectorAll('.span-row').forEach(row=>{{
+    const courseInput=spanCourseInputs.find(input=>input.dataset.spanCourse===row.dataset.spanGroup);
+    const courseEnabled=!courseInput||courseInput.checked;
     let visible=0;
     row.querySelectorAll('.span-marker').forEach(marker=>{{
       const show=mode==='both'||(mode==='mine-all'&&marker.dataset.mine==='1')||(mode==='mine-confirmed'&&marker.dataset.mineConfirmed==='1');
       marker.hidden=!show;
       if(show) visible+=1;
     }});
-    row.hidden=visible===0;
+    row.dataset.courseHidden=courseEnabled?'0':'1';
+    row.hidden=!courseEnabled||visible===0;
   }});
 }}
 function applyFilters(){{
@@ -1226,6 +1385,9 @@ document.querySelectorAll('.span-mode-option').forEach(btn=>btn.addEventListener
 }}));
 syncCourseFilterUI();
 syncLayerModeUI();
+syncSpanLabels();
+syncSpanCourseCount();
+applySpanZoom();
 applyFilters();
 (function(){{
  const pad=n=>String(n).padStart(2,'0');

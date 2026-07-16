@@ -197,5 +197,25 @@ assert not any(
 
 index = (ROOT / "index.html").read_text(encoding="utf-8")
 assert "May 2026" in index and "HK244HG" in index
+assert index.count('class="span-row"') == 16
+assert 'data-span-group="g12-c1" data-base-group="g12" data-first="2026-07-24" data-last="2026-08-12"' in index
+assert 'data-span-group="g12-c2" data-base-group="g12" data-first="2026-09-16" data-last="2026-10-14"' in index
+assert "HK265HG · FS · JUL 2026" in index and "HK265HG · FS · SEP 2026" in index
+assert index.count('data-span-course="') == 16
+assert all(control in index for control in (
+    'id="spanLabelsToggle"', 'id="spanZoomOut"', 'id="spanZoomReset"', 'id="spanZoomIn"',
+    'data-span-course-action="all"', 'data-span-course-action="none"',
+))
+filter_positions = [
+    index.index('<div class="filter-group-label">ERB</div>'),
+    index.index('<div class="filter-group-label">SEN</div>'),
+    index.index('<div class="filter-group-label">Other jobs</div>'),
+]
+assert filter_positions == sorted(filter_positions)
+erb_filter_section = index[filter_positions[0]:filter_positions[1]]
+erb_codes = re.findall(r'>(HK\d+[A-Z]+)', erb_filter_section)
+assert erb_codes == sorted(erb_codes)
+assert '@media (pointer:fine) and (min-width:821px)' in index
+assert '.span-month:first-child{border-left:0}' in index
 print("source ledger verification passed")
 print(f"events={len(EVENTS)} context={len(CONTEXT)} display={len(ALL)}")
