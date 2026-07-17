@@ -1,4 +1,4 @@
-const BUILD_ID = 'hk281-release-hk280-single-safe-slot-20260717-v18';
+const BUILD_ID = 'v18-top-version-selector-20260717a';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

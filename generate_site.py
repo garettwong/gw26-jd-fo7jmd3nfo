@@ -13,9 +13,10 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "hk281-release-hk280-single-safe-slot-20260717-v18"
+BUILD_ID = "v18-top-version-selector-20260717a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
+VERSIONS_SRC = OUTDIR / "versions.json"
 COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-17-V17D"
 COMPARE_LABEL = "V18"
 COMPARE_BASELINE_LABEL = "V17D"
@@ -721,6 +722,13 @@ html{overflow-x:auto;overflow-y:scroll}
 @media print{html{overflow:visible}.upcoming-summary,.filter-heading,.filter-groups,.span-control-bar{display:none}.span-scroll{width:100%;overflow:visible}.span-table{width:100%;min-width:0}.span-axis,.span-row{grid-template-columns:180px minmax(0,1fr)}}
 '''
 
+CSS += r'''
+.version-menu{width:100%;margin:14px 0 2px;border:1px solid #cfd8e5;border-radius:8px;background:#fff;box-shadow:0 1px 3px rgba(20,30,50,.08);overflow:hidden}.version-menu>summary{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:center;gap:10px;min-height:46px;padding:8px 12px;list-style:none;cursor:pointer}.version-menu>summary::-webkit-details-marker{display:none}.version-menu>summary:hover{background:#f7fbfb}.version-menu>summary:focus-visible{outline:3px solid #ffc857;outline-offset:-3px}.version-menu-kicker{color:#6c7888;font-size:10px;font-weight:900;text-transform:uppercase}.version-menu-current{border-radius:5px;background:#0f7074;color:#fff;padding:3px 7px;font-size:12px;font-weight:950}.version-menu-summary{min-width:0;color:#405064;font-size:12px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.version-menu-arrow{color:#0f7074;font-size:15px;font-weight:950;transition:transform .15s ease}.version-menu[open] .version-menu-arrow{transform:rotate(180deg)}.version-menu-list{max-height:min(52vh,460px);overflow:auto;border-top:1px solid #dce3ec}.version-menu-item{width:100%;display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:center;gap:10px;min-height:48px;padding:7px 12px;border:0;border-bottom:1px solid #e7ebf1;background:#fff;color:#263343;text-align:left;font:inherit;cursor:pointer}.version-menu-item:last-child{border-bottom:0}.version-menu-item:hover{background:#f4f9f9}.version-menu-item:focus-visible{outline:3px solid #ffc857;outline-offset:-3px}.version-menu-item.current{background:#e9f6f5}.version-menu-item strong{font-size:12px;font-weight:900}.version-menu-item span{min-width:0;color:#637084;font-size:11px;line-height:1.25}.version-menu-item.current span{color:#3d6567}.version-menu-badge{border-radius:999px;background:#0f7074;color:#fff!important;padding:2px 7px;font-size:9px!important;font-weight:900;white-space:nowrap}
+@media (max-width:820px){.version-menu{margin-top:10px}.version-menu>summary{grid-template-columns:auto auto minmax(0,1fr) auto;gap:7px;padding:7px 9px}.version-menu-kicker{display:none}.version-menu-summary{font-size:11px}.version-menu-item{grid-template-columns:118px minmax(0,1fr);gap:7px;padding:7px 9px}.version-menu-item .version-menu-badge{grid-column:1/-1;justify-self:start}}
+@media (orientation:landscape) and (max-height:700px) and (max-width:1400px){.version-menu{margin:4px 0}.version-menu>summary{min-height:32px;padding:4px 7px}.version-menu-current{padding:2px 5px;font-size:9px}.version-menu-summary{font-size:9px}.version-menu-arrow{font-size:11px}.version-menu-list{max-height:55vh}.version-menu-item{min-height:36px;padding:4px 7px}.version-menu-item strong{font-size:9px}.version-menu-item span{font-size:8px}}
+@media print{.version-menu{display:none}}
+'''
+
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
 TEACHER_RE = re.compile(r"\b(Garett|Garrett|Andy|Calvin|Mike(?:\s+Sir)?)\b", re.I)
 NOTE_WORD_RE = re.compile(r"test|exam|presentation|discussion|cancel|substitut", re.I)
@@ -1243,6 +1251,23 @@ erb_code_legend = ''.join(
     f'<div class="code-key"><b>{ehtml(code)}</b><span>{ehtml(name)}</span></div>'
     for code, name in COURSE_CHINESE_NAMES.items()
 )
+version_items = json.loads(VERSIONS_SRC.read_text(encoding="utf-8"))
+current_version = next((item for item in version_items if item.get("latest")), None)
+if not current_version:
+    raise ValueError("versions.json has no latest timetable version")
+version_rows = ''.join(
+    f'<button class="version-menu-item{" current" if item["id"] == current_version["id"] else ""}" type="button" '
+    f'data-version-id="{ehtml(item["id"])}"><strong>{ehtml(item["label"])}</strong>'
+    f'<span>{ehtml(item["summary"])}</span>'
+    f'{"<span class=\"version-menu-badge\">Current</span>" if item["id"] == current_version["id"] else ""}</button>'
+    for item in version_items
+)
+version_selector_html = (
+    f'<details id="topVersionSelector" class="version-menu"><summary>'
+    f'<span class="version-menu-kicker">Versions</span><span class="version-menu-current">{ehtml(current_version["label"].split(" - ")[-1])}</span>'
+    f'<span class="version-menu-summary">{ehtml(current_version["summary"])}</span><span class="version-menu-arrow" aria-hidden="true">&#9662;</span>'
+    f'</summary><div class="version-menu-list" role="list">{version_rows}</div></details>'
+)
 
 HTML = f'''<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=6, user-scalable=yes">
@@ -1257,6 +1282,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <script>window.ERB_BUILD_ID='{BUILD_ID}';(function(){{if(!/^https?:$/.test(location.protocol))return;var p=new URLSearchParams(location.search);if(p.get('build')!==window.ERB_BUILD_ID){{p.set('build',window.ERB_BUILD_ID);location.replace(location.pathname+'?'+p.toString()+location.hash);}}}})();</script>
 <style>{CSS}</style></head><body><main class="wrap">
 <div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
+{version_selector_html}
 <div id="viewTabs" class="view-tabs" role="tablist" aria-label="Timetable layout"><button id="calendarTab" class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="calendarView" data-view="calendar">Calendar</button><button id="spansTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="spansView" data-view="spans">Class spans</button></div>
 <section id="calendarView" class="view-panel" role="tabpanel" aria-labelledby="calendarTab">
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
@@ -1574,6 +1600,10 @@ document.getElementById('floatingVersions').addEventListener('click',()=>{{
   const target=location.pathname.includes('/versions/')?'../../master/?v=redtext1':'./master/?v=redtext1';
   location.assign(target);
 }});
+document.querySelectorAll('.version-menu-item').forEach(btn=>btn.addEventListener('click',()=>{{
+  const root=location.pathname.includes('/versions/')?'../../':'./';
+  location.assign(root+'versions/'+encodeURIComponent(btn.dataset.versionId)+'/?v=redtext1');
+}}));
 document.querySelectorAll('.mode-option').forEach(btn=>btn.addEventListener('click',()=>{{
   const anchor=window.__modeCompareAnchor||captureModeAnchor();
   window.__modeCompareAnchor=anchor;

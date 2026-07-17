@@ -304,7 +304,16 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "hk281-release-hk280-single-safe-slot-20260717-v18" in index
+assert "v18-top-version-selector-20260717a" in index
+versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
+assert index.count('class="version-menu-item') == len(versions)
+assert '<details id="topVersionSelector" class="version-menu">' in index
+assert 'HK281DS CW7 - Garett does not join; HK280HS SS Sep 14 AM remains proposed.' in index
+assert 'data-version-id="2026-07-17-V18"' in index
+assert 'class="version-menu-item current"' in index
+version_selector_start = index.index('<details id="topVersionSelector"')
+version_selector_end = index.index('</details>', version_selector_start)
+assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
 assert '> Changed in V18</div>' in index
 assert '<div class="code-key"><b>MC0106DS</b><span>' in index
