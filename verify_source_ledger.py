@@ -154,16 +154,22 @@ oct7_hk265_l9 = [row for row in hk265 if row["date"] == "2026-10-07" and lesson(
 assert len(oct7_hk265_l9) == 1
 assert "TIGHT TRAVEL ~40-47m" in oct7_hk265_l9[0]["text"]
 
-# Latest Excel-based proposals: Garett selections plus all currently assigned class context.
-# Exclude HK280HS proposal notes that merely name the HK281DS lessons being released.
+# Latest Excel-based proposals plus all currently assigned class context.
 hk281 = [
     row for row in rows_with("HK281DS", "CW7")
     if "PROPOSED availability only" not in row["text"]
 ]
 assert len(hk281) == 54
 assert_lessons(hk281, range(1, 55), "HK281DS CW7")
-assert sum(teacher(row) == "Garett" for row in hk281) == 12
+assert sum(teacher(row) == "Garett" for row in hk281) == 0
 assert all(row["status"] == "unconfirmed" for row in hk281)
+released_hk281_lessons = {5, 16, 17, 19, 22, 23, 24, 25, 28, 29, 30, 31}
+released_hk281 = [row for row in hk281 if lesson(row) in released_hk281_lessons]
+assert len(released_hk281) == 12
+assert all(teacher(row) == "Other tutor / TBC" for row in released_hk281)
+assert all(row.get("layer") in {None, "class"} for row in released_hk281)
+assert all(row.get("red") for row in released_hk281)
+assert all("CALVIN: GARETT NOT REQUIRED" in row["text"] for row in released_hk281)
 hk281_reassigned = [row for row in hk281 if lesson(row) in {4, 18}]
 assert [(row["date"], lesson(row), teacher(row), row.get("layer")) for row in hk281_reassigned] == [
     ("2026-08-29", 4, "Other tutor / TBC", "class"),
@@ -171,11 +177,11 @@ assert [(row["date"], lesson(row), teacher(row), row.get("layer")) for row in hk
 ]
 hk281_sep14 = [row for row in hk281 if lesson(row) in {30, 31}]
 assert [(row["date"], lesson(row), teacher(row)) for row in hk281_sep14] == [
-    ("2026-09-14", 30, "Garett"),
-    ("2026-09-14", 31, "Garett"),
+    ("2026-09-14", 30, "Other tutor / TBC"),
+    ("2026-09-14", 31, "Other tutor / TBC"),
 ]
-assert all("PROPOSED RELEASE" not in row["text"] for row in hk281_sep14)
-assert all(not row.get("red") for row in hk281_sep14)
+assert all("CALVIN: GARETT NOT REQUIRED" in row["text"] for row in hk281_sep14)
+assert all(row.get("red") for row in hk281_sep14)
 
 mc = rows_with("MC0106DS", "Class 第2班")
 assert len(mc) == 47
@@ -239,11 +245,17 @@ for row in hk239_fs:
         f"HK239HG FS L{number}: layer {row.get('layer')!r}, expected {expected_layer!r}"
     )
 
-# HK280HS SS was declined and must not appear in the active timetable.
+# HK280HS SS remains an enquiry. Only the one safely listed slot is proposed.
 hk280hs_ss = rows_with("HK280HS", "Class SS")
-assert not hk280hs_ss
+assert len(hk280hs_ss) == 1
+assert [(row["date"], lesson(row), teacher(row), row["status"], row.get("layer")) for row in hk280hs_ss] == [
+    ("2026-09-14", 1, "Garett", "unconfirmed", "mine"),
+]
+assert "0900 - 1300" in hk280hs_ss[0]["text"]
+assert "FOUR NEW DATES REQUIRED" in hk280hs_ss[0]["text"]
+assert hk280hs_ss[0].get("red")
 
-# V17D retains every accepted V17C assignment; this release changes web behavior only.
+# V18 does not displace any confirmed SEN, HK265HG, or HK244EG assignment.
 hk244_cw_l10 = next(row for row in cw if lesson(row) == 10)
 assert hk244_cw_l10["status"] == "confirmed"
 assert teacher(hk244_cw_l10) == "Garett"
@@ -266,12 +278,12 @@ assert not any(
 
 index = (ROOT / "index.html").read_text(encoding="utf-8")
 assert "May 2026" in index and "HK244HG" in index
-assert index.count('class="span-row"') == 17
+assert index.count('class="span-row"') == 18
 assert 'data-span-group="g13-c1" data-base-group="g13" data-first="2026-07-24" data-last="2026-08-12"' in index
 assert 'data-span-group="g13-c2" data-base-group="g13" data-first="2026-09-16" data-last="2026-10-14"' in index
 assert 'data-span-group="g03" data-base-group="g03" data-first="2026-08-14" data-last="2026-08-21"' in index
 assert "HK265HG · FS · JUL 2026" in index and "HK265HG · FS · SEP 2026" in index
-assert index.count('data-span-course="') == 17
+assert index.count('data-span-course="') == 18
 assert all(control in index for control in (
     'id="spanLabelsToggle"', 'id="spanZoomOut"', 'id="spanZoomReset"', 'id="spanZoomIn"',
     'data-span-course-action="all"', 'data-span-course-action="none"',
@@ -292,9 +304,9 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "legend-filter-reset-final-filename-20260717-v17d" in index
-assert 'data-filter="changed"' not in index
-assert '> Changed in V17D</div>' not in index
+assert "hk281-release-hk280-single-safe-slot-20260717-v18" in index
+assert 'data-filter="changed"' in index
+assert '> Changed in V18</div>' in index
 assert '<div class="code-key"><b>MC0106DS</b><span>' in index
 assert ".upcoming-course.active.unconfirmed,.upcoming-course.active.mixed{border-width:3px;border-style:dashed;border-color:#fff" in index
 assert "window.__courseFilter='all';" in index
@@ -312,8 +324,9 @@ assert upcoming_labels[:3] == [
     ("Aug 6", "HK244HG · CW8"),
 ]
 assert "英文授課／兼讀制" in upcoming and ">ENG<" in upcoming
-assert "HK281DS · CW7" in upcoming
-assert "基督教勵行會" in upcoming and "彩雲邨（未有確實街道／房號）" in upcoming
+assert "HK281DS · CW7" not in upcoming
+assert "基督教勵行會" in upcoming
+assert "HK280HS · SS" in upcoming and "上水彩園邨彩湖樓2座地下129舖02室" in upcoming
 assert 'data-toggle-filter="1"' in upcoming
 print("source ledger verification passed")
 print(f"events={len(EVENTS)} context={len(CONTEXT)} display={len(ALL)}")

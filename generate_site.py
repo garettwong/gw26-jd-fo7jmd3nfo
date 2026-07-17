@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "legend-filter-reset-final-filename-20260717-v17d"
+BUILD_ID = "hk281-release-hk280-single-safe-slot-20260717-v18"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-17-V17C"
-COMPARE_LABEL = "V17D"
-COMPARE_BASELINE_LABEL = "V17C"
-EXPECTED_COMPARISON_CHANGES = 0
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-17-V17D"
+COMPARE_LABEL = "V18"
+COMPARE_BASELINE_LABEL = "V17D"
+EXPECTED_COMPARISON_CHANGES = 13
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -32,6 +32,7 @@ COURSE_CHINESE_NAMES = {
 }
 UPCOMING_AS_OF = datetime.date(2026, 7, 17)
 UPCOMING_CLASS_META = {
+    "HK280HS · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
     "HK265HG · FS": ("基督教勵行會", "四海大廈", "ENG"),
     "MC0106DS · 第2班": ("循道衛理中心", "灣仔軒尼詩道22號3樓", "CHI"),
     "HK244HG · CW8": ("基督教勵行會", "彩雲邨", "CHI"),

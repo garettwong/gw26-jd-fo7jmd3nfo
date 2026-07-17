@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-17-V18",
+    "label": "2026-07-17 - V18",
+    "summary": "HK280HS SS - Sep 14 AM proposal after Calvin releases HK281DS CW7.",
+    "latest": true
+  },
+  {
     "id": "2026-07-17-V17D",
     "label": "2026-07-17 - V17D",
     "summary": "Web - MC0106DS legend and course-filter reset.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-17-V17C",
