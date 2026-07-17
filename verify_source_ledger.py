@@ -245,17 +245,33 @@ for row in hk239_fs:
         f"HK239HG FS L{number}: layer {row.get('layer')!r}, expected {expected_layer!r}"
     )
 
-# HK280HS SS remains an enquiry. Only the one safely listed slot is proposed.
+# HK280HS SS remains an enquiry. These five records are availability only.
 hk280hs_ss = rows_with("HK280HS", "Class SS")
-assert len(hk280hs_ss) == 1
-assert [(row["date"], lesson(row), teacher(row), row["status"], row.get("layer")) for row in hk280hs_ss] == [
-    ("2026-09-14", 1, "Garett", "unconfirmed", "mine"),
+assert len(hk280hs_ss) == 5
+assert [row["date"] for row in hk280hs_ss] == [
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-12",
+    "2026-09-14",
+    "2026-09-19",
 ]
-assert "0900 - 1300" in hk280hs_ss[0]["text"]
-assert "FOUR NEW DATES REQUIRED" in hk280hs_ss[0]["text"]
-assert hk280hs_ss[0].get("red")
+assert all(teacher(row) == "Garett" for row in hk280hs_ss)
+assert all(row["status"] == "unconfirmed" for row in hk280hs_ss)
+assert all(row.get("layer") == "mine" for row in hk280hs_ss)
+assert all(row.get("red") for row in hk280hs_ss)
+assert all("PROPOSED availability only" in row["text"] for row in hk280hs_ss)
+assert all("Lesson TBC" in row["text"] for row in hk280hs_ss)
+assert all("EXACT LESSON DATE/TIME PENDING CALVIN" in row["text"] for row in hk280hs_ss)
+sep14 = next(row for row in hk280hs_ss if row["date"] == "2026-09-14")
+assert "AM / PM OK UNTIL 17:00 - NO NIGHT" in sep14["text"]
+assert all(
+    "AM / PM / NIGHT OK" in row["text"]
+    for row in hk280hs_ss
+    if row["date"] != "2026-09-14"
+)
+assert all("0900 - 1300" not in row["text"] for row in hk280hs_ss)
 
-# V18 does not displace any confirmed SEN, HK265HG, or HK244EG assignment.
+# V18a does not displace any confirmed SEN, HK265HG, or HK244EG assignment.
 hk244_cw_l10 = next(row for row in cw if lesson(row) == 10)
 assert hk244_cw_l10["status"] == "confirmed"
 assert teacher(hk244_cw_l10) == "Garett"
@@ -304,18 +320,20 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "v18-top-version-selector-20260717a" in index
+assert "v18a-hk280-availability-five-dates-20260717a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
-assert 'HK281DS CW7 - Garett does not join; HK280HS SS Sep 14 AM remains proposed.' in index
-assert 'data-version-id="2026-07-17-V18"' in index
+assert 'HK280HS SS - five availability dates added; exact lessons and times pending Calvin.' in index
+assert 'data-version-id="2026-07-17-V18a"' in index
 assert 'class="version-menu-item current"' in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
-assert '> Changed in V18</div>' in index
+assert '> Changed in V18a</div>' in index
+assert index.count('class="change-badge"') >= 5
+assert index.count("Lesson TBC") >= 5
 assert '<div class="code-key"><b>MC0106DS</b><span>' in index
 assert ".upcoming-course.active.unconfirmed,.upcoming-course.active.mixed{border-width:3px;border-style:dashed;border-color:#fff" in index
 assert "window.__courseFilter='all';" in index

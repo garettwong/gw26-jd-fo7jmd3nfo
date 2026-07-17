@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18-top-version-selector-20260717a"
+BUILD_ID = "v18a-hk280-availability-five-dates-20260717a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-17-V17D"
-COMPARE_LABEL = "V18"
-COMPARE_BASELINE_LABEL = "V17D"
-EXPECTED_COMPARISON_CHANGES = 13
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-17-V18"
+COMPARE_LABEL = "V18a"
+COMPARE_BASELINE_LABEL = "V18"
+EXPECTED_COMPARISON_CHANGES = 5
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -815,7 +815,12 @@ def event_fields(ev):
     if category in {"holiday", "school", "mike"}:
         class_label = "-"
     lesson_m = LESSON_RE.search(text)
-    lesson = f"Lesson {lesson_m.group(1)}" if lesson_m else "Lesson -"
+    if lesson_m:
+        lesson = f"Lesson {lesson_m.group(1)}"
+    elif re.search(r"\bLesson\s+TBC\b", text, re.I):
+        lesson = "Lesson TBC"
+    else:
+        lesson = "Lesson -"
     return {
         "class_label": class_label,
         "location": clean_location(title, category),

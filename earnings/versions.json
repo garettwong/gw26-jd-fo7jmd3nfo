@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-17-V18a",
+    "label": "2026-07-17 - V18a",
+    "summary": "HK280HS SS - five availability dates added; exact lessons and times pending Calvin.",
+    "latest": true
+  },
+  {
     "id": "2026-07-17-V18",
     "label": "2026-07-17 - V18",
     "summary": "HK281DS CW7 - Garett does not join; HK280HS SS Sep 14 AM remains proposed.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-17-V17D",
