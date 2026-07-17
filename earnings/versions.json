@@ -1,14 +1,20 @@
 [
   {
-    "id": "2026-07-17-V17B",
-    "label": "2026-07-17 - V17B",
-    "summary": "HK280HS SS - only Sep 14 AM fits; 4 more dates needed.",
+    "id": "2026-07-17-V17C",
+    "label": "2026-07-17 - V17C",
+    "summary": "MC0106DS 第2班 - six Garett lessons confirmed; upcoming-course summary added.",
     "latest": true
   },
   {
     "id": "2026-07-17-V17A",
     "label": "2026-07-17 - V17A",
     "summary": "HK239HG FS - Aug 14 and 19 confirmed; clean accepted schedule.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-17-V17B",
+    "label": "2026-07-17 - V17B",
+    "summary": "HK280HS SS - withdrawn because it reduces Sep 14 hours and income; do not use.",
     "latest": false
   },
   {

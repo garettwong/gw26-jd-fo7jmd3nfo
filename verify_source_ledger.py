@@ -10,10 +10,6 @@ ROOT = Path(__file__).resolve().parent
 EVENTS = json.loads((ROOT / "events.json").read_text(encoding="utf-8"))
 CONTEXT = json.loads((ROOT / "class_context.json").read_text(encoding="utf-8"))
 ALL = EVENTS + CONTEXT
-BASELINE_ROOT = ROOT / "versions" / "2026-07-17-V17A"
-BASELINE_EVENTS = json.loads((BASELINE_ROOT / "events.json").read_text(encoding="utf-8"))
-BASELINE_CONTEXT = json.loads((BASELINE_ROOT / "class_context.json").read_text(encoding="utf-8"))
-BASELINE_ALL = BASELINE_EVENTS + BASELINE_CONTEXT
 LESSON_RE = re.compile(r"\bL\s*(\d+)\b", re.I)
 TIME_RE = re.compile(r"(?<!\d)(\d{3,4})\s*-\s*(\d{3,4})(?!\d)")
 
@@ -166,28 +162,40 @@ hk281 = [
 ]
 assert len(hk281) == 54
 assert_lessons(hk281, range(1, 55), "HK281DS CW7")
-assert sum(teacher(row) == "Garett" for row in hk281) == 10
+assert sum(teacher(row) == "Garett" for row in hk281) == 12
 assert all(row["status"] == "unconfirmed" for row in hk281)
 hk281_reassigned = [row for row in hk281 if lesson(row) in {4, 18}]
 assert [(row["date"], lesson(row), teacher(row), row.get("layer")) for row in hk281_reassigned] == [
     ("2026-08-29", 4, "Other tutor / TBC", "class"),
     ("2026-09-07", 18, "Other tutor / TBC", "class"),
 ]
-hk281_v17b_released = [row for row in hk281 if lesson(row) in {30, 31}]
-assert [(row["date"], lesson(row), teacher(row)) for row in hk281_v17b_released] == [
-    ("2026-09-14", 30, "Other tutor / TBC"),
-    ("2026-09-14", 31, "Other tutor / TBC"),
+hk281_sep14 = [row for row in hk281 if lesson(row) in {30, 31}]
+assert [(row["date"], lesson(row), teacher(row)) for row in hk281_sep14] == [
+    ("2026-09-14", 30, "Garett"),
+    ("2026-09-14", 31, "Garett"),
 ]
-assert all("PROPOSED RELEASE" in row["text"] for row in hk281_v17b_released)
-assert all("Calvin reply pending" in row["text"] for row in hk281_v17b_released)
-assert all(row.get("red") for row in hk281_v17b_released)
-assert "65m TRAVEL" in next(row["text"] for row in hk281_v17b_released if lesson(row) == 31)
+assert all("PROPOSED RELEASE" not in row["text"] for row in hk281_sep14)
+assert all(not row.get("red") for row in hk281_sep14)
 
 mc = rows_with("MC0106DS", "Class 第2班")
-assert len(mc) == 44
-assert_lessons(mc, range(1, 45), "MC0106DS Class 2")
+assert len(mc) == 47
+assert_lessons(mc, range(1, 48), "MC0106DS Class 2")
 assert sum(teacher(row) == "Garett" for row in mc) == 6
-assert all(row["status"] == "unconfirmed" for row in mc)
+assert all(row["status"] == "confirmed" for row in mc)
+mc_garett = [row for row in mc if teacher(row) == "Garett"]
+assert [(row["date"], lesson(row)) for row in mc_garett] == [
+    ("2026-08-01", 3),
+    ("2026-08-01", 4),
+    ("2026-08-08", 7),
+    ("2026-08-08", 8),
+    ("2026-08-15", 15),
+    ("2026-08-15", 16),
+]
+assert all(row in EVENTS for row in mc_garett)
+mc_other_tbc = [row for row in mc if teacher(row) == "Other tutor / TBC"]
+assert [lesson(row) for row in mc_other_tbc] == [21, 25]
+assert all(row.get("layer") == "class" for row in mc if row in CONTEXT)
+assert not any(lesson(row) in {48, 49} for row in mc)
 
 # Rejected, reassigned, or not-yet-accepted proposals must not enter the active timetable.
 for excluded in ("HK280HG", "BK151HG", "BK155HG"):
@@ -231,19 +239,11 @@ for row in hk239_fs:
         f"HK239HG FS L{number}: layer {row.get('layer')!r}, expected {expected_layer!r}"
     )
 
-# HK280HS SS enquiry: only the safe Sep 14 morning slot is proposed.
+# HK280HS SS was declined and must not appear in the active timetable.
 hk280hs_ss = rows_with("HK280HS", "Class SS")
-assert len(hk280hs_ss) == 1
-assert_lessons(hk280hs_ss, range(1, 2), "HK280HS SS")
-assert [(row["date"], lesson(row)) for row in hk280hs_ss] == [("2026-09-14", 1)]
-assert all(row["status"] == "unconfirmed" for row in hk280hs_ss)
-assert all(teacher(row) == "Garett" for row in hk280hs_ss)
-assert all(row.get("layer") == "mine" for row in hk280hs_ss)
-assert all("PROPOSED - pending Calvin confirmation" in row["text"] for row in hk280hs_ss)
-assert all(row.get("red") for row in hk280hs_ss)
-assert "0900 - 1300" in hk280hs_ss[0]["text"]
+assert not hk280hs_ss
 
-# V17B does not request changes to any confirmed ERB assignment.
+# V17C retains every accepted V17A assignment; only MC0106DS status/context changes.
 hk244_cw_l10 = next(row for row in cw if lesson(row) == 10)
 assert hk244_cw_l10["status"] == "confirmed"
 assert teacher(hk244_cw_l10) == "Garett"
@@ -266,12 +266,12 @@ assert not any(
 
 index = (ROOT / "index.html").read_text(encoding="utf-8")
 assert "May 2026" in index and "HK244HG" in index
-assert index.count('class="span-row"') == 18
+assert index.count('class="span-row"') == 17
 assert 'data-span-group="g13-c1" data-base-group="g13" data-first="2026-07-24" data-last="2026-08-12"' in index
 assert 'data-span-group="g13-c2" data-base-group="g13" data-first="2026-09-16" data-last="2026-10-14"' in index
 assert 'data-span-group="g03" data-base-group="g03" data-first="2026-08-14" data-last="2026-08-21"' in index
 assert "HK265HG · FS · JUL 2026" in index and "HK265HG · FS · SEP 2026" in index
-assert index.count('data-span-course="') == 18
+assert index.count('data-span-course="') == 17
 assert all(control in index for control in (
     'id="spanLabelsToggle"', 'id="spanZoomOut"', 'id="spanZoomReset"', 'id="spanZoomIn"',
     'data-span-course-action="all"', 'data-span-course-action="none"',
@@ -292,13 +292,21 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "hk280hs-sep14-single-safe-slot-20260717-v17b" in index
-
-# V17A is the clean accepted baseline used for side-by-side comparison.
-assert not rows_with("HK280HS", "Class SS", rows=BASELINE_ALL)
-assert not any("PROPOSED RELEASE" in row["text"] for row in BASELINE_ALL)
-baseline_hk239_fs = rows_with("HK239HG", "Class FS", rows=BASELINE_ALL)
-assert len(baseline_hk239_fs) == 6
-assert all(row["status"] == "confirmed" for row in baseline_hk239_fs)
+assert "mc0106ds-final-upcoming-summary-20260717-v17c" in index
+assert "Changed in V17C (47)" in index
+assert '<div id="upcomingHeading" class="section-h">Upcoming ERB classes</div>' in index
+upcoming_start = index.index('<section class="upcoming-summary"')
+upcoming_end = index.index('</section>', upcoming_start)
+upcoming = index[upcoming_start:upcoming_end]
+upcoming_labels = re.findall(r'<span class="upcoming-date">([^<]+)</span>.*?<strong>(HK[^<]+|MC[^<]+)</strong>', upcoming)
+assert upcoming_labels[:3] == [
+    ("Jul 24", "HK265HG · FS"),
+    ("Aug 1", "MC0106DS · 第2班"),
+    ("Aug 6", "HK244HG · CW8"),
+]
+assert "英文授課／兼讀制" in upcoming and ">ENG<" in upcoming
+assert "HK281DS · CW7" in upcoming
+assert "基督教勵行會" in upcoming and "彩雲邨（未有確實街道／房號）" in upcoming
+assert 'data-toggle-filter="1"' in upcoming
 print("source ledger verification passed")
 print(f"events={len(EVENTS)} context={len(CONTEXT)} display={len(ALL)}")

@@ -19,7 +19,7 @@ def version_row(item: dict) -> str:
     version_id = html.escape(item["id"], quote=True)
     return f'''<a class="version" href="../versions/{version_id}/?v=redtext1">
       <span class="version-main"><strong>{label}</strong>{badge}<small>{summary}</small></span>
-      <span class="open" aria-hidden="true">›</span>
+      <span class="open" aria-hidden="true">&#8250;</span>
     </a>'''
 
 

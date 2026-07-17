@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "hk280hs-sep14-single-safe-slot-20260717-v17b"
+BUILD_ID = "mc0106ds-final-upcoming-summary-20260717-v17c"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-17-V17A"
-COMPARE_LABEL = "V17B"
+COMPARE_LABEL = "V17C"
 COMPARE_BASELINE_LABEL = "V17A"
-EXPECTED_COMPARISON_CHANGES = 3
+EXPECTED_COMPARISON_CHANGES = 47
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -29,6 +29,20 @@ COURSE_CHINESE_NAMES = {
     "HK280HS": "生成式人工智能商務應用證書（兼讀制）",
     "HK281DS": "創意數碼媒體設計及製作助理證書",
     "MC0106DS": "創意數碼媒體設計及製作助理證書",
+}
+UPCOMING_AS_OF = datetime.date(2026, 7, 17)
+UPCOMING_CLASS_META = {
+    "HK265HG · FS": ("基督教勵行會", "四海大廈", "ENG"),
+    "MC0106DS · 第2班": ("循道衛理中心", "灣仔軒尼詩道22號3樓", "CHI"),
+    "HK244HG · CW8": ("基督教勵行會", "彩雲邨", "CHI"),
+    "HK244EG · CW": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓103室", "CHI"),
+    "HK239HG · CW10": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓101室", "CHI"),
+    "HK281DS · CW7": ("基督教勵行會", "彩雲邨（未有確實街道／房號）", "CHI"),
+    "HK239HG · SS": ("基督教勵行會", "上水彩園", "CHI"),
+    "HK244EG · FS": ("基督教勵行會", "四海大廈", "CHI"),
+    "HK239HG · ST": ("基督教勵行會", "順天", "CHI"),
+    "HK239HG · 城巿一條龍": ("基督教勵行會", "彩雲邨", "CHI"),
+    "HK239HG · LT": ("基督教勵行會", "藍田", "CHI"),
 }
 SEN_CODE_RE = re.compile(r"\((PFSA2|QAT7)\)", re.I)
 
@@ -697,11 +711,13 @@ CSS += r'''
 html{overflow-x:auto;overflow-y:scroll}
 .time-slot{display:contents}.time-slot.slot-hidden{display:none}.transit-notice{margin:10px 0 12px;padding:8px 10px;border:1px solid #9fc7c6;border-left:5px solid #0f7074;border-radius:5px;background:#f4fbfa;color:#36545a;font-size:11.5px;font-weight:750}.transit-bar{margin:3px 0;padding:3px 6px;border:1px solid #91bab8;border-radius:3px;background:#edf8f7;color:#255b5d;font-size:8.5px;font-weight:850;line-height:1.2;text-align:center}.transit-bar.tight{border-color:#c9342d;background:#fff0ee;color:#951f1a}.transit-bar strong{font-weight:950}
 .filter-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-top:22px}.filter-heading .section-h{margin:0}.filter-master{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.filter-groups{display:grid;gap:7px;margin:10px 0 16px}.filter-group{display:grid;grid-template-columns:92px minmax(0,1fr);align-items:start;gap:10px;padding-top:7px;border-top:1px solid #dbe2ec}.filter-group:first-child{border-top:0}.filter-group-label{padding:8px 0;color:#657285;font-size:11px;font-weight:900;text-transform:uppercase}.filter-group-buttons{display:flex;gap:7px;flex-wrap:wrap}.filter-group .filter{padding:6px 10px}
+.upcoming-summary{margin:18px 0 4px}.upcoming-summary .section-h{margin:0 2px 9px}.upcoming-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.upcoming-course{display:grid;grid-template-columns:58px minmax(0,1fr) 40px minmax(112px,.72fr);align-items:center;gap:8px;min-width:0;border:2.5px solid #1d2734;border-radius:6px;padding:7px 9px;background:#fff;color:#263343;text-align:left;font:inherit;cursor:pointer;box-shadow:0 1px 2px rgba(20,30,50,.05)}.upcoming-course.unconfirmed,.upcoming-course.mixed{border-style:dashed}.upcoming-course:hover{background:#f7fbfb}.upcoming-course:focus-visible{outline:3px solid #ffc857;outline-offset:2px}.upcoming-course.active{background:#0f7074;color:#fff}.upcoming-date{font-size:13px;font-weight:950;color:#0f7074;white-space:nowrap}.upcoming-course.active .upcoming-date{color:#fff}.upcoming-course-copy,.upcoming-place{display:flex;min-width:0;flex-direction:column}.upcoming-course-copy strong{font-size:12px;font-weight:950;line-height:1.15}.upcoming-course-copy span{margin-top:2px;color:#536174;font-size:9.5px;font-weight:750;line-height:1.18;overflow-wrap:anywhere}.upcoming-place{padding-left:8px;border-left:1px solid #dce3ec}.upcoming-place strong{font-size:9.5px;font-weight:900;line-height:1.16}.upcoming-place span{margin-top:2px;color:#647285;font-size:9px;font-weight:700;line-height:1.16;overflow-wrap:anywhere}.upcoming-course.active .upcoming-course-copy span,.upcoming-course.active .upcoming-place span{color:#e4f3f3}.upcoming-course.active .upcoming-place{border-left-color:#7eb1b2}.upcoming-language{justify-self:center;border:1px solid #a8b5c4;border-radius:4px;padding:2px 4px;background:#eef3f7;color:#405064;font-size:8.5px;font-weight:950}.upcoming-course.active .upcoming-language{border-color:#b9d7d8;background:#fff;color:#0f7074}
 .span-shell{--span-label-width:280px;--span-timeline-width:1760px;margin-top:16px}.span-head{display:block;max-width:980px;margin-bottom:10px}.span-head p{max-width:900px}.span-control-bar{position:sticky;left:16px;z-index:8;display:flex;align-items:flex-start;gap:8px;max-width:calc(100vw - 52px);margin-bottom:10px;flex-wrap:wrap}.span-tools{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:8px;flex-wrap:wrap}.span-tool-button,.span-zoom button,.span-course-picker summary,.span-course-actions button{min-height:40px;border:1px solid #cfd8e5;border-radius:6px;background:#fff;color:#405064;font:inherit;font-size:11px;font-weight:850;cursor:pointer}.span-tool-button{padding:7px 10px}.span-tool-button[aria-pressed="false"]{background:#405064;color:#fff}.span-zoom{display:grid;grid-template-columns:40px 64px 40px;gap:3px}.span-zoom button{padding:0;font-size:19px}.span-zoom .span-zoom-value{font-size:10px}.span-tool-button:focus-visible,.span-zoom button:focus-visible,.span-course-picker summary:focus-visible,.span-course-actions button:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.span-course-picker{position:relative}.span-course-picker summary{display:flex;align-items:center;gap:7px;padding:7px 10px;list-style:none}.span-course-picker summary::-webkit-details-marker{display:none}.span-course-picker summary::before{content:"+";font-size:15px}.span-course-picker[open] summary::before{content:"−"}.span-course-picker-body{position:absolute;top:46px;left:0;z-index:20;width:min(680px,calc(100vw - 48px));padding:10px;border:1px solid #cfd8e5;border-radius:7px;background:#fff;box-shadow:0 8px 24px rgba(20,30,50,.20)}.span-course-actions{display:flex;gap:6px;margin-bottom:8px}.span-course-actions button{min-height:32px;padding:4px 9px}.span-course-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:min(52vh,440px);overflow:auto;border-top:1px solid #e2e7ef}.span-course-toggle{display:flex;align-items:flex-start;gap:8px;min-width:0;padding:8px;border-bottom:1px solid #e8edf3;cursor:pointer}.span-course-toggle:nth-child(odd){border-right:1px solid #e8edf3}.span-course-toggle input{width:17px;height:17px;margin:1px 0 0;accent-color:#0f7074;flex:0 0 auto}.span-course-toggle span{display:flex;min-width:0;flex-direction:column}.span-course-toggle strong{font-size:10.5px;line-height:1.2}.span-course-toggle small{margin-top:2px;color:#748092;font-size:9px}.span-legend{justify-content:flex-start}.span-scroll{width:max-content;min-width:100%;overflow:visible;border:1px solid #dbe2ec;border-radius:8px;scrollbar-gutter:auto}.span-table{width:calc(var(--span-label-width) + var(--span-timeline-width));min-width:calc(var(--span-label-width) + var(--span-timeline-width))}.span-axis,.span-row{grid-template-columns:var(--span-label-width) var(--span-timeline-width)}.span-axis{border-bottom:1px solid #dbe2ec}.span-row{border-bottom:1px solid #dbe2ec}.span-axis-label,.span-label{border-right:1px solid #dbe2ec}.span-month{border-left:1px solid #dbe2ec}.span-month:first-child{border-left:0}.span-month:last-child{border-right:0}.span-guide{border-left:1px solid #dbe2ec}.span-shell.hide-span-labels{--span-label-width:0px}.span-shell.hide-span-labels .span-axis-label,.span-shell.hide-span-labels .span-label{display:none}.span-row[data-course-hidden="1"]{display:none!important}
 @media (pointer:fine) and (min-width:821px){body.span-view-active .wrap{overflow:visible}.span-view-active .span-scroll{width:max-content;min-width:100%;overflow:visible}.span-view-active .span-control-bar{position:sticky;left:16px}}
-@media (max-width:820px){html{overflow-x:hidden}.transit-notice{font-size:10.5px}.transit-bar{font-size:8px}.filter-heading{align-items:flex-start}.filter-groups{gap:5px}.filter-group{grid-template-columns:62px minmax(0,1fr);gap:6px}.filter-group-label{font-size:10px}.span-shell{--span-label-width:230px;--span-timeline-width:1640px}.span-control-bar{position:static;display:block;max-width:none}.span-tools{align-items:stretch}.span-mode-switch{width:100%}.span-zoom{width:100%;grid-template-columns:44px minmax(72px,1fr) 44px}.span-tool-button,.span-course-picker{width:100%}.span-course-picker summary{justify-content:center}.span-course-picker-body{position:fixed;top:76px;left:12px;right:12px;width:auto;max-height:calc(100vh - 94px);overflow:auto}.span-course-options{grid-template-columns:1fr;max-height:none}.span-course-toggle:nth-child(odd){border-right:0}.span-scroll{width:100%;min-width:0;overflow-x:auto;overflow-y:visible;overscroll-behavior-inline:contain;scrollbar-gutter:stable}.span-table{width:calc(var(--span-label-width) + var(--span-timeline-width));min-width:calc(var(--span-label-width) + var(--span-timeline-width))}.span-axis,.span-row{grid-template-columns:var(--span-label-width) var(--span-timeline-width)}}
-@media (orientation:landscape) and (max-height:700px) and (max-width:1400px) and (pointer:coarse){.filter-heading,.filter-groups{display:none}.span-shell{--span-label-width:205px;--span-timeline-width:1540px}.span-control-bar{display:flex}.span-tools{gap:4px}.span-tool-button,.span-zoom button,.span-course-picker summary{min-height:30px;font-size:8px}.span-zoom{width:auto;grid-template-columns:30px 48px 30px}.span-course-picker{width:auto}.span-course-picker-body{top:44px}.span-course-options{grid-template-columns:repeat(2,minmax(0,1fr))}.span-scroll{width:100%;min-width:0;overflow-x:auto;overflow-y:visible;overscroll-behavior-inline:contain;scrollbar-gutter:stable}}
-@media print{html{overflow:visible}.filter-heading,.filter-groups,.span-control-bar{display:none}.span-scroll{width:100%;overflow:visible}.span-table{width:100%;min-width:0}.span-axis,.span-row{grid-template-columns:180px minmax(0,1fr)}}
+@media (max-width:1100px){.upcoming-list{grid-template-columns:1fr}}
+@media (max-width:820px){html{overflow-x:hidden}.transit-notice{font-size:10.5px}.transit-bar{font-size:8px}.filter-heading{align-items:flex-start}.filter-groups{gap:5px}.filter-group{grid-template-columns:62px minmax(0,1fr);gap:6px}.filter-group-label{font-size:10px}.upcoming-course{grid-template-columns:54px minmax(0,1fr) 38px;padding:7px}.upcoming-place{grid-column:2/-1;padding:5px 0 0;border-top:1px solid #dce3ec;border-left:0}.upcoming-course.active .upcoming-place{border-top-color:#7eb1b2;border-left:0}.span-shell{--span-label-width:230px;--span-timeline-width:1640px}.span-control-bar{position:static;display:block;max-width:none}.span-tools{align-items:stretch}.span-mode-switch{width:100%}.span-zoom{width:100%;grid-template-columns:44px minmax(72px,1fr) 44px}.span-tool-button,.span-course-picker{width:100%}.span-course-picker summary{justify-content:center}.span-course-picker-body{position:fixed;top:76px;left:12px;right:12px;width:auto;max-height:calc(100vh - 94px);overflow:auto}.span-course-options{grid-template-columns:1fr;max-height:none}.span-course-toggle:nth-child(odd){border-right:0}.span-scroll{width:100%;min-width:0;overflow-x:auto;overflow-y:visible;overscroll-behavior-inline:contain;scrollbar-gutter:stable}.span-table{width:calc(var(--span-label-width) + var(--span-timeline-width));min-width:calc(var(--span-label-width) + var(--span-timeline-width))}.span-axis,.span-row{grid-template-columns:var(--span-label-width) var(--span-timeline-width)}}
+@media (orientation:landscape) and (max-height:700px) and (max-width:1400px) and (pointer:coarse){.upcoming-summary,.filter-heading,.filter-groups{display:none}.span-shell{--span-label-width:205px;--span-timeline-width:1540px}.span-control-bar{display:flex}.span-tools{gap:4px}.span-tool-button,.span-zoom button,.span-course-picker summary{min-height:30px;font-size:8px}.span-zoom{width:auto;grid-template-columns:30px 48px 30px}.span-course-picker{width:auto}.span-course-picker-body{top:44px}.span-course-options{grid-template-columns:repeat(2,minmax(0,1fr))}.span-scroll{width:100%;min-width:0;overflow-x:auto;overflow-y:visible;overscroll-behavior-inline:contain;scrollbar-gutter:stable}}
+@media print{html{overflow:visible}.upcoming-summary,.filter-heading,.filter-groups,.span-control-bar{display:none}.span-scroll{width:100%;overflow:visible}.span-table{width:100%;min-width:0}.span-axis,.span-row{grid-template-columns:180px minmax(0,1fr)}}
 '''
 
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
@@ -1003,6 +1019,50 @@ filter_groups_html = ''.join(
     for key, label in (("erb", "ERB"), ("sen", "SEN"), ("other", "Other jobs"))
 )
 
+
+def upcoming_course_button(group):
+    label, slug, _group_status, _first_date = group
+    future_events = [
+        event
+        for event in display_events
+        if event["group"] == slug
+        and event_layer(event) == "mine"
+        and datetime.date.fromisoformat(event["date"]) >= UPCOMING_AS_OF
+    ]
+    if not future_events or label not in UPCOMING_CLASS_META:
+        return None
+    next_date = min(datetime.date.fromisoformat(event["date"]) for event in future_events)
+    code = label.split(" · ", 1)[0]
+    course_name = COURSE_CHINESE_NAMES.get(code, "")
+    centre, location, language = UPCOMING_CLASS_META[label]
+    statuses = {event["status"] for event in future_events}
+    group_status = "confirmed" if statuses == {"confirmed"} else "unconfirmed" if statuses == {"unconfirmed"} else "mixed"
+    status_label = "Confirmed" if group_status == "confirmed" else "Unconfirmed / mixed"
+    next_date_label = f"{calendar.month_abbr[next_date.month]} {next_date.day}"
+    html_button = (
+        f'<button class="upcoming-course course-filter {ehtml(group_status)}" type="button" '
+        f'data-filter="{ehtml(slug)}" data-toggle-filter="1" data-first-date="{next_date.isoformat()}" '
+        f'aria-label="Filter {ehtml(label)}; {ehtml(status_label)}">'
+        f'<span class="upcoming-date">{ehtml(next_date_label)}</span>'
+        f'<span class="upcoming-course-copy"><strong>{ehtml(label)}</strong>'
+        f'<span>{ehtml(course_name)}</span></span>'
+        f'<span class="upcoming-language">{ehtml(language)}</span>'
+        f'<span class="upcoming-place"><strong>{ehtml(centre)}</strong><span>{ehtml(location)}</span></span>'
+        f'</button>'
+    )
+    return next_date, natural_key(label), html_button
+
+
+upcoming_courses = [item for item in (upcoming_course_button(group) for group in GROUPS) if item]
+upcoming_courses.sort(key=lambda item: (item[0], item[1]))
+upcoming_summary_html = (
+    '<section class="upcoming-summary" aria-labelledby="upcomingHeading">'
+    '<div id="upcomingHeading" class="section-h">Upcoming ERB classes</div>'
+    '<div class="upcoming-list">'
+    + ''.join(item[2] for item in upcoming_courses)
+    + '</div></section>'
+)
+
 TIMELINE_START = datetime.date(YEAR, 5, 1)
 TIMELINE_END = datetime.date(YEAR, 12, 31)
 TIMELINE_DAYS = (TIMELINE_END - TIMELINE_START).days + 1
@@ -1203,6 +1263,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div>{comparison_legend_html}<div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
 <div id="transitNotice" class="transit-notice" hidden>Transit reminders appear between your lesson slots. Red means less than 30 minutes remains after travel, so there is no reliable meal break.</div>
 <div class="section-h">ERB course codes</div><div class="course-code-legend">{erb_code_legend}</div>
+{upcoming_summary_html}
 <div class="filter-heading"><div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filter-master"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{comparison_filter_html}</div></div><div class="filter-groups">{filter_groups_html}</div>
 {months_html}
 <div class="foot">Sources: <b>{ehtml(SRC.name)}</b>, <b>{ehtml(OVERRIDES_SRC.name)}</b>, and <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
@@ -1279,6 +1340,7 @@ function jumpToFilter(btn){{
 window.__courseFilter='all';
 window.__layerMode='both';
 window.__cardCourseFilter=null;
+window.__upcomingFilterState=null;
 function syncCourseFilterUI(){{
   document.querySelectorAll('.course-filter').forEach(btn=>btn.classList.toggle('active',btn.dataset.filter===window.__courseFilter));
   const activeGroup=window.__cardCourseFilter&&window.__cardCourseFilter.group;
@@ -1427,7 +1489,21 @@ function applyFilters(){{
   applySpanFilters();
 }}
 document.querySelectorAll('.course-filter').forEach(btn=>btn.addEventListener('click',()=>{{
-  const f=btn.dataset.filter;
+  const requested=btn.dataset.filter;
+  let f=requested;
+  if(btn.dataset.toggleFilter==='1'){{
+    const state=window.__upcomingFilterState;
+    if(state&&state.group===requested){{
+      f=state.previousFilter;
+      window.__upcomingFilterState=null;
+    }} else if(state){{
+      state.group=requested;
+    }} else {{
+      window.__upcomingFilterState={{group:requested,previousFilter:window.__courseFilter}};
+    }}
+  }} else {{
+    window.__upcomingFilterState=null;
+  }}
   window.__cardCourseFilter=null;
   window.__courseFilter=f;
   syncCourseFilterUI();
