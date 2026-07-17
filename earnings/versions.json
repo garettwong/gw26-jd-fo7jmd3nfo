@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-17-V18b",
+    "label": "2026-07-17 - V18b",
+    "summary": "Calendar - daily teaching hours added for ME CONF and ME ALL; travel excluded.",
+    "latest": true
+  },
+  {
     "id": "2026-07-17-V18a",
     "label": "2026-07-17 - V18a",
     "summary": "HK280HS SS - five availability dates added; exact lessons and times pending Calvin.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-17-V18",

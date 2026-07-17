@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18a-hk280-availability-five-dates-20260717a"
+BUILD_ID = "v18b-daily-teaching-hours-20260717a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-17-V18"
-COMPARE_LABEL = "V18a"
-COMPARE_BASELINE_LABEL = "V18"
-EXPECTED_COMPARISON_CHANGES = 5
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-17-V18a"
+COMPARE_LABEL = "V18b"
+COMPARE_BASELINE_LABEL = "V18a"
+EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -657,10 +657,11 @@ CSS += r'''
 '''
 
 CSS += r'''
+.day-hours{display:inline-flex;align-items:center;justify-content:center;min-width:28px;padding:1px 5px;border:1px solid #78b8bb;border-radius:999px;background:#e4f6f5;color:#0b6669;font-size:9px;font-weight:900;line-height:1.15;white-space:nowrap;font-variant-numeric:tabular-nums;box-shadow:0 1px 1px rgba(20,30,50,.08)}.day-hours[hidden]{display:none!important}.dnum .day-hours{margin-left:auto}.dnum .day-hours:not([hidden])+.dweekday{margin-left:6px}.dnum .day-hours[hidden]+.dweekday{margin-left:auto}.adate .day-hours{margin:4px auto 0;padding-inline:4px;font-size:8.5px}
 .chip.layer-class{--context-color:#8c78b5}.chip.cat-erb.layer-class{--context-color:#d9772e}.chip.cat-methodist.layer-class{--context-color:#7567b9}.chip.cat-ymca.layer-class{--context-color:#238a99}.chip.cat-dgs.layer-class{--context-color:#31865c}.sample.class-layer{box-shadow:inset 7px 0 0 #d9772e,inset -7px 0 0 #7567b9}.chip.layer-class.confirmed{box-shadow:inset 8px 0 0 var(--context-color),0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.unconfirmed{box-shadow:inset 8px 0 0 var(--context-color),0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.note{box-shadow:inset 8px 0 0 var(--context-color),0 1px 1px rgba(20,30,50,.04)}.floating-mode-switch{position:fixed;z-index:40;left:clamp(58px,3.6vw,138px);bottom:24px;display:grid;grid-template-columns:repeat(3,48px);gap:3px;padding:4px;border:2px solid #fff;border-radius:12px;background:#dfe6ec;box-shadow:0 5px 18px rgba(25,38,55,.30);font-family:inherit}.mode-option,.today-option{width:48px;height:44px;border:0;border-radius:8px;background:#fff;color:#405064;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;font-family:inherit}.mode-option:hover,.today-option:hover{background:#eef7f7}.mode-option:focus-visible,.today-option:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.mode-option.active{background:#0f7074;color:#fff}.today-option{color:#0f7074}.today-option .mode-main{font-size:8px}.mode-main{font-size:12px;font-weight:900;line-height:1}.mode-sub{font-size:7px;font-weight:850;line-height:1;text-transform:uppercase}.grid .holiday-cell{background:#f1f3f6}.grid .holiday-cell .chip.cat-holiday{position:relative;flex:1;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-radius:7px}.grid .holiday-cell .chip.cat-holiday .top{position:absolute;top:7px;left:8px;right:8px;width:auto}.grid .holiday-cell .chip.cat-holiday .ttl{font-size:14px;margin:0}.grid .holiday-cell .chip.cat-holiday .det{display:none}
 @media (max-width:820px){.floating-mode-switch{left:14px;right:auto;bottom:14px;grid-template-columns:repeat(3,42px)}.mode-option,.today-option{width:42px;height:42px}.mode-main{font-size:10px}.today-option .mode-main{font-size:7px}}
 @media (min-width:821px) and (max-width:1400px){.floating-mode-switch{left:32px;grid-template-columns:repeat(3,36px)}.mode-option,.today-option{width:36px;height:34px}.mode-main{font-size:9px}.mode-sub{font-size:5.5px}.today-option .mode-main{font-size:7px}}
-@media (orientation:landscape) and (max-height:540px){.chip.layer-class.confirmed,.chip.layer-class.unconfirmed,.chip.layer-class.note{box-shadow:inset 4px 0 0 var(--context-color),0 1px 1px rgba(20,30,50,.04)}.floating-mode-switch{left:clamp(42px,3vw,112px);bottom:8px;grid-template-columns:repeat(3,34px);gap:2px;padding:3px}.mode-option,.today-option{width:34px;height:32px;border-radius:6px}.mode-main{font-size:8px}.today-option .mode-main{font-size:6px}.mode-sub{font-size:5px}.grid .holiday-cell .chip.cat-holiday{min-height:58px}.grid .holiday-cell .chip.cat-holiday .ttl{display:block;font-size:7px}}
+@media (orientation:landscape) and (max-height:540px){.day-hours{min-width:20px;padding:0 3px;font-size:6.3px;border-radius:6px}.dnum .day-hours:not([hidden])+.dweekday{margin-left:3px}.chip.layer-class.confirmed,.chip.layer-class.unconfirmed,.chip.layer-class.note{box-shadow:inset 4px 0 0 var(--context-color),0 1px 1px rgba(20,30,50,.04)}.floating-mode-switch{left:clamp(42px,3vw,112px);bottom:8px;grid-template-columns:repeat(3,34px);gap:2px;padding:3px}.mode-option,.today-option{width:34px;height:32px;border-radius:6px}.mode-main{font-size:8px}.today-option .mode-main{font-size:6px}.mode-sub{font-size:5px}.grid .holiday-cell .chip.cat-holiday{min-height:58px}.grid .holiday-cell .chip.cat-holiday .ttl{display:block;font-size:7px}}
 @media print{.floating-mode-switch{display:none}}
 .filter-jump-target{scroll-margin-top:12px}.top-option,.version-option{width:48px;height:44px;border:0;border-radius:8px;background:#fff;color:#0f7074;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;font-family:inherit}.top-option:hover,.version-option:hover{background:#eef7f7}.top-option:focus-visible,.version-option:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.top-option .mode-main{font-size:18px;line-height:.85}.version-option .mode-main{font-size:12px;line-height:1;font-weight:950}.top-option .mode-sub{font-size:7px;font-weight:850;line-height:1}@media (max-width:820px){.top-option,.version-option{width:42px;height:42px}.version-option .mode-main{font-size:11px}}@media (min-width:821px) and (max-width:1400px){.top-option,.version-option{width:36px;height:34px}.top-option .mode-main{font-size:13px}.version-option .mode-main{font-size:10px}.top-option .mode-sub{font-size:5.5px}}@media (orientation:landscape) and (max-height:540px){.top-option,.version-option{width:34px;height:32px;border-radius:6px}.top-option .mode-main{font-size:12px}.version-option .mode-main{font-size:9px}.top-option .mode-sub{font-size:5px}}
 '''
@@ -732,6 +733,7 @@ CSS += r'''
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
 TEACHER_RE = re.compile(r"\b(Garett|Garrett|Andy|Calvin|Mike(?:\s+Sir)?)\b", re.I)
 NOTE_WORD_RE = re.compile(r"test|exam|presentation|discussion|cancel|substitut", re.I)
+CANCELLED_TEACHING_RE = re.compile(r"\b(?:cancelled|canceled)\b|取消", re.I)
 
 
 def clean_location(title, category):
@@ -842,11 +844,7 @@ def event_layer(ev):
     return "class" if event_fields(ev)["teacher"] not in {"Garett", "-"} else "mine"
 
 
-def event_interval(ev):
-    match = TIME_RANGE_RE.search(str(ev.get("text") or ""))
-    if not match:
-        return None
-
+def time_range_intervals(text):
     def minutes(hour, minute, marker):
         hour = int(hour)
         minute = int(minute)
@@ -857,9 +855,32 @@ def event_interval(ev):
             hour = 0
         return hour * 60 + minute
 
-    start = minutes(match.group(1), match.group(2), match.group(3))
-    end = minutes(match.group(4), match.group(5), match.group(6))
-    return start, end
+    intervals = []
+    seen = set()
+    for match in TIME_RANGE_RE.finditer(str(text or "")):
+        start = minutes(match.group(1), match.group(2), match.group(3))
+        end = minutes(match.group(4), match.group(5), match.group(6))
+        interval = (start, end)
+        if end > start and interval not in seen:
+            seen.add(interval)
+            intervals.append(interval)
+    return intervals
+
+
+def event_interval(ev):
+    intervals = time_range_intervals(ev.get("text"))
+    if not intervals:
+        return None
+    return min(start for start, _end in intervals), max(end for _start, end in intervals)
+
+
+def teaching_intervals(ev):
+    text = str(ev.get("text") or "")
+    if event_layer(ev) != "mine" or ev.get("category") in {"holiday", "mike"}:
+        return []
+    if CANCELLED_TEACHING_RE.search(text):
+        return []
+    return time_range_intervals(text)
 
 
 def event_slot(ev):
@@ -904,6 +925,8 @@ def chip(ev):
     layer = event_layer(ev)
     layer_cls = f" layer-{layer}"
     interval = event_interval(ev)
+    lesson_intervals = teaching_intervals(ev)
+    lesson_intervals_attr = ",".join(f"{start}-{end}" for start, end in lesson_intervals)
     interval_attrs = (
         f' data-start="{interval[0]}" data-end="{interval[1]}"'
         if interval else ' data-start="" data-end=""'
@@ -911,6 +934,7 @@ def chip(ev):
     layer_attrs = (f' data-layer="{layer}" data-erb="{1 if ev["category"] == "erb" else 0}"'
                    f' data-course="{1 if ev["category"] in {"erb", "methodist"} else 0}"'
                    f' data-centre="{ehtml(centre_code(ev))}"{interval_attrs}'
+                   f' data-teaching-intervals="{lesson_intervals_attr}"'
                    f' data-source="{ehtml(ev.get("source", ""))}"')
     changed = bool(ev.get("changed_in_version"))
     comparison_cls = " changed-in-version" if changed else ""
@@ -982,7 +1006,7 @@ def month_html(year, month):
             cell_id = f"d-{ds}" if day.month == month else f"d-out-m{month}-{ds}"
             mon = calendar.month_abbr[day.month]
             weekday = day.strftime("%a")
-            cells.append(f'<div class="{cls}" id="{cell_id}"><div class="dnum"><span class="dmon">{mon}</span><span class="dday">{day.day}</span><span class="dweekday">{weekday}</span></div>' + render_day_events(evs) + '</div>')
+            cells.append(f'<div class="{cls}" id="{cell_id}"><div class="dnum"><span class="dmon">{mon}</span><span class="dday">{day.day}</span><span class="day-hours" data-day-hours hidden></span><span class="dweekday">{weekday}</span></div>' + render_day_events(evs) + '</div>')
     grid = '<div class="gridwrap"><div class="grid">' + ''.join(cells) + '</div></div>'
     daykeys = [datetime.date(year, month, day) for day in range(1, calendar.monthrange(year, month)[1] + 1)]
     agenda_bits = []
@@ -991,7 +1015,7 @@ def month_html(year, month):
         mon = calendar.month_abbr[day.month]
         day_events = by_date.get(ds, [])
         empty_class = " empty-day" if not day_events else ""
-        agenda_bits.append(f'<div class="aday{empty_class}" id="a-d-{ds}" data-date="{ds}"><div class="adate"><span class="adow">{day.strftime("%a")}</span><span class="amon">{mon}</span><span class="anum">{day.day}</span></div><div class="achips">' + render_day_events(day_events) + '</div></div>')
+        agenda_bits.append(f'<div class="aday{empty_class}" id="a-d-{ds}" data-date="{ds}"><div class="adate"><span class="adow">{day.strftime("%a")}</span><span class="amon">{mon}</span><span class="anum">{day.day}</span><span class="day-hours" data-day-hours hidden></span></div><div class="achips">' + render_day_events(day_events) + '</div></div>')
     agenda = ''.join(agenda_bits)
     return f'<section class="month" id="m{month}"><h2>{calendar.month_name[month]} {year}</h2>{grid}<div class="agenda">{agenda}</div></section>'
 
@@ -1495,6 +1519,52 @@ function refreshTransitBars(){{
     }}
   }});
 }}
+function parseTeachingIntervals(value){{
+  return String(value||'').split(',').filter(Boolean).map(part=>part.split('-').map(Number)).filter(interval=>interval.length===2&&Number.isFinite(interval[0])&&Number.isFinite(interval[1])&&interval[1]>interval[0]);
+}}
+function mergeTeachingMinutes(intervals){{
+  if(!intervals.length) return 0;
+  intervals.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
+  const merged=[];
+  intervals.forEach(interval=>{{
+    const last=merged[merged.length-1];
+    if(last&&interval[0]<=last[1]) last[1]=Math.max(last[1],interval[1]);
+    else merged.push([interval[0],interval[1]]);
+  }});
+  return merged.reduce((total,interval)=>total+interval[1]-interval[0],0);
+}}
+function formatTeachingMinutes(minutes){{
+  const hours=Math.floor(minutes/60),remainder=minutes%60;
+  if(hours&&remainder) return hours+'h'+String(remainder).padStart(2,'0');
+  if(hours) return hours+'h';
+  return remainder+'m';
+}}
+function refreshDailyHours(){{
+  const mode=window.__layerMode;
+  const personal=mode==='mine-confirmed'||mode==='mine-all';
+  document.querySelectorAll('[data-day-hours]').forEach(badge=>{{
+    badge.hidden=true;
+    badge.textContent='';
+    badge.removeAttribute('title');
+    badge.removeAttribute('aria-label');
+    if(!personal) return;
+    const container=badge.closest('.cell,.aday');
+    if(!container) return;
+    const intervals=[];
+    container.querySelectorAll('.chip[data-layer="mine"]').forEach(chip=>{{
+      const status=chip.dataset.status;
+      const include=mode==='mine-confirmed'?status==='confirmed':(status==='confirmed'||status==='unconfirmed');
+      if(include) intervals.push(...parseTeachingIntervals(chip.dataset.teachingIntervals));
+    }});
+    const minutes=mergeTeachingMinutes(intervals);
+    if(!minutes) return;
+    const label=formatTeachingMinutes(minutes);
+    badge.textContent=label;
+    badge.title=(mode==='mine-confirmed'?'Confirmed':'Confirmed and unconfirmed')+' teaching time; travel excluded';
+    badge.setAttribute('aria-label',label+' teaching time, travel excluded');
+    badge.hidden=false;
+  }});
+}}
 function applyFilters(){{
   const f=window.__courseFilter, mode=window.__layerMode;
   window.__filterActive = f !== 'all';
@@ -1516,6 +1586,7 @@ function applyFilters(){{
   }});
   document.querySelectorAll('.cell').forEach(cell=>{{ const visible=Array.from(cell.querySelectorAll('.chip')).some(ch=>ch.style.display!=='none'); if(cell.querySelector('.chip')) cell.classList.toggle('has', visible); }});
   document.querySelectorAll('.aday').forEach(day=>{{ const chips=Array.from(day.querySelectorAll('.chip')); if(chips.length) day.style.display=chips.some(ch=>ch.style.display!=='none')?'':'none'; }});
+  refreshDailyHours();
   refreshTransitBars();
   applySpanFilters();
 }}

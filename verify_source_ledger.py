@@ -320,20 +320,26 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "v18a-hk280-availability-five-dates-20260717a" in index
+assert "v18b-daily-teaching-hours-20260717a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
-assert 'HK280HS SS - five availability dates added; exact lessons and times pending Calvin.' in index
-assert 'data-version-id="2026-07-17-V18a"' in index
+assert 'Calendar - daily teaching hours added for ME CONF and ME ALL; travel excluded.' in index
+assert 'data-version-id="2026-07-17-V18b"' in index
 assert 'class="version-menu-item current"' in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
-assert 'data-filter="changed"' in index
-assert '> Changed in V18a</div>' in index
-assert index.count('class="change-badge"') >= 5
+assert 'data-filter="changed"' not in index
+assert 'Changed in V18b</span>' in index
+assert index.count('class="change-badge"') == 0
 assert index.count("Lesson TBC") >= 5
+assert index.count('data-day-hours hidden') >= 400
+assert 'data-teaching-intervals="480-590,660-780"' in index
+assert 'function refreshDailyHours()' in index
+assert 'function mergeTeachingMinutes(intervals)' in index
+assert "mode==='mine-confirmed'?status==='confirmed'" in index
+assert "' teaching time; travel excluded'" in index
 assert '<div class="code-key"><b>MC0106DS</b><span>' in index
 assert ".upcoming-course.active.unconfirmed,.upcoming-course.active.mixed{border-width:3px;border-style:dashed;border-color:#fff" in index
 assert "window.__courseFilter='all';" in index
