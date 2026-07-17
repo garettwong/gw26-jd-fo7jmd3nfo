@@ -1,0 +1,617 @@
+{
+  "revision": "20260717_V17C_MC0106DS_FINAL",
+  "source": "V17A clean accepted schedule plus Calvin's finalized MC0106DS 第2班 workbook MC106DS_1創意數碼媒體設計及製作助理證書_20260717_FINAL FINAL.xlsx.",
+  "confirmation": "MC0106DS 第2班 is final. Garett teaches L3, L4, L7, L8, L15 and L16 (24 hours); the remaining populated lessons L1-L47 are full-class context. The source header says 49 lessons, but no L48-L49 rows are populated.",
+  "default_status": "confirmed",
+  "overrides": [
+    {
+      "date": "2026-08-24",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 1,
+      "teacher": "Andy",
+      "source": "HK244EG(CW )_R2.doc, lesson 1",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Andy - L1"
+    },
+    {
+      "date": "2026-08-25",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 2,
+      "teacher": "Andy",
+      "source": "HK244EG(CW )_R2.doc, lesson 2",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Andy - L2"
+    },
+    {
+      "date": "2026-08-26",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 3,
+      "teacher": "Andy",
+      "source": "HK244EG(CW )_R2.doc, lesson 3",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Andy - L3"
+    },
+    {
+      "date": "2026-08-27",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 4,
+      "teacher": "Andy",
+      "source": "HK244EG(CW )_R2.doc, lesson 4",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Andy - L4"
+    },
+    {
+      "date": "2026-08-31",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 5,
+      "teacher": "Garett",
+      "source": "HK244EG(CW )_R2.doc, lesson 5",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L5"
+    },
+    {
+      "date": "2026-09-01",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 6,
+      "teacher": "Garett",
+      "source": "HK244EG(CW )_R2.doc, lesson 6",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L6"
+    },
+    {
+      "date": "2026-09-02",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 7,
+      "teacher": "Garett",
+      "source": "HK244EG(CW )_R2.doc, lesson 7",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L7"
+    },
+    {
+      "date": "2026-09-03",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 8,
+      "teacher": "Garett",
+      "source": "HK244EG(CW )_R2.doc, lesson 8",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L8"
+    },
+    {
+      "date": "2026-09-08",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 9,
+      "teacher": "Garett",
+      "source": "HK244EG(CW )_R2.doc, lesson 9",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L9"
+    },
+    {
+      "date": "2026-09-14",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 10,
+      "teacher": "Garett",
+      "source": "HK244EG(CW )_R2.doc, lesson 10",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L10"
+    },
+    {
+      "date": "2026-09-15",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 11,
+      "teacher": "Garett",
+      "source": "HK244EG(CW )_R2.doc, lesson 11",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L11"
+    },
+    {
+      "date": "2026-09-18",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 12,
+      "teacher": "Garett",
+      "source": "HK244EG(CW )_R2.doc, lesson 12",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L12"
+    },
+    {
+      "date": "2026-09-22",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 13,
+      "teacher": "Garett",
+      "source": "HK244EG(CW )_R2.doc, lesson 13",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L13"
+    },
+    {
+      "date": "2026-09-29",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 14,
+      "teacher": "Garett",
+      "source": "HK244EG(CW )_R2.doc, lesson 14",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L14"
+    },
+    {
+      "date": "2026-10-07",
+      "course_code": "HK244EG",
+      "class": "CW",
+      "lesson": 17,
+      "teacher": "Garett",
+      "source": "HK244EG(CW )_R2.doc, lesson 17",
+      "text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2100 - Garett - L17 [持續筆試]"
+    },
+    {
+      "date": "2026-06-18",
+      "match_lesson": 4,
+      "course_code": "HK244EG",
+      "class": "HF2",
+      "lesson": null,
+      "teacher": "Garett",
+      "source": "HK244EG(HF2)_R6_0707.doc, unnumbered black-rain cancellation",
+      "text": "勵行-豪輝 (Garett) [black rain cancelled] / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG (HF2) (1900 - 2130)"
+    },
+    {
+      "date": "2026-06-27",
+      "match_lesson": null,
+      "course_code": "HK244EG",
+      "class": "FS-1",
+      "lesson": 17,
+      "teacher": "Garett",
+      "source": "00003644-HK244EG(FS1)R4_0623.doc and WhatsApp 2026-06-23, lesson 17 substitute",
+      "text": "勵行-四海 (Garett) [substitute] / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class FS-1, (1500 - 1730) - L17"
+    },
+    {
+      "date": "2026-08-12",
+      "course_code": "HK265HG",
+      "class": "FS",
+      "lesson": 12,
+      "teacher": "Garett",
+      "source": "HK265HG(FS)7月班_0508.doc, lesson 12",
+      "text": "勵行-四海 (Garett) - HK265HG, Class FS - L12 / Certificate in AI-enhanced Social Media Content / 1400 - 1730 [Final Practical Exam 1420-1720]"
+    },
+    {
+      "date": "2026-10-14",
+      "course_code": "HK265HG",
+      "class": "FS",
+      "lesson": 12,
+      "teacher": "Garett",
+      "source": "HK265HG(FS)9月班_0625_0707_check again 03.doc, lesson 12",
+      "text": "勵行-四海 (Garett) - HK265HG, Class FS - L12 / Certificate in AI-enhanced Social Media Content / 1400 - 1745 [Final Practical Exam 1420-1720]"
+    },
+    {
+      "date": "2026-10-07",
+      "course_code": "HK265HG",
+      "class": "FS",
+      "lesson": 9,
+      "status": "confirmed",
+      "source": "Latest personal workbook; Google Maps public-transit check 2026-07-14: Fourseas Building to Choi Wan 40-47 minutes within the 17:45-19:00 75-minute gap",
+      "text": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L9 [TIGHT TRAVEL ~40-47m]"
+    },
+    {
+      "date": "2026-08-06",
+      "match_course_code": "HK244EG",
+      "course_code": "HK244HG",
+      "class": "CW8",
+      "lesson": 1,
+      "teacher": "Garett",
+      "source": "HK244HG(CW8)_R3_final.docx, lesson 1",
+      "text": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L1"
+    },
+    {
+      "date": "2026-08-13",
+      "match_course_code": "HK244EG",
+      "course_code": "HK244HG",
+      "class": "CW8",
+      "lesson": 2,
+      "teacher": "Garett",
+      "source": "HK244HG(CW8)_R3_final.docx, lesson 2",
+      "text": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1730) - L2"
+    },
+    {
+      "date": "2026-08-14",
+      "match_course_code": "HK244EG",
+      "course_code": "HK244HG",
+      "class": "CW8",
+      "lesson": 3,
+      "teacher": "Calvin",
+      "source": "HK244HG(CW8)_R3_final.docx, lesson 3; Calvin WhatsApp confirmation 2026-07-16: Calvin substitutes Garett",
+      "text": "勵行-彩雲 (Calvin) [substitute for Garett] / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L3"
+    },
+    {
+      "date": "2026-08-24",
+      "match_course_code": "HK244EG",
+      "course_code": "HK244HG",
+      "class": "CW8",
+      "lesson": 4,
+      "teacher": "Garett",
+      "source": "HK244HG(CW8)_R3_final.docx, lesson 4",
+      "text": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L4"
+    },
+    {
+      "date": "2026-08-26",
+      "match_course_code": "HK244EG",
+      "course_code": "HK244HG",
+      "class": "CW8",
+      "lesson": 5,
+      "teacher": "Garett",
+      "source": "HK244HG(CW8)_R3_final.docx, lesson 5",
+      "text": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L5"
+    },
+    {
+      "date": "2026-08-27",
+      "match_course_code": "HK244EG",
+      "course_code": "HK244HG",
+      "class": "CW8",
+      "lesson": 6,
+      "teacher": "Garett",
+      "source": "HK244HG(CW8)_R3_final.docx, lesson 6",
+      "text": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1730) - L6"
+    },
+    {
+      "date": "2026-08-31",
+      "match_course_code": "HK244EG",
+      "course_code": "HK244HG",
+      "class": "CW8",
+      "lesson": 7,
+      "teacher": "Garett",
+      "source": "HK244HG(CW8)_R3_final.docx, lesson 7",
+      "text": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L7"
+    },
+    {
+      "date": "2026-09-02",
+      "match_course_code": "HK244EG",
+      "course_code": "HK244HG",
+      "class": "CW8",
+      "lesson": 8,
+      "teacher": "Garett",
+      "source": "HK244HG(CW8)_R3_final.docx, lesson 8",
+      "text": "勵行-彩雲 (Garett) [持續評估小組匯報] / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L8"
+    },
+    {
+      "date": "2026-09-03",
+      "match_course_code": "HK244EG",
+      "course_code": "HK244HG",
+      "class": "CW8",
+      "lesson": 9,
+      "teacher": "Garett",
+      "source": "HK244HG(CW8)_R3_final.docx, lesson 9",
+      "text": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L9"
+    },
+    {
+      "date": "2026-09-04",
+      "match_course_code": "HK244EG",
+      "course_code": "HK244HG",
+      "class": "CW8",
+      "lesson": 10,
+      "teacher": "Calvin",
+      "source": "HK244HG(CW8)_R3_final.docx and WhatsApp 2026-07-03, lesson 10",
+      "text": "勵行-彩雲 (Calvin) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1730) - L10"
+    },
+    {
+      "date": "2026-09-07",
+      "match_course_code": "HK244EG",
+      "course_code": "HK244HG",
+      "class": "CW8",
+      "lesson": 11,
+      "teacher": "Calvin",
+      "source": "HK244HG(CW8)_R3_final.docx and WhatsApp 2026-07-03, lesson 11",
+      "text": "勵行-彩雲 (Calvin) [持續筆試] / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L11"
+    },
+    {
+      "date": "2026-09-08",
+      "match_course_code": "HK244EG",
+      "course_code": "HK244HG",
+      "class": "CW8",
+      "lesson": 12,
+      "teacher": "Calvin",
+      "source": "HK244HG(CW8)_R3_final.docx and WhatsApp 2026-07-03, lesson 12",
+      "text": "勵行-彩雲 (Calvin) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L12 [期末實務試 1515-1715]"
+    },
+    {
+      "date": "2026-09-16",
+      "course_code": "HK239HG",
+      "class": "SS",
+      "lesson": 1,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "上課地點SS.docx and WhatsApp 2026-06-19 explicit confirmation, SS lesson 1; Google Maps public-transit check 2026-07-14: Choi Yuen to Fourseas Building 55-61 minutes within the 12:30-14:00 90-minute gap",
+      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0830-1230 - L1 [TIGHT TRAVEL ~55-61m]"
+    },
+    {
+      "date": "2026-09-23",
+      "course_code": "HK239HG",
+      "class": "SS",
+      "lesson": 2,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "上課地點SS.docx and WhatsApp 2026-06-19 explicit confirmation, SS lesson 2; Google Maps public-transit check 2026-07-14: Choi Yuen to Fourseas Building 55-61 minutes within the 12:30-14:00 90-minute gap",
+      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0830-1230 - L2 [TIGHT TRAVEL ~55-61m]"
+    },
+    {
+      "date": "2026-09-30",
+      "course_code": "HK239HG",
+      "class": "SS",
+      "lesson": 3,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "上課地點SS.docx and WhatsApp 2026-06-19 explicit confirmation, SS lesson 3; Google Maps public-transit check 2026-07-14: Choi Yuen to Fourseas Building 55-61 minutes within the 12:30-14:00 90-minute gap",
+      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0830-1230 - L3 [TIGHT TRAVEL ~55-61m]"
+    },
+    {
+      "date": "2026-10-07",
+      "course_code": "HK239HG",
+      "class": "SS",
+      "lesson": 4,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "上課地點SS.docx and WhatsApp 2026-06-19 explicit confirmation, SS lesson 4; Google Maps public-transit check 2026-07-14: Choi Yuen to Fourseas Building 55-61 minutes within the 12:30-14:00 90-minute gap",
+      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0830-1230 - L4 [TIGHT TRAVEL ~55-61m]"
+    },
+    {
+      "date": "2026-10-14",
+      "course_code": "HK239HG",
+      "class": "SS",
+      "lesson": 5,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "上課地點SS.docx and WhatsApp 2026-06-19 explicit confirmation, SS lesson 5; Google Maps public-transit check 2026-07-14: Choi Yuen to Fourseas Building 55-61 minutes within the 12:30-14:00 90-minute gap",
+      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0830-1230 - L5 [持續評估 / 小組討論及專題報告] [TIGHT TRAVEL ~55-61m]"
+    },
+    {
+      "date": "2026-10-21",
+      "course_code": "HK239HG",
+      "class": "SS",
+      "lesson": 6,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "上課地點SS.docx and WhatsApp 2026-06-19 explicit confirmation, SS lesson 6",
+      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0830-1230 - L6 [期末筆試 1030-1130]"
+    },
+    {
+      "date": "2026-10-10",
+      "course_code": "HK239HG",
+      "class": "ST",
+      "lesson": 2,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HGSS_ST_LT_checked_lam tin time is wrong.docx, ST lesson 2",
+      "text": "勵行-順天 - HK239HG, Class ST (Garett) / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L2"
+    },
+    {
+      "date": "2026-10-17",
+      "course_code": "HK239HG",
+      "class": "ST",
+      "lesson": 3,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HGSS_ST_LT_checked_lam tin time is wrong.docx, ST lesson 3",
+      "text": "勵行-順天 - HK239HG, Class ST (Garett) / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L3"
+    },
+    {
+      "date": "2026-10-24",
+      "course_code": "HK239HG",
+      "class": "ST",
+      "lesson": 4,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HGSS_ST_LT_checked_lam tin time is wrong.docx, ST lesson 4",
+      "text": "勵行-順天 - HK239HG, Class ST (Garett) / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L4"
+    },
+    {
+      "date": "2026-10-31",
+      "course_code": "HK239HG",
+      "class": "ST",
+      "lesson": 5,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HGSS_ST_LT_checked_lam tin time is wrong.docx, ST lesson 5",
+      "text": "勵行-順天 - HK239HG, Class ST (Garett) / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L5 [持續評估小組討論及專題報告]"
+    },
+    {
+      "date": "2026-11-07",
+      "match_lesson": 5,
+      "course_code": "HK239HG",
+      "class": "ST",
+      "lesson": 6,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HGSS_ST_LT_checked_lam tin time is wrong.docx, ST lesson 6",
+      "text": "勵行-順天 - HK239HG, Class ST (Garett) / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L6 [期末筆試 1030-1130]"
+    },
+    {
+      "date": "2026-11-23",
+      "match_lesson": null,
+      "course_code": "HK239HG",
+      "class": "LT",
+      "lesson": 1,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HGLT_2026 07 08_checked.docx, lesson 1",
+      "text": "勵行-藍田 - HK239HG (Garett), Class LT / 人工智能知識及應用證書 (兼讀制) / 1400-1700 - L1"
+    },
+    {
+      "date": "2026-11-24",
+      "match_lesson": null,
+      "course_code": "HK239HG",
+      "class": "LT",
+      "lesson": 2,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HGLT_2026 07 08_checked.docx, lesson 2",
+      "text": "勵行-藍田 - HK239HG (Garett), Class LT / 人工智能知識及應用證書 (兼讀制) / 1400-1700 - L2"
+    },
+    {
+      "date": "2026-11-25",
+      "match_lesson": null,
+      "course_code": "HK239HG",
+      "class": "LT",
+      "lesson": 3,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HGLT_2026 07 08_checked.docx, lesson 3",
+      "text": "勵行-藍田 - HK239HG (Garett), Class LT / 人工智能知識及應用證書 (兼讀制) / 1400-1700 - L3"
+    },
+    {
+      "date": "2026-11-26",
+      "match_lesson": null,
+      "course_code": "HK239HG",
+      "class": "LT",
+      "lesson": 4,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HGLT_2026 07 08_checked.docx, lesson 4",
+      "text": "勵行-藍田 - HK239HG (Garett), Class LT / 人工智能知識及應用證書 (兼讀制) / 1400-1700 - L4"
+    },
+    {
+      "date": "2026-11-27",
+      "match_lesson": null,
+      "course_code": "HK239HG",
+      "class": "LT",
+      "lesson": 5,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HGLT_2026 07 08_checked.docx, lesson 5",
+      "text": "勵行-藍田 - HK239HG (Garett), Class LT / 人工智能知識及應用證書 (兼讀制) / 1400-1700 - L5"
+    },
+    {
+      "date": "2026-11-30",
+      "match_lesson": null,
+      "course_code": "HK239HG",
+      "class": "LT",
+      "lesson": 6,
+      "teacher": "Garett",
+      "status": "unconfirmed",
+      "source": "HK239HGLT_2026 07 08_checked.docx, lesson 6",
+      "text": "勵行-藍田 - HK239HG (Garett), Class LT / 人工智能知識及應用證書 (兼讀制) / 1400-1700 - L6"
+    },
+    {
+      "date": "2026-08-27",
+      "course_code": "HK239HG",
+      "class": "CW10",
+      "lesson": 1,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 1",
+      "text": "勵行-彩雲 (Garett) - HK239HG, Class CW10 / 人工智能知識及應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 0900-1200 - L1"
+    },
+    {
+      "date": "2026-08-29",
+      "course_code": "HK239HG",
+      "class": "CW10",
+      "lesson": 2,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 2",
+      "text": "勵行-彩雲 (Garett) - HK239HG, Class CW10 / 人工智能知識及應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 0900-1200 - L2",
+      "match_cell": "T27"
+    },
+    {
+      "date": "2026-08-31",
+      "course_code": "HK239HG",
+      "class": "CW10",
+      "lesson": 3,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 3",
+      "text": "勵行-彩雲 (Garett) - HK239HG, Class CW10 / 人工智能知識及應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 0900-1200 - L3"
+    },
+    {
+      "date": "2026-09-02",
+      "match_lesson": 5,
+      "course_code": "HK239HG",
+      "class": "CW10",
+      "lesson": 4,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 4",
+      "text": "勵行-彩雲 (Garett) - HK239HG, Class CW10 / 人工智能知識及應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 0900-1200 - L4"
+    },
+    {
+      "date": "2026-09-03",
+      "match_lesson": 6,
+      "course_code": "HK239HG",
+      "class": "CW10",
+      "lesson": 5,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 5",
+      "text": "勵行-彩雲 (Garett) - HK239HG, Class CW10 / 人工智能知識及應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 0900-1200 - L5 [持續評估 / 小組討論及專題報告]"
+    },
+    {
+      "date": "2026-09-07",
+      "course_code": "HK239HG",
+      "class": "CW10",
+      "lesson": 6,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 6",
+      "text": "勵行-彩雲 (Garett) - HK239HG, Class CW10 / 人工智能知識及應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 0900-1200 - L6 [期末筆試10:30-11:30]",
+      "match_cell": "E12"
+    },
+    {
+      "date": "2026-08-01",
+      "match_cell": "T7",
+      "course_code": "MC0106DS",
+      "class": "第2班",
+      "lesson": 3,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "MC106DS_1創意數碼媒體設計及製作助理證書_20260717_FINAL FINAL.xlsx, lesson 3 - FINAL FINAL",
+      "text": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L3 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 09:00 - 13:00"
+    },
+    {
+      "date": "2026-08-01",
+      "match_cell": "T8",
+      "course_code": "MC0106DS",
+      "class": "第2班",
+      "lesson": 4,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "MC106DS_1創意數碼媒體設計及製作助理證書_20260717_FINAL FINAL.xlsx, lesson 4 - FINAL FINAL",
+      "text": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L4 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 14:00 - 18:00"
+    },
+    {
+      "date": "2026-08-08",
+      "match_cell": "T12",
+      "course_code": "MC0106DS",
+      "class": "第2班",
+      "lesson": 7,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "MC106DS_1創意數碼媒體設計及製作助理證書_20260717_FINAL FINAL.xlsx, lesson 7 - FINAL FINAL",
+      "text": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L7 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 09:00 - 13:00"
+    },
+    {
+      "date": "2026-08-08",
+      "match_cell": "T13",
+      "course_code": "MC0106DS",
+      "class": "第2班",
+      "lesson": 8,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "MC106DS_1創意數碼媒體設計及製作助理證書_20260717_FINAL FINAL.xlsx, lesson 8 - FINAL FINAL",
+      "text": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L8 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 14:00 - 18:00"
+    },
+    {
+      "date": "2026-08-15",
+      "match_cell": "T17",
+      "course_code": "MC0106DS",
+      "class": "第2班",
+      "lesson": 15,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "MC106DS_1創意數碼媒體設計及製作助理證書_20260717_FINAL FINAL.xlsx, lesson 15 - FINAL FINAL",
+      "text": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L15 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 09:00 - 13:00"
+    },
+    {
+      "date": "2026-08-15",
+      "match_cell": "T18",
+      "course_code": "MC0106DS",
+      "class": "第2班",
+      "lesson": 16,
+      "teacher": "Garett",
+      "status": "confirmed",
+      "source": "MC106DS_1創意數碼媒體設計及製作助理證書_20260717_FINAL FINAL.xlsx, lesson 16 - FINAL FINAL",
+      "text": "循道-灣仔 (Garett) - MC0106DS, Class 第2班 - L16 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 14:00 - 18:00"
+    }
+  ]
+}

@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-17-V17D",
+    "label": "2026-07-17 - V17D",
+    "summary": "Web - MC0106DS legend and course-filter reset.",
+    "latest": true
+  },
+  {
     "id": "2026-07-17-V17C",
     "label": "2026-07-17 - V17C",
     "summary": "MC0106DS 第2班 - six Garett lessons confirmed; upcoming-course summary added.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-17-V17A",

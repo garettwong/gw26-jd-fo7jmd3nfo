@@ -243,7 +243,7 @@ for row in hk239_fs:
 hk280hs_ss = rows_with("HK280HS", "Class SS")
 assert not hk280hs_ss
 
-# V17C retains every accepted V17A assignment; only MC0106DS status/context changes.
+# V17D retains every accepted V17C assignment; this release changes web behavior only.
 hk244_cw_l10 = next(row for row in cw if lesson(row) == 10)
 assert hk244_cw_l10["status"] == "confirmed"
 assert teacher(hk244_cw_l10) == "Garett"
@@ -292,8 +292,15 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "mc0106ds-final-upcoming-summary-20260717-v17c" in index
-assert "Changed in V17C (47)" in index
+assert "legend-filter-reset-final-filename-20260717-v17d" in index
+assert 'data-filter="changed"' not in index
+assert '> Changed in V17D</div>' not in index
+assert '<div class="code-key"><b>MC0106DS</b><span>' in index
+assert ".upcoming-course.active.unconfirmed,.upcoming-course.active.mixed{border-width:3px;border-style:dashed;border-color:#fff" in index
+assert "window.__courseFilter='all';" in index
+assert "window.__upcomingFilterState=null;" in index
+assert "window.__cardCourseFilter=null;" in index
+assert 'aria-label="All full timetable and clear course filter"' in index
 assert '<div id="upcomingHeading" class="section-h">Upcoming ERB classes</div>' in index
 upcoming_start = index.index('<section class="upcoming-summary"')
 upcoming_end = index.index('</section>', upcoming_start)
