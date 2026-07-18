@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-18-V18d",
+    "label": "2026-07-18 - V18d",
+    "summary": "Web - reversible class and month visibility switches in Class spans.",
+    "latest": true
+  },
+  {
     "id": "2026-07-18-V18c",
     "label": "2026-07-18 - V18c",
     "summary": "Web - daily spans and status sections; MC0106DS Room 306 lessons recorded as Calvin.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-17-V18b",

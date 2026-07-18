@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18c-daily-span-grid-20260718a"
+BUILD_ID = "v18d-reversible-span-toggles-20260718a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-17-V18b"
-COMPARE_LABEL = "V18c"
-COMPARE_BASELINE_LABEL = "V18b"
-EXPECTED_COMPARISON_CHANGES = 6
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-18-V18c"
+COMPARE_LABEL = "V18d"
+COMPARE_BASELINE_LABEL = "V18c"
+EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -737,6 +737,15 @@ CSS += r'''
 '''
 
 CSS += r'''
+.span-month-controls{order:10}.span-month-toggle{position:relative;display:inline-block;min-width:44px;min-height:34px;border:0;padding:0;background:transparent;color:inherit}.span-month-toggle input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.span-month-toggle span{display:flex;min-width:44px;min-height:34px;align-items:center;justify-content:center;border:1px solid #aebdcc;border-radius:5px;background:#fff;color:#687689;font-size:9px;font-weight:900;text-decoration:line-through;cursor:pointer}.span-month-toggle input:checked+span{border-color:#0f7074;background:#0f7074;color:#fff;text-decoration:none}.span-month-toggle input:focus-visible+span{outline:3px solid #ffc857;outline-offset:1px}
+.span-course-picker{position:static;order:20;flex:1 0 100%;width:100%;margin-top:2px;border:1px solid #cfd8e5;border-radius:7px;background:#fff;overflow:hidden;box-shadow:0 1px 3px rgba(20,30,50,.08)}.span-course-picker-head{display:flex;align-items:center;gap:10px;min-height:42px;padding:7px 10px;border-bottom:1px solid #dce3ec;background:#f7f9fc}.span-course-picker-head>strong{font-size:11px;font-weight:950}.span-course-picker-head>#spanCourseCount{color:#0f7074;font-size:10px;font-weight:900}.span-course-picker-head .span-course-actions{margin:0 0 0 auto}.span-course-picker-body{position:static;width:auto;padding:0;border:0;border-radius:0;background:#fff;box-shadow:none}.span-course-options{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));max-height:260px;overflow:auto;border-top:0}.span-course-toggle{min-height:52px;border-right:1px solid #e8edf3;border-bottom:1px solid #e8edf3;background:#f4f6f8}.span-course-toggle:has(input:checked){border-left:4px solid #0f7074;background:#eaf7f5}.span-course-toggle input{accent-color:#0f7074}.span-course-toggle input+span strong::after{content:" OFF";margin-left:4px;color:#a1261f;font-size:8px}.span-course-toggle input:checked+span strong::after{content:" ON";color:#0f7074}.span-course-toggle input:not(:checked)+span{opacity:.68}.span-legend{order:15}.span-row-toggle{display:none!important}
+@media(max-width:1100px){.span-course-options{grid-template-columns:repeat(3,minmax(180px,1fr))}}
+@media(max-width:820px){.span-month-toggle{flex:1}.span-month-toggle span{width:100%}.span-course-options{grid-template-columns:1fr;max-height:300px}.span-course-picker-head{align-items:flex-start;flex-wrap:wrap}.span-course-picker-head .span-course-actions{width:100%;margin-left:0}.span-course-picker-head .span-course-actions button{flex:1}}
+@media (orientation:landscape) and (max-height:700px) and (max-width:1400px) and (pointer:coarse){.span-course-picker{width:100%}.span-course-options{grid-template-columns:repeat(3,minmax(160px,1fr));max-height:180px}.span-course-toggle{min-height:40px;padding:5px}.span-month-toggle span{min-height:28px}}
+@media print{.span-course-picker{display:none}}
+'''
+
+CSS += r'''
 .version-menu{width:100%;margin:14px 0 2px;border:1px solid #cfd8e5;border-radius:8px;background:#fff;box-shadow:0 1px 3px rgba(20,30,50,.08);overflow:hidden}.version-menu>summary{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:center;gap:10px;min-height:46px;padding:8px 12px;list-style:none;cursor:pointer}.version-menu>summary::-webkit-details-marker{display:none}.version-menu>summary:hover{background:#f7fbfb}.version-menu>summary:focus-visible{outline:3px solid #ffc857;outline-offset:-3px}.version-menu-kicker{color:#6c7888;font-size:10px;font-weight:900;text-transform:uppercase}.version-menu-current{border-radius:5px;background:#0f7074;color:#fff;padding:3px 7px;font-size:12px;font-weight:950}.version-menu-summary{min-width:0;color:#405064;font-size:12px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.version-menu-arrow{color:#0f7074;font-size:15px;font-weight:950;transition:transform .15s ease}.version-menu[open] .version-menu-arrow{transform:rotate(180deg)}.version-menu-list{max-height:min(52vh,460px);overflow:auto;border-top:1px solid #dce3ec}.version-menu-item{width:100%;display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:center;gap:10px;min-height:48px;padding:7px 12px;border:0;border-bottom:1px solid #e7ebf1;background:#fff;color:#263343;text-align:left;font:inherit;cursor:pointer}.version-menu-item:last-child{border-bottom:0}.version-menu-item:hover{background:#f4f9f9}.version-menu-item:focus-visible{outline:3px solid #ffc857;outline-offset:-3px}.version-menu-item.current{background:#e9f6f5}.version-menu-item strong{font-size:12px;font-weight:900}.version-menu-item span{min-width:0;color:#637084;font-size:11px;line-height:1.25}.version-menu-item.current span{color:#3d6567}.version-menu-badge{border-radius:999px;background:#0f7074;color:#fff!important;padding:2px 7px;font-size:9px!important;font-weight:900;white-space:nowrap}
 @media (max-width:820px){.version-menu{margin-top:10px}.version-menu>summary{grid-template-columns:auto auto minmax(0,1fr) auto;gap:7px;padding:7px 9px}.version-menu-kicker{display:none}.version-menu-summary{font-size:11px}.version-menu-item{grid-template-columns:118px minmax(0,1fr);gap:7px;padding:7px 9px}.version-menu-item .version-menu-badge{grid-column:1/-1;justify-self:start}}
 @media (orientation:landscape) and (max-height:700px) and (max-width:1400px){.version-menu{margin:4px 0}.version-menu>summary{min-height:32px;padding:4px 7px}.version-menu-current{padding:2px 5px;font-size:9px}.version-menu-summary{font-size:9px}.version-menu-arrow{font-size:11px}.version-menu-list{max-height:55vh}.version-menu-item{min-height:36px;padding:4px 7px}.version-menu-item strong{font-size:9px}.version-menu-item span{font-size:8px}}
@@ -1188,8 +1197,8 @@ for month in range(5, 13):
         f'<span class="span-track-month" data-span-month="{month}" style="--month-days:{month_days}"></span>'
     )
     span_month_toggles.append(
-        f'<button class="span-month-toggle" type="button" data-span-month-toggle="{month}" '
-        f'aria-pressed="true">{calendar.month_abbr[month]}</button>'
+        f'<label class="span-month-toggle"><input type="checkbox" data-span-month-toggle="{month}" checked '
+        f'aria-label="Show {calendar.month_name[month]}"><span>{calendar.month_abbr[month]}</span></label>'
     )
 
 def span_identity(ev):
@@ -1317,9 +1326,7 @@ for group in sorted(
         f'data-last="{last_day.isoformat()}" data-lesson-dates="{len(events_by_day)}" data-my-dates="{my_dates}">'
         f'<div class="span-label"><strong>{ehtml(group["label"])}</strong>'
         f'<span class="span-course-name">{ehtml(group["chinese_name"])}</span>'
-        f'<small>{ehtml(range_label)} · My dates {my_dates}/{len(events_by_day)}</small>'
-        f'<button class="span-row-toggle" type="button" data-span-row-toggle="{ehtml(slug)}" '
-        f'aria-label="Hide {ehtml(group["label"])}" title="Hide this class">&#10005;</button></div>'
+        f'<small>{ehtml(range_label)} · My dates {my_dates}/{len(events_by_day)}</small></div>'
         f'<div class="span-track"><div class="span-track-grid">{"".join(span_track_months)}</div>'
         f'<div class="span-bar" style="--span-hue:{class_hue}" '
         f'data-first-label="{ehtml(short_date(first_day))}" data-last-label="{ehtml(short_date(last_day))}" '
@@ -1338,9 +1345,11 @@ span_course_toggles = ''.join(
     for slug, label, range_label in span_controls
 )
 span_course_picker = (
-    f'<details id="spanCoursePicker" class="span-course-picker"><summary>Classes <span id="spanCourseCount">{len(span_controls)}/{len(span_controls)}</span></summary>'
-    f'<div class="span-course-picker-body"><div class="span-course-actions"><button type="button" data-span-course-action="all">All on</button>'
-    f'<button type="button" data-span-course-action="none">All off</button></div><div class="span-course-options">{span_course_toggles}</div></div></details>'
+    f'<section id="spanCoursePicker" class="span-course-picker" aria-label="Class visibility">'
+    f'<div class="span-course-picker-head"><strong>Class visibility</strong><span id="spanCourseCount">{len(span_controls)}/{len(span_controls)} ON</span>'
+    f'<div class="span-course-actions"><button type="button" data-span-course-action="all">All on</button>'
+    f'<button type="button" data-span-course-action="none">All off</button></div></div>'
+    f'<div class="span-course-picker-body"><div class="span-course-options">{span_course_toggles}</div></div></section>'
 )
 span_month_controls = (
     '<div class="span-month-controls" role="group" aria-label="Visible months">'
@@ -1482,7 +1491,7 @@ const spanCourseInputs=Array.from(document.querySelectorAll('[data-span-course]'
 const spanCourseCount=document.getElementById('spanCourseCount');
 function syncSpanCourseCount(){{
   const enabled=spanCourseInputs.filter(input=>input.checked).length;
-  if(spanCourseCount) spanCourseCount.textContent=enabled+'/'+spanCourseInputs.length;
+  if(spanCourseCount) spanCourseCount.textContent=enabled+'/'+spanCourseInputs.length+' ON';
 }}
 let spanLabelsVisible=true;
 const spanLabelsToggle=document.getElementById('spanLabelsToggle');
@@ -1493,9 +1502,9 @@ function syncSpanLabels(){{
 }}
 const spanZoomLevels=[8,12,16,22,30,40];
 let spanZoomIndex=2;
-const spanMonthButtons=Array.from(document.querySelectorAll('[data-span-month-toggle]'));
+const spanMonthInputs=Array.from(document.querySelectorAll('[data-span-month-toggle]'));
 const spanMonthDays={{5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31}};
-function visibleSpanMonths(){{return spanMonthButtons.filter(button=>button.getAttribute('aria-pressed')==='true').map(button=>Number(button.dataset.spanMonthToggle));}}
+function visibleSpanMonths(){{return spanMonthInputs.filter(input=>input.checked).map(input=>Number(input.dataset.spanMonthToggle));}}
 function spanMonthOffset(month,visibleMonths){{let offset=0;visibleMonths.forEach(value=>{{if(value<month) offset+=spanMonthDays[value];}});return offset;}}
 function layoutSpanTimeline(){{
   const visibleMonths=visibleSpanMonths();
@@ -1560,21 +1569,12 @@ spanLabelsToggle.addEventListener('click',()=>{{spanLabelsVisible=!spanLabelsVis
 document.getElementById('spanZoomOut').addEventListener('click',()=>{{if(spanZoomIndex>0){{spanZoomIndex-=1;applySpanZoom(true);}}}});
 document.getElementById('spanZoomIn').addEventListener('click',()=>{{if(spanZoomIndex<spanZoomLevels.length-1){{spanZoomIndex+=1;applySpanZoom(true);}}}});
 document.getElementById('spanZoomReset').addEventListener('click',()=>{{spanZoomIndex=2;applySpanZoom(true);}});
-spanMonthButtons.forEach(button=>button.addEventListener('click',()=>{{
-  const currentlyVisible=button.getAttribute('aria-pressed')==='true';
-  if(currentlyVisible&&visibleSpanMonths().length===1) return;
-  button.setAttribute('aria-pressed',String(!currentlyVisible));
+spanMonthInputs.forEach(input=>input.addEventListener('change',()=>{{
+  if(!input.checked&&visibleSpanMonths().length===0){{input.checked=true;return;}}
   applySpanZoom(true);
   applySpanFilters();
 }}));
 spanCourseInputs.forEach(input=>input.addEventListener('change',()=>{{syncSpanCourseCount();applySpanFilters();}}));
-document.querySelectorAll('[data-span-row-toggle]').forEach(button=>button.addEventListener('click',()=>{{
-  const input=spanCourseInputs.find(item=>item.dataset.spanCourse===button.dataset.spanRowToggle);
-  if(!input) return;
-  input.checked=false;
-  syncSpanCourseCount();
-  applySpanFilters();
-}}));
 document.querySelectorAll('[data-span-course-action]').forEach(button=>button.addEventListener('click',()=>{{
   const checked=button.dataset.spanCourseAction==='all';
   spanCourseInputs.forEach(input=>input.checked=checked);

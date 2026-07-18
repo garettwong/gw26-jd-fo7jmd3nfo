@@ -324,19 +324,19 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "v18c-daily-span-grid-20260718a" in index
+assert "v18d-reversible-span-toggles-20260718a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
-assert 'Web - daily spans and status sections; MC0106DS Room 306 lessons recorded as Calvin.' in index
-assert 'data-version-id="2026-07-18-V18c"' in index
+assert 'Web - reversible class and month visibility switches in Class spans.' in index
+assert 'data-version-id="2026-07-18-V18d"' in index
 assert 'class="version-menu-item current"' in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
-assert 'data-filter="changed"' in index
-assert 'Changed in V18c</span>' in index
-assert index.count('class="change-badge"') == 12
+assert 'data-filter="changed"' not in index
+assert '<span class="sample changed-sample"></span> Changed in V18d' not in index
+assert index.count('class="change-badge"') == 0
 assert index.count("Lesson TBC") >= 5
 assert index.count('data-day-hours hidden') >= 400
 assert 'data-teaching-intervals="480-590,660-780"' in index
@@ -373,7 +373,11 @@ completed_end = index.index('</section>', completed_start)
 completed = index[completed_start:completed_end]
 assert 'HK244EG' in completed and 'HF2' in completed and '>COMPLETED</span>' in completed
 assert index.count('data-span-month-toggle="') == 8
-assert index.count('data-span-row-toggle="') == 18
+assert index.count('<input type="checkbox" data-span-month-toggle="') == 8
+assert index.count('data-span-row-toggle="') == 0
+assert '<section id="spanCoursePicker" class="span-course-picker" aria-label="Class visibility">' in index
+assert index.count('data-span-course="') == 18
+assert "spanCourseCount.textContent=enabled+'/'+spanCourseInputs.length+' ON'" in index
 assert index.count('class="span-day"') == 245
 assert 'const spanZoomLevels=[8,12,16,22,30,40]' in index
 assert 'function layoutSpanTimeline()' in index
