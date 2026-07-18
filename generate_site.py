@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18e-hk280hg-full-class-context-20260718a"
+BUILD_ID = "v18f-cohort-and-assessment-audit-20260718a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-18-V18d"
-COMPARE_LABEL = "V18e"
-COMPARE_BASELINE_LABEL = "V18d"
-EXPECTED_COMPARISON_CHANGES = 5
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-18-V18e"
+COMPARE_LABEL = "V18f"
+COMPARE_BASELINE_LABEL = "V18e"
+EXPECTED_COMPARISON_CHANGES = 2
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -37,6 +37,8 @@ UPCOMING_CLASS_META = {
     "HK280HG · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
     "HK280HS · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
     "HK265HG · FS": ("基督教勵行會", "四海大廈", "ENG"),
+    "HK265HG · FS · JUL 2026": ("基督教勵行會", "四海大廈", "ENG"),
+    "HK265HG · FS · SEP 2026": ("基督教勵行會", "四海大廈", "ENG"),
     "MC0106DS · 第2班": ("循道衛理中心", "灣仔軒尼詩道22號3樓", "CHI"),
     "HK244HG · CW8": ("基督教勵行會", "彩雲邨", "CHI"),
     "HK244EG · CW": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓103室", "CHI"),
@@ -350,6 +352,45 @@ def event_sort_key(ev):
     return (start, 0 if code else 1, natural_key(code), natural_key(cls), lesson, ev.get("row", 999), ev.get("col", 999), ev.get("text", ""))
 
 
+LESSON_NUMBER_RE = re.compile(r"\bL\s*(\d+)\b", re.I)
+
+
+def span_lesson_number(ev):
+    match = LESSON_NUMBER_RE.search(str(ev.get("text") or ""))
+    return int(match.group(1)) if match else None
+
+
+def split_span_instances(events):
+    """Split repeated cohorts when the lesson sequence restarts at L1/L2."""
+    events_by_date = {}
+    for event in sorted(events, key=lambda item: (item["date"], event_sort_key(item))):
+        events_by_date.setdefault(event["date"], []).append(event)
+
+    instances = []
+    current = []
+    previous_max_lesson = None
+    for _date, day_events in sorted(events_by_date.items()):
+        lesson_numbers = [number for number in (span_lesson_number(event) for event in day_events) if number is not None]
+        day_min = min(lesson_numbers) if lesson_numbers else None
+        starts_new_cohort = (
+            bool(current)
+            and day_min is not None
+            and previous_max_lesson is not None
+            and day_min <= 2
+            and day_min < previous_max_lesson
+        )
+        if starts_new_cohort:
+            instances.append(current)
+            current = []
+            previous_max_lesson = None
+        current.extend(day_events)
+        if lesson_numbers:
+            previous_max_lesson = max(previous_max_lesson or 0, max(lesson_numbers))
+    if current:
+        instances.append(current)
+    return instances
+
+
 events = []
 context_events = []
 by_date = {}
@@ -567,7 +608,39 @@ INFERRED_CLASS_BY_CODE = {
     if len(classes) == 1
 }
 
-_group_labels = sorted({course_group_label(e["text"], e["category_label"]) for e in display_events}, key=lambda label: (0 if COURSE_CODE_RE.fullmatch(label.split(" · ", 1)[0]) or label == "DGS" else 1, natural_key(label.split(" · ", 1)[0]), natural_key(label.split(" · ", 1)[1] if " · " in label else ""), label))
+_events_by_base_group = {}
+for event in display_events:
+    base_label = course_group_label(event["text"], event["category_label"])
+    _events_by_base_group.setdefault(base_label, []).append(event)
+
+for base_label, group_events in _events_by_base_group.items():
+    instances = split_span_instances(group_events)
+    if len(instances) == 1:
+        for event in instances[0]:
+            event["group_label"] = base_label
+        continue
+    for instance in instances:
+        first_day = datetime.date.fromisoformat(min(event["date"] for event in instance))
+        cohort_label = f"{base_label} · {calendar.month_abbr[first_day.month].upper()} {first_day.year}"
+        for event in instance:
+            event["group_label"] = cohort_label
+
+_hk265_cohorts = {
+    event["group_label"]: [item for item in display_events if item["group_label"] == event["group_label"]]
+    for event in display_events
+    if event["group_label"].startswith("HK265HG · FS · ")
+}
+_hk265_signature = sorted(
+    (label, min(item["date"] for item in items), len(items))
+    for label, items in _hk265_cohorts.items()
+)
+if _hk265_signature != [
+    ("HK265HG · FS · JUL 2026", "2026-07-24", 12),
+    ("HK265HG · FS · SEP 2026", "2026-09-16", 12),
+]:
+    raise ValueError(f"HK265HG FS cohort split mismatch: {_hk265_signature}")
+
+_group_labels = sorted({e["group_label"] for e in display_events}, key=lambda label: (0 if COURSE_CODE_RE.fullmatch(label.split(" · ", 1)[0]) or label == "DGS" else 1, natural_key(label.split(" · ", 1)[0]), natural_key(label.split(" · ", 1)[1] if " · " in label else ""), label))
 
 # Preserve existing filter IDs across releases. A newly introduced course must not
 # renumber unrelated workbook events or invalidate the immutable baseline hash.
@@ -602,7 +675,6 @@ for label in _group_labels:
     _used_group_slugs.add(slug)
     _next_group_number += 1
 for ev in display_events:
-    ev["group_label"] = course_group_label(ev["text"], ev["category_label"])
     ev["group"] = _group_slugs[ev["group_label"]]
 
 def ehtml(s):
@@ -756,7 +828,12 @@ CSS += r'''
 
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
 TEACHER_RE = re.compile(r"\b(Garett|Garrett|Andy|Calvin|Mike(?:\s+Sir)?)\b", re.I)
-NOTE_WORD_RE = re.compile(r"test|exam|presentation|discussion|cancel|substitut", re.I)
+NOTE_WORD_RE = re.compile(
+    r"test|exam|presentation|discussion|assessment|report|cancel|substitut|"
+    r"\u6301\u7e8c|\u671f\u672b|\u7b46\u8a66|\u5be6\u52d9\u8a66|\u8a55\u4f30|"
+    r"\u532f\u5831|\u5831\u544a|\u5c0f\u7d44|\u5c08\u984c",
+    re.I,
+)
 CANCELLED_TEACHING_RE = re.compile(r"\b(?:cancelled|canceled)\b|取消", re.I)
 
 
@@ -1211,45 +1288,6 @@ def span_identity(ev):
     label = ev["group_label"]
     name = next((name for code, name in COURSE_CHINESE_NAMES.items() if code in label.upper()), "")
     return ev["group"], label, name
-
-
-LESSON_NUMBER_RE = re.compile(r"\bL\s*(\d+)\b", re.I)
-
-
-def span_lesson_number(ev):
-    match = LESSON_NUMBER_RE.search(str(ev.get("text") or ""))
-    return int(match.group(1)) if match else None
-
-
-def split_span_instances(events):
-    """Split repeated cohorts when the lesson sequence restarts at L1/L2."""
-    events_by_date = {}
-    for event in sorted(events, key=lambda item: (item["date"], event_sort_key(item))):
-        events_by_date.setdefault(event["date"], []).append(event)
-
-    instances = []
-    current = []
-    previous_max_lesson = None
-    for _date, day_events in sorted(events_by_date.items()):
-        lesson_numbers = [number for number in (span_lesson_number(event) for event in day_events) if number is not None]
-        day_min = min(lesson_numbers) if lesson_numbers else None
-        starts_new_cohort = (
-            bool(current)
-            and day_min is not None
-            and previous_max_lesson is not None
-            and day_min <= 2
-            and day_min < previous_max_lesson
-        )
-        if starts_new_cohort:
-            instances.append(current)
-            current = []
-            previous_max_lesson = None
-        current.extend(day_events)
-        if lesson_numbers:
-            previous_max_lesson = max(previous_max_lesson or 0, max(lesson_numbers))
-    if current:
-        instances.append(current)
-    return instances
 
 
 span_group_map = {}

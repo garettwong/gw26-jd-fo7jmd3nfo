@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-18-V18f",
+    "label": "2026-07-18 - V18f",
+    "summary": "Audit - separate July and September HK265HG FS cohorts; restore LT assessment notes.",
+    "latest": true
+  },
+  {
     "id": "2026-07-18-V18e",
     "label": "2026-07-18 - V18e",
     "summary": "HK280HG SS - confirmed full-class schedule shown under Other tutor / TBC; not Garett salary.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-18-V18d",

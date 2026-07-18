@@ -150,6 +150,17 @@ assert len(hk265) == 24
 assert Counter(lesson(row) for row in hk265) == Counter({number: 2 for number in range(1, 13)})
 assert all(row["status"] == "confirmed" for row in hk265)
 assert sum("1420-1720" in row["text"] for row in hk265) == 2
+hk265_jul = [row for row in hk265 if row["date"] < "2026-09-01"]
+hk265_sep = [row for row in hk265 if row["date"] >= "2026-09-01"]
+assert len(hk265_jul) == 12 and len(hk265_sep) == 12
+assert_lessons(hk265_jul, range(1, 13), "HK265HG FS July cohort")
+assert_lessons(hk265_sep, range(1, 13), "HK265HG FS September cohort")
+assert_status(hk265_jul, "confirmed", "HK265HG FS July cohort")
+assert_status(hk265_sep, "confirmed", "HK265HG FS September cohort")
+assert min(row["date"] for row in hk265_jul) == "2026-07-24"
+assert min(row["date"] for row in hk265_sep) == "2026-09-16"
+assert {row.get("group_label") for row in hk265_jul} == {"HK265HG · FS · JUL 2026"}
+assert {row.get("group_label") for row in hk265_sep} == {"HK265HG · FS · SEP 2026"}
 oct7_hk265_l9 = [row for row in hk265 if row["date"] == "2026-10-07" and lesson(row) == 9]
 assert len(oct7_hk265_l9) == 1
 assert "TIGHT TRAVEL ~40-47m" in oct7_hk265_l9[0]["text"]
@@ -314,9 +325,9 @@ assert not any(
 index = (ROOT / "index.html").read_text(encoding="utf-8")
 assert "May 2026" in index and "HK244HG" in index
 assert index.count('class="span-row"') == 19
-assert 'data-span-group="g13-c1" data-base-group="g13" data-first="2026-07-24" data-last="2026-08-12"' in index
-assert 'data-span-group="g13-c2" data-base-group="g13" data-first="2026-09-16" data-last="2026-10-14"' in index
-assert 'data-span-group="g03" data-base-group="g03" data-first="2026-08-14" data-last="2026-08-21"' in index
+assert 'data-first="2026-07-24" data-last="2026-08-12"' in index
+assert 'data-first="2026-09-16" data-last="2026-10-14"' in index
+assert 'data-first="2026-08-14" data-last="2026-08-21"' in index
 assert "HK265HG · FS · JUL 2026" in index and "HK265HG · FS · SEP 2026" in index
 assert index.count('data-span-course="') == 19
 assert all(control in index for control in (
@@ -339,19 +350,19 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "v18e-hk280hg-full-class-context-20260718a" in index
+assert "v18f-cohort-and-assessment-audit-20260718a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
-assert 'HK280HG SS - confirmed full-class schedule shown under Other tutor / TBC; not Garett salary.' in index
-assert 'data-version-id="2026-07-18-V18e"' in index
+assert 'Audit - separate July and September HK265HG FS cohorts; restore LT assessment notes.' in index
+assert 'data-version-id="2026-07-18-V18f"' in index
 assert 'class="version-menu-item current"' in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
-assert '<span class="sample changed-sample"></span> Changed in V18e' in index
-assert index.count('class="change-badge"') == 10
+assert '<span class="sample changed-sample"></span> Changed in V18f' in index
+assert index.count('class="change-badge"') == 4
 assert index.count("Lesson TBC") >= 5
 assert index.count('data-day-hours hidden') >= 400
 assert 'data-teaching-intervals="480-590,660-780"' in index
@@ -372,10 +383,11 @@ upcoming_end = index.index('</section>', upcoming_start)
 upcoming = index[upcoming_start:upcoming_end]
 upcoming_labels = re.findall(r'<span class="upcoming-date">([^<]+)</span>.*?<strong>(HK[^<]+|MC[^<]+)</strong>', upcoming)
 assert upcoming_labels[:3] == [
-    ("Jul 24", "HK265HG · FS"),
+    ("Jul 24", "HK265HG · FS · JUL 2026"),
     ("Aug 1", "MC0106DS · 第2班"),
     ("Aug 6", "HK244HG · CW8"),
 ]
+assert ("Sep 16", "HK265HG · FS · SEP 2026") in upcoming_labels
 assert "英文授課／兼讀制" in upcoming and ">ENG<" in upcoming
 assert "HK281DS · CW7" not in upcoming
 assert "基督教勵行會" in upcoming
@@ -396,5 +408,91 @@ assert "spanCourseCount.textContent=enabled+'/'+spanCourseInputs.length+' ON'" i
 assert index.count('class="span-day"') == 245
 assert 'const spanZoomLevels=[8,12,16,22,30,40]' in index
 assert 'function layoutSpanTimeline()' in index
+
+# The nine confirmed Christian Action course instances are independently present.
+confirmed_ca_specs = [
+    ("HK265HG", "Class FS", "2026-07-24", 12),
+    ("HK244HG", "Class CW8", "2026-08-06", 12),
+    ("HK239HG", "Class FS", "2026-08-14", 6),
+    ("HK239HG", "Class CW10", "2026-08-27", 6),
+    ("HK244EG", "Class CW", "2026-08-24", 18),
+    ("HK239HG", "Class SS", "2026-09-16", 6),
+    ("HK265HG", "Class FS", "2026-09-16", 12),
+    ("HK244EG", "Class FS", "2026-09-21", 18),
+    ("HK239HG", "Class 城巿一條龍", "2026-11-11", 6),
+]
+for code, class_name, first_date, count in confirmed_ca_specs:
+    matches = [
+        row for row in ALL
+        if code in row["text"]
+        and class_name in row["text"]
+        and row["date"] >= first_date
+        and (code != "HK244EG" or class_name != "Class FS" or "Class FS-1" not in row["text"])
+    ]
+    if code == "HK265HG":
+        matches = [
+            row for row in matches
+            if (first_date == "2026-07-24" and row["date"] < "2026-09-01")
+            or (first_date == "2026-09-16" and row["date"] >= "2026-09-01")
+        ]
+    assert len(matches) == count, (code, class_name, first_date, len(matches))
+    assert min(row["date"] for row in matches) == first_date
+    assert_status(matches, "confirmed", f"{code} {class_name} {first_date}")
+
+# Compact calendar cards must expose every assessment note in red, not only the full text.
+assessment_cards = [
+    ("2026-08-07", "HK265HG · FS · JUL 2026", "Lesson 10", "Written Test"),
+    ("2026-08-12", "HK265HG · FS · JUL 2026", "Lesson 11", "Group Presentation"),
+    ("2026-08-12", "HK265HG · FS · JUL 2026", "Lesson 12", "Final Practical Exam"),
+    ("2026-08-21", "HK239HG · FS", "Lesson 5", "小組討論及專題報告"),
+    ("2026-08-21", "HK239HG · FS", "Lesson 6", "期末筆試"),
+    ("2026-09-03", "HK239HG · CW10", "Lesson 5", "小組討論及專題報告"),
+    ("2026-09-07", "HK239HG · CW10", "Lesson 6", "期末筆試"),
+    ("2026-09-02", "HK244HG · CW8", "Lesson 8", "持續評估小組匯報"),
+    ("2026-09-07", "HK244HG · CW8", "Lesson 11", "持續筆試"),
+    ("2026-09-08", "HK244HG · CW8", "Lesson 12", "期末實務試"),
+    ("2026-10-08", "HK265HG · FS · SEP 2026", "Lesson 10", "Written Test"),
+    ("2026-10-12", "HK265HG · FS · SEP 2026", "Lesson 11", "Group Presentation"),
+    ("2026-10-14", "HK265HG · FS · SEP 2026", "Lesson 12", "Final Practical Exam"),
+    ("2026-10-14", "HK239HG · SS", "Lesson 5", "小組討論及專題報告"),
+    ("2026-10-21", "HK239HG · SS", "Lesson 6", "期末筆試"),
+    ("2026-10-05", "HK244EG · CW", "Lesson 16", "持續評估小組匯報"),
+    ("2026-10-07", "HK244EG · CW", "Lesson 17", "持續筆試"),
+    ("2026-10-08", "HK244EG · CW", "Lesson 18", "期末實務試"),
+    ("2026-10-29", "HK244EG · FS", "Lesson 16", "小組匯報"),
+    ("2026-11-02", "HK244EG · FS", "Lesson 17", "持續筆試"),
+    ("2026-11-03", "HK244EG · FS", "Lesson 18", "期末實務試"),
+    ("2026-11-13", "HK239HG · 城巿一條龍", "Lesson 5", "Group Discussion"),
+    ("2026-11-13", "HK239HG · 城巿一條龍", "Lesson 6", "Final Exam"),
+    ("2026-10-31", "HK239HG · ST", "Lesson 5", "小組討論及專題報告"),
+    ("2026-11-07", "HK239HG · ST", "Lesson 6", "期末筆試"),
+    ("2026-11-27", "HK239HG · LT", "Lesson 5", "小組討論及專題報告"),
+    ("2026-11-30", "HK239HG · LT", "Lesson 6", "期末筆試"),
+]
+for date, group_label, lesson_label, note in assessment_cards:
+    openings = list(re.finditer(
+        rf'<div class="chip [^"]*"[^>]*data-date="{re.escape(date)}"[^>]*'
+        rf'data-group-label="{re.escape(group_label)}"[^>]*>',
+        index,
+    ))
+    assert openings, (date, group_label, "card missing")
+    matching_cards = []
+    for opening in openings:
+        card_start = opening.start()
+        card_end = index.find('<div class="chip ', opening.end())
+        if card_end < 0:
+            card_end = min(len(index), card_start + 6000)
+        card = index[card_start:card_end]
+        if lesson_label in card:
+            matching_cards.append(card)
+    assert matching_cards, (date, group_label, lesson_label)
+    assert any(
+        re.search(
+            rf'<span class="card-note">\[[^\]]*{re.escape(note)}[^\]]*\]</span>',
+            card,
+        )
+        for card in matching_cards
+    ), (date, group_label, note)
+assert '.card-note{color:#d60000' in index
 print("source ledger verification passed")
 print(f"events={len(EVENTS)} context={len(CONTEXT)} display={len(ALL)}")
