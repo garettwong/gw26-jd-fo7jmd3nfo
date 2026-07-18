@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18f-cohort-and-assessment-audit-20260718a"
+BUILD_ID = "v18g-hk239-ss-st-lt-confirmed-20260719a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-18-V18e"
-COMPARE_LABEL = "V18f"
-COMPARE_BASELINE_LABEL = "V18e"
-EXPECTED_COMPARISON_CHANGES = 2
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-18-V18f"
+COMPARE_LABEL = "V18g"
+COMPARE_BASELINE_LABEL = "V18f"
+EXPECTED_COMPARISON_CHANGES = 18
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -685,14 +685,37 @@ for label in _group_labels:
     slug = _group_slugs[label]
     group_events = [e for e in display_events if e["group"] == slug]
     statuses = {e["status"] for e in group_events}
-    if statuses == {"confirmed"}:
-        group_status = "confirmed"
-    elif statuses == {"unconfirmed"}:
+    pending_mine = any(
+        e["status"] == "unconfirmed"
+        and e["date"] >= UPCOMING_AS_OF.isoformat()
+        and e.get("layer") != "class"
+        and (
+            bool(re.search(r"\bGar(?:e|r)tt\b", str(e.get("teacher", "")), re.I))
+            or (
+                not str(e.get("teacher", "")).strip()
+                and bool(re.search(r"\bGar(?:e|r)tt\b", e.get("text", ""), re.I))
+                and "GARETT NOT REQUIRED" not in e.get("text", "").upper()
+            )
+        )
+        for e in group_events
+    )
+    confirmed_mine = any(
+        e["status"] == "confirmed"
+        and e.get("layer") != "class"
+        and (
+            bool(re.search(r"\bGar(?:e|r)tt\b", str(e.get("teacher", "")), re.I))
+            or bool(re.search(r"\bGar(?:e|r)tt\b", e.get("text", ""), re.I))
+        )
+        for e in group_events
+    )
+    if pending_mine:
         group_status = "unconfirmed"
     elif statuses == {"note"}:
         group_status = "note"
+    elif confirmed_mine or statuses == {"confirmed"}:
+        group_status = "confirmed"
     else:
-        group_status = "mixed"
+        group_status = "context"
     first_date = min(e["date"] for e in group_events)
     GROUPS.append((label, slug, group_status, first_date))
 
@@ -702,6 +725,9 @@ CSS = r'''
 
 CSS += r'''
 .foot{overflow-wrap:anywhere}
+.filter.unconfirmed{border-color:#a64b00;background:#fff8e8;color:#7a3a00}
+.filter.context{border:2px solid #96a3b2;background:#f7f9fb;color:#596676}
+.filter.active.context{border-style:solid;border-color:#596676;background:#596676;color:#fff}
 @media (min-width:821px){.wrap{width:100%;max-width:none;margin:0;padding:28px clamp(16px,1.6vw,36px) 70px}}
 .title,.month h2{letter-spacing:0}
 .layer-controls{margin:16px 0 2px}.layer-controls .section-h{margin:0 0 8px}.layer-switch{display:inline-grid;grid-template-columns:repeat(3,minmax(104px,1fr));padding:3px;border:1px solid #cfd8e5;border-radius:8px;background:#e5eaf1;box-shadow:0 1px 2px rgba(20,30,50,.06)}.mode-filter{min-height:34px;border:0;border-radius:6px;padding:6px 11px;background:transparent;color:#4c5a6b;font:inherit;font-size:12px;font-weight:800;cursor:pointer}.mode-filter.active{background:#fff;color:#145f63;box-shadow:0 1px 3px rgba(20,30,50,.18)}.sample.class-layer{border:2px solid #8b80aa;background:#fff1e6;box-shadow:inset 4px 0 0 #a99bc7}.chip.layer-class.confirmed{box-shadow:inset 3px 0 0 #a99bc7,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.unconfirmed{box-shadow:inset 3px 0 0 #a99bc7,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.modal-source{margin-top:14px;padding-top:10px;border-top:1px solid #e4e9f0;color:#6c7786;font-size:12px}.pill.class-layer{background:#eeeaf7;color:#5d537a}

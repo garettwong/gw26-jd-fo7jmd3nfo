@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-19-V18g",
+    "label": "2026-07-19 - V18g",
+    "summary": "HK239HG ST and corrected LT confirmed; SS time corrected to 09:00-12:00.",
+    "latest": true
+  },
+  {
     "id": "2026-07-18-V18f",
     "label": "2026-07-18 - V18f",
     "summary": "Audit - separate July and September HK265HG FS cohorts; restore LT assessment notes.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-18-V18e",

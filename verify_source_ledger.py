@@ -122,8 +122,8 @@ assert_lessons(ss, range(1, 7), "HK239HG SS")
 assert_lessons(st, range(1, 7), "HK239HG ST")
 assert_lessons(lt, range(1, 7), "HK239HG LT")
 assert_status(ss, "confirmed", "HK239HG SS")
-assert_status(st, "unconfirmed", "HK239HG ST")
-assert_status(lt, "unconfirmed", "HK239HG LT")
+assert_status(st, "confirmed", "HK239HG ST")
+assert_status(lt, "confirmed", "HK239HG LT")
 ss_expected_dates = {
     1: "2026-09-16",
     2: "2026-09-23",
@@ -137,12 +137,12 @@ for row in ss:
     match = TIME_RE.search(row["text"])
     assert match
     assert row["date"] == ss_expected_dates[number]
-    assert match.groups() == ("0830", "1230")
+    assert match.groups() == ("0900", "1200")
     assert "上水彩園" in row["text"]
-    if number <= 5:
-        assert "TIGHT TRAVEL ~55-61m" in row["text"]
-    else:
-        assert "TIGHT TRAVEL" not in row["text"]
+    assert "TIGHT TRAVEL" not in row["text"]
+    assert "Calvin WhatsApp 2026-07-18 23:46" in row.get("source", "")
+assert all("Calvin WhatsApp 2026-07-18 23:46" in row.get("source", "") for row in st)
+assert all("Calvin WhatsApp 2026-07-18 23:46" in row.get("source", "") for row in lt)
 assert not rows_with("人工智能知識2應用")
 
 hk265 = rows_with("HK265HG", "Class FS", rows=EVENTS)
@@ -350,19 +350,19 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "v18f-cohort-and-assessment-audit-20260718a" in index
+assert "v18g-hk239-ss-st-lt-confirmed-20260719a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
-assert 'Audit - separate July and September HK265HG FS cohorts; restore LT assessment notes.' in index
-assert 'data-version-id="2026-07-18-V18f"' in index
+assert 'HK239HG ST and corrected LT confirmed; SS time corrected to 09:00-12:00.' in index
+assert 'data-version-id="2026-07-19-V18g"' in index
 assert 'class="version-menu-item current"' in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
-assert '<span class="sample changed-sample"></span> Changed in V18f' in index
-assert index.count('class="change-badge"') == 4
+assert '<span class="sample changed-sample"></span> Changed in V18g' in index
+assert index.count('class="change-badge"') == 36
 assert index.count("Lesson TBC") >= 5
 assert index.count('data-day-hours hidden') >= 400
 assert 'data-teaching-intervals="480-590,660-780"' in index
@@ -394,6 +394,13 @@ assert "基督教勵行會" in upcoming
 assert "HK280HS · SS" in upcoming and "上水彩園邨彩湖樓2座地下129舖02室" in upcoming
 assert 'data-toggle-filter="1"' in upcoming
 assert '>CONFIRMED</span>' in upcoming and '>UNCONFIRMED</span>' in upcoming
+assert upcoming.count('>CONFIRMED</span>') == 12
+assert upcoming.count('>UNCONFIRMED</span>') == 1
+assert 'HK239HG · ST' in upcoming and 'HK239HG · LT' in upcoming
+assert re.findall(r'class="filter course-filter unconfirmed"[^>]*>([^<]+)</button>', index) == [
+    'HK280HS · SS (5)'
+]
+assert 'class="filter course-filter context"' in index
 assert '<div id="completedHeading" class="section-h">Completed ERB classes</div>' in index
 completed_start = index.index('<section class="class-summary completed-summary"')
 completed_end = index.index('</section>', completed_start)
@@ -409,7 +416,7 @@ assert index.count('class="span-day"') == 245
 assert 'const spanZoomLevels=[8,12,16,22,30,40]' in index
 assert 'function layoutSpanTimeline()' in index
 
-# The nine confirmed Christian Action course instances are independently present.
+# The eleven confirmed Christian Action course instances are independently present.
 confirmed_ca_specs = [
     ("HK265HG", "Class FS", "2026-07-24", 12),
     ("HK244HG", "Class CW8", "2026-08-06", 12),
@@ -417,6 +424,8 @@ confirmed_ca_specs = [
     ("HK239HG", "Class CW10", "2026-08-27", 6),
     ("HK244EG", "Class CW", "2026-08-24", 18),
     ("HK239HG", "Class SS", "2026-09-16", 6),
+    ("HK239HG", "Class ST", "2026-10-03", 6),
+    ("HK239HG", "Class LT", "2026-11-23", 6),
     ("HK265HG", "Class FS", "2026-09-16", 12),
     ("HK244EG", "Class FS", "2026-09-21", 18),
     ("HK239HG", "Class 城巿一條龍", "2026-11-11", 6),
