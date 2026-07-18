@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18g-hk239-ss-st-lt-confirmed-20260719a"
+BUILD_ID = "v18h-filter-status-span-labels-20260719a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-18-V18f"
-COMPARE_LABEL = "V18g"
-COMPARE_BASELINE_LABEL = "V18f"
-EXPECTED_COMPARISON_CHANGES = 18
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-19-V18g"
+COMPARE_LABEL = "V18h"
+COMPARE_BASELINE_LABEL = "V18g"
+EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -32,7 +32,7 @@ COURSE_CHINESE_NAMES = {
     "HK281DS": "創意數碼媒體設計及製作助理證書",
     "MC0106DS": "創意數碼媒體設計及製作助理證書",
 }
-UPCOMING_AS_OF = datetime.date(2026, 7, 18)
+UPCOMING_AS_OF = datetime.date(2026, 7, 19)
 UPCOMING_CLASS_META = {
     "HK280HG · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
     "HK280HS · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
@@ -681,41 +681,44 @@ def ehtml(s):
     return html.escape(str(s or ""), quote=True)
 
 GROUPS = []
+
+def is_personal_assignment(event):
+    if event.get("layer") == "class":
+        return False
+    category = event.get("category")
+    if category in {"ymca", "dgs"}:
+        return True
+    teacher = str(event.get("teacher", "")).strip()
+    text = str(event.get("text", ""))
+    if "GARETT NOT REQUIRED" in text.upper():
+        return False
+    return bool(re.search(r"\bGar(?:e|r)tt\b", teacher or text, re.I))
+
+
+def lifecycle_status(group_events):
+    statuses = {event["status"] for event in group_events}
+    if statuses == {"note"}:
+        return "note"
+    future_events = [
+        event for event in group_events
+        if event["date"] >= UPCOMING_AS_OF.isoformat()
+    ]
+    if any(
+        event["status"] == "unconfirmed" and is_personal_assignment(event)
+        for event in future_events
+    ):
+        return "pending"
+    if not future_events:
+        return "completed"
+    if any(is_personal_assignment(event) for event in future_events):
+        return "upcoming"
+    return "context"
+
+
 for label in _group_labels:
     slug = _group_slugs[label]
     group_events = [e for e in display_events if e["group"] == slug]
-    statuses = {e["status"] for e in group_events}
-    pending_mine = any(
-        e["status"] == "unconfirmed"
-        and e["date"] >= UPCOMING_AS_OF.isoformat()
-        and e.get("layer") != "class"
-        and (
-            bool(re.search(r"\bGar(?:e|r)tt\b", str(e.get("teacher", "")), re.I))
-            or (
-                not str(e.get("teacher", "")).strip()
-                and bool(re.search(r"\bGar(?:e|r)tt\b", e.get("text", ""), re.I))
-                and "GARETT NOT REQUIRED" not in e.get("text", "").upper()
-            )
-        )
-        for e in group_events
-    )
-    confirmed_mine = any(
-        e["status"] == "confirmed"
-        and e.get("layer") != "class"
-        and (
-            bool(re.search(r"\bGar(?:e|r)tt\b", str(e.get("teacher", "")), re.I))
-            or bool(re.search(r"\bGar(?:e|r)tt\b", e.get("text", ""), re.I))
-        )
-        for e in group_events
-    )
-    if pending_mine:
-        group_status = "unconfirmed"
-    elif statuses == {"note"}:
-        group_status = "note"
-    elif confirmed_mine or statuses == {"confirmed"}:
-        group_status = "confirmed"
-    else:
-        group_status = "context"
+    group_status = lifecycle_status(group_events)
     first_date = min(e["date"] for e in group_events)
     GROUPS.append((label, slug, group_status, first_date))
 
@@ -725,9 +728,15 @@ CSS = r'''
 
 CSS += r'''
 .foot{overflow-wrap:anywhere}
-.filter.unconfirmed{border-color:#a64b00;background:#fff8e8;color:#7a3a00}
-.filter.context{border:2px solid #96a3b2;background:#f7f9fb;color:#596676}
+.filter.upcoming{border:2.5px solid #0f7074;background:#e8f7f5;color:#0b5f62}
+.filter.pending{border:3px dashed #b65a00;background:#fff1d7;color:#8a4200}
+.filter.completed{border:2px solid #8a96a5;background:#edf1f5;color:#566273}
+.filter.context{border:2px solid #6f60aa;background:#f0eef9;color:#51458a}
+.filter.active.upcoming{border-style:solid;border-color:#09565a;background:#0f7074;color:#fff}
+.filter.active.pending{border-style:dashed;border-color:#7f3f00;background:#a94f00;color:#fff}
+.filter.active.completed{border-style:solid;border-color:#566273;background:#667384;color:#fff}
 .filter.active.context{border-style:solid;border-color:#596676;background:#596676;color:#fff}
+.filter-status-summary{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:8px 0 3px}.filter-status-total{color:#425064;font-size:11px;font-weight:900}.filter-status-pill{display:inline-flex;align-items:center;gap:5px;min-height:25px;padding:3px 7px;border:1px solid #cfd8e5;border-radius:5px;background:#fff;color:#526073;font-size:10px;font-weight:850}.filter-status-swatch{width:12px;height:12px;border-radius:3px}.filter-status-swatch.upcoming{border:2px solid #0f7074;background:#e8f7f5}.filter-status-swatch.pending{border:2px dashed #b65a00;background:#fff1d7}.filter-status-swatch.completed{border:2px solid #8a96a5;background:#edf1f5}.filter-status-swatch.context{border:2px solid #6f60aa;background:#f0eef9}
 @media (min-width:821px){.wrap{width:100%;max-width:none;margin:0;padding:28px clamp(16px,1.6vw,36px) 70px}}
 .title,.month h2{letter-spacing:0}
 .layer-controls{margin:16px 0 2px}.layer-controls .section-h{margin:0 0 8px}.layer-switch{display:inline-grid;grid-template-columns:repeat(3,minmax(104px,1fr));padding:3px;border:1px solid #cfd8e5;border-radius:8px;background:#e5eaf1;box-shadow:0 1px 2px rgba(20,30,50,.06)}.mode-filter{min-height:34px;border:0;border-radius:6px;padding:6px 11px;background:transparent;color:#4c5a6b;font:inherit;font-size:12px;font-weight:800;cursor:pointer}.mode-filter.active{background:#fff;color:#145f63;box-shadow:0 1px 3px rgba(20,30,50,.18)}.sample.class-layer{border:2px solid #8b80aa;background:#fff1e6;box-shadow:inset 4px 0 0 #a99bc7}.chip.layer-class.confirmed{box-shadow:inset 3px 0 0 #a99bc7,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.unconfirmed{box-shadow:inset 3px 0 0 #a99bc7,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.modal-source{margin-top:14px;padding-top:10px;border-top:1px solid #e4e9f0;color:#6c7786;font-size:12px}.pill.class-layer{background:#eeeaf7;color:#5d537a}
@@ -843,6 +852,11 @@ CSS += r'''
 @media(max-width:820px){.span-month-toggle{flex:1}.span-month-toggle span{width:100%}.span-course-options{grid-template-columns:1fr;max-height:300px}.span-course-picker-head{align-items:flex-start;flex-wrap:wrap}.span-course-picker-head .span-course-actions{width:100%;margin-left:0}.span-course-picker-head .span-course-actions button{flex:1}}
 @media (orientation:landscape) and (max-height:700px) and (max-width:1400px) and (pointer:coarse){.span-course-picker{width:100%}.span-course-options{grid-template-columns:repeat(3,minmax(160px,1fr));max-height:180px}.span-course-toggle{min-height:40px;padding:5px}.span-month-toggle span{min-height:28px}}
 @media print{.span-course-picker{display:none}}
+'''
+
+CSS += r'''
+.span-course-breakdown{color:#647285;font-size:10px;font-weight:800}.span-course-toggle:has(input:checked){background:#f8fbfc}.span-course-toggle.status-upcoming{border-left:5px solid #0f7074;background:#e8f7f5}.span-course-toggle.status-pending{border-left:5px dashed #b65a00;background:#fff1d7}.span-course-toggle.status-completed{border-left:5px solid #8a96a5;background:#edf1f5}.span-course-toggle.status-context{border-left:5px solid #6f60aa;background:#f0eef9}.span-course-toggle.type-sen{box-shadow:inset 0 -4px 0 #2792a0}.span-status-tag{display:inline-flex;align-items:center;align-self:flex-start;margin-top:3px;padding:1px 5px;border-radius:3px;background:#fff;color:#526073;font-size:8px;font-weight:900;text-transform:uppercase}.span-bar-label{position:absolute;left:50%;top:50%;z-index:1;max-width:calc(100% - 56px);transform:translate(-50%,-50%);padding:2px 6px;border:1px solid hsla(var(--span-hue),55%,38%,.45);border-radius:4px;background:rgba(255,255,255,.90);color:hsl(var(--span-hue),55%,28%);font-size:8px;font-weight:950;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+@media(max-width:820px){.span-course-breakdown{flex-basis:100%}.span-bar-label{font-size:7px}}
 '''
 
 CSS += r'''
@@ -1184,6 +1198,27 @@ filter_groups_html = ''.join(
     for key, label in (("erb", "ERB"), ("sen", "SEN"), ("other", "Other jobs"))
 )
 
+erb_filter_groups = calendar_filter_buckets["erb"]
+erb_filter_counts = {
+    status: sum(group[2] == status for group in erb_filter_groups)
+    for status in ("upcoming", "pending", "completed", "context")
+}
+filter_status_summary_html = (
+    f'<div class="filter-status-summary" aria-label="ERB class filter status summary">'
+    f'<span class="filter-status-total">{len(erb_filter_groups)} tracked ERB classes</span>'
+    + ''.join(
+        f'<span class="filter-status-pill" data-filter-status="{status}">'
+        f'<span class="filter-status-swatch {status}"></span>{label} {erb_filter_counts[status]}</span>'
+        for status, label in (
+            ("upcoming", "Upcoming"),
+            ("pending", "Pending"),
+            ("completed", "Completed"),
+            ("context", "Full-class context"),
+        )
+    )
+    + '</div>'
+)
+
 
 def summary_group_status(events):
     statuses = {event["status"] for event in events}
@@ -1386,7 +1421,9 @@ for group in sorted(
         )
 
     range_label = f"{short_date(first_day)}–{short_date(last_day)}"
-    span_controls.append((slug, group["label"], range_label))
+    lifecycle = lifecycle_status(group_events)
+    class_type = "sen" if all(ev["category"] == "ymca" for ev in group_events) else "erb"
+    span_controls.append((slug, group["label"], range_label, lifecycle, class_type))
     span_rows.append(
         f'<div class="span-row" data-span-group="{ehtml(slug)}" data-base-group="{ehtml(group["base_slug"])}" data-first="{first_day.isoformat()}" '
         f'data-last="{last_day.isoformat()}" data-lesson-dates="{len(events_by_day)}" data-my-dates="{my_dates}">'
@@ -1394,9 +1431,10 @@ for group in sorted(
         f'<span class="span-course-name">{ehtml(group["chinese_name"])}</span>'
         f'<small>{ehtml(range_label)} · My dates {my_dates}/{len(events_by_day)}</small></div>'
         f'<div class="span-track"><div class="span-track-grid">{"".join(span_track_months)}</div>'
-        f'<div class="span-bar" style="--span-hue:{class_hue}" '
+        f'<div class="span-bar status-{lifecycle}" style="--span-hue:{class_hue}" '
         f'data-first-label="{ehtml(short_date(first_day))}" data-last-label="{ehtml(short_date(last_day))}" '
-        f'title="{ehtml(group["label"])} · {ehtml(range_label)}">{"".join(markers)}</div></div></div>'
+        f'title="{ehtml(group["label"])} · {ehtml(range_label)}">'
+        f'<span class="span-bar-label">{ehtml(group["label"])}</span>{"".join(markers)}</div></div></div>'
     )
 
 span_timeline_html = (
@@ -1406,13 +1444,17 @@ span_timeline_html = (
     if span_rows else '<div class="span-empty">No tracked classes.</div>'
 )
 span_course_toggles = ''.join(
-    f'<label class="span-course-toggle"><input type="checkbox" data-span-course="{ehtml(slug)}" checked>'
-    f'<span><strong>{ehtml(label)}</strong><small>{ehtml(range_label)}</small></span></label>'
-    for slug, label, range_label in span_controls
+    f'<label class="span-course-toggle status-{lifecycle} type-{class_type}"><input type="checkbox" data-span-course="{ehtml(slug)}" checked>'
+    f'<span><strong>{ehtml(label)}</strong><small>{ehtml(range_label)}</small>'
+    f'<span class="span-status-tag">{ehtml("SEN" if class_type == "sen" else lifecycle)}</span></span></label>'
+    for slug, label, range_label, lifecycle, class_type in span_controls
 )
+span_erb_count = sum(class_type == "erb" for _slug, _label, _range, _status, class_type in span_controls)
+span_sen_count = sum(class_type == "sen" for _slug, _label, _range, _status, class_type in span_controls)
 span_course_picker = (
     f'<section id="spanCoursePicker" class="span-course-picker" aria-label="Class visibility">'
     f'<div class="span-course-picker-head"><strong>Class visibility</strong><span id="spanCourseCount">{len(span_controls)}/{len(span_controls)} ON</span>'
+    f'<span class="span-course-breakdown">{len(span_controls)} total = {span_erb_count} ERB + {span_sen_count} SEN</span>'
     f'<div class="span-course-actions"><button type="button" data-span-course-action="all">All on</button>'
     f'<button type="button" data-span-course-action="none">All off</button></div></div>'
     f'<div class="span-course-picker-body"><div class="span-course-options">{span_course_toggles}</div></div></section>'
@@ -1467,7 +1509,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="course-code-heading"><div class="section-h">ERB course code legend</div><span class="course-code-count">{len(COURSE_CHINESE_NAMES)} course families</span></div><div class="course-code-legend">{erb_code_legend}</div>
 {upcoming_summary_html}
 {completed_summary_html}
-<div class="filter-heading"><div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filter-master"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{comparison_filter_html}</div></div><div class="filter-groups">{filter_groups_html}</div>
+<div class="filter-heading"><div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filter-master"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{comparison_filter_html}</div></div>{filter_status_summary_html}<div class="filter-groups">{filter_groups_html}</div>
 {months_html}
 <div class="foot">Sources: <b>{ehtml(SRC.name)}</b>, <b>{ehtml(OVERRIDES_SRC.name)}</b>, and <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
 </section><section id="spansView" class="view-panel" role="tabpanel" aria-labelledby="spansTab" hidden>

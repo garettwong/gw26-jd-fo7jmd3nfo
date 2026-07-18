@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-19-V18h",
+    "label": "2026-07-19 - V18h",
+    "summary": "Web - status-coloured filters and always-visible class-span labels.",
+    "latest": true
+  },
+  {
     "id": "2026-07-19-V18g",
     "label": "2026-07-19 - V18g",
     "summary": "HK239HG ST and corrected LT confirmed; SS time corrected to 09:00-12:00.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-18-V18f",
@@ -14,7 +20,7 @@
   {
     "id": "2026-07-18-V18e",
     "label": "2026-07-18 - V18e",
-    "summary": "HK280HG SS - confirmed full-class schedule shown under Other tutor / TBC; not Garett salary.",
+    "summary": "HK280HG SS - confirmed full-class schedule shown under Other tutor / TBC; not Garett's lesson.",
     "latest": false
   },
   {

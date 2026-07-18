@@ -22,9 +22,13 @@ TIME_RE = re.compile(
 )
 CANCELLED_RE = re.compile(r"cancel(?:led|ed)", re.I)
 PROPOSED_AVAILABILITY_RE = re.compile(r"PROPOSED availability only", re.I)
+HK280HS_SS_RE = re.compile(r"HK280HS\s*,?\s*Class\s+SS", re.I)
 GARETT_RE = re.compile(r"\bGar(?:e|r)tt\b", re.I)
 MONTHS = ("June", "July", "August", "September", "October", "November", "December")
 AAD = b"erb-earnings-v1"
+DGS_FINAL_TOTAL = 7000
+HK280HS_SS_PENDING_HOURS = 18
+REVISED_SALARY_RULES_FROM = "2026-07-19-V18h"
 
 
 def event_interval(text: str) -> tuple[int, int] | None:
@@ -65,9 +69,10 @@ def merge_minutes(intervals: list[tuple[int, int]]) -> int:
     return sum(end - start for start, end in merged)
 
 
-def calculate(events: list[dict], statuses: set[str]) -> dict:
+def calculate(events: list[dict], statuses: set[str], revised_rules: bool = False) -> dict:
     regular_by_date: dict[str, list[tuple[int, int]]] = defaultdict(list)
     dgs_dates: set[str] = set()
+    hk280hs_pending_placeholders: set[str] = set()
     counted_events = 0
     for event in events:
         event_date = event["date"]
@@ -76,6 +81,13 @@ def calculate(events: list[dict], statuses: set[str]) -> dict:
         if event["status"] not in statuses or event_date == "2026-06-03":
             continue
         if PROPOSED_AVAILABILITY_RE.search(event["text"]):
+            if (
+                revised_rules
+                and event["status"] == "unconfirmed"
+                and "unconfirmed" in statuses
+                and HK280HS_SS_RE.search(event["text"])
+            ):
+                hk280hs_pending_placeholders.add(event_date)
             continue
         if not is_garetts(event) or CANCELLED_RE.search(event["text"]):
             continue
@@ -89,6 +101,12 @@ def calculate(events: list[dict], statuses: set[str]) -> dict:
         regular_by_date[event_date].append(interval)
         counted_events += 1
 
+    counted_events += len(hk280hs_pending_placeholders)
+    hk280hs_pending_active = bool(hk280hs_pending_placeholders)
+    dgs_payment_month = min(
+        (int(event_date[5:7]) for event_date in dgs_dates),
+        default=None,
+    )
     rows = []
     grand_total = 0
     for month_number, month_name in enumerate(MONTHS, 6):
@@ -97,11 +115,18 @@ def calculate(events: list[dict], statuses: set[str]) -> dict:
             for event_date, intervals in regular_by_date.items()
             if int(event_date[5:7]) == month_number
         )
-        regular_hours = regular_minutes / 60
+        pending_hours = (
+            HK280HS_SS_PENDING_HOURS
+            if hk280hs_pending_active and month_number == 9
+            else 0
+        )
+        regular_hours = regular_minutes / 60 + pending_hours
         dgs_days = sum(int(event_date[5:7]) == month_number for event_date in dgs_dates)
         dgs_hours = dgs_days * 4
         regular_pay = regular_hours * 300
-        dgs_pay = dgs_hours * 900
+        dgs_pay = (
+            DGS_FINAL_TOTAL if month_number == dgs_payment_month else 0
+        ) if revised_rules else dgs_hours * 900
         total = regular_pay + dgs_pay
         grand_total += total
         rows.append({
@@ -139,21 +164,33 @@ def decrypt_report(payload: dict, key: bytes) -> dict:
 
 
 def build_report(item: dict, events: list[dict]) -> dict:
+    revised_rules = item["id"] >= REVISED_SALARY_RULES_FROM
+    notes = [
+        "Only Garett's lessons are counted; YMCA SEN and DGS are treated as Garett's lessons.",
+        "June 3, Mike Sir, cancelled lessons, holidays, and other teachers are excluded.",
+        "Overlapping time ranges on the same date are merged to prevent double payment.",
+    ]
+    if revised_rules:
+        notes.extend([
+            "DGS is counted as the final agreed flat total of HKD 7,000.",
+            "Confirmed + unconfirmed includes HK280HS SS once as an 18-hour pending course (HKD 5,400); its five availability placeholders are not five separate 18-hour courses.",
+        ])
+    notes.append(
+        "The June 18 afternoon SEN entry is included because the source says black rain but does not say cancelled."
+    )
     return {
         "name": "Garett Wong",
         "period": "June to December 2026",
         "generated": item["id"][:10],
         "version": item["label"],
         "version_id": item["id"],
-        "rates": {"ERB and SEN": "HKD 300/hour", "DGS": "HKD 900/hour, 4 hours/day"},
-        "confirmed": calculate(events, {"confirmed"}),
-        "confirmed_and_unconfirmed": calculate(events, {"confirmed", "unconfirmed"}),
-        "notes": [
-            "Only Garett's lessons are counted; YMCA SEN and DGS are treated as Garett's lessons.",
-            "June 3, Mike Sir, cancelled lessons, holidays, and other teachers are excluded.",
-            "Overlapping time ranges on the same date are merged to prevent double payment.",
-            "The June 18 afternoon SEN entry is included because the source says black rain but does not say cancelled.",
-        ],
+        "rates": {
+            "ERB and SEN": "HKD 300/hour",
+            "DGS": "HKD 7,000 final flat total" if revised_rules else "HKD 900/hour, 4 hours/day",
+        },
+        "confirmed": calculate(events, {"confirmed"}, revised_rules),
+        "confirmed_and_unconfirmed": calculate(events, {"confirmed", "unconfirmed"}, revised_rules),
+        "notes": notes,
     }
 
 

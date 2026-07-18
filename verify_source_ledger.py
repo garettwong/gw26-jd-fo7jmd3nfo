@@ -350,19 +350,31 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "v18g-hk239-ss-st-lt-confirmed-20260719a" in index
+assert "v18h-filter-status-span-labels-20260719a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
-assert 'HK239HG ST and corrected LT confirmed; SS time corrected to 09:00-12:00.' in index
-assert 'data-version-id="2026-07-19-V18g"' in index
+assert 'Web - status-coloured filters and always-visible class-span labels.' in index
+assert 'data-version-id="2026-07-19-V18h"' in index
 assert 'class="version-menu-item current"' in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
-assert 'data-filter="changed"' in index
-assert '<span class="sample changed-sample"></span> Changed in V18g' in index
-assert index.count('class="change-badge"') == 36
+assert 'data-filter="changed"' not in index
+assert '<span class="sample changed-sample"></span> Changed in V18h' not in index
+assert index.count('class="change-badge"') == 0
+assert index.count('class="filter course-filter upcoming"') == 13
+assert index.count('class="filter course-filter pending"') == 1
+assert index.count('class="filter course-filter completed"') >= 2
+assert index.count('class="filter course-filter context"') >= 2
+assert '<span class="filter-status-total">17 tracked ERB classes</span>' in index
+assert '<span class="filter-status-swatch upcoming"></span>Upcoming 12' in index
+assert '<span class="filter-status-swatch pending"></span>Pending 1' in index
+assert '<span class="filter-status-swatch completed"></span>Completed 2' in index
+assert '<span class="filter-status-swatch context"></span>Full-class context 2' in index
+assert '<span class="span-course-breakdown">19 total = 17 ERB + 2 SEN</span>' in index
+assert index.count('class="span-bar-label"') == 19
+assert index.count('class="span-course-toggle ') == 19
 assert index.count("Lesson TBC") >= 5
 assert index.count('data-day-hours hidden') >= 400
 assert 'data-teaching-intervals="480-590,660-780"' in index
@@ -397,7 +409,7 @@ assert '>CONFIRMED</span>' in upcoming and '>UNCONFIRMED</span>' in upcoming
 assert upcoming.count('>CONFIRMED</span>') == 12
 assert upcoming.count('>UNCONFIRMED</span>') == 1
 assert 'HK239HG · ST' in upcoming and 'HK239HG · LT' in upcoming
-assert re.findall(r'class="filter course-filter unconfirmed"[^>]*>([^<]+)</button>', index) == [
+assert re.findall(r'class="filter course-filter pending"[^>]*>([^<]+)</button>', index) == [
     'HK280HS · SS (5)'
 ]
 assert 'class="filter course-filter context"' in index
