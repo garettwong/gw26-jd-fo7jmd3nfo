@@ -207,9 +207,24 @@ assert not any(teacher(row) == "Other tutor / TBC" for row in mc)
 assert all(row.get("layer") == "class" for row in mc if row in CONTEXT)
 assert not any(lesson(row) in {48, 49} for row in mc)
 
-# Rejected, reassigned, or not-yet-accepted proposals must not enter the active timetable.
-for excluded in ("HK280HG", "BK151HG", "BK155HG"):
+# Rejected or not-yet-accepted proposals must not enter the active timetable.
+for excluded in ("BK151HG", "BK155HG"):
     assert not rows_with(excluded), f"Unexpected active timetable entry: {excluded}"
+
+# HK280HG SS is a finalized class schedule, but Calvin reassigned it away from Garett.
+# Keep it in All Full as confirmed class context and exclude it from Garett's views and salary.
+hk280hg_ss = rows_with("HK280HG", "Class SS")
+assert len(hk280hg_ss) == 5
+assert [(row["date"], lesson(row)) for row in hk280hg_ss] == [
+    ("2026-09-18", 1),
+    ("2026-09-21", 2),
+    ("2026-09-23", 3),
+    ("2026-09-28", 4),
+    ("2026-09-30", 5),
+]
+assert all(row["status"] == "confirmed" for row in hk280hg_ss)
+assert all(teacher(row) == "Other tutor / TBC" for row in hk280hg_ss)
+assert all(row.get("layer") == "class" for row in hk280hg_ss)
 hk239_cw10 = rows_with("HK239HG", "Class CW10", rows=EVENTS)
 assert len(hk239_cw10) == 6
 assert [(row["date"], lesson(row)) for row in hk239_cw10] == [
@@ -298,12 +313,12 @@ assert not any(
 
 index = (ROOT / "index.html").read_text(encoding="utf-8")
 assert "May 2026" in index and "HK244HG" in index
-assert index.count('class="span-row"') == 18
+assert index.count('class="span-row"') == 19
 assert 'data-span-group="g13-c1" data-base-group="g13" data-first="2026-07-24" data-last="2026-08-12"' in index
 assert 'data-span-group="g13-c2" data-base-group="g13" data-first="2026-09-16" data-last="2026-10-14"' in index
 assert 'data-span-group="g03" data-base-group="g03" data-first="2026-08-14" data-last="2026-08-21"' in index
 assert "HK265HG · FS · JUL 2026" in index and "HK265HG · FS · SEP 2026" in index
-assert index.count('data-span-course="') == 18
+assert index.count('data-span-course="') == 19
 assert all(control in index for control in (
     'id="spanLabelsToggle"', 'id="spanZoomOut"', 'id="spanZoomReset"', 'id="spanZoomIn"',
     'data-span-course-action="all"', 'data-span-course-action="none"',
@@ -324,19 +339,19 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "v18d-reversible-span-toggles-20260718a" in index
+assert "v18e-hk280hg-full-class-context-20260718a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
-assert 'Web - reversible class and month visibility switches in Class spans.' in index
-assert 'data-version-id="2026-07-18-V18d"' in index
+assert 'HK280HG SS - confirmed full-class schedule shown under Other tutor / TBC; not Garett salary.' in index
+assert 'data-version-id="2026-07-18-V18e"' in index
 assert 'class="version-menu-item current"' in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
-assert 'data-filter="changed"' not in index
-assert '<span class="sample changed-sample"></span> Changed in V18d' not in index
-assert index.count('class="change-badge"') == 0
+assert 'data-filter="changed"' in index
+assert '<span class="sample changed-sample"></span> Changed in V18e' in index
+assert index.count('class="change-badge"') == 10
 assert index.count("Lesson TBC") >= 5
 assert index.count('data-day-hours hidden') >= 400
 assert 'data-teaching-intervals="480-590,660-780"' in index
@@ -345,7 +360,7 @@ assert 'function mergeTeachingMinutes(intervals)' in index
 assert "mode==='mine-confirmed'?status==='confirmed'" in index
 assert "' teaching time; travel excluded'" in index
 assert '<div class="code-key"><b>MC0106DS</b><span>' in index
-assert 'ERB course code legend' in index and '7 course families' in index
+assert 'ERB course code legend' in index and '8 course families' in index
 assert '.class-summary-card.unconfirmed{border-width:3px;border-style:dashed' in index
 assert "window.__courseFilter='all';" in index
 assert "window.__upcomingFilterState=null;" in index
@@ -376,7 +391,7 @@ assert index.count('data-span-month-toggle="') == 8
 assert index.count('<input type="checkbox" data-span-month-toggle="') == 8
 assert index.count('data-span-row-toggle="') == 0
 assert '<section id="spanCoursePicker" class="span-course-picker" aria-label="Class visibility">' in index
-assert index.count('data-span-course="') == 18
+assert index.count('data-span-course="') == 19
 assert "spanCourseCount.textContent=enabled+'/'+spanCourseInputs.length+' ON'" in index
 assert index.count('class="span-day"') == 245
 assert 'const spanZoomLevels=[8,12,16,22,30,40]' in index

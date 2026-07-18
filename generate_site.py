@@ -13,26 +13,28 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18d-reversible-span-toggles-20260718a"
+BUILD_ID = "v18e-hk280hg-full-class-context-20260718a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-18-V18c"
-COMPARE_LABEL = "V18d"
-COMPARE_BASELINE_LABEL = "V18c"
-EXPECTED_COMPARISON_CHANGES = 0
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-18-V18d"
+COMPARE_LABEL = "V18e"
+COMPARE_BASELINE_LABEL = "V18d"
+EXPECTED_COMPARISON_CHANGES = 5
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
     "HK244EG": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
     "HK244HG": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
     "HK265HG": "人工智能強化營銷社交媒體內容創作證書（英文授課／兼讀制）",
+    "HK280HG": "生成式人工智能商業應用證書（兼讀制）",
     "HK280HS": "生成式人工智能商務應用證書（兼讀制）",
     "HK281DS": "創意數碼媒體設計及製作助理證書",
     "MC0106DS": "創意數碼媒體設計及製作助理證書",
 }
 UPCOMING_AS_OF = datetime.date(2026, 7, 18)
 UPCOMING_CLASS_META = {
+    "HK280HG · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
     "HK280HS · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
     "HK265HG · FS": ("基督教勵行會", "四海大廈", "ENG"),
     "MC0106DS · 第2班": ("循道衛理中心", "灣仔軒尼詩道22號3樓", "CHI"),

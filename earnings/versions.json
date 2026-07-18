@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-18-V18e",
+    "label": "2026-07-18 - V18e",
+    "summary": "HK280HG SS - confirmed full-class schedule shown under Other tutor / TBC; not Garett salary.",
+    "latest": true
+  },
+  {
     "id": "2026-07-18-V18d",
     "label": "2026-07-18 - V18d",
     "summary": "Web - reversible class and month visibility switches in Class spans.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-18-V18c",
