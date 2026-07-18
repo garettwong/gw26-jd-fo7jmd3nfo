@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-19-V18i",
+    "label": "2026-07-19 - V18i",
+    "summary": "Web - eight ERB codes grouped into four course families with Chinese centre names.",
+    "latest": true
+  },
+  {
     "id": "2026-07-19-V18h",
     "label": "2026-07-19 - V18h",
     "summary": "Web - status-coloured filters and always-visible class-span labels.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-19-V18g",

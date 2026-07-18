@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18h-filter-status-span-labels-20260719a"
+BUILD_ID = "v18i-four-course-family-legend-20260719a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-19-V18g"
-COMPARE_LABEL = "V18h"
-COMPARE_BASELINE_LABEL = "V18g"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-19-V18h"
+COMPARE_LABEL = "V18i"
+COMPARE_BASELINE_LABEL = "V18h"
 EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
@@ -32,6 +32,34 @@ COURSE_CHINESE_NAMES = {
     "HK281DS": "創意數碼媒體設計及製作助理證書",
     "MC0106DS": "創意數碼媒體設計及製作助理證書",
 }
+COURSE_FAMILIES = [
+    {
+        "name": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
+        "members": [
+            ("HK244EG", "基督教勵行會", ""),
+            ("HK244HG", "基督教勵行會", ""),
+            ("HK265HG", "基督教勵行會", "英文授課"),
+        ],
+    },
+    {
+        "name": "人工智能知識及應用證書（兼讀制）",
+        "members": [("HK239HG", "基督教勵行會", "")],
+    },
+    {
+        "name": "創意數碼媒體設計及製作助理證書",
+        "members": [
+            ("HK281DS", "基督教勵行會", ""),
+            ("MC0106DS", "循道衞理中心", ""),
+        ],
+    },
+    {
+        "name": "生成式人工智能商業應用證書（兼讀制）",
+        "members": [
+            ("HK280HG", "基督教勵行會", ""),
+            ("HK280HS", "基督教勵行會", ""),
+        ],
+    },
+]
 UPCOMING_AS_OF = datetime.date(2026, 7, 19)
 UPCOMING_CLASS_META = {
     "HK280HG · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
@@ -760,8 +788,8 @@ CSS += r'''
 '''
 
 CSS += r'''
-.course-code-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 8px}.code-key{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:9px;padding:8px 10px;border:1px solid #dbe2ec;border-left:5px solid #0f7d7d;border-radius:6px;background:#fff;color:#465364;font-size:12px;line-height:1.3}.code-key b{color:#1d2734;white-space:nowrap}.sample.class-layer{box-shadow:inset 8px 0 0 #8c78b5}.chip.layer-class{padding-left:14px}.chip.layer-class.confirmed{box-shadow:inset 8px 0 0 #8c78b5,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.unconfirmed{box-shadow:inset 8px 0 0 #8c78b5,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.note{box-shadow:inset 8px 0 0 #8c78b5,0 1px 1px rgba(20,30,50,.04)}.chip.erb-compact.layer-class{padding-left:14px}.context-teacher{font-weight:850;color:#6c568f}.overlap-group{position:relative;display:flex;flex-direction:column;gap:4px;min-width:0}.overlap-group.overlap-active{padding:3px 12px 3px 0}.overlap-group.overlap-active::after{content:"";position:absolute;top:1px;right:1px;bottom:1px;width:8px;border:2.5px solid #536170;border-left:0;border-radius:0 5px 5px 0;pointer-events:none}.overlap-group.overlap-active>.chip.layer-mine:first-child{outline:2px solid rgba(15,125,125,.20);outline-offset:1px}
-@media (max-width:820px){.course-code-legend{grid-template-columns:1fr}.code-key{font-size:11.5px}.overlap-group.overlap-active{padding-right:13px}}
+.course-code-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 8px}.course-family-card{min-width:0;padding:9px 10px;border:1px solid #dbe2ec;border-left:5px solid #0f7d7d;border-radius:6px;background:#fff}.course-family-name{color:#1d2734;font-size:12px;font-weight:900;line-height:1.28}.course-family-members{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.course-family-member{display:inline-flex;align-items:center;gap:5px;min-height:24px;padding:3px 6px;border:1px solid #cbd5e1;border-radius:4px;background:#f7fafc;color:#526174;font-size:9.5px;font-weight:750;line-height:1.15}.course-family-member b{color:#1d2734;white-space:nowrap}.course-family-member em{color:#8a4b00;font-style:normal;font-weight:850}.sample.class-layer{box-shadow:inset 8px 0 0 #8c78b5}.chip.layer-class{padding-left:14px}.chip.layer-class.confirmed{box-shadow:inset 8px 0 0 #8c78b5,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.unconfirmed{box-shadow:inset 8px 0 0 #8c78b5,0 0 0 1px rgba(29,39,52,.10),0 1px 1px rgba(20,30,50,.04)}.chip.layer-class.note{box-shadow:inset 8px 0 0 #8c78b5,0 1px 1px rgba(20,30,50,.04)}.chip.erb-compact.layer-class{padding-left:14px}.context-teacher{font-weight:850;color:#6c568f}.overlap-group{position:relative;display:flex;flex-direction:column;gap:4px;min-width:0}.overlap-group.overlap-active{padding:3px 12px 3px 0}.overlap-group.overlap-active::after{content:"";position:absolute;top:1px;right:1px;bottom:1px;width:8px;border:2.5px solid #536170;border-left:0;border-radius:0 5px 5px 0;pointer-events:none}.overlap-group.overlap-active>.chip.layer-mine:first-child{outline:2px solid rgba(15,125,125,.20);outline-offset:1px}
+@media (max-width:820px){.course-code-legend{grid-template-columns:1fr}.course-family-name{font-size:11.5px}.course-family-member{font-size:9px}.overlap-group.overlap-active{padding-right:13px}}
 @media (orientation:landscape) and (max-height:540px){.course-code-legend{display:none}.chip.layer-class,.chip.erb-compact.layer-class{padding-left:7px}.chip.layer-class.confirmed,.chip.layer-class.unconfirmed,.chip.layer-class.note{box-shadow:inset 4px 0 0 #8c78b5,0 1px 1px rgba(20,30,50,.04)}.overlap-group{gap:2px}.overlap-group.overlap-active{padding:1px 6px 1px 0}.overlap-group.overlap-active::after{width:4px;border-width:1.4px}}
 '''
 
@@ -1466,8 +1494,16 @@ span_month_controls = (
     + '</div>'
 )
 erb_code_legend = ''.join(
-    f'<div class="code-key"><b>{ehtml(code)}</b><span>{ehtml(name)}</span></div>'
-    for code, name in COURSE_CHINESE_NAMES.items()
+    '<section class="course-family-card">'
+    f'<div class="course-family-name">{ehtml(family["name"])}</div>'
+    '<div class="course-family-members">'
+    + ''.join(
+        f'<span class="course-family-member"><b>{ehtml(code)}</b><span>{ehtml(centre)}</span>'
+        f'{f"<em>{ehtml(note)}</em>" if note else ""}</span>'
+        for code, centre, note in family["members"]
+    )
+    + '</div></section>'
+    for family in COURSE_FAMILIES
 )
 version_items = json.loads(VERSIONS_SRC.read_text(encoding="utf-8"))
 current_version = next((item for item in version_items if item.get("latest")), None)
@@ -1506,7 +1542,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
 <div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div>{comparison_legend_html}<div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
 <div id="transitNotice" class="transit-notice" hidden>Transit reminders appear between your lesson slots. Red means less than 30 minutes remains after travel, so there is no reliable meal break.</div>
-<div class="course-code-heading"><div class="section-h">ERB course code legend</div><span class="course-code-count">{len(COURSE_CHINESE_NAMES)} course families</span></div><div class="course-code-legend">{erb_code_legend}</div>
+<div class="course-code-heading"><div class="section-h">ERB course families</div><span class="course-code-count">{len(COURSE_FAMILIES)} course families</span></div><div class="course-code-legend">{erb_code_legend}</div>
 {upcoming_summary_html}
 {completed_summary_html}
 <div class="filter-heading"><div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filter-master"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{comparison_filter_html}</div></div>{filter_status_summary_html}<div class="filter-groups">{filter_groups_html}</div>

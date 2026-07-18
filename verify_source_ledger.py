@@ -350,18 +350,18 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "v18h-filter-status-span-labels-20260719a" in index
+assert "v18i-four-course-family-legend-20260719a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
-assert 'Web - status-coloured filters and always-visible class-span labels.' in index
-assert 'data-version-id="2026-07-19-V18h"' in index
+assert 'Web - eight ERB codes grouped into four course families with Chinese centre names.' in index
+assert 'data-version-id="2026-07-19-V18i"' in index
 assert 'class="version-menu-item current"' in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' not in index
-assert '<span class="sample changed-sample"></span> Changed in V18h' not in index
+assert '<span class="sample changed-sample"></span> Changed in V18i' not in index
 assert index.count('class="change-badge"') == 0
 assert index.count('class="filter course-filter upcoming"') == 13
 assert index.count('class="filter course-filter pending"') == 1
@@ -382,8 +382,16 @@ assert 'function refreshDailyHours()' in index
 assert 'function mergeTeachingMinutes(intervals)' in index
 assert "mode==='mine-confirmed'?status==='confirmed'" in index
 assert "' teaching time; travel excluded'" in index
-assert '<div class="code-key"><b>MC0106DS</b><span>' in index
-assert 'ERB course code legend' in index and '8 course families' in index
+legend_start = index.index('<div class="course-code-heading">')
+legend_end = index.index('<section class="class-summary upcoming-summary"', legend_start)
+course_legend = index[legend_start:legend_end]
+assert 'ERB course families' in course_legend and '4 course families' in course_legend
+assert course_legend.count('class="course-family-card"') == 4
+for code in ("HK239HG", "HK244EG", "HK244HG", "HK265HG", "HK280HG", "HK280HS", "HK281DS", "MC0106DS"):
+    assert f'<b>{code}</b>' in course_legend
+assert course_legend.count('基督教勵行會') == 7
+assert course_legend.count('循道衞理中心') == 1
+assert '<b>HK265HG</b><span>基督教勵行會</span><em>英文授課</em>' in course_legend
 assert '.class-summary-card.unconfirmed{border-width:3px;border-style:dashed' in index
 assert "window.__courseFilter='all';" in index
 assert "window.__upcomingFilterState=null;" in index
