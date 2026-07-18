@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18b-daily-teaching-hours-20260717a"
+BUILD_ID = "v18c-daily-span-grid-20260718a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-17-V18a"
-COMPARE_LABEL = "V18b"
-COMPARE_BASELINE_LABEL = "V18a"
-EXPECTED_COMPARISON_CHANGES = 0
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-17-V18b"
+COMPARE_LABEL = "V18c"
+COMPARE_BASELINE_LABEL = "V18b"
+EXPECTED_COMPARISON_CHANGES = 6
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -31,7 +31,7 @@ COURSE_CHINESE_NAMES = {
     "HK281DS": "創意數碼媒體設計及製作助理證書",
     "MC0106DS": "創意數碼媒體設計及製作助理證書",
 }
-UPCOMING_AS_OF = datetime.date(2026, 7, 17)
+UPCOMING_AS_OF = datetime.date(2026, 7, 18)
 UPCOMING_CLASS_META = {
     "HK280HS · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
     "HK265HG · FS": ("基督教勵行會", "四海大廈", "ENG"),
@@ -724,6 +724,19 @@ html{overflow-x:auto;overflow-y:scroll}
 '''
 
 CSS += r'''
+.course-code-heading{display:flex;align-items:center;gap:8px;margin-top:22px}.course-code-heading .section-h{margin:0}.course-code-count{border:1px solid #b8c5d3;border-radius:4px;padding:2px 6px;background:#fff;color:#526174;font-size:9px;font-weight:900}
+.class-summary{margin:18px 0 4px}.class-summary-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 2px 9px}.class-summary-head .section-h{margin:0}.class-summary-key{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.class-summary-key span{display:inline-flex;align-items:center;gap:5px;color:#526174;font-size:9px;font-weight:850}.class-summary-key i{display:inline-block;width:20px;height:10px;border:2px solid #0f7074;border-radius:2px;background:#e9f7f5}.class-summary-key .pending i{border:2px dashed #a64b00;background:#fff0d2}
+.class-summary-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.class-summary-card{position:relative;display:grid;grid-template-columns:62px minmax(0,1fr) 42px minmax(112px,.72fr) auto;align-items:center;gap:8px;min-width:0;border:2px solid #0f7074;border-radius:5px;padding:8px 9px;background:#edf9f7;color:#263343;text-align:left;font:inherit;cursor:pointer;box-shadow:0 1px 2px rgba(20,30,50,.06)}.class-summary-card.confirmed{border-style:solid;border-color:#0f7074;background:#eaf7f5}.class-summary-card.unconfirmed{border-width:3px;border-style:dashed;border-color:#a64b00;background:#fff3da}.class-summary-card.mixed{border-width:3px;border-style:dashed;border-color:#6b4bb5;background:#f3efff}.class-summary-card.completed{border-color:#64748b;background:#f3f6f9}.class-summary-card:hover{filter:brightness(.985)}.class-summary-card:focus-visible{outline:3px solid #ffc857;outline-offset:2px}.class-summary-card.active,.class-summary-card.active.confirmed,.class-summary-card.active.unconfirmed,.class-summary-card.active.mixed,.class-summary-card.active.completed{background:inherit;color:inherit;outline:4px solid #ffc857;outline-offset:1px;box-shadow:0 0 0 1px #1d2734,0 2px 5px rgba(20,30,50,.2)}.class-summary-card.active .upcoming-date{color:#0f7074}.class-summary-card.active .upcoming-course-copy span,.class-summary-card.active .upcoming-place span{color:#536174}.class-summary-card.active .upcoming-place{border-left-color:#b9c5d1}.class-summary-card.active .upcoming-language{border-color:#a8b5c4;background:#eef3f7;color:#405064}.summary-status{justify-self:end;border-radius:4px;padding:3px 6px;color:#fff;font-size:8px;font-weight:950;letter-spacing:0;white-space:nowrap}.confirmed .summary-status{background:#0f7074}.unconfirmed .summary-status{background:#a64b00}.mixed .summary-status{background:#6b4bb5}.completed .summary-status{background:#64748b}.completed-summary{margin-top:20px}.completed-summary .class-summary-card{opacity:.94}.completed-summary .upcoming-date{color:#526174}
+.span-shell{--span-day-width:16px;--span-timeline-width:3920px}.span-control-bar{align-items:center}.span-month-controls{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.span-month-controls-label{margin-right:3px;color:#5f6d7f;font-size:10px;font-weight:900}.span-month-toggle{min-width:40px;min-height:34px;border:1px solid #aebdcc;border-radius:5px;padding:4px 7px;background:#0f7074;color:#fff;font:inherit;font-size:9px;font-weight:900;cursor:pointer}.span-month-toggle[aria-pressed="false"]{background:#fff;color:#687689;text-decoration:line-through}.span-month-toggle:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.span-axis{min-height:58px}.span-axis-track{display:flex;height:58px;width:var(--span-timeline-width);overflow:hidden}.span-month{position:relative;inset:auto;display:block;flex:0 0 calc(var(--month-days) * var(--span-day-width));width:calc(var(--month-days) * var(--span-day-width));height:58px;border-left:1px solid #aebdcc;color:#4f5d70;text-align:center}.span-month[hidden],.span-track-month[hidden]{display:none!important}.span-month>strong{display:block;height:24px;padding-top:5px;border-bottom:1px solid #cfd8e5;font-size:10px;font-weight:950}.span-days{display:grid;grid-template-columns:repeat(var(--month-days),var(--span-day-width));height:34px}.span-day{display:flex;align-items:center;justify-content:center;border-left:1px solid #e0e6ed;color:#708094;font-size:7px;font-weight:750;overflow:hidden}.span-day:first-child{border-left:0}.span-row{min-height:76px}.span-label{position:sticky;padding-right:38px}.span-row-toggle{position:absolute;top:8px;right:8px;width:24px;height:24px;border:1px solid #b7c3d0;border-radius:4px;background:#fff;color:#4c5b6d;font:inherit;font-size:13px;font-weight:900;line-height:1;cursor:pointer}.span-row-toggle:hover{background:#fff0ee;color:#a1261f}.span-row-toggle:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.span-track{height:76px;width:var(--span-timeline-width);background:none}.span-track-grid{position:absolute;inset:0;display:flex;z-index:0;overflow:hidden;pointer-events:none}.span-track-month{display:block;flex:0 0 calc(var(--month-days) * var(--span-day-width));width:calc(var(--month-days) * var(--span-day-width));height:100%;border-left:1px solid #aebdcc;background-image:repeating-linear-gradient(to right,transparent 0,transparent calc(var(--span-day-width) - 1px),#e0e6ed calc(var(--span-day-width) - 1px),#e0e6ed var(--span-day-width))}.span-track-month:first-child{border-left:0}.span-bar{top:20px;z-index:1;height:36px;min-width:var(--span-day-width);border-radius:4px}.span-marker{width:8px;height:18px;border-radius:3px}.span-marker.mine{width:10px;height:28px;border-radius:3px}.span-bar::before,.span-bar::after{font-size:7px}.span-table{width:calc(var(--span-label-width) + var(--span-timeline-width));min-width:calc(var(--span-label-width) + var(--span-timeline-width))}.span-axis,.span-row{grid-template-columns:var(--span-label-width) var(--span-timeline-width)}
+.completed-summary .class-summary-card{grid-template-columns:92px minmax(0,1fr) 42px minmax(112px,.72fr) auto}
+@media(max-width:1100px){.class-summary-list{grid-template-columns:1fr}}
+@media(max-width:820px){.course-code-heading{align-items:flex-start}.class-summary-head{align-items:flex-start;flex-direction:column}.class-summary-card{grid-template-columns:56px minmax(0,1fr) 40px auto;padding:8px}.class-summary-card .upcoming-place{grid-column:2/-1}.summary-status{grid-column:4}.span-month-controls{width:100%}.span-month-controls-label{width:100%}.span-month-toggle{flex:1;min-width:44px}.span-row-toggle{top:6px;right:6px}.span-shell{--span-day-width:16px}}
+@media(max-width:820px){.completed-summary .class-summary-card{grid-template-columns:82px minmax(0,1fr) 40px auto}}
+@media (orientation:landscape) and (max-height:700px) and (max-width:1400px) and (pointer:coarse){.class-summary{display:none}.span-month-toggle{min-height:28px;font-size:8px}.span-axis{min-height:50px}.span-axis-track,.span-month{height:50px}.span-month>strong{height:21px;padding-top:4px}.span-days{height:29px}.span-row{min-height:60px}.span-track{height:60px}.span-bar{top:13px;height:34px}}
+@media print{.class-summary{display:none}.span-month-controls,.span-row-toggle{display:none}}
+'''
+
+CSS += r'''
 .version-menu{width:100%;margin:14px 0 2px;border:1px solid #cfd8e5;border-radius:8px;background:#fff;box-shadow:0 1px 3px rgba(20,30,50,.08);overflow:hidden}.version-menu>summary{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:center;gap:10px;min-height:46px;padding:8px 12px;list-style:none;cursor:pointer}.version-menu>summary::-webkit-details-marker{display:none}.version-menu>summary:hover{background:#f7fbfb}.version-menu>summary:focus-visible{outline:3px solid #ffc857;outline-offset:-3px}.version-menu-kicker{color:#6c7888;font-size:10px;font-weight:900;text-transform:uppercase}.version-menu-current{border-radius:5px;background:#0f7074;color:#fff;padding:3px 7px;font-size:12px;font-weight:950}.version-menu-summary{min-width:0;color:#405064;font-size:12px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.version-menu-arrow{color:#0f7074;font-size:15px;font-weight:950;transition:transform .15s ease}.version-menu[open] .version-menu-arrow{transform:rotate(180deg)}.version-menu-list{max-height:min(52vh,460px);overflow:auto;border-top:1px solid #dce3ec}.version-menu-item{width:100%;display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:center;gap:10px;min-height:48px;padding:7px 12px;border:0;border-bottom:1px solid #e7ebf1;background:#fff;color:#263343;text-align:left;font:inherit;cursor:pointer}.version-menu-item:last-child{border-bottom:0}.version-menu-item:hover{background:#f4f9f9}.version-menu-item:focus-visible{outline:3px solid #ffc857;outline-offset:-3px}.version-menu-item.current{background:#e9f6f5}.version-menu-item strong{font-size:12px;font-weight:900}.version-menu-item span{min-width:0;color:#637084;font-size:11px;line-height:1.25}.version-menu-item.current span{color:#3d6567}.version-menu-badge{border-radius:999px;background:#0f7074;color:#fff!important;padding:2px 7px;font-size:9px!important;font-weight:900;white-space:nowrap}
 @media (max-width:820px){.version-menu{margin-top:10px}.version-menu>summary{grid-template-columns:auto auto minmax(0,1fr) auto;gap:7px;padding:7px 9px}.version-menu-kicker{display:none}.version-menu-summary{font-size:11px}.version-menu-item{grid-template-columns:118px minmax(0,1fr);gap:7px;padding:7px 9px}.version-menu-item .version-menu-badge{grid-column:1/-1;justify-self:start}}
 @media (orientation:landscape) and (max-height:700px) and (max-width:1400px){.version-menu{margin:4px 0}.version-menu>summary{min-height:32px;padding:4px 7px}.version-menu-current{padding:2px 5px;font-size:9px}.version-menu-summary{font-size:9px}.version-menu-arrow{font-size:11px}.version-menu-list{max-height:55vh}.version-menu-item{min-height:36px;padding:4px 7px}.version-menu-item strong{font-size:9px}.version-menu-item span{font-size:8px}}
@@ -1058,48 +1071,94 @@ filter_groups_html = ''.join(
 )
 
 
-def upcoming_course_button(group):
+def summary_group_status(events):
+    statuses = {event["status"] for event in events}
+    if statuses == {"confirmed"}:
+        return "confirmed"
+    if statuses == {"unconfirmed"}:
+        return "unconfirmed"
+    return "mixed"
+
+
+def summary_class_meta(label, events):
+    if label in UPCOMING_CLASS_META:
+        return UPCOMING_CLASS_META[label]
+    locations = []
+    for event in events:
+        location = clean_location(event.get("title"), event.get("category"))
+        if location != "-" and location not in locations:
+            locations.append(location)
+    language = "ENG" if label.upper().startswith("HK265HG") else "CHI"
+    return "ERB", " / ".join(locations[:2]) or "Location in calendar", language
+
+
+def class_summary_button(group, section):
     label, slug, _group_status, _first_date = group
-    future_events = [
+    mine_events = [
         event
         for event in display_events
         if event["group"] == slug
         and event_layer(event) == "mine"
-        and datetime.date.fromisoformat(event["date"]) >= UPCOMING_AS_OF
+        and event["category"] in {"erb", "methodist"}
     ]
-    if not future_events or label not in UPCOMING_CLASS_META:
+    if not mine_events:
         return None
-    next_date = min(datetime.date.fromisoformat(event["date"]) for event in future_events)
+    dated_events = [(datetime.date.fromisoformat(event["date"]), event) for event in mine_events]
+    if section == "upcoming":
+        section_events = [event for day, event in dated_events if day >= UPCOMING_AS_OF]
+        if not section_events:
+            return None
+        display_day = min(datetime.date.fromisoformat(event["date"]) for event in section_events)
+        date_label = f"{calendar.month_abbr[display_day.month]} {display_day.day}"
+        group_status = summary_group_status(section_events)
+        status_label = {"confirmed": "CONFIRMED", "unconfirmed": "UNCONFIRMED", "mixed": "MIXED"}[group_status]
+        card_classes = f"{group_status} upcoming"
+    else:
+        last_day = max(day for day, _event in dated_events)
+        if last_day >= UPCOMING_AS_OF:
+            return None
+        section_events = mine_events
+        display_day = last_day
+        date_label = f"Ended {calendar.month_abbr[display_day.month]} {display_day.day}"
+        group_status = summary_group_status(section_events)
+        status_label = "COMPLETED"
+        card_classes = "completed"
+
     code = label.split(" · ", 1)[0]
     course_name = COURSE_CHINESE_NAMES.get(code, "")
-    centre, location, language = UPCOMING_CLASS_META[label]
-    statuses = {event["status"] for event in future_events}
-    group_status = "confirmed" if statuses == {"confirmed"} else "unconfirmed" if statuses == {"unconfirmed"} else "mixed"
-    status_label = "Confirmed" if group_status == "confirmed" else "Unconfirmed / mixed"
-    next_date_label = f"{calendar.month_abbr[next_date.month]} {next_date.day}"
+    centre, location, language = summary_class_meta(label, section_events)
     html_button = (
-        f'<button class="upcoming-course course-filter {ehtml(group_status)}" type="button" '
-        f'data-filter="{ehtml(slug)}" data-toggle-filter="1" data-first-date="{next_date.isoformat()}" '
+        f'<button class="class-summary-card upcoming-course course-filter {card_classes}" type="button" '
+        f'data-filter="{ehtml(slug)}" data-toggle-filter="1" data-first-date="{display_day.isoformat()}" '
         f'aria-label="Filter {ehtml(label)}; {ehtml(status_label)}">'
-        f'<span class="upcoming-date">{ehtml(next_date_label)}</span>'
+        f'<span class="upcoming-date">{ehtml(date_label)}</span>'
         f'<span class="upcoming-course-copy"><strong>{ehtml(label)}</strong>'
         f'<span>{ehtml(course_name)}</span></span>'
         f'<span class="upcoming-language">{ehtml(language)}</span>'
         f'<span class="upcoming-place"><strong>{ehtml(centre)}</strong><span>{ehtml(location)}</span></span>'
+        f'<span class="summary-status">{ehtml(status_label)}</span>'
         f'</button>'
     )
-    return next_date, natural_key(label), html_button
+    return display_day, natural_key(label), html_button
 
 
-upcoming_courses = [item for item in (upcoming_course_button(group) for group in GROUPS) if item]
-upcoming_courses.sort(key=lambda item: (item[0], item[1]))
-upcoming_summary_html = (
-    '<section class="upcoming-summary" aria-labelledby="upcomingHeading">'
-    '<div id="upcomingHeading" class="section-h">Upcoming ERB classes</div>'
-    '<div class="upcoming-list">'
-    + ''.join(item[2] for item in upcoming_courses)
-    + '</div></section>'
-)
+def class_summary_section(section, heading, heading_id):
+    courses = [item for item in (class_summary_button(group, section) for group in GROUPS) if item]
+    courses.sort(key=lambda item: (item[0], item[1]), reverse=section == "completed")
+    status_key = (
+        '<div class="class-summary-key" aria-label="Class confirmation key">'
+        '<span><i></i>Confirmed</span><span class="pending"><i></i>Unconfirmed</span></div>'
+        if section == "upcoming" else ""
+    )
+    return (
+        f'<section class="class-summary {section}-summary" aria-labelledby="{heading_id}">'
+        f'<div class="class-summary-head"><div id="{heading_id}" class="section-h">{heading}</div>{status_key}</div>'
+        f'<div class="class-summary-list">{"".join(item[2] for item in courses)}</div></section>'
+    )
+
+
+upcoming_summary_html = class_summary_section("upcoming", "Upcoming ERB classes", "upcomingHeading")
+completed_summary_html = class_summary_section("completed", "Completed ERB classes", "completedHeading")
 
 TIMELINE_START = datetime.date(YEAR, 5, 1)
 TIMELINE_END = datetime.date(YEAR, 12, 31)
@@ -1116,17 +1175,22 @@ def short_date(day):
 
 
 span_months = []
+span_track_months = []
+span_month_toggles = []
 for month in range(5, 13):
-    month_start = datetime.date(YEAR, month, 1)
     month_days = calendar.monthrange(YEAR, month)[1]
+    day_cells = ''.join(f'<span class="span-day">{day}</span>' for day in range(1, month_days + 1))
     span_months.append(
-        f'<div class="span-month" style="left:{timeline_percent(month_start):.5f}%;width:{month_days / TIMELINE_DAYS * 100:.5f}%">'
-        f'{calendar.month_abbr[month]}</div>'
+        f'<div class="span-month" data-span-month="{month}" style="--month-days:{month_days}">'
+        f'<strong>{calendar.month_abbr[month]}</strong><div class="span-days">{day_cells}</div></div>'
     )
-span_guides = ''.join(
-    f'<span class="span-guide" style="left:{timeline_percent(datetime.date(YEAR, month, 1)):.5f}%"></span>'
-    for month in range(6, 13)
-)
+    span_track_months.append(
+        f'<span class="span-track-month" data-span-month="{month}" style="--month-days:{month_days}"></span>'
+    )
+    span_month_toggles.append(
+        f'<button class="span-month-toggle" type="button" data-span-month-toggle="{month}" '
+        f'aria-pressed="true">{calendar.month_abbr[month]}</button>'
+    )
 
 def span_identity(ev):
     if ev["category"] == "ymca":
@@ -1231,7 +1295,6 @@ for group in sorted(
         if mine:
             my_dates += 1
         status = "unconfirmed" if any(ev["status"] == "unconfirmed" for ev in day_events) else "confirmed"
-        relative = ((day - first_day).days + 0.5) / span_days * 100
         details = []
         for ev in day_events:
             fields = event_fields(ev)
@@ -1243,7 +1306,7 @@ for group in sorted(
             f'<button class="span-marker {"mine" if mine else "other"} {status}" type="button" '
             f'data-date="{ds}" data-mine="{1 if mine else 0}" data-mine-confirmed="{1 if mine_confirmed else 0}" '
             f'data-group-label="{ehtml(group["label"])}" '
-            f'data-details="{ehtml(tooltip)}" style="left:{relative:.5f}%" title="{ehtml(tooltip)}" '
+            f'data-details="{ehtml(tooltip)}" title="{ehtml(tooltip)}" '
             f'aria-label="{ehtml(tooltip)}; {"Garett teaches" if mine else "other tutor or TBC"}"></button>'
         )
 
@@ -1254,8 +1317,11 @@ for group in sorted(
         f'data-last="{last_day.isoformat()}" data-lesson-dates="{len(events_by_day)}" data-my-dates="{my_dates}">'
         f'<div class="span-label"><strong>{ehtml(group["label"])}</strong>'
         f'<span class="span-course-name">{ehtml(group["chinese_name"])}</span>'
-        f'<small>{ehtml(range_label)} · My dates {my_dates}/{len(events_by_day)}</small></div>'
-        f'<div class="span-track">{span_guides}<div class="span-bar" style="--span-hue:{class_hue};left:{bar_left:.5f}%;width:{bar_width:.5f}%" '
+        f'<small>{ehtml(range_label)} · My dates {my_dates}/{len(events_by_day)}</small>'
+        f'<button class="span-row-toggle" type="button" data-span-row-toggle="{ehtml(slug)}" '
+        f'aria-label="Hide {ehtml(group["label"])}" title="Hide this class">&#10005;</button></div>'
+        f'<div class="span-track"><div class="span-track-grid">{"".join(span_track_months)}</div>'
+        f'<div class="span-bar" style="--span-hue:{class_hue}" '
         f'data-first-label="{ehtml(short_date(first_day))}" data-last-label="{ehtml(short_date(last_day))}" '
         f'title="{ehtml(group["label"])} · {ehtml(range_label)}">{"".join(markers)}</div></div></div>'
     )
@@ -1272,9 +1338,15 @@ span_course_toggles = ''.join(
     for slug, label, range_label in span_controls
 )
 span_course_picker = (
-    f'<details id="spanCoursePicker" class="span-course-picker"><summary>Courses <span id="spanCourseCount">{len(span_controls)}/{len(span_controls)}</span></summary>'
+    f'<details id="spanCoursePicker" class="span-course-picker"><summary>Classes <span id="spanCourseCount">{len(span_controls)}/{len(span_controls)}</span></summary>'
     f'<div class="span-course-picker-body"><div class="span-course-actions"><button type="button" data-span-course-action="all">All on</button>'
     f'<button type="button" data-span-course-action="none">All off</button></div><div class="span-course-options">{span_course_toggles}</div></div></details>'
+)
+span_month_controls = (
+    '<div class="span-month-controls" role="group" aria-label="Visible months">'
+    '<span class="span-month-controls-label">Months</span>'
+    + ''.join(span_month_toggles)
+    + '</div>'
 )
 erb_code_legend = ''.join(
     f'<div class="code-key"><b>{ehtml(code)}</b><span>{ehtml(name)}</span></div>'
@@ -1317,13 +1389,14 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
 <div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div>{comparison_legend_html}<div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
 <div id="transitNotice" class="transit-notice" hidden>Transit reminders appear between your lesson slots. Red means less than 30 minutes remains after travel, so there is no reliable meal break.</div>
-<div class="section-h">ERB course codes</div><div class="course-code-legend">{erb_code_legend}</div>
+<div class="course-code-heading"><div class="section-h">ERB course code legend</div><span class="course-code-count">{len(COURSE_CHINESE_NAMES)} course families</span></div><div class="course-code-legend">{erb_code_legend}</div>
 {upcoming_summary_html}
+{completed_summary_html}
 <div class="filter-heading"><div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filter-master"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{comparison_filter_html}</div></div><div class="filter-groups">{filter_groups_html}</div>
 {months_html}
 <div class="foot">Sources: <b>{ehtml(SRC.name)}</b>, <b>{ehtml(OVERRIDES_SRC.name)}</b>, and <b>{ehtml(CONTEXT_SRC.name)}</b>. The supplemental layer never overwrites a workbook entry. Generated from Excel border styles: solid/medium = confirmed, dashed = unconfirmed.</div>
 </section><section id="spansView" class="view-panel" role="tabpanel" aria-labelledby="spansTab" hidden>
-<div id="spanShell" class="span-shell"><div class="span-head"><h2>Class spans</h2><p>Each capsule is one class, from its first lesson to its last lesson. Repeated cohorts with the same code are separated when the lesson sequence restarts.</p></div><div class="span-control-bar"><div class="span-tools"><div class="span-mode-switch" role="group" aria-label="Class span lesson filter"><button class="span-mode-option" type="button" data-mode="mine-confirmed">ME CONF</button><button class="span-mode-option" type="button" data-mode="mine-all">ME ALL</button><button class="span-mode-option active" type="button" data-mode="both">ALL FULL</button></div><button id="spanLabelsToggle" class="span-tool-button" type="button" aria-pressed="true">Course names ON</button><div class="span-zoom" role="group" aria-label="Class span timeline zoom"><button id="spanZoomOut" type="button" aria-label="Zoom timeline out" title="Zoom timeline out">−</button><button id="spanZoomReset" class="span-zoom-value" type="button" aria-label="Reset timeline zoom" title="Reset timeline zoom">100%</button><button id="spanZoomIn" type="button" aria-label="Zoom timeline in" title="Zoom timeline in">+</button></div>{span_course_picker}<div class="span-legend"><span class="span-legend-item"><span class="span-key"></span>Garett teaches</span><span class="span-legend-item"><span class="span-key other"></span>Other tutor / TBC</span></div></div></div>{span_timeline_html}</div>
+<div id="spanShell" class="span-shell"><div class="span-head"><h2>Class spans</h2><p>Each row is one class. Every visible grid column is one calendar day; darker markers are Garett's lesson dates.</p></div><div class="span-control-bar"><div class="span-tools"><div class="span-mode-switch" role="group" aria-label="Class span lesson filter"><button class="span-mode-option" type="button" data-mode="mine-confirmed">ME CONF</button><button class="span-mode-option" type="button" data-mode="mine-all">ME ALL</button><button class="span-mode-option active" type="button" data-mode="both">ALL FULL</button></div><button id="spanLabelsToggle" class="span-tool-button" type="button" aria-pressed="true">Course names ON</button><div class="span-zoom" role="group" aria-label="Class span timeline zoom"><button id="spanZoomOut" type="button" aria-label="Zoom timeline out" title="Zoom timeline out">−</button><button id="spanZoomReset" class="span-zoom-value" type="button" aria-label="Reset timeline zoom" title="Reset timeline zoom">100%</button><button id="spanZoomIn" type="button" aria-label="Zoom timeline in" title="Zoom timeline in">+</button></div>{span_course_picker}{span_month_controls}<div class="span-legend"><span class="span-legend-item"><span class="span-key"></span>Garett teaches</span><span class="span-legend-item"><span class="span-key other"></span>Other tutor / TBC</span></div></div></div>{span_timeline_html}</div>
 </section>
 </main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view and navigation"><button id="floatingToday" class="today-option" type="button" aria-label="Go to today" title="Go to today"><span class="mode-main">TODAY</span></button><button id="floatingTop" class="top-option" type="button" aria-label="Back to course filters" title="Back to course filters"><span class="mode-main" aria-hidden="true">&uarr;</span><span class="mode-sub">FILTER</span></button><button id="floatingVersions" class="version-option" type="button" aria-label="Back to version selector" title="Back to version selector"><span class="mode-main">VER</span></button><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All full timetable and clear course filter" title="All full timetable and clear course filter"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div><div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
 <script>
@@ -1418,23 +1491,64 @@ function syncSpanLabels(){{
   spanLabelsToggle.setAttribute('aria-pressed',String(spanLabelsVisible));
   spanLabelsToggle.textContent='Course names '+(spanLabelsVisible?'ON':'OFF');
 }}
-const spanZoomLevels=[0.75,1,1.25,1.5,2,2.5];
-let spanZoomIndex=1;
+const spanZoomLevels=[8,12,16,22,30,40];
+let spanZoomIndex=2;
+const spanMonthButtons=Array.from(document.querySelectorAll('[data-span-month-toggle]'));
+const spanMonthDays={{5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31}};
+function visibleSpanMonths(){{return spanMonthButtons.filter(button=>button.getAttribute('aria-pressed')==='true').map(button=>Number(button.dataset.spanMonthToggle));}}
+function spanMonthOffset(month,visibleMonths){{let offset=0;visibleMonths.forEach(value=>{{if(value<month) offset+=spanMonthDays[value];}});return offset;}}
+function layoutSpanTimeline(){{
+  const visibleMonths=visibleSpanMonths();
+  const dayWidth=spanZoomLevels[spanZoomIndex];
+  const visibleDays=visibleMonths.reduce((sum,month)=>sum+spanMonthDays[month],0);
+  spanShell.style.setProperty('--span-day-width',dayWidth+'px');
+  spanShell.style.setProperty('--span-timeline-width',(visibleDays*dayWidth)+'px');
+  document.querySelectorAll('[data-span-month]').forEach(element=>{{element.hidden=!visibleMonths.includes(Number(element.dataset.spanMonth));}});
+  document.querySelectorAll('.span-row').forEach(row=>{{
+    const firstParts=row.dataset.first.split('-').map(Number);
+    const lastParts=row.dataset.last.split('-').map(Number);
+    let startIndex=Infinity;
+    let endIndex=-Infinity;
+    visibleMonths.forEach(month=>{{
+      if(month<firstParts[1]||month>lastParts[1]) return;
+      const firstDay=month===firstParts[1]?firstParts[2]:1;
+      const lastDay=month===lastParts[1]?lastParts[2]:spanMonthDays[month];
+      const monthOffset=spanMonthOffset(month,visibleMonths);
+      startIndex=Math.min(startIndex,monthOffset+firstDay-1);
+      endIndex=Math.max(endIndex,monthOffset+lastDay);
+    }});
+    const bar=row.querySelector('.span-bar');
+    const rangeVisible=Number.isFinite(startIndex)&&Number.isFinite(endIndex)&&endIndex>startIndex;
+    row.dataset.monthHidden=rangeVisible?'0':'1';
+    bar.hidden=!rangeVisible;
+    if(!rangeVisible) return;
+    const barLeft=startIndex*dayWidth;
+    bar.style.left=barLeft+'px';
+    bar.style.width=Math.max(dayWidth,(endIndex-startIndex)*dayWidth)+'px';
+    row.querySelectorAll('.span-marker').forEach(marker=>{{
+      const parts=marker.dataset.date.split('-').map(Number);
+      const month=parts[1];
+      const monthVisible=visibleMonths.includes(month);
+      marker.dataset.monthVisible=monthVisible?'1':'0';
+      if(monthVisible){{
+        const center=(spanMonthOffset(month,visibleMonths)+parts[2]-.5)*dayWidth;
+        marker.style.left=(center-barLeft)+'px';
+      }}
+    }});
+  }});
+}}
 function spanLayoutMetrics(){{
-  if(window.matchMedia('(orientation: landscape) and (max-height: 700px) and (max-width: 1400px) and (pointer: coarse)').matches) return {{label:205,minTimeline:1540,gutter:10}};
-  if(window.matchMedia('(max-width: 820px)').matches) return {{label:230,minTimeline:1640,gutter:10}};
-  return {{label:280,minTimeline:1760,gutter:72}};
+  if(window.matchMedia('(orientation: landscape) and (max-height: 700px) and (max-width: 1400px) and (pointer: coarse)').matches) return {{label:205}};
+  if(window.matchMedia('(max-width: 820px)').matches) return {{label:230}};
+  return {{label:280}};
 }}
 function applySpanZoom(preservePosition=false){{
   const previousMax=Math.max(0,document.documentElement.scrollWidth-innerWidth);
   const previousRatio=previousMax?scrollX/previousMax:0;
   const metrics=spanLayoutMetrics();
-  const available=Math.max(0,innerWidth-(spanLabelsVisible?metrics.label:0)-metrics.gutter);
-  const base=Math.max(metrics.minTimeline,available);
-  const scale=spanZoomLevels[spanZoomIndex];
   spanShell.style.setProperty('--span-label-width',(spanLabelsVisible?metrics.label:0)+'px');
-  spanShell.style.setProperty('--span-timeline-width',Math.round(base*scale)+'px');
-  document.getElementById('spanZoomReset').textContent=Math.round(scale*100)+'%';
+  layoutSpanTimeline();
+  document.getElementById('spanZoomReset').textContent=Math.round(spanZoomLevels[spanZoomIndex]/16*100)+'%';
   document.getElementById('spanZoomOut').disabled=spanZoomIndex===0;
   document.getElementById('spanZoomIn').disabled=spanZoomIndex===spanZoomLevels.length-1;
   if(preservePosition) requestAnimationFrame(()=>{{
@@ -1445,8 +1559,22 @@ function applySpanZoom(preservePosition=false){{
 spanLabelsToggle.addEventListener('click',()=>{{spanLabelsVisible=!spanLabelsVisible;syncSpanLabels();applySpanZoom(true);}});
 document.getElementById('spanZoomOut').addEventListener('click',()=>{{if(spanZoomIndex>0){{spanZoomIndex-=1;applySpanZoom(true);}}}});
 document.getElementById('spanZoomIn').addEventListener('click',()=>{{if(spanZoomIndex<spanZoomLevels.length-1){{spanZoomIndex+=1;applySpanZoom(true);}}}});
-document.getElementById('spanZoomReset').addEventListener('click',()=>{{spanZoomIndex=1;applySpanZoom(true);}});
+document.getElementById('spanZoomReset').addEventListener('click',()=>{{spanZoomIndex=2;applySpanZoom(true);}});
+spanMonthButtons.forEach(button=>button.addEventListener('click',()=>{{
+  const currentlyVisible=button.getAttribute('aria-pressed')==='true';
+  if(currentlyVisible&&visibleSpanMonths().length===1) return;
+  button.setAttribute('aria-pressed',String(!currentlyVisible));
+  applySpanZoom(true);
+  applySpanFilters();
+}}));
 spanCourseInputs.forEach(input=>input.addEventListener('change',()=>{{syncSpanCourseCount();applySpanFilters();}}));
+document.querySelectorAll('[data-span-row-toggle]').forEach(button=>button.addEventListener('click',()=>{{
+  const input=spanCourseInputs.find(item=>item.dataset.spanCourse===button.dataset.spanRowToggle);
+  if(!input) return;
+  input.checked=false;
+  syncSpanCourseCount();
+  applySpanFilters();
+}}));
 document.querySelectorAll('[data-span-course-action]').forEach(button=>button.addEventListener('click',()=>{{
   const checked=button.dataset.spanCourseAction==='all';
   spanCourseInputs.forEach(input=>input.checked=checked);
@@ -1462,12 +1590,13 @@ function applySpanFilters(){{
     const courseEnabled=!courseInput||courseInput.checked;
     let visible=0;
     row.querySelectorAll('.span-marker').forEach(marker=>{{
-      const show=mode==='both'||(mode==='mine-all'&&marker.dataset.mine==='1')||(mode==='mine-confirmed'&&marker.dataset.mineConfirmed==='1');
+      const modeMatch=mode==='both'||(mode==='mine-all'&&marker.dataset.mine==='1')||(mode==='mine-confirmed'&&marker.dataset.mineConfirmed==='1');
+      const show=modeMatch&&marker.dataset.monthVisible!=='0';
       marker.hidden=!show;
       if(show) visible+=1;
     }});
     row.dataset.courseHidden=courseEnabled?'0':'1';
-    row.hidden=!courseEnabled||visible===0;
+    row.hidden=!courseEnabled||row.dataset.monthHidden==='1'||visible===0;
   }});
 }}
 const transitMinutes={{

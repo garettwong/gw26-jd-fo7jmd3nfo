@@ -198,8 +198,12 @@ assert [(row["date"], lesson(row)) for row in mc_garett] == [
     ("2026-08-15", 16),
 ]
 assert all(row in EVENTS for row in mc_garett)
-mc_other_tbc = [row for row in mc if teacher(row) == "Other tutor / TBC"]
-assert [lesson(row) for row in mc_other_tbc] == [21, 25]
+mc_room306_calvin = [
+    row for row in mc
+    if teacher(row) == "Calvin" and "Calvin takes all Room 306 enquiry lessons" in row.get("source", "")
+]
+assert [lesson(row) for row in mc_room306_calvin] == [18, 21, 25, 27, 29, 33]
+assert not any(teacher(row) == "Other tutor / TBC" for row in mc)
 assert all(row.get("layer") == "class" for row in mc if row in CONTEXT)
 assert not any(lesson(row) in {48, 49} for row in mc)
 
@@ -320,19 +324,19 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "v18b-daily-teaching-hours-20260717a" in index
+assert "v18c-daily-span-grid-20260718a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
-assert 'Calendar - daily teaching hours added for ME CONF and ME ALL; travel excluded.' in index
-assert 'data-version-id="2026-07-17-V18b"' in index
+assert 'Web - daily spans and status sections; MC0106DS Room 306 lessons recorded as Calvin.' in index
+assert 'data-version-id="2026-07-18-V18c"' in index
 assert 'class="version-menu-item current"' in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
-assert 'data-filter="changed"' not in index
-assert 'Changed in V18b</span>' in index
-assert index.count('class="change-badge"') == 0
+assert 'data-filter="changed"' in index
+assert 'Changed in V18c</span>' in index
+assert index.count('class="change-badge"') == 12
 assert index.count("Lesson TBC") >= 5
 assert index.count('data-day-hours hidden') >= 400
 assert 'data-teaching-intervals="480-590,660-780"' in index
@@ -341,13 +345,14 @@ assert 'function mergeTeachingMinutes(intervals)' in index
 assert "mode==='mine-confirmed'?status==='confirmed'" in index
 assert "' teaching time; travel excluded'" in index
 assert '<div class="code-key"><b>MC0106DS</b><span>' in index
-assert ".upcoming-course.active.unconfirmed,.upcoming-course.active.mixed{border-width:3px;border-style:dashed;border-color:#fff" in index
+assert 'ERB course code legend' in index and '7 course families' in index
+assert '.class-summary-card.unconfirmed{border-width:3px;border-style:dashed' in index
 assert "window.__courseFilter='all';" in index
 assert "window.__upcomingFilterState=null;" in index
 assert "window.__cardCourseFilter=null;" in index
 assert 'aria-label="All full timetable and clear course filter"' in index
 assert '<div id="upcomingHeading" class="section-h">Upcoming ERB classes</div>' in index
-upcoming_start = index.index('<section class="upcoming-summary"')
+upcoming_start = index.index('<section class="class-summary upcoming-summary"')
 upcoming_end = index.index('</section>', upcoming_start)
 upcoming = index[upcoming_start:upcoming_end]
 upcoming_labels = re.findall(r'<span class="upcoming-date">([^<]+)</span>.*?<strong>(HK[^<]+|MC[^<]+)</strong>', upcoming)
@@ -361,5 +366,16 @@ assert "HK281DS · CW7" not in upcoming
 assert "基督教勵行會" in upcoming
 assert "HK280HS · SS" in upcoming and "上水彩園邨彩湖樓2座地下129舖02室" in upcoming
 assert 'data-toggle-filter="1"' in upcoming
+assert '>CONFIRMED</span>' in upcoming and '>UNCONFIRMED</span>' in upcoming
+assert '<div id="completedHeading" class="section-h">Completed ERB classes</div>' in index
+completed_start = index.index('<section class="class-summary completed-summary"')
+completed_end = index.index('</section>', completed_start)
+completed = index[completed_start:completed_end]
+assert 'HK244EG' in completed and 'HF2' in completed and '>COMPLETED</span>' in completed
+assert index.count('data-span-month-toggle="') == 8
+assert index.count('data-span-row-toggle="') == 18
+assert index.count('class="span-day"') == 245
+assert 'const spanZoomLevels=[8,12,16,22,30,40]' in index
+assert 'function layoutSpanTimeline()' in index
 print("source ledger verification passed")
 print(f"events={len(EVENTS)} context={len(CONTEXT)} display={len(ALL)}")
