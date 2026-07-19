@@ -350,18 +350,20 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "v18j-provider-badges-consistent-course-cards-20260719a" in index
+assert "window.scrollTo({top:0,left:0,behavior:'smooth'});" in index
+assert "location.assign(target);" not in index
+assert "v18k-ver-scrolls-top-20260719a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
-assert 'Web - prominent CA/MC badges and one consistent clickable course-card format.' in index
-assert 'data-version-id="2026-07-19-V18j"' in index
+assert 'Web - VER button returns to the in-page version selector.' in index
+assert 'data-version-id="2026-07-19-V18k"' in index
 assert 'class="version-menu-item current"' in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' not in index
-assert '<span class="sample changed-sample"></span> Changed in V18j' not in index
+assert '<span class="sample changed-sample"></span> Changed in V18k' not in index
 assert index.count('class="change-badge"') == 0
 assert index.count('class="filter course-filter upcoming"') == 13
 assert index.count('class="filter course-filter pending"') == 1

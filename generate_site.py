@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18j-provider-badges-consistent-course-cards-20260719a"
+BUILD_ID = "v18k-ver-scrolls-top-20260719a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-19-V18i"
-COMPARE_LABEL = "V18j"
-COMPARE_BASELINE_LABEL = "V18i"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-19-V18j"
+COMPARE_LABEL = "V18k"
+COMPARE_BASELINE_LABEL = "V18j"
 EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
@@ -1959,8 +1959,8 @@ window.__restoringModeAnchor=false;
 window.addEventListener('scroll',()=>{{if(!window.__restoringModeAnchor) window.__modeCompareAnchor=null;}},{{passive:true}});
 document.getElementById('floatingTop').addEventListener('click',()=>{{window.__modeCompareAnchor=null;document.getElementById('filterArea').scrollIntoView({{block:'start',behavior:'smooth'}});}});
 document.getElementById('floatingVersions').addEventListener('click',()=>{{
-  const target=location.pathname.includes('/versions/')?'../../master/?v=redtext1':'./master/?v=redtext1';
-  location.assign(target);
+  window.__modeCompareAnchor=null;
+  window.scrollTo({{top:0,left:0,behavior:'smooth'}});
 }});
 document.querySelectorAll('.version-menu-item').forEach(btn=>btn.addEventListener('click',()=>{{
   const root=location.pathname.includes('/versions/')?'../../':'./';

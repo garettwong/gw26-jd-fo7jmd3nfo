@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-19-V18k",
+    "label": "2026-07-19 - V18k",
+    "summary": "Web - VER button returns to the in-page version selector.",
+    "latest": true
+  },
+  {
     "id": "2026-07-19-V18j",
     "label": "2026-07-19 - V18j",
     "summary": "Web - prominent CA/MC badges and one consistent clickable course-card format.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-19-V18i",
