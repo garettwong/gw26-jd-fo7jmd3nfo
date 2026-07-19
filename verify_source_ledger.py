@@ -350,18 +350,18 @@ assert 'NO MEAL BUFFER' in index
 assert "'sheung_shui|four_seas':64" in index
 assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
-assert "v18i-four-course-family-legend-20260719a" in index
+assert "v18j-provider-badges-consistent-course-cards-20260719a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
-assert 'Web - eight ERB codes grouped into four course families with Chinese centre names.' in index
-assert 'data-version-id="2026-07-19-V18i"' in index
+assert 'Web - prominent CA/MC badges and one consistent clickable course-card format.' in index
+assert 'data-version-id="2026-07-19-V18j"' in index
 assert 'class="version-menu-item current"' in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' not in index
-assert '<span class="sample changed-sample"></span> Changed in V18i' not in index
+assert '<span class="sample changed-sample"></span> Changed in V18j' not in index
 assert index.count('class="change-badge"') == 0
 assert index.count('class="filter course-filter upcoming"') == 13
 assert index.count('class="filter course-filter pending"') == 1
@@ -392,6 +392,22 @@ for code in ("HK239HG", "HK244EG", "HK244HG", "HK265HG", "HK280HG", "HK280HS", "
 assert course_legend.count('基督教勵行會') == 7
 assert course_legend.count('循道衞理中心') == 1
 assert '<b>HK265HG</b><span>基督教勵行會</span><em>英文授課</em>' in course_legend
+assert index.count('class="provider-badge provider-ca"') == 14
+assert index.count('class="provider-badge provider-mc"') == 1
+course_card_classes = re.findall(r'<div class="chip ([^"]*cat-(?:erb|methodist)[^"]*)"', index)
+# Calendar month grids include adjacent-month filler days, so the 256 source
+# course entries are rendered as 512 visible card instances across the page.
+assert len(course_card_classes) == 512
+assert all('erb-compact' in classes for classes in course_card_classes)
+july_25_start = index.index('<div class="cell wknd has" id="d-2026-07-25">')
+july_25_end = index.index('<div class="cell wknd" id="d-2026-07-26">', july_25_start)
+july_25 = index[july_25_start:july_25_end]
+assert july_25.count('cat-methodist') == 2
+assert july_25.count('class="class-id card-course-filter"') == 2
+assert '循道衞理中心-灣仔' in july_25
+assert july_25.count('Teacher: Calvin') >= 2
+assert '09:00-13:00' in july_25 and '14:00-18:00' in july_25
+assert 'Lesson 1' in july_25 and 'Lesson 2' in july_25
 assert '.class-summary-card.unconfirmed{border-width:3px;border-style:dashed' in index
 assert "window.__courseFilter='all';" in index
 assert "window.__upcomingFilterState=null;" in index

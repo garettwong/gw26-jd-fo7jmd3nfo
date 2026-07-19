@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-19-V18j",
+    "label": "2026-07-19 - V18j",
+    "summary": "Web - prominent CA/MC badges and one consistent clickable course-card format.",
+    "latest": true
+  },
+  {
     "id": "2026-07-19-V18i",
     "label": "2026-07-19 - V18i",
     "summary": "Web - eight ERB codes grouped into four course families with Chinese centre names.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-19-V18h",
