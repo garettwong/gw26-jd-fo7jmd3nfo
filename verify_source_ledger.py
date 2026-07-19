@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 EVENTS = json.loads((ROOT / "events.json").read_text(encoding="utf-8"))
 CONTEXT = json.loads((ROOT / "class_context.json").read_text(encoding="utf-8"))
+SUMMARY = json.loads((ROOT / "summary.json").read_text(encoding="utf-8"))
 ALL = EVENTS + CONTEXT
 LESSON_RE = re.compile(r"\bL\s*(\d+)\b", re.I)
 TIME_RE = re.compile(r"(?<!\d)(\d{3,4})\s*-\s*(\d{3,4})(?!\d)")
@@ -166,22 +167,23 @@ assert len(oct7_hk265_l9) == 1
 assert "TIGHT TRAVEL ~40-47m" in oct7_hk265_l9[0]["text"]
 
 # Calvin's 2026-07-19 revision replaces the older 54-lesson HK281DS schedule.
-# The whole L1-L62 class remains provisional; only L52 is Garett's available slot.
+# L51 is confirmed for Demian and L52 is confirmed for Garett; the remaining
+# full-class context stays provisional until separately assigned.
 hk281 = rows_with("HK281DS", "CW7", rows=CONTEXT)
 assert len(hk281) == 62
 assert_lessons(hk281, range(1, 63), "HK281DS CW7")
-assert all(row["status"] == "unconfirmed" for row in hk281)
-assert all("HK281DSCW7_R1 2.xlsx" in row.get("source", "") for row in hk281)
+assert Counter(row["status"] for row in hk281) == Counter({"unconfirmed": 60, "confirmed": 2})
+assert all("HK281DSCW7_R1_Calvin.xlsx" in row.get("source", "") for row in hk281)
 assert Counter(teacher(row) for row in hk281) == Counter({
-    "袁亦堅": 27,
-    "Other tutor / TBC": 17,
+    "Demian Yuen": 28,
+    "Other tutor / TBC": 16,
     "Ricky Leung": 13,
     "Calvin": 4,
     "Garett Wong": 1,
 })
 assert Counter(row.get("helper", "") for row in hk281) == Counter({
-    "Fiona": 23,
-    "Apple": 20,
+    "Fiona": 25,
+    "Apple": 18,
     "": 16,
     "Thomas": 3,
 })
@@ -192,18 +194,24 @@ assert [(row["date"], lesson(row), teacher(row), row.get("helper")) for row in h
 hk281_l51 = next(row for row in hk281 if lesson(row) == 51)
 assert hk281_l51["date"] == "2026-10-03"
 assert "0900-1300" in hk281_l51["text"]
-assert "confirmed HK239HG ST 09:00-12:00 overlap" in hk281_l51["text"]
-assert teacher(hk281_l51) == "Other tutor / TBC"
+assert teacher(hk281_l51) == "Demian Yuen"
+assert hk281_l51["status"] == "confirmed"
 assert hk281_l51.get("helper") == "Fiona"
-assert hk281_l51.get("layer") == "class" and hk281_l51.get("red")
+assert hk281_l51.get("layer") == "class" and not hk281_l51.get("red")
 hk281_l52 = hk281_mine[0]
 assert "1400-1800" in hk281_l52["text"]
+assert hk281_l52["status"] == "confirmed"
 assert not hk281_l52.get("red")
-assert "instructor 黃偉漢; helper Fiona" in hk281_l52.get("source", "")
+assert "Garett explicitly confirmed" in hk281_l52.get("source", "")
 assert all(
     teacher(row) == "Ricky Leung"
     for row in hk281
     if "instructor 梁榮傑" in row.get("source", "")
+)
+assert all(
+    teacher(row) == "Demian Yuen"
+    for row in hk281
+    if "instructor 袁亦堅" in row.get("source", "")
 )
 for number, marker in {
     53: "持續評估習作",
@@ -371,26 +379,30 @@ assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
 assert "window.scrollTo({top:0,left:0,behavior:'smooth'});" in index
 assert "location.assign(target);" not in index
-assert "v18l-hk281-l52-helper-20260719a" in index
+assert "v18m-hk281-l51-l52-confirmed-dual-start-20260719a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
 assert 'Web - VER button returns to the in-page version selector.' in index
-assert 'data-version-id="2026-07-19-V18l"' in index
+assert 'data-version-id="2026-07-19-V18m"' in index
+assert 'data-build-id="v18m-hk281-l51-l52-confirmed-dual-start-20260719a"' in index
 assert 'class="version-menu-item current"' in index
+assert "target.searchParams.set('build',btn.dataset.buildId)" in index
+assert "btn.classList.add('loading')" in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
-assert '<span class="sample changed-sample"></span> Changed in V18l' in index
-assert index.count('class="change-badge"') == 124
-assert index.count('class="filter course-filter upcoming"') == 13
-assert index.count('class="filter course-filter pending"') == 2
+assert '<span class="sample changed-sample"></span> Changed in V18m' in index
+assert SUMMARY["changed_in_version"] == 29
+assert index.count('class="change-badge"') == 58
+assert index.count('class="filter course-filter upcoming"') == 14
+assert index.count('class="filter course-filter pending"') == 1
 assert index.count('class="filter course-filter completed"') >= 2
 assert index.count('class="filter course-filter context"') >= 1
 assert '<span class="filter-status-total">17 tracked ERB classes</span>' in index
-assert '<span class="filter-status-swatch upcoming"></span>Upcoming 12' in index
-assert '<span class="filter-status-swatch pending"></span>Pending 2' in index
+assert '<span class="filter-status-swatch upcoming"></span>Upcoming 13' in index
+assert '<span class="filter-status-swatch pending"></span>Pending 1' in index
 assert '<span class="filter-status-swatch completed"></span>Completed 2' in index
 assert '<span class="filter-status-swatch context"></span>Full-class context 1' in index
 assert '<span class="span-course-breakdown">19 total = 17 ERB + 2 SEN</span>' in index
@@ -438,26 +450,35 @@ assert '<div id="upcomingHeading" class="section-h">Upcoming ERB classes</div>' 
 upcoming_start = index.index('<section class="class-summary upcoming-summary"')
 upcoming_end = index.index('</section>', upcoming_start)
 upcoming = index[upcoming_start:upcoming_end]
-upcoming_labels = re.findall(r'<span class="upcoming-date">([^<]+)</span>.*?<strong>(HK[^<]+|MC[^<]+)</strong>', upcoming)
+upcoming_labels = re.findall(
+    r'<span class="summary-dates">.*?<small>我首堂</small><strong>([^<]+)</strong>.*?'
+    r'<small>全班首堂</small><strong>([^<]+)</strong>.*?'
+    r'<span class="upcoming-course-copy"><strong>(HK[^<]+|MC[^<]+)</strong>',
+    upcoming,
+    re.S,
+)
 assert upcoming_labels[:3] == [
-    ("Jul 24", "HK265HG · FS · JUL 2026"),
-    ("Aug 1", "MC0106DS · 第2班"),
-    ("Aug 6", "HK244HG · CW8"),
+    ("Jul 24", "Jul 24", "HK265HG · FS · JUL 2026"),
+    ("Aug 1", "Jul 25", "MC0106DS · 第2班"),
+    ("Aug 6", "Aug 6", "HK244HG · CW8"),
 ]
-assert ("Sep 16", "HK265HG · FS · SEP 2026") in upcoming_labels
+assert ("Sep 16", "Sep 16", "HK265HG · FS · SEP 2026") in upcoming_labels
+assert ("Oct 3", "Aug 31", "HK281DS · CW7") in upcoming_labels
 assert "英文授課／兼讀制" in upcoming and ">ENG<" in upcoming
 assert "HK281DS · CW7" in upcoming
+assert 'summary-lesson-count' in upcoming
+assert "\u6211\u7684\u5802\u6578 1 / \u5168\u73ed 62" in upcoming
+assert "\u6211\u7684\u5802\u6578 6 / \u5168\u73ed 47" in upcoming
 assert "Helper: Fiona" in index
 assert "基督教勵行會" in upcoming
 assert "HK280HS · SS" in upcoming and "上水彩園邨彩湖樓2座地下129舖02室" in upcoming
 assert 'data-toggle-filter="1"' in upcoming
 assert '>CONFIRMED</span>' in upcoming and '>UNCONFIRMED</span>' in upcoming
-assert upcoming.count('>CONFIRMED</span>') == 12
-assert upcoming.count('>UNCONFIRMED</span>') == 2
+assert upcoming.count('>CONFIRMED</span>') == 13
+assert upcoming.count('>UNCONFIRMED</span>') == 1
 assert 'HK239HG · ST' in upcoming and 'HK239HG · LT' in upcoming
 assert re.findall(r'class="filter course-filter pending"[^>]*>([^<]+)</button>', index) == [
     'HK280HS · SS (5)',
-    'HK281DS · CW7 (62)',
 ]
 assert 'class="filter course-filter context"' in index
 assert '<div id="completedHeading" class="section-h">Completed ERB classes</div>' in index

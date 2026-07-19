@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-19-V18m",
+    "label": "2026-07-19 - V18m",
+    "summary": "HK281DS CW7 - Demian Yuen L51 and Garett L52 confirmed; latest Calvin helpers and both start dates shown.",
+    "latest": true
+  },
+  {
     "id": "2026-07-19-V18l",
     "label": "2026-07-19 - V18l",
     "summary": "HK281DS CW7 - revised L1-L62 schedule; Garett L52 PM only, Helper Fiona; pending Calvin confirmation.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-19-V18k",
