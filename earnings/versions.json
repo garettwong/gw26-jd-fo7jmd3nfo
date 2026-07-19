@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-19-V18l",
+    "label": "2026-07-19 - V18l",
+    "summary": "HK281DS CW7 - revised L1-L62 schedule; Garett L52 PM only, Helper Fiona; pending Calvin confirmation.",
+    "latest": true
+  },
+  {
     "id": "2026-07-19-V18k",
     "label": "2026-07-19 - V18k",
     "summary": "Web - VER button returns to the in-page version selector.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-19-V18j",

@@ -165,34 +165,53 @@ oct7_hk265_l9 = [row for row in hk265 if row["date"] == "2026-10-07" and lesson(
 assert len(oct7_hk265_l9) == 1
 assert "TIGHT TRAVEL ~40-47m" in oct7_hk265_l9[0]["text"]
 
-# Latest Excel-based proposals plus all currently assigned class context.
-hk281 = [
-    row for row in rows_with("HK281DS", "CW7")
-    if "PROPOSED availability only" not in row["text"]
-]
-assert len(hk281) == 54
-assert_lessons(hk281, range(1, 55), "HK281DS CW7")
-assert sum(teacher(row) == "Garett" for row in hk281) == 0
+# Calvin's 2026-07-19 revision replaces the older 54-lesson HK281DS schedule.
+# The whole L1-L62 class remains provisional; only L52 is Garett's available slot.
+hk281 = rows_with("HK281DS", "CW7", rows=CONTEXT)
+assert len(hk281) == 62
+assert_lessons(hk281, range(1, 63), "HK281DS CW7")
 assert all(row["status"] == "unconfirmed" for row in hk281)
-released_hk281_lessons = {5, 16, 17, 19, 22, 23, 24, 25, 28, 29, 30, 31}
-released_hk281 = [row for row in hk281 if lesson(row) in released_hk281_lessons]
-assert len(released_hk281) == 12
-assert all(teacher(row) == "Other tutor / TBC" for row in released_hk281)
-assert all(row.get("layer") in {None, "class"} for row in released_hk281)
-assert all(row.get("red") for row in released_hk281)
-assert all("CALVIN: GARETT NOT REQUIRED" in row["text"] for row in released_hk281)
-hk281_reassigned = [row for row in hk281 if lesson(row) in {4, 18}]
-assert [(row["date"], lesson(row), teacher(row), row.get("layer")) for row in hk281_reassigned] == [
-    ("2026-08-29", 4, "Other tutor / TBC", "class"),
-    ("2026-09-07", 18, "Other tutor / TBC", "class"),
+assert all("HK281DSCW7_R1 2.xlsx" in row.get("source", "") for row in hk281)
+assert Counter(teacher(row) for row in hk281) == Counter({
+    "袁亦堅": 27,
+    "Other tutor / TBC": 17,
+    "Ricky Leung": 13,
+    "Calvin": 4,
+    "Garett Wong": 1,
+})
+assert Counter(row.get("helper", "") for row in hk281) == Counter({
+    "Fiona": 23,
+    "Apple": 20,
+    "": 16,
+    "Thomas": 3,
+})
+hk281_mine = [row for row in hk281 if row.get("layer") == "mine"]
+assert [(row["date"], lesson(row), teacher(row), row.get("helper")) for row in hk281_mine] == [
+    ("2026-10-03", 52, "Garett Wong", "Fiona"),
 ]
-hk281_sep14 = [row for row in hk281 if lesson(row) in {30, 31}]
-assert [(row["date"], lesson(row), teacher(row)) for row in hk281_sep14] == [
-    ("2026-09-14", 30, "Other tutor / TBC"),
-    ("2026-09-14", 31, "Other tutor / TBC"),
-]
-assert all("CALVIN: GARETT NOT REQUIRED" in row["text"] for row in hk281_sep14)
-assert all(row.get("red") for row in hk281_sep14)
+hk281_l51 = next(row for row in hk281 if lesson(row) == 51)
+assert hk281_l51["date"] == "2026-10-03"
+assert "0900-1300" in hk281_l51["text"]
+assert "confirmed HK239HG ST 09:00-12:00 overlap" in hk281_l51["text"]
+assert teacher(hk281_l51) == "Other tutor / TBC"
+assert hk281_l51.get("helper") == "Fiona"
+assert hk281_l51.get("layer") == "class" and hk281_l51.get("red")
+hk281_l52 = hk281_mine[0]
+assert "1400-1800" in hk281_l52["text"]
+assert not hk281_l52.get("red")
+assert "instructor 黃偉漢; helper Fiona" in hk281_l52.get("source", "")
+assert all(
+    teacher(row) == "Ricky Leung"
+    for row in hk281
+    if "instructor 梁榮傑" in row.get("source", "")
+)
+for number, marker in {
+    53: "持續評估習作",
+    57: "持續評估數碼媒體專案",
+    62: "期末筆試11:30-12:30",
+}.items():
+    row = next(item for item in hk281 if lesson(item) == number)
+    assert marker in row["text"] and row.get("red")
 
 mc = rows_with("MC0106DS", "Class 第2班")
 assert len(mc) == 47
@@ -318,7 +337,7 @@ assert all("REPLACEMENT REQUESTED" not in row["text"] for row in hk265_sep_l1_l3
 assert all(not row.get("red") for row in hk265_sep_l1_l3)
 assert not any("PROPOSED replacement option" in row["text"] for row in ALL)
 assert not any(
-    re.search(r"Class CW(?!10\b)", row["text"])
+    re.search(r"HK239HG,\s*Class CW(?!10\b)", row["text"])
     for row in rows_with("HK239HG")
 )
 
@@ -352,28 +371,28 @@ assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
 assert "window.scrollTo({top:0,left:0,behavior:'smooth'});" in index
 assert "location.assign(target);" not in index
-assert "v18k-ver-scrolls-top-20260719a" in index
+assert "v18l-hk281-l52-helper-20260719a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
 assert 'Web - VER button returns to the in-page version selector.' in index
-assert 'data-version-id="2026-07-19-V18k"' in index
+assert 'data-version-id="2026-07-19-V18l"' in index
 assert 'class="version-menu-item current"' in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
-assert 'data-filter="changed"' not in index
-assert '<span class="sample changed-sample"></span> Changed in V18k' not in index
-assert index.count('class="change-badge"') == 0
+assert 'data-filter="changed"' in index
+assert '<span class="sample changed-sample"></span> Changed in V18l' in index
+assert index.count('class="change-badge"') == 124
 assert index.count('class="filter course-filter upcoming"') == 13
-assert index.count('class="filter course-filter pending"') == 1
+assert index.count('class="filter course-filter pending"') == 2
 assert index.count('class="filter course-filter completed"') >= 2
-assert index.count('class="filter course-filter context"') >= 2
+assert index.count('class="filter course-filter context"') >= 1
 assert '<span class="filter-status-total">17 tracked ERB classes</span>' in index
 assert '<span class="filter-status-swatch upcoming"></span>Upcoming 12' in index
-assert '<span class="filter-status-swatch pending"></span>Pending 1' in index
+assert '<span class="filter-status-swatch pending"></span>Pending 2' in index
 assert '<span class="filter-status-swatch completed"></span>Completed 2' in index
-assert '<span class="filter-status-swatch context"></span>Full-class context 2' in index
+assert '<span class="filter-status-swatch context"></span>Full-class context 1' in index
 assert '<span class="span-course-breakdown">19 total = 17 ERB + 2 SEN</span>' in index
 assert index.count('class="span-bar-label"') == 19
 assert index.count('class="span-course-toggle ') == 19
@@ -394,12 +413,12 @@ for code in ("HK239HG", "HK244EG", "HK244HG", "HK265HG", "HK280HG", "HK280HS", "
 assert course_legend.count('基督教勵行會') == 7
 assert course_legend.count('循道衞理中心') == 1
 assert '<b>HK265HG</b><span>基督教勵行會</span><em>英文授課</em>' in course_legend
-assert index.count('class="provider-badge provider-ca"') == 14
+assert index.count('class="provider-badge provider-ca"') == 15
 assert index.count('class="provider-badge provider-mc"') == 1
 course_card_classes = re.findall(r'<div class="chip ([^"]*cat-(?:erb|methodist)[^"]*)"', index)
-# Calendar month grids include adjacent-month filler days, so the 256 source
-# course entries are rendered as 512 visible card instances across the page.
-assert len(course_card_classes) == 512
+# Calendar month grids include adjacent-month filler days, so the 264 source
+# course entries are rendered as 528 visible card instances across the page.
+assert len(course_card_classes) == 528
 assert all('erb-compact' in classes for classes in course_card_classes)
 july_25_start = index.index('<div class="cell wknd has" id="d-2026-07-25">')
 july_25_end = index.index('<div class="cell wknd" id="d-2026-07-26">', july_25_start)
@@ -427,16 +446,18 @@ assert upcoming_labels[:3] == [
 ]
 assert ("Sep 16", "HK265HG · FS · SEP 2026") in upcoming_labels
 assert "英文授課／兼讀制" in upcoming and ">ENG<" in upcoming
-assert "HK281DS · CW7" not in upcoming
+assert "HK281DS · CW7" in upcoming
+assert "Helper: Fiona" in index
 assert "基督教勵行會" in upcoming
 assert "HK280HS · SS" in upcoming and "上水彩園邨彩湖樓2座地下129舖02室" in upcoming
 assert 'data-toggle-filter="1"' in upcoming
 assert '>CONFIRMED</span>' in upcoming and '>UNCONFIRMED</span>' in upcoming
 assert upcoming.count('>CONFIRMED</span>') == 12
-assert upcoming.count('>UNCONFIRMED</span>') == 1
+assert upcoming.count('>UNCONFIRMED</span>') == 2
 assert 'HK239HG · ST' in upcoming and 'HK239HG · LT' in upcoming
 assert re.findall(r'class="filter course-filter pending"[^>]*>([^<]+)</button>', index) == [
-    'HK280HS · SS (5)'
+    'HK280HS · SS (5)',
+    'HK281DS · CW7 (62)',
 ]
 assert 'class="filter course-filter context"' in index
 assert '<div id="completedHeading" class="section-h">Completed ERB classes</div>' in index

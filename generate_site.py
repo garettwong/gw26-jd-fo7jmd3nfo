@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18k-ver-scrolls-top-20260719a"
+BUILD_ID = "v18l-hk281-l52-helper-20260719a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-19-V18j"
-COMPARE_LABEL = "V18k"
-COMPARE_BASELINE_LABEL = "V18j"
-EXPECTED_COMPARISON_CHANGES = 0
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-19-V18k"
+COMPARE_LABEL = "V18l"
+COMPARE_BASELINE_LABEL = "V18k"
+EXPECTED_COMPARISON_CHANGES = 62
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -528,7 +528,13 @@ if OVERRIDES_SRC.exists():
             "status": status,
             "teacher": item.get("teacher", ""),
             "source": item.get("source", ""),
+            "excluded": bool(item.get("exclude", False)),
         })
+
+events = [event for event in events if not event.get("excluded")]
+by_date = {}
+for event in events:
+    by_date.setdefault(event["date"], []).append(event)
 
 if CONTEXT_SRC.exists():
     raw_context = json.loads(CONTEXT_SRC.read_text(encoding="utf-8"))
@@ -562,7 +568,8 @@ if CONTEXT_SRC.exists():
             "category_label": cat_label, "html": html.escape(text, quote=True),
             "title_html": html.escape(title, quote=True), "detail_html": html.escape(detail, quote=True),
             "red": bool(item.get("red", False)), "layer": layer,
-            "teacher": teacher, "source": item.get("source", ""),
+            "teacher": teacher, "helper": str(item.get("helper", "")).strip(),
+            "source": item.get("source", ""),
         }
         context_events.append(ev)
         by_date.setdefault(dt.isoformat(), []).append(ev)
@@ -1003,12 +1010,13 @@ def event_fields(ev):
         "time": display_times(text),
         "lesson": lesson,
         "notes": display_notes(text),
+        "helper": str(ev.get("helper") or "").strip(),
     }
 
 
 def event_layer(ev):
-    if ev.get("layer") == "class":
-        return "class"
+    if ev.get("layer") in {"mine", "class"}:
+        return ev["layer"]
     if ev.get("category") == "mike":
         return "other"
     if ev.get("category") != "erb":
@@ -1136,11 +1144,15 @@ def chip(ev):
                      f'<span class="class-dot" aria-hidden="true"></span>{ehtml(class_label)}</span>')
     teacher_cls = " is-missing" if fields["teacher"] == "-" else " is-alert" if fields["teacher"] in {"Andy", "Calvin"} else ""
     note_html = "".join(f' <span class="card-note">[{ehtml(note)}]</span>' for note in fields["notes"])
+    helper_html = (
+        f'<span class="erb-sep">&middot;</span><span class="erb-helper">Helper: {ehtml(fields["helper"])}</span>'
+        if fields["helper"] else ""
+    )
     return (f'<div class="chip erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}" tabindex="0" role="button" '
             f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}>'
             f'{comparison_badge}<span class="status" aria-label="{ehtml(st)}">{mark}</span>{identity_html}'
             f'<div class="erb-meta"><span class="erb-location">{ehtml(fields["location"])}</span><span class="erb-sep">&middot;</span>'
-            f'<span class="erb-teacher{teacher_cls}">Teacher: {ehtml(fields["teacher"])}</span></div>'
+            f'<span class="erb-teacher{teacher_cls}">Teacher: {ehtml(fields["teacher"])}</span>{helper_html}</div>'
             f'<div class="erb-course">{ehtml(fields["course_name"])}</div>'
             f'<div class="erb-foot"><span class="erb-time">{ehtml(fields["time"])}</span><span class="erb-sep">&middot;</span>'
             f'<span class="erb-lesson">{ehtml(fields["lesson"])}{note_html}</span></div>'
@@ -1761,6 +1773,7 @@ const transitMinutes={{
   'four_seas|choi_wan':40,'choi_wan|four_seas':40,
   'ymca_yau_ma_tei|choi_wan':37,'choi_wan|ymca_yau_ma_tei':37,
   'ymca_yau_ma_tei|four_seas':12,'four_seas|ymca_yau_ma_tei':12,
+  'shun_tin|choi_wan':30,'choi_wan|shun_tin':30,
   'sheung_shui|choi_wan':65,'choi_wan|sheung_shui':65
 }};
 const centreLabels={{sheung_shui:'Sheung Shui',four_seas:'Four Seas',choi_wan:'Choi Wan',ymca_yau_ma_tei:'YMCA',wan_chai:'Wan Chai',lam_tin:'Lam Tin',shun_tin:'Shun Tin'}};
