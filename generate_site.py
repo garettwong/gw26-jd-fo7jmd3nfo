@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18n-hk280hs-r4-confirmed-20260721a"
+BUILD_ID = "v18o-upcoming-all-dates-20260722a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-19-V18m"
-COMPARE_LABEL = "V18n"
-COMPARE_BASELINE_LABEL = "V18m"
-EXPECTED_COMPARISON_CHANGES = 5
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-21-V18n"
+COMPARE_LABEL = "V18o"
+COMPARE_BASELINE_LABEL = "V18n"
+EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -876,10 +876,11 @@ CSS += r'''
 .course-code-heading{display:flex;align-items:center;gap:8px;margin-top:22px}.course-code-heading .section-h{margin:0}.course-code-count{border:1px solid #b8c5d3;border-radius:4px;padding:2px 6px;background:#fff;color:#526174;font-size:9px;font-weight:900}
 .class-summary{margin:18px 0 4px}.class-summary-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 2px 9px}.class-summary-head .section-h{margin:0}.class-summary-key{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.class-summary-key span{display:inline-flex;align-items:center;gap:5px;color:#526174;font-size:9px;font-weight:850}.class-summary-key i{display:inline-block;width:20px;height:10px;border:2px solid #0f7074;border-radius:2px;background:#e9f7f5}.class-summary-key .pending i{border:2px dashed #a64b00;background:#fff0d2}
 .class-summary-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.class-summary-card{position:relative;display:grid;grid-template-columns:122px minmax(0,1fr) 42px 38px minmax(112px,.72fr) auto;align-items:center;gap:8px;min-width:0;border:2px solid #0f7074;border-radius:5px;padding:8px 9px;background:#edf9f7;color:#263343;text-align:left;font:inherit;cursor:pointer;box-shadow:0 1px 2px rgba(20,30,50,.06)}.class-summary-card.confirmed{border-style:solid;border-color:#0f7074;background:#eaf7f5}.class-summary-card.unconfirmed{border-width:3px;border-style:dashed;border-color:#a64b00;background:#fff3da}.class-summary-card.mixed{border-width:3px;border-style:dashed;border-color:#6b4bb5;background:#f3efff}.class-summary-card.completed{border-color:#64748b;background:#f3f6f9}.class-summary-card:hover{filter:brightness(.985)}.class-summary-card:focus-visible{outline:3px solid #ffc857;outline-offset:2px}.class-summary-card.active,.class-summary-card.active.confirmed,.class-summary-card.active.unconfirmed,.class-summary-card.active.mixed,.class-summary-card.active.completed{background:inherit;color:inherit;outline:4px solid #ffc857;outline-offset:1px;box-shadow:0 0 0 1px #1d2734,0 2px 5px rgba(20,30,50,.2)}.summary-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;min-width:0}.summary-date{display:flex;min-width:0;flex-direction:column}.summary-date small{color:#677488;font-size:7px;font-weight:900;line-height:1.05;white-space:nowrap}.summary-date strong{margin-top:2px;color:#0f7074;font-size:12px;font-weight:950;line-height:1.05;white-space:nowrap}.summary-lesson-count{color:#0f7074!important;font-weight:900!important}.class-summary-card.unconfirmed .summary-lesson-count{color:#9b4a00!important}.class-summary-card.active .summary-date strong{color:#0f7074}.class-summary-card.active .upcoming-course-copy span,.class-summary-card.active .upcoming-place span{color:#536174}.class-summary-card.active .upcoming-place{border-left-color:#b9c5d1}.class-summary-card.active .upcoming-language{border-color:#a8b5c4;background:#eef3f7;color:#405064}.provider-badge{display:flex;width:36px;height:30px;align-items:center;justify-content:center;border:2px solid #1d2734;border-radius:5px;color:#fff;font-size:12px;font-weight:950;line-height:1;box-shadow:0 1px 2px rgba(20,30,50,.18)}.provider-badge.provider-ca{background:#006f78}.provider-badge.provider-mc{background:#6552a3}.summary-status{justify-self:end;border-radius:4px;padding:3px 6px;color:#fff;font-size:8px;font-weight:950;letter-spacing:0;white-space:nowrap}.confirmed .summary-status{background:#0f7074}.unconfirmed .summary-status{background:#a64b00}.mixed .summary-status{background:#6b4bb5}.completed .summary-status{background:#64748b}.completed-summary{margin-top:20px}.completed-summary .class-summary-card{opacity:.94}.completed-summary .summary-date strong{color:#526174}
+.summary-class-dates{display:flex;grid-column:1/-1;align-items:flex-start;gap:5px;min-width:0;padding-top:6px;border-top:1px solid #c9dbdc}.summary-class-dates-label{flex:0 0 auto;padding-top:3px;color:#526174;font-size:8px;font-weight:950}.summary-class-date-list{display:flex;flex-wrap:wrap;gap:4px;min-width:0}.summary-class-date{display:inline-flex;align-items:center;justify-content:center;min-height:20px;padding:2px 5px;border:1px solid #9eacbb;border-radius:4px;background:#fff;color:#526174;font-size:8px;font-weight:900;line-height:1;white-space:nowrap}.summary-class-date.mine{border:2px solid #063f43;background:#0f7074;color:#fff;box-shadow:0 0 0 1px #fff inset}.class-summary-card.unconfirmed .summary-class-dates{border-top-color:#d8b985}.class-summary-card.active .summary-class-date.mine{background:#0f7074;color:#fff}.class-summary-key .my-date-key i{border:2px solid #063f43;background:#0f7074}.class-summary-key .other-date-key i{border:1px solid #9eacbb;background:#fff}
 .span-shell{--span-day-width:16px;--span-timeline-width:3920px}.span-control-bar{align-items:center}.span-month-controls{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.span-month-controls-label{margin-right:3px;color:#5f6d7f;font-size:10px;font-weight:900}.span-month-toggle{min-width:40px;min-height:34px;border:1px solid #aebdcc;border-radius:5px;padding:4px 7px;background:#0f7074;color:#fff;font:inherit;font-size:9px;font-weight:900;cursor:pointer}.span-month-toggle[aria-pressed="false"]{background:#fff;color:#687689;text-decoration:line-through}.span-month-toggle:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.span-axis{min-height:58px}.span-axis-track{display:flex;height:58px;width:var(--span-timeline-width);overflow:hidden}.span-month{position:relative;inset:auto;display:block;flex:0 0 calc(var(--month-days) * var(--span-day-width));width:calc(var(--month-days) * var(--span-day-width));height:58px;border-left:1px solid #aebdcc;color:#4f5d70;text-align:center}.span-month[hidden],.span-track-month[hidden]{display:none!important}.span-month>strong{display:block;height:24px;padding-top:5px;border-bottom:1px solid #cfd8e5;font-size:10px;font-weight:950}.span-days{display:grid;grid-template-columns:repeat(var(--month-days),var(--span-day-width));height:34px}.span-day{display:flex;align-items:center;justify-content:center;border-left:1px solid #e0e6ed;color:#708094;font-size:7px;font-weight:750;overflow:hidden}.span-day:first-child{border-left:0}.span-row{min-height:76px}.span-label{position:sticky;padding-right:38px}.span-row-toggle{position:absolute;top:8px;right:8px;width:24px;height:24px;border:1px solid #b7c3d0;border-radius:4px;background:#fff;color:#4c5b6d;font:inherit;font-size:13px;font-weight:900;line-height:1;cursor:pointer}.span-row-toggle:hover{background:#fff0ee;color:#a1261f}.span-row-toggle:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.span-track{height:76px;width:var(--span-timeline-width);background:none}.span-track-grid{position:absolute;inset:0;display:flex;z-index:0;overflow:hidden;pointer-events:none}.span-track-month{display:block;flex:0 0 calc(var(--month-days) * var(--span-day-width));width:calc(var(--month-days) * var(--span-day-width));height:100%;border-left:1px solid #aebdcc;background-image:repeating-linear-gradient(to right,transparent 0,transparent calc(var(--span-day-width) - 1px),#e0e6ed calc(var(--span-day-width) - 1px),#e0e6ed var(--span-day-width))}.span-track-month:first-child{border-left:0}.span-bar{top:20px;z-index:1;height:36px;min-width:var(--span-day-width);border-radius:4px}.span-marker{width:8px;height:18px;border-radius:3px}.span-marker.mine{width:10px;height:28px;border-radius:3px}.span-bar::before,.span-bar::after{font-size:7px}.span-table{width:calc(var(--span-label-width) + var(--span-timeline-width));min-width:calc(var(--span-label-width) + var(--span-timeline-width))}.span-axis,.span-row{grid-template-columns:var(--span-label-width) var(--span-timeline-width)}
 .completed-summary .class-summary-card{grid-template-columns:122px minmax(0,1fr) 42px 38px minmax(112px,.72fr) auto}
 @media(max-width:1100px){.class-summary-list{grid-template-columns:1fr}}
-@media(max-width:820px){.course-code-heading{align-items:flex-start}.class-summary-head{align-items:flex-start;flex-direction:column}.class-summary-card,.completed-summary .class-summary-card{grid-template-columns:minmax(0,1fr) 38px 38px auto;padding:8px}.class-summary-card .summary-dates{grid-column:1/-1;width:max-content;grid-template-columns:repeat(2,64px);padding-bottom:2px}.class-summary-card .upcoming-place{grid-column:1/-1}.summary-status{grid-column:4}.span-month-controls{width:100%}.span-month-controls-label{width:100%}.span-month-toggle{flex:1;min-width:44px}.span-row-toggle{top:6px;right:6px}.span-shell{--span-day-width:16px}}
+@media(max-width:820px){.course-code-heading{align-items:flex-start}.class-summary-head{align-items:flex-start;flex-direction:column}.class-summary-card,.completed-summary .class-summary-card{grid-template-columns:minmax(0,1fr) 38px 38px auto;padding:8px}.class-summary-card .summary-dates{grid-column:1/-1;width:max-content;grid-template-columns:repeat(2,64px);padding-bottom:2px}.class-summary-card .upcoming-place{grid-column:1/-1}.summary-status{grid-column:4}.summary-class-dates{align-items:flex-start}.summary-class-date{font-size:8.5px}.span-month-controls{width:100%}.span-month-controls-label{width:100%}.span-month-toggle{flex:1;min-width:44px}.span-row-toggle{top:6px;right:6px}.span-shell{--span-day-width:16px}}
 @media (orientation:landscape) and (max-height:700px) and (max-width:1400px) and (pointer:coarse){.class-summary{display:none}.span-month-toggle{min-height:28px;font-size:8px}.span-axis{min-height:50px}.span-axis-track,.span-month{height:50px}.span-month>strong{height:21px;padding-top:4px}.span-days{height:29px}.span-row{min-height:60px}.span-track{height:60px}.span-bar{top:13px;height:34px}}
 @media print{.class-summary{display:none}.span-month-controls,.span-row-toggle{display:none}}
 '''
@@ -1312,6 +1313,15 @@ def class_summary_button(group, section):
     my_first_label = f"{calendar.month_abbr[my_first_day.month]} {my_first_day.day}"
     class_first_label = f"{calendar.month_abbr[class_first_day.month]} {class_first_day.day}"
     lesson_count_label = f"我的堂數 {len(mine_events)} / 全班 {len(all_group_events)}"
+    all_class_dates = sorted({event["date"] for event in all_group_events})
+    mine_class_dates = {event["date"] for event in mine_events}
+    class_dates_html = ''.join(
+        f'<span class="summary-class-date{" mine" if date_value in mine_class_dates else ""}" '
+        f'title="{"你需要任教" if date_value in mine_class_dates else "其他導師"}">'
+        f'{calendar.month_abbr[datetime.date.fromisoformat(date_value).month]} '
+        f'{datetime.date.fromisoformat(date_value).day}</span>'
+        for date_value in all_class_dates
+    )
     if section == "upcoming":
         section_events = [event for day, event in dated_events if day >= UPCOMING_AS_OF]
         if not section_events:
@@ -1350,6 +1360,8 @@ def class_summary_button(group, section):
         f'aria-label="{ehtml(provider_code)}: {ehtml(centre)}">{ehtml(provider_code)}</span>'
         f'<span class="upcoming-place"><strong>{ehtml(centre)}</strong><span>{ehtml(location)}</span></span>'
         f'<span class="summary-status">{ehtml(status_label)}</span>'
+        f'<span class="summary-class-dates"><span class="summary-class-dates-label">全班日期</span>'
+        f'<span class="summary-class-date-list">{class_dates_html}</span></span>'
         f'</button>'
     )
     return display_day, natural_key(label), html_button
@@ -1360,7 +1372,9 @@ def class_summary_section(section, heading, heading_id):
     courses.sort(key=lambda item: (item[0], item[1]), reverse=section == "completed")
     status_key = (
         '<div class="class-summary-key" aria-label="Class confirmation key">'
-        '<span><i></i>Confirmed</span><span class="pending"><i></i>Unconfirmed</span></div>'
+        '<span><i></i>Confirmed</span><span class="pending"><i></i>Unconfirmed</span>'
+        '<span class="my-date-key"><i></i>你任教日期</span>'
+        '<span class="other-date-key"><i></i>其他導師日期</span></div>'
         if section == "upcoming" else ""
     )
     return (

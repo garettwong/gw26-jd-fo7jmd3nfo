@@ -392,23 +392,23 @@ assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
 assert "window.scrollTo({top:0,left:0,behavior:'smooth'});" in index
 assert "location.assign(target);" not in index
-assert "v18n-hk280hs-r4-confirmed-20260721a" in index
+assert "v18o-upcoming-all-dates-20260722a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
 assert 'Web - VER button returns to the in-page version selector.' in index
-assert 'data-version-id="2026-07-21-V18n"' in index
-assert 'data-build-id="v18n-hk280hs-r4-confirmed-20260721a"' in index
+assert 'data-version-id="2026-07-22-V18o"' in index
+assert 'data-build-id="v18o-upcoming-all-dates-20260722a"' in index
 assert 'class="version-menu-item current"' in index
 assert "target.searchParams.set('build',btn.dataset.buildId)" in index
 assert "btn.classList.add('loading')" in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
-assert 'data-filter="changed"' in index
-assert '<span class="sample changed-sample"></span> Changed in V18n' in index
-assert SUMMARY["changed_in_version"] == 5
-assert index.count('class="change-badge"') == 10
+assert 'data-filter="changed"' not in index
+assert '<span class="sample changed-sample"></span> Changed in V18o' not in index
+assert SUMMARY["changed_in_version"] == 0
+assert index.count('class="change-badge"') == 0
 assert index.count('class="filter course-filter upcoming"') == 15
 assert index.count('class="filter course-filter pending"') == 0
 assert index.count('class="filter course-filter completed"') >= 2
@@ -486,6 +486,16 @@ assert "Helper: Fiona" in index
 assert "基督教勵行會" in upcoming
 assert "HK280HS · SS" in upcoming and "上水彩園邨彩湖樓2座地下129舖02室" in upcoming
 assert 'data-toggle-filter="1"' in upcoming
+assert upcoming.count('class="summary-class-dates"') == 14
+assert '<span class="my-date-key"><i></i>你任教日期</span>' in index
+assert '<span class="other-date-key"><i></i>其他導師日期</span>' in index
+upcoming_cards = re.findall(r'<button class="class-summary-card[^>]+>.*?</button>', upcoming, re.S)
+hk239_fs_card = next(card for card in upcoming_cards if '<strong>HK239HG · FS</strong>' in card)
+assert '<span class="summary-class-date mine" title="你需要任教">Aug 14</span>' in hk239_fs_card
+assert '<span class="summary-class-date mine" title="你需要任教">Aug 19</span>' in hk239_fs_card
+assert '<span class="summary-class-date" title="其他導師">Aug 21</span>' in hk239_fs_card
+assert hk239_fs_card.count('class="summary-class-date mine"') == 2
+assert hk239_fs_card.count('class="summary-class-date" title="其他導師"') == 1
 assert '>CONFIRMED</span>' in upcoming and '>UNCONFIRMED</span>' not in upcoming
 assert upcoming.count('>CONFIRMED</span>') == 14
 assert upcoming.count('>UNCONFIRMED</span>') == 0
