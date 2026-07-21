@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-21-V18n",
+    "label": "2026-07-21 - V18n",
+    "summary": "HK280HS SS - R4 confirmed; Garett L1 only, L2-L5 other tutor / TBC.",
+    "latest": true
+  },
+  {
     "id": "2026-07-19-V18m",
     "label": "2026-07-19 - V18m",
     "summary": "HK281DS CW7 - Demian Yuen L51 and Garett L52 confirmed; latest Calvin helpers and both start dates shown.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-19-V18l",

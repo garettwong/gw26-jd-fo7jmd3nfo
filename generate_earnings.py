@@ -171,10 +171,20 @@ def build_report(item: dict, events: list[dict]) -> dict:
         "Overlapping time ranges on the same date are merged to prevent double payment.",
     ]
     if revised_rules:
-        notes.extend([
-            "DGS is counted as the final agreed flat total of HKD 7,000.",
-            "Confirmed + unconfirmed includes HK280HS SS once as an 18-hour pending course (HKD 5,400); its five availability placeholders are not five separate 18-hour courses.",
-        ])
+        notes.append("DGS is counted as the final agreed flat total of HKD 7,000.")
+        if item["id"] < "2026-07-21-V18n":
+            notes.append(
+                "Confirmed + unconfirmed includes HK280HS SS once as an 18-hour pending course (HKD 5,400); its five availability placeholders are not five separate 18-hour courses."
+            )
+        elif any(
+            event.get("status") == "unconfirmed"
+            and PROPOSED_AVAILABILITY_RE.search(str(event.get("text", "")))
+            and HK280HS_SS_RE.search(str(event.get("text", "")))
+            for event in events
+        ):
+            notes.append(
+                "Confirmed + unconfirmed includes HK280HS SS once as an 18-hour pending course; its five availability placeholders are not five separate courses."
+            )
     notes.append(
         "The June 18 afternoon SEN entry is included because the source says black rain but does not say cancelled."
     )

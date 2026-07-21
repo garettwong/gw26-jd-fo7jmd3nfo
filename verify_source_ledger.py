@@ -302,31 +302,44 @@ for row in hk239_fs:
         f"HK239HG FS L{number}: layer {row.get('layer')!r}, expected {expected_layer!r}"
     )
 
-# HK280HS SS remains an enquiry. These five records are availability only.
+# HK280HS SS R4 is confirmed as a five-lesson class. The teacher column assigns
+# Garett only to L1; blank teacher cells remain Other tutor / TBC.
 hk280hs_ss = rows_with("HK280HS", "Class SS")
 assert len(hk280hs_ss) == 5
-assert [row["date"] for row in hk280hs_ss] == [
-    "2026-09-09",
-    "2026-09-10",
-    "2026-09-12",
-    "2026-09-14",
-    "2026-09-19",
+assert [(row["date"], lesson(row)) for row in hk280hs_ss] == [
+    ("2026-09-14", 1),
+    ("2026-09-15", 2),
+    ("2026-09-17", 3),
+    ("2026-09-22", 4),
+    ("2026-09-22", 5),
 ]
-assert all(teacher(row) == "Garett" for row in hk280hs_ss)
-assert all(row["status"] == "unconfirmed" for row in hk280hs_ss)
-assert all(row.get("layer") == "mine" for row in hk280hs_ss)
-assert all(row.get("red") for row in hk280hs_ss)
-assert all("PROPOSED availability only" in row["text"] for row in hk280hs_ss)
-assert all("Lesson TBC" in row["text"] for row in hk280hs_ss)
-assert all("EXACT LESSON DATE/TIME PENDING CALVIN" in row["text"] for row in hk280hs_ss)
-sep14 = next(row for row in hk280hs_ss if row["date"] == "2026-09-14")
-assert "AM / PM OK UNTIL 17:00 - NO NIGHT" in sep14["text"]
-assert all(
-    "AM / PM / NIGHT OK" in row["text"]
-    for row in hk280hs_ss
-    if row["date"] != "2026-09-14"
-)
-assert all("0900 - 1300" not in row["text"] for row in hk280hs_ss)
+assert Counter(teacher(row) for row in hk280hs_ss) == Counter({
+    "Garett": 1,
+    "Other tutor / TBC": 4,
+})
+assert all(row["status"] == "confirmed" for row in hk280hs_ss)
+assert [row.get("layer") for row in hk280hs_ss] == [
+    "mine",
+    "class",
+    "class",
+    "class",
+    "class",
+]
+assert all("HK280HSSS_R4.docx" in row.get("source", "") for row in hk280hs_ss)
+assert "0900-1300" in hk280hs_ss[0]["text"]
+assert "0900-1230" in hk280hs_ss[1]["text"]
+assert "1400-1730" in hk280hs_ss[2]["text"]
+assert "0900-1230" in hk280hs_ss[3]["text"]
+assert "1400-1730" in hk280hs_ss[4]["text"]
+for number, marker in {
+    3: "Continuous Assessment - Individual Assignment 1",
+    4: "Continuous Assessment - Individual Assignment 2",
+    5: "Final Written Test 16:00-17:00",
+}.items():
+    row = next(item for item in hk280hs_ss if lesson(item) == number)
+    assert marker in row["text"] and row.get("red")
+assert not any("PROPOSED availability only" in row["text"] for row in ALL)
+assert not any("Lesson TBC" in row["text"] for row in hk280hs_ss)
 
 # V18a does not displace any confirmed SEN, HK265HG, or HK244EG assignment.
 hk244_cw_l10 = next(row for row in cw if lesson(row) == 10)
@@ -379,13 +392,13 @@ assert '<span class="mode-main">VER</span>' in index
 assert "&#9776;" not in index
 assert "window.scrollTo({top:0,left:0,behavior:'smooth'});" in index
 assert "location.assign(target);" not in index
-assert "v18m-hk281-l51-l52-confirmed-dual-start-20260719a" in index
+assert "v18n-hk280hs-r4-confirmed-20260721a" in index
 versions = json.loads((ROOT / "versions.json").read_text(encoding="utf-8"))
 assert index.count('class="version-menu-item') == len(versions)
 assert '<details id="topVersionSelector" class="version-menu">' in index
 assert 'Web - VER button returns to the in-page version selector.' in index
-assert 'data-version-id="2026-07-19-V18m"' in index
-assert 'data-build-id="v18m-hk281-l51-l52-confirmed-dual-start-20260719a"' in index
+assert 'data-version-id="2026-07-21-V18n"' in index
+assert 'data-build-id="v18n-hk280hs-r4-confirmed-20260721a"' in index
 assert 'class="version-menu-item current"' in index
 assert "target.searchParams.set('build',btn.dataset.buildId)" in index
 assert "btn.classList.add('loading')" in index
@@ -393,22 +406,22 @@ version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
-assert '<span class="sample changed-sample"></span> Changed in V18m' in index
-assert SUMMARY["changed_in_version"] == 29
-assert index.count('class="change-badge"') == 58
-assert index.count('class="filter course-filter upcoming"') == 14
-assert index.count('class="filter course-filter pending"') == 1
+assert '<span class="sample changed-sample"></span> Changed in V18n' in index
+assert SUMMARY["changed_in_version"] == 5
+assert index.count('class="change-badge"') == 10
+assert index.count('class="filter course-filter upcoming"') == 15
+assert index.count('class="filter course-filter pending"') == 0
 assert index.count('class="filter course-filter completed"') >= 2
 assert index.count('class="filter course-filter context"') >= 1
 assert '<span class="filter-status-total">17 tracked ERB classes</span>' in index
-assert '<span class="filter-status-swatch upcoming"></span>Upcoming 13' in index
-assert '<span class="filter-status-swatch pending"></span>Pending 1' in index
+assert '<span class="filter-status-swatch upcoming"></span>Upcoming 14' in index
+assert '<span class="filter-status-swatch pending"></span>Pending 0' in index
 assert '<span class="filter-status-swatch completed"></span>Completed 2' in index
 assert '<span class="filter-status-swatch context"></span>Full-class context 1' in index
 assert '<span class="span-course-breakdown">19 total = 17 ERB + 2 SEN</span>' in index
 assert index.count('class="span-bar-label"') == 19
 assert index.count('class="span-course-toggle ') == 19
-assert index.count("Lesson TBC") >= 5
+assert "PROPOSED availability only" not in index
 assert index.count('data-day-hours hidden') >= 400
 assert 'data-teaching-intervals="480-590,660-780"' in index
 assert 'function refreshDailyHours()' in index
@@ -473,13 +486,11 @@ assert "Helper: Fiona" in index
 assert "基督教勵行會" in upcoming
 assert "HK280HS · SS" in upcoming and "上水彩園邨彩湖樓2座地下129舖02室" in upcoming
 assert 'data-toggle-filter="1"' in upcoming
-assert '>CONFIRMED</span>' in upcoming and '>UNCONFIRMED</span>' in upcoming
-assert upcoming.count('>CONFIRMED</span>') == 13
-assert upcoming.count('>UNCONFIRMED</span>') == 1
+assert '>CONFIRMED</span>' in upcoming and '>UNCONFIRMED</span>' not in upcoming
+assert upcoming.count('>CONFIRMED</span>') == 14
+assert upcoming.count('>UNCONFIRMED</span>') == 0
 assert 'HK239HG · ST' in upcoming and 'HK239HG · LT' in upcoming
-assert re.findall(r'class="filter course-filter pending"[^>]*>([^<]+)</button>', index) == [
-    'HK280HS · SS (5)',
-]
+assert re.findall(r'class="filter course-filter pending"[^>]*>([^<]+)</button>', index) == []
 assert 'class="filter course-filter context"' in index
 assert '<div id="completedHeading" class="section-h">Completed ERB classes</div>' in index
 completed_start = index.index('<section class="class-summary completed-summary"')
@@ -496,7 +507,7 @@ assert index.count('class="span-day"') == 245
 assert 'const spanZoomLevels=[8,12,16,22,30,40]' in index
 assert 'function layoutSpanTimeline()' in index
 
-# The eleven confirmed Christian Action course instances are independently present.
+# The twelve confirmed Christian Action course instances are independently present.
 confirmed_ca_specs = [
     ("HK265HG", "Class FS", "2026-07-24", 12),
     ("HK244HG", "Class CW8", "2026-08-06", 12),
@@ -509,6 +520,7 @@ confirmed_ca_specs = [
     ("HK265HG", "Class FS", "2026-09-16", 12),
     ("HK244EG", "Class FS", "2026-09-21", 18),
     ("HK239HG", "Class 城巿一條龍", "2026-11-11", 6),
+    ("HK280HS", "Class SS", "2026-09-14", 5),
 ]
 for code, class_name, first_date, count in confirmed_ca_specs:
     matches = [
@@ -555,6 +567,9 @@ assessment_cards = [
     ("2026-11-13", "HK239HG · 城巿一條龍", "Lesson 6", "Final Exam"),
     ("2026-10-31", "HK239HG · ST", "Lesson 5", "小組討論及專題報告"),
     ("2026-11-07", "HK239HG · ST", "Lesson 6", "期末筆試"),
+    ("2026-09-17", "HK280HS · SS", "Lesson 3", "Continuous Assessment - Individual Assignment 1"),
+    ("2026-09-22", "HK280HS · SS", "Lesson 4", "Continuous Assessment - Individual Assignment 2"),
+    ("2026-09-22", "HK280HS · SS", "Lesson 5", "Final Written Test 16:00-17:00"),
     ("2026-11-27", "HK239HG · LT", "Lesson 5", "小組討論及專題報告"),
     ("2026-11-30", "HK239HG · LT", "Lesson 6", "期末筆試"),
 ]
