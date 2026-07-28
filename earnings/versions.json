@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-28-V18r",
+    "label": "2026-07-28 - V18r",
+    "summary": "Salary - DGS marked received; five received payments hidden by default with the same reversible toggle.",
+    "latest": true
+  },
+  {
     "id": "2026-07-28-V18q",
     "label": "2026-07-28 - V18q",
     "summary": "Salary - four received payments hidden by default with a reversible show/hide toggle.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-28-V18p",

@@ -13,12 +13,12 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18q-received-payment-toggle-20260728a"
+BUILD_ID = "v18r-dgs-received-toggle-20260728a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
 COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-22-V18o"
-COMPARE_LABEL = "V18q"
+COMPARE_LABEL = "V18r"
 COMPARE_BASELINE_LABEL = "V18o"
 EXPECTED_COMPARISON_CHANGES = 0
 

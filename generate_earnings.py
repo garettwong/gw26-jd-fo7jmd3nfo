@@ -352,6 +352,9 @@ def build_report(
                         row["label"],
                         row["invoice_date"],
                     ) in RECEIVED_PAYMENTS
+                if item["id"] >= "2026-07-28-V18r":
+                    for row in report[mode]["expected_payments"]["undated"]:
+                        row["received"] = row["kind"] == "DGS"
         report["notes"].extend([
             "ERB 預計到賬日以全班最後一課後 21 個曆日規劃；Calvin 說的是 3 星期內，因此實際可能較早或受會計處理影響。",
             "SEN 預計到賬日以每月最後一日後 7 個曆日規劃。",
@@ -403,19 +406,25 @@ async function start(){
     document.getElementById('title').textContent=data.name+' - Salary';
     document.getElementById('subtitle').textContent=data.period+' · '+data.version+' · Updated '+data.generated;
     document.getElementById('notes').innerHTML=data.notes.map(x=>'<li>'+esc(x)+'</li>').join('');
-    const receivedStorageKey='garetts-erb-show-received-v1';
+    const receivedStorageKey='garetts-erb-show-received-v2';
     let showReceived=localStorage.getItem(receivedStorageKey)==='1';
     let activeMode='confirmed';
     const receivedToggle=document.getElementById('receivedToggle');
     function renderExpected(schedule){
       const receivedRows=schedule.rows.filter(r=>r.received);
-      const receivedAmount=receivedRows.reduce((total,r)=>total+r.amount,0);
+      const receivedUndated=schedule.undated.filter(r=>r.received);
+      const receivedItems=[...receivedRows,...receivedUndated];
+      const receivedAmount=receivedItems.reduce((total,r)=>total+r.amount,0);
       const visibleRows=showReceived?schedule.rows:schedule.rows.filter(r=>!r.received);
+      const visibleUndated=showReceived?schedule.undated:schedule.undated.filter(r=>!r.received);
       document.getElementById('expectedRows').innerHTML=visibleRows.map(r=>'<tr class="'+(r.received?'received-payment':'')+'"><td><span class="pay-kind '+(r.kind==='SEN'?'sen':'')+'">'+esc(r.kind)+'</span><span class="pay-label">'+esc(r.label)+'</span>'+(r.received?'<span class="received-badge">已收款</span>':'')+'<span class="pay-course">'+esc(r.course_name)+'</span></td><td>'+esc(r.invoice_date)+'</td><td class="pay-date">'+esc(r.expected_payment_date)+'</td><td><span class="pay-basis">'+esc(r.basis)+'</span><br>'+hours(r.hours)+' hours</td><td class="total">'+money(r.amount)+'</td></tr>').join('')||'<tr><td colspan="5">沒有尚未收取的款項。</td></tr>';
-      receivedToggle.hidden=!receivedRows.length;
+      const undated=document.getElementById('undated');
+      undated.hidden=!visibleUndated.length;
+      undated.innerHTML=visibleUndated.map(r=>'<strong>'+esc(r.label)+': '+money(r.amount)+'</strong>'+(r.received?'<span class="received-badge">已收款</span>':'')+' · '+esc(r.reason)).join('<br>');
+      receivedToggle.hidden=!receivedItems.length;
       receivedToggle.setAttribute('aria-pressed',String(showReceived));
-      receivedToggle.textContent=(showReceived?'隱藏':'顯示')+'已收款項（'+receivedRows.length+'）';
-      document.getElementById('receivedSummary').textContent=receivedRows.length?(showReceived?'正在顯示':'已隱藏')+' '+receivedRows.length+' 筆已收款項，共 '+money(receivedAmount):'';
+      receivedToggle.textContent=(showReceived?'隱藏':'顯示')+'已收款項（'+receivedItems.length+'）';
+      document.getElementById('receivedSummary').textContent=receivedItems.length?(showReceived?'正在顯示':'已隱藏')+' '+receivedItems.length+' 筆已收款項，共 '+money(receivedAmount):'';
     }
     function render(mode){
       activeMode=mode;
@@ -425,9 +434,6 @@ async function start(){
       document.getElementById('rows').innerHTML=d.months.map(r=>'<tr><td>'+r.month+'</td><td>'+hours(r.regular_hours)+'</td><td>'+money(r.regular_pay)+'</td><td>'+hours(r.dgs_hours)+'</td><td>'+money(r.dgs_pay)+'</td><td class="total">'+money(r.total)+'</td></tr>').join('');
       const schedule=d.expected_payments||{rows:[],undated:[]};
       renderExpected(schedule);
-      const undated=document.getElementById('undated');
-      undated.hidden=!schedule.undated.length;
-      undated.innerHTML=schedule.undated.map(r=>'<strong>'+esc(r.label)+': '+money(r.amount)+'</strong> · '+esc(r.reason)).join('<br>');
       document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
     }
     receivedToggle.onclick=()=>{
