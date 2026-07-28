@@ -608,5 +608,31 @@ for date, group_label, lesson_label, note in assessment_cards:
         for card in matching_cards
     ), (date, group_label, note)
 assert '.card-note{color:#d60000' in index
+assessment_reminder = (
+    "評分提醒：學員如缺席小組匯報但有參與討論／功課，"
+    "評分紙及登分紙須註明「缺席」，匯報表現扣10分。"
+)
+assert index.count(assessment_reminder) == 10
+for date, group_label in [
+    ("2026-06-22", "HK244EG · FS-1"),
+    ("2026-07-09", "HK244EG · HF2"),
+    ("2026-09-02", "HK244HG · CW8"),
+    ("2026-10-05", "HK244EG · CW"),
+    ("2026-10-29", "HK244EG · FS"),
+]:
+    opening = re.search(
+        rf'<div class="chip [^"]*"[^>]*data-date="{date}"[^>]*'
+        rf'data-group-label="{re.escape(group_label)}"[^>]*>',
+        index,
+    )
+    assert opening, (date, group_label, "assessment card missing")
+    card_end = index.find('<div class="chip ', opening.end())
+    if card_end < 0:
+        card_end = min(len(index), opening.start() + 9000)
+    assert assessment_reminder in index[opening.start():card_end], (
+        date,
+        group_label,
+        "assessment attendance reminder missing",
+    )
 print("source ledger verification passed")
 print(f"events={len(EVENTS)} context={len(CONTEXT)} display={len(ALL)}")

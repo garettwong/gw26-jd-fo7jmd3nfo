@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-28-V18p",
+    "label": "2026-07-28 - V18p",
+    "summary": "Salary - expected ERB/SEN receipt dates; HK244 group-presentation absence marking reminder.",
+    "latest": true
+  },
+  {
     "id": "2026-07-22-V18o",
     "label": "2026-07-22 - V18o",
     "summary": "Web - every upcoming class shows all course dates; Garett teaching dates highlighted.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-21-V18n",

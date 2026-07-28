@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v18o-upcoming-all-dates-20260722a"
+BUILD_ID = "v18p-expected-payment-dates-assessment-note-20260728a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-21-V18n"
-COMPARE_LABEL = "V18o"
-COMPARE_BASELINE_LABEL = "V18n"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-22-V18o"
+COMPARE_LABEL = "V18p"
+COMPARE_BASELINE_LABEL = "V18o"
 EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
@@ -762,6 +762,29 @@ for label in _group_labels:
     first_date = min(e["date"] for e in group_events)
     GROUPS.append((label, slug, group_status, first_date))
 
+PAYMENT_CONTEXT = []
+for label, slug, _group_status, _first_date in GROUPS:
+    group_events = [
+        event
+        for event in display_events
+        if event["group"] == slug and event["category"] in {"erb", "methodist"}
+    ]
+    if not group_events:
+        continue
+    code = label.split(" · ", 1)[0]
+    PAYMENT_CONTEXT.append({
+        "group": slug,
+        "label": label,
+        "course_code": code,
+        "course_name": COURSE_CHINESE_NAMES.get(code, ""),
+        "provider": "循道衞理中心" if any(
+            event["category"] == "methodist" for event in group_events
+        ) else "基督教勵行會",
+        "full_course_start": min(event["date"] for event in group_events),
+        "full_course_end": max(event["date"] for event in group_events),
+        "full_lesson_entries": len(group_events),
+    })
+
 CSS = r'''
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}body{margin:0;font-family:"Segoe UI Variable","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:#eef1f6;color:#1d2734;line-height:1.42}.xl-red{color:#d60000;font-weight:700}.chip .xl-red{color:#d60000}.modal-body .xl-red{color:#d60000;font-weight:750}.wrap{max-width:1280px;margin:0 auto;padding:28px 16px 70px}.hero{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.title{font-size:30px;font-weight:850;letter-spacing:-.45px;margin:0}.title .y{color:#0f7d7d}.sub{color:#64707f;margin:6px 0 0;font-size:14px}.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.btn{border:1px solid #d8e0ea;background:#fff;color:#344153;border-radius:10px;padding:8px 12px;font-weight:750;font-size:13px;text-decoration:none;box-shadow:0 1px 2px rgba(20,30,50,.05)}.btn:hover{border-color:#8bb8bd}.stats,.legend{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}.stat,.legend-card{background:#fff;border:1px solid #e2e7ef;border-radius:12px;padding:8px 13px;font-size:13px;color:#46505e;box-shadow:0 1px 2px rgba(20,30,50,.05)}.stat b{color:#1d2734;font-size:15px}.legend-card{display:flex;align-items:center;gap:8px}.sample{width:28px;height:18px;border-radius:6px;background:#f9fcff}.sample.confirmed{border:3px solid #1d2734}.sample.unconfirmed{border:3px dashed #1d2734}.sample.note{border:2px solid #b8c1ce}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.filter{border:2px solid #dbe3ed;background:#fff;border-radius:999px;padding:7px 11px;font-weight:750;font-size:12px;color:#4c5a6b;cursor:pointer}.filter.confirmed{border:3px solid #1d2734}.filter.unconfirmed{border:3px dashed #1d2734}.filter.mixed{border:3px dashed #1d2734;box-shadow:inset 0 0 0 2px rgba(29,39,52,.18),0 1px 2px rgba(20,30,50,.05)}.filter.note{border:2px solid #b8c1ce;color:#69737f}.filter.active{background:#0f7d7d;color:#fff;border-color:#1d2734}.filter.active.confirmed{border-style:solid}.filter.active.unconfirmed,.filter.active.mixed{border-style:dashed}.filter.active.note{border-color:#b8c1ce}.section-h{font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:#8a94a2;font-weight:800;margin:24px 2px 10px}.month{background:#fff;border:1px solid #e2e7ef;border-radius:16px;padding:16px;margin-top:18px;box-shadow:0 1px 3px rgba(20,30,50,.06)}.month h2{margin:0 0 12px;font-size:20px;font-weight:850;letter-spacing:-.2px}.gridwrap{overflow-x:auto}.grid{display:grid;grid-template-columns:repeat(7,minmax(124px,1fr));gap:7px;min-width:868px}.dow{font-size:11.5px;font-weight:800;color:#98a2af;text-align:center;padding:2px 0;text-transform:uppercase;letter-spacing:.5px}.cell{min-height:132px;border:1px solid #e8ecf3;border-radius:10px;padding:6px;background:#fcfdff;display:flex;flex-direction:column;gap:4px}.cell.out{background:#f4f6f9;border-style:dashed;opacity:.5}.cell.wknd{background:#f7f9fc}.cell.today{outline:3px solid #0f7d7d;outline-offset:1px}.dnum{font-size:12px;font-weight:850;color:#9aa4b1}.cell.has .dnum{color:#2d3948}.dnum{display:flex;align-items:baseline;gap:3px;white-space:nowrap}.dnum .dmon{font-size:13px;font-weight:900;color:#667384;text-transform:uppercase}.dnum .dday{font-size:12px;font-weight:900;color:inherit}.dnum .dweekday{margin-left:auto;font-size:10.5px;font-weight:850;color:#8792a0;text-transform:uppercase}.chip{border-radius:8px;padding:5px 7px 6px;background:#fff;box-shadow:0 1px 1px rgba(20,30,50,.04);cursor:pointer;overflow:visible}.chip.confirmed{border-style:solid!important;border-width:2.5px!important;border-color:#1d2734!important;box-shadow:0 0 0 1px rgba(29,39,52,.10) inset,0 1px 1px rgba(20,30,50,.04)}.chip.unconfirmed{border-style:dashed!important;border-width:2.5px!important;border-color:#1d2734!important;box-shadow:0 0 0 1px rgba(29,39,52,.10) inset,0 1px 1px rgba(20,30,50,.04)}.chip.note{border-style:solid!important;border-width:1.5px!important;border-color:#9aa4b2!important;background:#f8fafc}.chip .top{display:flex;justify-content:space-between;gap:6px;align-items:flex-start}.chip .cat{font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.35px;opacity:.82}.chip .status{font-size:9.5px;font-weight:850;white-space:nowrap}.class-id{display:inline-flex;align-items:center;align-self:flex-start;gap:4px;max-width:100%;margin-top:3px;padding:2px 5px;border:1.5px solid hsl(var(--class-hue),72%,14%);border-radius:4px;background:hsl(var(--class-hue),72%,22%);color:#fff;font-size:9.3px;font-weight:900;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 1px rgba(12,18,28,.22)}.class-dot{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.45)}.chip .ttl{font-size:11.5px;font-weight:850;margin-top:2px;color:#172232;line-height:1.22}.chip .det{font-size:10.2px;color:#596676;margin-top:2px;line-height:1.22;display:block;white-space:normal;overflow:visible}.chip .fulltxt{display:none}.cat-ymca{background:#e3f7fa}.cat-erb{background:#fff1e6}.cat-methodist{background:#eef0ff}.cat-dgs{background:#ecfdf3}.cat-holiday{background:#f3f4f6}.cat-mike{background:#fff8db}.cat-school{background:#fce7f3}.cat-other{background:#f6f7fb}.agenda{display:none}.aday{display:flex;gap:10px;align-items:flex-start;padding:9px 2px;border-top:1px solid #eef1f6}.aday.empty-day{display:none}.aday:first-child{border-top:none}.adate{flex:0 0 48px;text-align:center}.adate .adow{display:block;font-size:11px;font-weight:800;color:#98a2af;text-transform:uppercase}.adate .amon{display:block;font-size:10px;font-weight:900;color:#0f7d7d;text-transform:uppercase;letter-spacing:.05em;line-height:1}.adate .anum{display:block;font-size:20px;font-weight:850;color:#3a4452;line-height:1.05}.achips{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}.foot{margin-top:28px;color:#7a8492;font-size:12.5px;border-top:1px solid #e2e7ef;padding-top:14px}.modal{position:fixed;inset:0;background:rgba(18,26,38,.56);display:flex;align-items:center;justify-content:center;padding:18px;z-index:50}.modal[hidden]{display:none}.modal-card{background:#fff;border-radius:16px;max-width:560px;width:100%;padding:20px 20px 22px;box-shadow:0 14px 44px rgba(15,25,45,.32);position:relative;max-height:88vh;overflow:auto}.modal-x{position:absolute;top:8px;right:12px;border:none;background:transparent;font-size:26px;line-height:1;color:#98a2af;cursor:pointer}.modal-h{font-size:20px;font-weight:850;padding-right:24px}.modal-date{color:#69737f;font-size:13px;margin-top:2px}.modal-body{white-space:pre-wrap;margin-top:14px;font-size:15px}.pill{display:inline-block;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:850;margin-top:10px;margin-right:6px}.pill.confirmed{background:#e7f6ee;color:#16623d}.pill.unconfirmed{background:#fff3df;color:#a25600}.pill.note{background:#eef2f7;color:#596676}@media (max-width:820px){.wrap{padding:14px 10px 48px}.hero{display:block}.title{font-size:22px}.sub{font-size:13px}.actions{justify-content:flex-start;margin-top:10px}.month{padding:12px 10px 14px}.month h2{font-size:17px}.stats,.legend{gap:7px}.stat,.legend-card{font-size:12px;padding:7px 10px}}@media (orientation:portrait) and (max-width:820px){.gridwrap{display:none}.agenda{display:block}.aday{scroll-margin-top:18px}.aday.today{background:linear-gradient(90deg,rgba(15,125,125,.10),transparent);border-radius:14px}}@media (orientation:landscape) and (max-height:540px){.sub,.stats,.legend,.filters,.foot{display:none}.month{padding:8px;margin-top:10px}.month h2{font-size:15px;margin:0 0 6px}.gridwrap{overflow:visible}.grid{min-width:0;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}.dow{font-size:8.5px;letter-spacing:0;padding:0;text-transform:uppercase}.cell{min-height:98px;height:auto;padding:2px;border-radius:5px;overflow:visible}.dnum{font-size:8.5px;gap:2px}.dnum .dmon{font-size:9px}.dnum .dday{font-size:8.5px}.dnum .dweekday{font-size:6.8px}.chip{padding:2px 3px 3px;border-radius:4px;overflow:visible}.chip.confirmed{border-width:1.8px!important}.chip.unconfirmed{border-width:1.8px!important}.chip.note{border-width:1.3px!important}.chip .top{margin-bottom:1px}.chip .cat,.chip .status{font-size:5.8px;font-weight:550;letter-spacing:0}.class-id{margin-top:1px;padding:1px 2px;gap:2px;font-size:5.8px;border-radius:2px}.class-dot{width:4px;height:4px;flex-basis:4px}.chip .ttl,.chip .det{display:none}.chip .fulltxt{display:block;font-size:6.6px;font-weight:400;line-height:1.14;color:#172232;white-space:normal;overflow:visible;word-break:break-word;overflow-wrap:anywhere}}@media print{body{background:#fff}.month,.stat,.legend-card{box-shadow:none}.actions,.filters{display:none}.gridwrap{overflow:visible}.grid{min-width:0}.chip{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 '''
@@ -793,8 +816,9 @@ CSS += r'''
 .erb-foot{font-size:9.9px;font-weight:800;line-height:1.15;color:#4d5b6c;font-variant-numeric:tabular-nums}
 .erb-sep{padding:0 3px;color:#8d97a4}
 .card-note{color:#d60000;font-weight:850}
+.assessment-reminder{width:100%;margin-top:2px;padding-top:3px;border-top:1px solid rgba(214,0,0,.25);color:#c40000;font-size:8.5px;font-weight:900;line-height:1.18;text-align:center}
 .chip.erb-compact .fulltxt{display:none!important}
-@media (orientation:landscape) and (max-height:540px){.chip.erb-compact{gap:1px;padding:3px 4px 4px}.chip.erb-compact .class-id{min-height:10px;max-width:calc(100% - 14px);padding:1px 3px;font-size:6px;border-width:1.3px;border-radius:2px}.chip.erb-compact .class-dot{width:4px;height:4px;flex-basis:4px}.erb-meta,.erb-course,.erb-foot{font-size:6px;line-height:1.08}.chip.erb-compact .status{top:2px;right:3px;font-size:5.8px}}
+@media (orientation:landscape) and (max-height:540px){.chip.erb-compact{gap:1px;padding:3px 4px 4px}.chip.erb-compact .class-id{min-height:10px;max-width:calc(100% - 14px);padding:1px 3px;font-size:6px;border-width:1.3px;border-radius:2px}.chip.erb-compact .class-dot{width:4px;height:4px;flex-basis:4px}.erb-meta,.erb-course,.erb-foot{font-size:6px;line-height:1.08}.assessment-reminder{font-size:5.5px;padding-top:2px}.chip.erb-compact .status{top:2px;right:3px;font-size:5.8px}}
 @media (max-width:520px){.layer-switch{display:grid;width:100%;grid-template-columns:repeat(3,minmax(0,1fr))}.mode-filter{padding:6px 4px}}
 @media (orientation:landscape) and (max-height:540px){.layer-controls{display:none}}
 '''
@@ -960,6 +984,19 @@ def display_notes(text):
         if NOTE_WORD_RE.search(value):
             notes.append(value)
     return list(dict.fromkeys(note.strip() for note in notes if note.strip()))
+
+
+def assessment_attendance_reminder(ev, notes):
+    group_label = str(ev.get("group_label") or "")
+    if not group_label.startswith(("HK244EG", "HK244HG")):
+        return ""
+    note_text = " ".join(notes)
+    if not re.search(r"Group Presentation|持續評估小組匯報|小組匯報", note_text, re.I):
+        return ""
+    return (
+        "評分提醒：學員如缺席小組匯報但有參與討論／功課，"
+        "評分紙及登分紙須註明「缺席」，匯報表現扣10分。"
+    )
 
 
 def event_fields(ev):
@@ -1149,6 +1186,11 @@ def chip(ev):
                      f'<span class="class-dot" aria-hidden="true"></span>{ehtml(class_label)}</span>')
     teacher_cls = " is-missing" if fields["teacher"] == "-" else " is-alert" if fields["teacher"] in {"Andy", "Calvin"} else ""
     note_html = "".join(f' <span class="card-note">[{ehtml(note)}]</span>' for note in fields["notes"])
+    assessment_reminder = assessment_attendance_reminder(ev, fields["notes"])
+    assessment_html = (
+        f'<div class="assessment-reminder">{ehtml(assessment_reminder)}</div>'
+        if assessment_reminder else ""
+    )
     helper_html = (
         f'<span class="erb-sep">&middot;</span><span class="erb-helper">Helper: {ehtml(fields["helper"])}</span>'
         if fields["helper"] else ""
@@ -1160,7 +1202,7 @@ def chip(ev):
             f'<span class="erb-teacher{teacher_cls}">Teacher: {ehtml(fields["teacher"])}</span>{helper_html}</div>'
             f'<div class="erb-course">{ehtml(fields["course_name"])}</div>'
             f'<div class="erb-foot"><span class="erb-time">{ehtml(fields["time"])}</span><span class="erb-sep">&middot;</span>'
-            f'<span class="erb-lesson">{ehtml(fields["lesson"])}{note_html}</span></div>'
+            f'<span class="erb-lesson">{ehtml(fields["lesson"])}{note_html}</span></div>{assessment_html}'
             f'<div class="fulltxt">{full_html}</div></div>')
 
 
@@ -2127,6 +2169,7 @@ self.addEventListener('fetch', event => {{
 (OUTDIR / '.nojekyll').write_text('', encoding='utf-8')
 (OUTDIR / 'sw.js').write_text(SW, encoding='utf-8')
 (OUTDIR / 'events.json').write_text(json.dumps(events, ensure_ascii=False, indent=2), encoding='utf-8')
+(OUTDIR / 'payment_context.json').write_text(json.dumps(PAYMENT_CONTEXT, ensure_ascii=False, indent=2), encoding='utf-8')
 (OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "override_source": str(OVERRIDES_SRC), "override_revision": override_revision, "override_confirmation": override_confirmation, "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "class_spans": len(span_rows), "comparison_baseline": str(COMPARE_BASELINE), "comparison_label": COMPARE_LABEL, "changed_in_version": len(changed_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
 (OUTDIR / 'manifest.webmanifest').write_text(json.dumps({"id":"./","name":"Garett's ERB","short_name":"Garett's ERB","description":"Garett's ERB teaching timetable","start_url":"./?v=redtext1&build=" + BUILD_ID,"scope":"./","display":"standalone","background_color":"#eef1f6","theme_color":"#0f7074","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}, ensure_ascii=False, indent=2), encoding='utf-8')
 try:
