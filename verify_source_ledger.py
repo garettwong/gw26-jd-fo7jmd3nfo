@@ -406,9 +406,9 @@ version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
-assert '<span class="sample changed-sample"></span> Changed in V18s' in index
-assert SUMMARY["changed_in_version"] == 5
-assert index.count('class="change-badge"') == 10
+assert '<span class="sample changed-sample"></span> Changed in V18t' in index
+assert SUMMARY["changed_in_version"] == 1
+assert index.count('class="change-badge"') == 2
 assert index.count('class="filter course-filter upcoming"') == 15
 assert index.count('class="filter course-filter pending"') == 1
 assert index.count('class="filter course-filter completed"') >= 2

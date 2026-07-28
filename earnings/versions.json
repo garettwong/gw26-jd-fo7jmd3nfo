@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-28-V18t",
+    "label": "2026-07-28 - V18t",
+    "summary": "HK280HG CW - Sep 10 afternoon proposal changed to 14:00-17:30.",
+    "latest": true
+  },
+  {
     "id": "2026-07-28-V18s",
     "label": "2026-07-28 - V18s",
     "summary": "HK280HG CW - five proposed Choi Wan lessons, 18 hours; pending Calvin confirmation.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-28-V18r",
