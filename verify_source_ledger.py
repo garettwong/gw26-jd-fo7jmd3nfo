@@ -364,12 +364,12 @@ assert not any(
 
 index = (ROOT / "index.html").read_text(encoding="utf-8")
 assert "May 2026" in index and "HK244HG" in index
-assert index.count('class="span-row"') == 19
+assert index.count('class="span-row"') == 20
 assert 'data-first="2026-07-24" data-last="2026-08-12"' in index
 assert 'data-first="2026-09-16" data-last="2026-10-14"' in index
 assert 'data-first="2026-08-14" data-last="2026-08-21"' in index
 assert "HK265HG · FS · JUL 2026" in index and "HK265HG · FS · SEP 2026" in index
-assert index.count('data-span-course="') == 19
+assert index.count('data-span-course="') == 20
 assert all(control in index for control in (
     'id="spanLabelsToggle"', 'id="spanZoomOut"', 'id="spanZoomReset"', 'id="spanZoomIn"',
     'data-span-course-action="all"', 'data-span-course-action="none"',
@@ -405,22 +405,22 @@ assert "btn.classList.add('loading')" in index
 version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
-assert 'data-filter="changed"' not in index
-assert '<span class="sample changed-sample"></span> Changed in V18o' not in index
-assert SUMMARY["changed_in_version"] == 0
-assert index.count('class="change-badge"') == 0
+assert 'data-filter="changed"' in index
+assert '<span class="sample changed-sample"></span> Changed in V18s' in index
+assert SUMMARY["changed_in_version"] == 5
+assert index.count('class="change-badge"') == 10
 assert index.count('class="filter course-filter upcoming"') == 15
-assert index.count('class="filter course-filter pending"') == 0
+assert index.count('class="filter course-filter pending"') == 1
 assert index.count('class="filter course-filter completed"') >= 2
 assert index.count('class="filter course-filter context"') >= 1
-assert '<span class="filter-status-total">17 tracked ERB classes</span>' in index
+assert '<span class="filter-status-total">18 tracked ERB classes</span>' in index
 assert '<span class="filter-status-swatch upcoming"></span>Upcoming 14' in index
-assert '<span class="filter-status-swatch pending"></span>Pending 0' in index
+assert '<span class="filter-status-swatch pending"></span>Pending 1' in index
 assert '<span class="filter-status-swatch completed"></span>Completed 2' in index
 assert '<span class="filter-status-swatch context"></span>Full-class context 1' in index
-assert '<span class="span-course-breakdown">19 total = 17 ERB + 2 SEN</span>' in index
-assert index.count('class="span-bar-label"') == 19
-assert index.count('class="span-course-toggle ') == 19
+assert '<span class="span-course-breakdown">20 total = 18 ERB + 2 SEN</span>' in index
+assert index.count('class="span-bar-label"') == 20
+assert index.count('class="span-course-toggle ') == 20
 assert "PROPOSED availability only" not in index
 assert index.count('data-day-hours hidden') >= 400
 assert 'data-teaching-intervals="480-590,660-780"' in index
@@ -438,12 +438,12 @@ for code in ("HK239HG", "HK244EG", "HK244HG", "HK265HG", "HK280HG", "HK280HS", "
 assert course_legend.count('基督教勵行會') == 7
 assert course_legend.count('循道衞理中心') == 1
 assert '<b>HK265HG</b><span>基督教勵行會</span><em>英文授課</em>' in course_legend
-assert index.count('class="provider-badge provider-ca"') == 15
+assert index.count('class="provider-badge provider-ca"') == 16
 assert index.count('class="provider-badge provider-mc"') == 1
 course_card_classes = re.findall(r'<div class="chip ([^"]*cat-(?:erb|methodist)[^"]*)"', index)
-# Calendar month grids include adjacent-month filler days, so the 264 source
-# course entries are rendered as 528 visible card instances across the page.
-assert len(course_card_classes) == 528
+# Calendar month grids include adjacent-month filler days, so the 269 source
+# course entries are rendered as 538 visible card instances across the page.
+assert len(course_card_classes) == 538
 assert all('erb-compact' in classes for classes in course_card_classes)
 july_25_start = index.index('<div class="cell wknd has" id="d-2026-07-25">')
 july_25_end = index.index('<div class="cell wknd" id="d-2026-07-26">', july_25_start)
@@ -486,7 +486,7 @@ assert "Helper: Fiona" in index
 assert "基督教勵行會" in upcoming
 assert "HK280HS · SS" in upcoming and "上水彩園邨彩湖樓2座地下129舖02室" in upcoming
 assert 'data-toggle-filter="1"' in upcoming
-assert upcoming.count('class="summary-class-dates"') == 14
+assert upcoming.count('class="summary-class-dates"') == 15
 assert '<span class="my-date-key"><i></i>你任教日期</span>' in index
 assert '<span class="other-date-key"><i></i>其他導師日期</span>' in index
 upcoming_cards = re.findall(r'<button class="class-summary-card[^>]+>.*?</button>', upcoming, re.S)
@@ -496,11 +496,12 @@ assert '<span class="summary-class-date mine" title="你需要任教">Aug 19</sp
 assert '<span class="summary-class-date" title="其他導師">Aug 21</span>' in hk239_fs_card
 assert hk239_fs_card.count('class="summary-class-date mine"') == 2
 assert hk239_fs_card.count('class="summary-class-date" title="其他導師"') == 1
-assert '>CONFIRMED</span>' in upcoming and '>UNCONFIRMED</span>' not in upcoming
+assert '>CONFIRMED</span>' in upcoming and '>UNCONFIRMED</span>' in upcoming
 assert upcoming.count('>CONFIRMED</span>') == 14
-assert upcoming.count('>UNCONFIRMED</span>') == 0
+assert upcoming.count('>UNCONFIRMED</span>') == 1
 assert 'HK239HG · ST' in upcoming and 'HK239HG · LT' in upcoming
-assert re.findall(r'class="filter course-filter pending"[^>]*>([^<]+)</button>', index) == []
+pending_filters = re.findall(r'class="filter course-filter pending"[^>]*>([^<]+)</button>', index)
+assert len(pending_filters) == 1 and "HK280HG" in pending_filters[0] and "(5)" in pending_filters[0]
 assert 'class="filter course-filter context"' in index
 assert '<div id="completedHeading" class="section-h">Completed ERB classes</div>' in index
 completed_start = index.index('<section class="class-summary completed-summary"')
@@ -511,7 +512,7 @@ assert index.count('data-span-month-toggle="') == 8
 assert index.count('<input type="checkbox" data-span-month-toggle="') == 8
 assert index.count('data-span-row-toggle="') == 0
 assert '<section id="spanCoursePicker" class="span-course-picker" aria-label="Class visibility">' in index
-assert index.count('data-span-course="') == 19
+assert index.count('data-span-course="') == 20
 assert "spanCourseCount.textContent=enabled+'/'+spanCourseInputs.length+' ON'" in index
 assert index.count('class="span-day"') == 245
 assert 'const spanZoomLevels=[8,12,16,22,30,40]' in index

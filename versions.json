@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-28-V18s",
+    "label": "2026-07-28 - V18s",
+    "summary": "HK280HG CW - five proposed Choi Wan lessons, 18 hours; pending Calvin confirmation.",
+    "latest": true
+  },
+  {
     "id": "2026-07-28-V18r",
     "label": "2026-07-28 - V18r",
     "summary": "Salary - DGS marked received; five received payments hidden by default with the same reversible toggle.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-28-V18q",
