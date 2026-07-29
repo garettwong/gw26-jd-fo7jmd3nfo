@@ -1,0 +1,28 @@
+{
+  "checks": [
+    {
+      "name": "desktop2k",
+      "aug14TransitText": "Four Seas to Choi Wan · 40m transit · 20m spare · NO MEAL BUFFER",
+      "oct7TransitText": "Sheung Shui to Four Seas · 64m transit · 56m spare"
+    },
+    {
+      "name": "desktop4k",
+      "aug14TransitText": "Four Seas to Choi Wan · 40m transit · 20m spare · NO MEAL BUFFER",
+      "oct7TransitText": "Sheung Shui to Four Seas · 64m transit · 56m spare"
+    },
+    {
+      "name": "phone",
+      "aug14TransitText": "Four Seas to Choi Wan · 40m transit · 20m spare · NO MEAL BUFFER",
+      "oct7TransitText": "Sheung Shui to Four Seas · 64m transit · 56m spare"
+    },
+    {
+      "name": "landscape",
+      "aug14TransitText": "Four Seas to Choi Wan · 40m transit · 20m spare · NO MEAL BUFFER",
+      "oct7TransitText": "Sheung Shui to Four Seas · 64m transit · 56m spare"
+    }
+  ],
+  "salary": {
+    "confirmed": "HK$187,450",
+    "all": "HK$187,450"
+  }
+}

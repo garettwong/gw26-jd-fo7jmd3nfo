@@ -1,0 +1,18 @@
+{
+  "version": "2026-07-30-V20c",
+  "build": "v20c-full-upcoming-source-reconciliation-20260730a",
+  "source_workbook": "D:\\Garett Super Jobs 2026\\Calvin\\REAL ERB\\Check schedule only (Codex)\\05 Confirmed Schedules\\00 FINAL FINAL - Calvin Confirmed\\2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx",
+  "mc_source_lesson_count": 47,
+  "mc_source_garett_lessons": [
+    3,
+    4,
+    8,
+    9,
+    16,
+    17
+  ],
+  "removed_stale_hk280hg_ss_rows": 5,
+  "archived_stale_final_final": "D:\\Garett Super Jobs 2026\\Calvin\\REAL ERB\\Check schedule only (Codex)\\04 Superseded - Do Not Send\\20260730 HK280HG SS client-disregarded\\2026 09 14 (2026 09 14) - HK280HS_SS_FINAL FINAL (CHI) - CA - 上水彩園.docx",
+  "expected_changed_display_rows": 30,
+  "salary_regenerated": true
+}

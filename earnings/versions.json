@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-30-V20c",
+    "label": "2026-07-30 - V20c",
+    "summary": "Full audit - MC106DS rebuilt from FINAL FINAL L1-L47; superseded HK280HG SS removed.",
+    "latest": true
+  },
+  {
     "id": "2026-07-30-V20b",
     "label": "2026-07-30 - V20b",
     "summary": "HK239HG SS - six replacement mornings confirmed.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-29-V20a",

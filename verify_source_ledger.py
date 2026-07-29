@@ -14,7 +14,8 @@ ALL = EVENTS + CONTEXT
 REVISION = SUMMARY.get("override_revision")
 IS_V20A = REVISION == "V20a"
 IS_V20B = REVISION == "V20b"
-USES_HK239_REPLACEMENTS = REVISION in {"V20a", "V20b"}
+IS_V20C = REVISION == "V20c"
+USES_HK239_REPLACEMENTS = REVISION in {"V20a", "V20b", "V20c"}
 LESSON_RE = re.compile(r"\bL\s*(\d+)\b", re.I)
 TIME_RE = re.compile(r"(?<!\d)(\d{3,4})\s*-\s*(\d{3,4})(?!\d)")
 
@@ -289,39 +290,39 @@ mc_garett = [row for row in mc if teacher(row) == "Garett"]
 assert [(row["date"], lesson(row)) for row in mc_garett] == [
     ("2026-08-01", 3),
     ("2026-08-01", 4),
-    ("2026-08-08", 7),
     ("2026-08-08", 8),
-    ("2026-08-15", 15),
+    ("2026-08-08", 9),
     ("2026-08-15", 16),
+    ("2026-08-15", 17),
 ]
-assert all(row in EVENTS for row in mc_garett)
+assert all(row in CONTEXT for row in mc_garett)
 mc_room306_calvin = [
     row for row in mc
-    if teacher(row) == "Calvin" and "Calvin takes all Room 306 enquiry lessons" in row.get("source", "")
+    if teacher(row) == "Calvin"
 ]
-assert [lesson(row) for row in mc_room306_calvin] == [18, 21, 25, 27, 29, 33]
+assert [lesson(row) for row in mc_room306_calvin] == [1, 2, 7, 19, 22, 26, 46, 47]
 assert not any(teacher(row) == "Other tutor / TBC" for row in mc)
-assert all(row.get("layer") == "class" for row in mc if row in CONTEXT)
+assert all(
+    row.get("layer") == ("mine" if teacher(row) == "Garett" else "class")
+    for row in mc
+)
+assert Counter(teacher(row) for row in mc) == Counter({
+    "Demian Yuen": 29,
+    "Calvin": 8,
+    "Garett": 6,
+    "Ricky Leung": 2,
+    "Melody": 2,
+})
 assert not any(lesson(row) in {48, 49} for row in mc)
 
 # Rejected or not-yet-accepted proposals must not enter the active timetable.
 for excluded in ("BK151HG", "BK155HG"):
     assert not rows_with(excluded), f"Unexpected active timetable entry: {excluded}"
 
-# HK280HG SS is a finalized class schedule, but Calvin reassigned it away from Garett.
-# Keep it in All Full as confirmed class context and exclude it from Garett's views and salary.
+# The client explicitly instructed Calvin to disregard the old HK280HG/HS SS
+# table. It must not remain active in any timetable mode or salary context.
 hk280hg_ss = rows_with("HK280HG", "Class SS")
-assert len(hk280hg_ss) == 5
-assert [(row["date"], lesson(row)) for row in hk280hg_ss] == [
-    ("2026-09-18", 1),
-    ("2026-09-21", 2),
-    ("2026-09-23", 3),
-    ("2026-09-28", 4),
-    ("2026-09-30", 5),
-]
-assert all(row["status"] == "confirmed" for row in hk280hg_ss)
-assert all(teacher(row) == "Other tutor / TBC" for row in hk280hg_ss)
-assert all(row.get("layer") == "class" for row in hk280hg_ss)
+assert not hk280hg_ss
 hk239_cw10 = rows_with("HK239HG", "Class CW10", rows=EVENTS)
 assert len(hk239_cw10) == 6
 assert [(row["date"], lesson(row)) for row in hk239_cw10] == [
@@ -391,12 +392,12 @@ assert not any(
 
 index = (ROOT / "index.html").read_text(encoding="utf-8")
 assert "May 2026" in index and "HK244HG" in index
-assert index.count('class="span-row"') == 19
+assert index.count('class="span-row"') == 18
 assert 'data-first="2026-07-24" data-last="2026-08-12"' in index
 assert 'data-first="2026-09-23" data-last="2026-10-12"' in index
 assert 'data-first="2026-08-14" data-last="2026-08-21"' in index
 assert "HK265HG · FS · JUL 2026" in index and "HK265HG · FS · SEP 2026" in index
-assert index.count('data-span-course="') == 19
+assert index.count('data-span-course="') == 18
 assert all(control in index for control in (
     'id="spanLabelsToggle"', 'id="spanZoomOut"', 'id="spanZoomReset"', 'id="spanZoomIn"',
     'data-span-course-action="all"', 'data-span-course-action="none"',
@@ -434,22 +435,22 @@ version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
 assert f'<span class="sample changed-sample"></span> Changed in {REVISION}' in index
-assert SUMMARY["changed_in_version"] == 6
-assert index.count('class="change-badge"') == 12
+assert SUMMARY["changed_in_version"] == 42
+assert index.count('class="change-badge"') == 84
 assert index.count('class="filter course-filter upcoming"') == (14 if IS_V20A else 15)
 assert index.count('class="filter course-filter pending"') == (1 if IS_V20A else 0)
 assert index.count('class="filter course-filter completed"') >= 2
-assert index.count('class="filter course-filter context"') >= 1
-assert '<span class="filter-status-total">17 tracked ERB classes</span>' in index
+assert index.count('class="filter course-filter context"') == 0
+assert '<span class="filter-status-total">16 tracked ERB classes</span>' in index
 expected_upcoming = 13 if IS_V20A else 14
 expected_pending = 1 if IS_V20A else 0
 assert f'<span class="filter-status-swatch upcoming"></span>Upcoming {expected_upcoming}' in index
 assert f'<span class="filter-status-swatch pending"></span>Pending {expected_pending}' in index
 assert '<span class="filter-status-swatch completed"></span>Completed 2' in index
-assert '<span class="filter-status-swatch context"></span>Full-class context 1' in index
-assert '<span class="span-course-breakdown">19 total = 17 ERB + 2 SEN</span>' in index
-assert index.count('class="span-bar-label"') == 19
-assert index.count('class="span-course-toggle ') == 19
+assert '<span class="filter-status-swatch context"></span>Full-class context 0' in index
+assert '<span class="span-course-breakdown">18 total = 16 ERB + 2 SEN</span>' in index
+assert index.count('class="span-bar-label"') == 18
+assert index.count('class="span-course-toggle ') == 18
 if IS_V20A:
     assert "建議替補課節" in index
 else:
@@ -475,7 +476,7 @@ assert index.count('class="provider-badge provider-ca"') == 15
 assert index.count('class="provider-badge provider-mc"') == 1
 course_card_classes = re.findall(r'<div class="chip ([^"]*cat-(?:erb|methodist)[^"]*)"', index)
 # Calendar month grids include adjacent-month filler days.
-assert len(course_card_classes) == 528
+assert len(course_card_classes) == 518
 assert all('erb-compact' in classes for classes in course_card_classes)
 july_25_start = index.index('<div class="cell wknd has" id="d-2026-07-25">')
 july_25_end = index.index('<div class="cell wknd" id="d-2026-07-26">', july_25_start)
@@ -538,7 +539,7 @@ if IS_V20A:
 else:
     assert not any("HK239HG" in label and "SS" in label for label in pending_filters)
 assert "HK280HG" in upcoming
-assert 'class="filter course-filter context"' in index
+assert 'class="filter course-filter context"' not in index
 assert '<div id="completedHeading" class="section-h">Completed ERB classes</div>' in index
 completed_start = index.index('<section class="class-summary completed-summary"')
 completed_end = index.index('</section>', completed_start)
@@ -548,7 +549,7 @@ assert index.count('data-span-month-toggle="') == 8
 assert index.count('<input type="checkbox" data-span-month-toggle="') == 8
 assert index.count('data-span-row-toggle="') == 0
 assert '<section id="spanCoursePicker" class="span-course-picker" aria-label="Class visibility">' in index
-assert index.count('data-span-course="') == 19
+assert index.count('data-span-course="') == 18
 assert "spanCourseCount.textContent=enabled+'/'+spanCourseInputs.length+' ON'" in index
 assert index.count('class="span-day"') == 245
 assert 'const spanZoomLevels=[8,12,16,22,30,40]' in index

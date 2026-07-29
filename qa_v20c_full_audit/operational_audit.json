@@ -1,0 +1,349 @@
+{
+  "version": "2026-07-30-V20c",
+  "upcoming_course_count": 14,
+  "upcoming_course_ledger": [
+    {
+      "class": "HK265HG · FS · JUL 2026",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-07-24",
+      "full_course_end": "2026-08-12",
+      "first_garett_lesson": "2026-07-24",
+      "last_garett_lesson": "2026-08-12",
+      "garett_lessons": 12,
+      "full_lessons": 12,
+      "garett_status": "confirmed",
+      "source_count": 1,
+      "sources": "HK265HG(FS)7月班_0508.doc, lesson 12"
+    },
+    {
+      "class": "MC0106DS · 第2班",
+      "provider": "循道衞理中心",
+      "full_course_start": "2026-07-25",
+      "full_course_end": "2026-09-10",
+      "first_garett_lesson": "2026-08-01",
+      "last_garett_lesson": "2026-08-15",
+      "garett_lessons": 6,
+      "full_lessons": 47,
+      "garett_status": "confirmed",
+      "source_count": 47,
+      "sources": "2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 1 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 10 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 11 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 12 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 13 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 14 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 15 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 16 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 17 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 18 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 19 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 2 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 20 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 21 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 22 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 23 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 24 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 25 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 26 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 27 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 28 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 29 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 3 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 30 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 31 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 32 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 33 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 34 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 35 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 36 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 37 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 38 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 39 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 4 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 40 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 41 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 42 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 43 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 44 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 45 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 46 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 47 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 5 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 6 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 7 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 8 - FINAL FINAL | 2026 08 01 (2026 07 25) - MC106DS_FINAL FINAL (CHI) - MC - 灣仔.xlsx, lesson 9 - FINAL FINAL"
+    },
+    {
+      "class": "HK244HG · CW8",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-08-06",
+      "full_course_end": "2026-09-08",
+      "first_garett_lesson": "2026-08-06",
+      "last_garett_lesson": "2026-09-03",
+      "garett_lessons": 8,
+      "full_lessons": 12,
+      "garett_status": "confirmed",
+      "source_count": 1,
+      "sources": "WhatsApp Image 2026-07-29 at 14.00.32.jpeg"
+    },
+    {
+      "class": "HK239HG · FS",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-08-14",
+      "full_course_end": "2026-08-21",
+      "first_garett_lesson": "2026-08-14",
+      "last_garett_lesson": "2026-08-19",
+      "garett_lessons": 3,
+      "full_lessons": 6,
+      "garett_status": "confirmed",
+      "source_count": 6,
+      "sources": "HK239HG(FS)8月班_0508.doc screenshot and Calvin WhatsApp confirmation 2026-07-16, lesson 1 | HK239HG(FS)8月班_0508.doc screenshot and Calvin WhatsApp confirmation 2026-07-16, lesson 3 | HK239HG(FS)8月班_0508.doc screenshot and Calvin WhatsApp confirmation 2026-07-16, lesson 4 | HK239HG(FS)8月班_0508.doc screenshot and Calvin WhatsApp confirmation 2026-07-16, lesson 5 covered by another tutor | HK239HG(FS)8月班_0508.doc screenshot and Calvin WhatsApp confirmation 2026-07-16, lesson 6 covered by another tutor | WhatsApp Image 2026-07-29 at 14.00.32.jpeg supersedes the earlier 2026-07-16 allocation by confirming Garett for HK244HG CW8 L3 at the same time"
+    },
+    {
+      "class": "HK239HG · CW10",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-08-27",
+      "full_course_end": "2026-09-07",
+      "first_garett_lesson": "2026-08-27",
+      "last_garett_lesson": "2026-09-07",
+      "garett_lessons": 6,
+      "full_lessons": 6,
+      "garett_status": "confirmed",
+      "source_count": 6,
+      "sources": "HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 1 | HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 2 | HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 3 | HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 4 | HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 5 | HK239HG(CW10)_R3.docx, confirmed 2026-07-16, lesson 6"
+    },
+    {
+      "class": "HK244EG · CW",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-08-24",
+      "full_course_end": "2026-10-08",
+      "first_garett_lesson": "2026-08-31",
+      "last_garett_lesson": "2026-10-07",
+      "garett_lessons": 11,
+      "full_lessons": 18,
+      "garett_status": "confirmed",
+      "source_count": 18,
+      "sources": "HK244EG(CW )_R2.doc, lesson 1 | HK244EG(CW )_R2.doc, lesson 10 | HK244EG(CW )_R2.doc, lesson 11 | HK244EG(CW )_R2.doc, lesson 12 | HK244EG(CW )_R2.doc, lesson 13 | HK244EG(CW )_R2.doc, lesson 14 | HK244EG(CW )_R2.doc, lesson 15 | HK244EG(CW )_R2.doc, lesson 16 | HK244EG(CW )_R2.doc, lesson 17 | HK244EG(CW )_R2.doc, lesson 18 | HK244EG(CW )_R2.doc, lesson 2 | HK244EG(CW )_R2.doc, lesson 3 | HK244EG(CW )_R2.doc, lesson 4 | HK244EG(CW )_R2.doc, lesson 5 | HK244EG(CW )_R2.doc, lesson 6 | HK244EG(CW )_R2.doc, lesson 7 | HK244EG(CW )_R2.doc, lesson 8 | HK244EG(CW )_R2.doc, lesson 9"
+    },
+    {
+      "class": "HK280HG · CW1",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-08-31",
+      "full_course_end": "2026-09-10",
+      "first_garett_lesson": "2026-08-31",
+      "last_garett_lesson": "2026-09-10",
+      "garett_lessons": 5,
+      "full_lessons": 5,
+      "garett_status": "confirmed",
+      "source_count": 1,
+      "sources": "WhatsApp Image 2026-07-29 at 14.00.13.jpeg"
+    },
+    {
+      "class": "HK265HG · FS · SEP 2026",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-09-16",
+      "full_course_end": "2026-10-14",
+      "first_garett_lesson": "2026-09-16",
+      "last_garett_lesson": "2026-10-14",
+      "garett_lessons": 12,
+      "full_lessons": 12,
+      "garett_status": "confirmed",
+      "source_count": 2,
+      "sources": "HK265HG(FS)9月班_0625_0707_check again 03.doc, lesson 12 | Latest personal workbook"
+    },
+    {
+      "class": "HK244EG · FS",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-09-21",
+      "full_course_end": "2026-11-03",
+      "first_garett_lesson": "2026-09-21",
+      "last_garett_lesson": "2026-11-03",
+      "garett_lessons": 18,
+      "full_lessons": 18,
+      "garett_status": "confirmed",
+      "source_count": 0,
+      "sources": ""
+    },
+    {
+      "class": "HK239HG · SS",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-09-23",
+      "full_course_end": "2026-10-12",
+      "first_garett_lesson": "2026-09-23",
+      "last_garett_lesson": "2026-10-12",
+      "garett_lessons": 6,
+      "full_lessons": 6,
+      "garett_status": "confirmed",
+      "source_count": 1,
+      "sources": "HK239HG_SS_R2_CHECKED_REPLACEMENT_DATES_PROPOSED R1_OK.docx"
+    },
+    {
+      "class": "HK239HG · ST",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-10-03",
+      "full_course_end": "2026-11-07",
+      "first_garett_lesson": "2026-10-03",
+      "last_garett_lesson": "2026-11-07",
+      "garett_lessons": 6,
+      "full_lessons": 6,
+      "garett_status": "confirmed",
+      "source_count": 6,
+      "sources": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation, ST lesson 1 | Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation, ST lesson 2 | Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation, ST lesson 3 | Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation, ST lesson 4 | Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation, ST lesson 5 | Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation, ST lesson 6"
+    },
+    {
+      "class": "HK281DS · CW7",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-08-31",
+      "full_course_end": "2026-10-09",
+      "first_garett_lesson": "2026-10-03",
+      "last_garett_lesson": "2026-10-03",
+      "garett_lessons": 1,
+      "full_lessons": 62,
+      "garett_status": "confirmed",
+      "source_count": 62,
+      "sources": "HK281DSCW7_R1_Calvin.xlsx, lesson 1 | HK281DSCW7_R1_Calvin.xlsx, lesson 10 | HK281DSCW7_R1_Calvin.xlsx, lesson 11 | HK281DSCW7_R1_Calvin.xlsx, lesson 12 | HK281DSCW7_R1_Calvin.xlsx, lesson 13 | HK281DSCW7_R1_Calvin.xlsx, lesson 14 | HK281DSCW7_R1_Calvin.xlsx, lesson 15 | HK281DSCW7_R1_Calvin.xlsx, lesson 16 | HK281DSCW7_R1_Calvin.xlsx, lesson 17 | HK281DSCW7_R1_Calvin.xlsx, lesson 18 | HK281DSCW7_R1_Calvin.xlsx, lesson 19 | HK281DSCW7_R1_Calvin.xlsx, lesson 2 | HK281DSCW7_R1_Calvin.xlsx, lesson 20 | HK281DSCW7_R1_Calvin.xlsx, lesson 21 | HK281DSCW7_R1_Calvin.xlsx, lesson 22 | HK281DSCW7_R1_Calvin.xlsx, lesson 23 | HK281DSCW7_R1_Calvin.xlsx, lesson 24 | HK281DSCW7_R1_Calvin.xlsx, lesson 25 | HK281DSCW7_R1_Calvin.xlsx, lesson 26 | HK281DSCW7_R1_Calvin.xlsx, lesson 27 | HK281DSCW7_R1_Calvin.xlsx, lesson 28 | HK281DSCW7_R1_Calvin.xlsx, lesson 29 | HK281DSCW7_R1_Calvin.xlsx, lesson 3 | HK281DSCW7_R1_Calvin.xlsx, lesson 30 | HK281DSCW7_R1_Calvin.xlsx, lesson 31 | HK281DSCW7_R1_Calvin.xlsx, lesson 32 | HK281DSCW7_R1_Calvin.xlsx, lesson 33 | HK281DSCW7_R1_Calvin.xlsx, lesson 34 | HK281DSCW7_R1_Calvin.xlsx, lesson 35 | HK281DSCW7_R1_Calvin.xlsx, lesson 36 | HK281DSCW7_R1_Calvin.xlsx, lesson 37 | HK281DSCW7_R1_Calvin.xlsx, lesson 38 | HK281DSCW7_R1_Calvin.xlsx, lesson 39 | HK281DSCW7_R1_Calvin.xlsx, lesson 4 | HK281DSCW7_R1_Calvin.xlsx, lesson 40 | HK281DSCW7_R1_Calvin.xlsx, lesson 41 | HK281DSCW7_R1_Calvin.xlsx, lesson 42 | HK281DSCW7_R1_Calvin.xlsx, lesson 43 | HK281DSCW7_R1_Calvin.xlsx, lesson 44 | HK281DSCW7_R1_Calvin.xlsx, lesson 45 | HK281DSCW7_R1_Calvin.xlsx, lesson 46 | HK281DSCW7_R1_Calvin.xlsx, lesson 47 | HK281DSCW7_R1_Calvin.xlsx, lesson 48 | HK281DSCW7_R1_Calvin.xlsx, lesson 49 | HK281DSCW7_R1_Calvin.xlsx, lesson 5 | HK281DSCW7_R1_Calvin.xlsx, lesson 50 | HK281DSCW7_R1_Calvin.xlsx, lesson 51 | HK281DSCW7_R1_Calvin.xlsx, lesson 52 | HK281DSCW7_R1_Calvin.xlsx, lesson 53 | HK281DSCW7_R1_Calvin.xlsx, lesson 54 | HK281DSCW7_R1_Calvin.xlsx, lesson 55 | HK281DSCW7_R1_Calvin.xlsx, lesson 56 | HK281DSCW7_R1_Calvin.xlsx, lesson 57 | HK281DSCW7_R1_Calvin.xlsx, lesson 58 | HK281DSCW7_R1_Calvin.xlsx, lesson 59 | HK281DSCW7_R1_Calvin.xlsx, lesson 6 | HK281DSCW7_R1_Calvin.xlsx, lesson 60 | HK281DSCW7_R1_Calvin.xlsx, lesson 61 | HK281DSCW7_R1_Calvin.xlsx, lesson 62 | HK281DSCW7_R1_Calvin.xlsx, lesson 7 | HK281DSCW7_R1_Calvin.xlsx, lesson 8 | HK281DSCW7_R1_Calvin.xlsx, lesson 9"
+    },
+    {
+      "class": "HK239HG · 城巿一條龍",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-11-11",
+      "full_course_end": "2026-11-13",
+      "first_garett_lesson": "2026-11-11",
+      "last_garett_lesson": "2026-11-13",
+      "garett_lessons": 6,
+      "full_lessons": 6,
+      "garett_status": "confirmed",
+      "source_count": 0,
+      "sources": ""
+    },
+    {
+      "class": "HK239HG · LT",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-11-23",
+      "full_course_end": "2026-11-30",
+      "first_garett_lesson": "2026-11-23",
+      "last_garett_lesson": "2026-11-30",
+      "garett_lessons": 6,
+      "full_lessons": 6,
+      "garett_status": "confirmed",
+      "source_count": 1,
+      "sources": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation"
+    }
+  ],
+  "future_confirmed_garett_timed_entries": 102,
+  "confirmed_garett_overlaps": [],
+  "same_or_nearby_lunch_dinner_gaps_at_most_90_minutes": [
+    {
+      "date": "2026-07-31",
+      "gap_minutes": 60,
+      "first": "勵行 - 四海 (Garett) - HK265HG, Class FS - L5 / Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
+      "second": "勵行 - 四海 (Garett) - HK265HG, Class FS - L6 / Certificate in AI-enhanced Social Media Content, 1400 - 1730 /"
+    },
+    {
+      "date": "2026-08-01",
+      "gap_minutes": 60,
+      "first": "循道-灣仔 MC0106DS, Class 第2班 - L3 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 09:00 - 13:00",
+      "second": "循道-灣仔 MC0106DS, Class 第2班 - L4 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 14:00 - 18:00"
+    },
+    {
+      "date": "2026-08-05",
+      "gap_minutes": 60,
+      "first": "勵行 - 四海 (Garett) - HK265HG, Class FS - L7 / Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
+      "second": "勵行 - 四海 (Garett) - HK265HG, Class FS - L8 / Certificate in AI-enhanced Social Media Content, 1400 - 1730 /"
+    },
+    {
+      "date": "2026-08-07",
+      "gap_minutes": 60,
+      "first": "勵行 - 四海 (Garett) - HK265HG, Class FS - L9 / Certificate in AI-enhanced Social Media Content, 0900 - 1300 /",
+      "second": "勵行 - 四海 (Garett) - HK265HG, Class FS - L10 / Certificate in AI-enhanced Social Media Content, 1400 - 1730 (Written Test) /"
+    },
+    {
+      "date": "2026-08-08",
+      "gap_minutes": 60,
+      "first": "循道-灣仔 MC0106DS, Class 第2班 - L8 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 09:00 - 13:00",
+      "second": "循道-灣仔 MC0106DS, Class 第2班 - L9 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 14:00 - 18:00"
+    },
+    {
+      "date": "2026-08-12",
+      "gap_minutes": 60,
+      "first": "勵行 - 四海 (Garett) - HK265HG, Class FS - L11 / Certificate in AI-enhanced Social Media Content, 0900 - 1300 (Group Presentation) /",
+      "second": "勵行-四海 (Garett) - HK265HG, Class FS - L12 / Certificate in AI-enhanced Social Media Content / 1400 - 1730 [Final Practical Exam 1420-1720]"
+    },
+    {
+      "date": "2026-08-14",
+      "gap_minutes": 60,
+      "first": "勵行-四海 (Garett) / 人工智能知識及應用證書 (兼讀制) / 九龍彌敦道208至212號四海大廈2樓全層 / HK239HG, Class FS, (1000 - 1300) - L1",
+      "second": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1800) - L3"
+    },
+    {
+      "date": "2026-08-15",
+      "gap_minutes": 60,
+      "first": "循道-灣仔 MC0106DS, Class 第2班 - L16 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 09:00 - 13:00",
+      "second": "循道-灣仔 MC0106DS, Class 第2班 - L17 / 創意數碼媒體設計及製作助理證書 / 灣仔軒尼詩道22號3樓 / 14:00 - 18:00"
+    },
+    {
+      "date": "2026-08-19",
+      "gap_minutes": 60,
+      "first": "勵行-四海 (Garett) / 人工智能知識及應用證書 (兼讀制) / 九龍彌敦道208至212號四海大廈2樓全層 / HK239HG, Class FS, (1000 - 1300) - L3",
+      "second": "勵行-四海 (Garett) / 人工智能知識及應用證書 (兼讀制) / 九龍彌敦道208至212號四海大廈2樓全層 / HK239HG, Class FS, (1400 - 1700) - L4"
+    },
+    {
+      "date": "2026-08-31",
+      "gap_minutes": 60,
+      "first": "勵行-彩雲二邨 HK280HG, Class CW1 / 生成式人工智能商業應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 14:00-18:00 - L1",
+      "second": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L5"
+    },
+    {
+      "date": "2026-09-02",
+      "gap_minutes": 90,
+      "first": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1730) - L8 [持續評估小組匯報]",
+      "second": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L7"
+    },
+    {
+      "date": "2026-09-03",
+      "gap_minutes": 90,
+      "first": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / HK244HG, Class CW8, (1400 - 1730) - L9",
+      "second": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L8"
+    },
+    {
+      "date": "2026-09-09",
+      "gap_minutes": 90,
+      "first": "勵行-彩雲二邨 HK280HG, Class CW1 / 生成式人工智能商業應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 09:00-12:30 - L3 [持續評估－個人習作一]",
+      "second": "勵行-彩雲二邨 HK280HG, Class CW1 / 生成式人工智能商業應用證書 (兼讀制) / 九龍彩雲二邨清水灣道55號1樓101室 / 14:00-17:30 - L4 [持續評估－個人習作二]"
+    },
+    {
+      "date": "2026-09-21",
+      "gap_minutes": 75,
+      "first": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L3",
+      "second": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L1"
+    },
+    {
+      "date": "2026-09-23",
+      "gap_minutes": 75,
+      "first": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L4",
+      "second": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L2"
+    },
+    {
+      "date": "2026-09-24",
+      "gap_minutes": 75,
+      "first": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L5",
+      "second": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L3"
+    },
+    {
+      "date": "2026-09-28",
+      "gap_minutes": 75,
+      "first": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L6",
+      "second": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L4"
+    },
+    {
+      "date": "2026-09-30",
+      "gap_minutes": 75,
+      "first": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L7",
+      "second": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L5"
+    },
+    {
+      "date": "2026-10-05",
+      "gap_minutes": 75,
+      "first": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L8",
+      "second": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L6"
+    },
+    {
+      "date": "2026-10-07",
+      "gap_minutes": 75,
+      "first": "勵行-四海 (Garett) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L9 [TIGHT TRAVEL ~40-47m]",
+      "second": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2100 - Garett - L17 [持續筆試]"
+    },
+    {
+      "date": "2026-10-08",
+      "gap_minutes": 75,
+      "first": "勵行-四海 (Garett) (Written Test) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L10",
+      "second": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L8"
+    },
+    {
+      "date": "2026-10-12",
+      "gap_minutes": 75,
+      "first": "勵行-四海 (Garett) (Group Presentation) / Cert in AI Social Media, HK265HG, Class FS / 1400 - 1745 - L11",
+      "second": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L9"
+    },
+    {
+      "date": "2026-11-11",
+      "gap_minutes": 60,
+      "first": "勵行-彩雲 (Garett) / 人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (0900 - 1200) - L1 /",
+      "second": "勵行-彩雲 (Garett) / 人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (1300 - 1600) - L2 /"
+    },
+    {
+      "date": "2026-11-12",
+      "gap_minutes": 60,
+      "first": "勵行-彩雲 (Garett) / 人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (0900 - 1200) - L3",
+      "second": "勵行-彩雲 (Garett) / 人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (1300 - 1600) - L4"
+    },
+    {
+      "date": "2026-11-13",
+      "gap_minutes": 60,
+      "first": "勵行-彩雲 (Garett) [Group Discussion] / 人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (0900 - 1200) - L5",
+      "second": "勵行-彩雲 (Garett) [Final Exam] / 人工智能知識及應用證書(兼讀制) / HK239HG, Class 城巿一條龍, (1300 - 1600) - L6"
+    }
+  ],
+  "exact_duplicate_entries": [],
+  "active_superseded_hk280hg_ss_rows": [],
+  "known_source_defects_requiring_no_invention": [
+    "MC106DS workbook header says 49 lessons / 196 hours, but the actual finalized assignment rows stop at L47 / 188 hours.",
+    "HK281DS CW7 L62 lists a 14:00-18:00 lesson but an 11:30-12:30 final exam; the conflict stays visibly flagged.",
+    "HK239HG 城巿一條龍 has a confirmed derived TXT source rather than the original Calvin timetable document."
+  ]
+}
