@@ -13,6 +13,7 @@ SNAPSHOT_FILES = (
     "index.html",
     "events.json",
     "class_context.json",
+    "payment_context.json",
     "summary.json",
     "schedule_overrides.json",
     "sw.js",

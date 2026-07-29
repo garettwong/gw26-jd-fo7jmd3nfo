@@ -72,22 +72,22 @@ assert all(
     if row in CONTEXT and "cancelled" not in row["text"].lower()
 )
 
-# HK244HG CW8: official code, final R3 time column, and chat-confirmed teacher split.
+# HK244HG CW8: the 2026-07-29 final teacher sheet supersedes earlier splits.
 cw8 = rows_with("HK244HG", "Class CW8", rows=EVENTS)
 assert len(cw8) == 12
 assert_lessons(cw8, range(1, 13), "HK244HG CW8")
 cw8_expected = {
     1: ("2026-08-06", "1400", "1800", "Garett"),
     2: ("2026-08-13", "1400", "1730", "Garett"),
-    3: ("2026-08-14", "1400", "1800", "Calvin"),
+    3: ("2026-08-14", "1400", "1800", "Garett"),
     4: ("2026-08-24", "1400", "1800", "Garett"),
     5: ("2026-08-26", "1400", "1800", "Garett"),
     6: ("2026-08-27", "1400", "1730", "Garett"),
-    7: ("2026-08-31", "1400", "1800", "Garett"),
-    8: ("2026-09-02", "1400", "1800", "Garett"),
-    9: ("2026-09-03", "1400", "1800", "Garett"),
+    7: ("2026-08-31", "1400", "1800", "Chan Shuk Ki"),
+    8: ("2026-09-02", "1400", "1730", "Garett"),
+    9: ("2026-09-03", "1400", "1730", "Garett"),
     10: ("2026-09-04", "1400", "1730", "Calvin"),
-    11: ("2026-09-07", "1400", "1800", "Calvin"),
+    11: ("2026-09-07", "1400", "1730", "Calvin"),
     12: ("2026-09-08", "1400", "1800", "Calvin"),
 }
 for row in cw8:
@@ -96,7 +96,34 @@ for row in cw8:
     assert match
     assert (row["date"], match.group(1), match.group(2), teacher(row)) == cw8_expected[number]
     assert "?" not in row["text"]
-assert "1515-1715" in next(row["text"] for row in cw8 if lesson(row) == 12)
+assert "14:30-17:30" in next(row["text"] for row in cw8 if lesson(row) == 12)
+
+# HK280HG CW1: the final confirmed sheet totals exactly 18 hours.
+hk280_cw = rows_with("HK280HG", "Class CW1", rows=CONTEXT)
+assert len(hk280_cw) == 5
+assert_lessons(hk280_cw, range(1, 6), "HK280HG CW1")
+assert_status(hk280_cw, "confirmed", "HK280HG CW1")
+hk280_expected = {
+    1: ("2026-08-31", "1400", "1800"),
+    2: ("2026-09-07", "1400", "1800"),
+    3: ("2026-09-09", "0900", "1230"),
+    4: ("2026-09-09", "1400", "1730"),
+    5: ("2026-09-10", "0900", "1200"),
+}
+hk280_minutes = 0
+for row in hk280_cw:
+    number = lesson(row)
+    match = TIME_RE.search(row["text"].replace(":", ""))
+    assert match
+    assert (row["date"], match.group(1), match.group(2)) == hk280_expected[number]
+    assert teacher(row) == "Garett" and row["layer"] == "mine"
+    start = int(match.group(1)[:2]) * 60 + int(match.group(1)[2:])
+    end = int(match.group(2)[:2]) * 60 + int(match.group(2)[2:])
+    hk280_minutes += end - start
+assert hk280_minutes == 18 * 60
+assert "個人習作一" in next(row["text"] for row in hk280_cw if lesson(row) == 3)
+assert "個人習作二" in next(row["text"] for row in hk280_cw if lesson(row) == 4)
+assert "期末筆試10:30-11:30" in next(row["text"] for row in hk280_cw if lesson(row) == 5)
 
 # Other complete ERB course sequences.
 cw = rows_with("HK244EG", "Class CW")
@@ -278,13 +305,13 @@ assert all(teacher(row) == "Garett" for row in hk239_cw10)
 assert all("0900-1200" in row["text"] for row in hk239_cw10)
 assert all("HK239HG(CW10)_R3.docx" in row.get("source", "") for row in hk239_cw10)
 
-# HK239HG FS: confirmed Garett substitution on Aug 14 and 19; another tutor covers Aug 21.
+# HK239HG FS: the latest CW8 sheet displaces Garett from simultaneous L2.
 hk239_fs = rows_with("HK239HG", "Class FS")
 assert len(hk239_fs) == 6
 assert_lessons(hk239_fs, range(1, 7), "HK239HG FS")
 hk239_fs_expected = {
     1: ("2026-08-14", "1000", "1300", "Garett"),
-    2: ("2026-08-14", "1400", "1700", "Garett"),
+    2: ("2026-08-14", "1400", "1700", "Other tutor / TBC"),
     3: ("2026-08-19", "1000", "1300", "Garett"),
     4: ("2026-08-19", "1400", "1700", "Garett"),
     5: ("2026-08-21", "1000", "1300", "Other tutor / TBC"),
@@ -297,7 +324,7 @@ for row in hk239_fs:
     assert (row["date"], match.group(1), match.group(2), teacher(row)) == hk239_fs_expected[number]
     assert row["status"] == "confirmed"
     assert "四海大廈" in row["text"]
-    expected_layer = "mine" if number <= 4 else "class"
+    expected_layer = "mine" if number in {1, 3, 4} else "class"
     assert row.get("layer") == expected_layer, (
         f"HK239HG FS L{number}: layer {row.get('layer')!r}, expected {expected_layer!r}"
     )
@@ -406,16 +433,16 @@ version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
-assert '<span class="sample changed-sample"></span> Changed in V18t' in index
-assert SUMMARY["changed_in_version"] == 1
-assert index.count('class="change-badge"') == 2
-assert index.count('class="filter course-filter upcoming"') == 15
-assert index.count('class="filter course-filter pending"') == 1
+assert '<span class="sample changed-sample"></span> Changed in V19' in index
+assert SUMMARY["changed_in_version"] == 12
+assert index.count('class="change-badge"') == 24
+assert index.count('class="filter course-filter upcoming"') == 16
+assert index.count('class="filter course-filter pending"') == 0
 assert index.count('class="filter course-filter completed"') >= 2
 assert index.count('class="filter course-filter context"') >= 1
 assert '<span class="filter-status-total">18 tracked ERB classes</span>' in index
-assert '<span class="filter-status-swatch upcoming"></span>Upcoming 14' in index
-assert '<span class="filter-status-swatch pending"></span>Pending 1' in index
+assert '<span class="filter-status-swatch upcoming"></span>Upcoming 15' in index
+assert '<span class="filter-status-swatch pending"></span>Pending 0' in index
 assert '<span class="filter-status-swatch completed"></span>Completed 2' in index
 assert '<span class="filter-status-swatch context"></span>Full-class context 1' in index
 assert '<span class="span-course-breakdown">20 total = 18 ERB + 2 SEN</span>' in index
@@ -496,12 +523,13 @@ assert '<span class="summary-class-date mine" title="你需要任教">Aug 19</sp
 assert '<span class="summary-class-date" title="其他導師">Aug 21</span>' in hk239_fs_card
 assert hk239_fs_card.count('class="summary-class-date mine"') == 2
 assert hk239_fs_card.count('class="summary-class-date" title="其他導師"') == 1
-assert '>CONFIRMED</span>' in upcoming and '>UNCONFIRMED</span>' in upcoming
-assert upcoming.count('>CONFIRMED</span>') == 14
-assert upcoming.count('>UNCONFIRMED</span>') == 1
+assert '>CONFIRMED</span>' in upcoming
+assert upcoming.count('>CONFIRMED</span>') == 15
+assert upcoming.count('>UNCONFIRMED</span>') == 0
 assert 'HK239HG · ST' in upcoming and 'HK239HG · LT' in upcoming
 pending_filters = re.findall(r'class="filter course-filter pending"[^>]*>([^<]+)</button>', index)
-assert len(pending_filters) == 1 and "HK280HG" in pending_filters[0] and "(5)" in pending_filters[0]
+assert pending_filters == []
+assert "HK280HG" in upcoming
 assert 'class="filter course-filter context"' in index
 assert '<div id="completedHeading" class="section-h">Completed ERB classes</div>' in index
 completed_start = index.index('<section class="class-summary completed-summary"')
@@ -518,7 +546,7 @@ assert index.count('class="span-day"') == 245
 assert 'const spanZoomLevels=[8,12,16,22,30,40]' in index
 assert 'function layoutSpanTimeline()' in index
 
-# The twelve confirmed Christian Action course instances are independently present.
+# The thirteen confirmed Christian Action course instances are independently present.
 confirmed_ca_specs = [
     ("HK265HG", "Class FS", "2026-07-24", 12),
     ("HK244HG", "Class CW8", "2026-08-06", 12),
@@ -532,6 +560,7 @@ confirmed_ca_specs = [
     ("HK244EG", "Class FS", "2026-09-21", 18),
     ("HK239HG", "Class 城巿一條龍", "2026-11-11", 6),
     ("HK280HS", "Class SS", "2026-09-14", 5),
+    ("HK280HG", "Class CW1", "2026-08-31", 5),
 ]
 for code, class_name, first_date, count in confirmed_ca_specs:
     matches = [
@@ -547,6 +576,8 @@ for code, class_name, first_date, count in confirmed_ca_specs:
             if (first_date == "2026-07-24" and row["date"] < "2026-09-01")
             or (first_date == "2026-09-16" and row["date"] >= "2026-09-01")
         ]
+    if code == "HK280HG" and class_name == "Class CW1":
+        matches = [row for row in matches if row in CONTEXT]
     assert len(matches) == count, (code, class_name, first_date, len(matches))
     assert min(row["date"] for row in matches) == first_date
     assert_status(matches, "confirmed", f"{code} {class_name} {first_date}")

@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-29-V19",
+    "label": "2026-07-29 - V19",
+    "summary": "HK244HG CW8 and HK280HG CW1 - latest confirmed teacher and lesson schedules.",
+    "latest": true
+  },
+  {
     "id": "2026-07-28-V18t",
     "label": "2026-07-28 - V18t",
     "summary": "HK280HG CW - Sep 10 afternoon proposal changed to 14:00-17:30.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-28-V18s",
