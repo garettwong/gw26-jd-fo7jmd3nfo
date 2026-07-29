@@ -238,6 +238,12 @@ def main() -> None:
                 "11:30-12:30 final exam; the conflict stays visibly flagged."
             ),
             (
+                "HK244EG FS has an impossible 2026-08-27 exam date in its "
+                "header even though the course runs 2026-09-21 to 2026-11-03; "
+                "the timetable follows the lesson table and keeps the final "
+                "exam on 2026-11-03."
+            ),
+            (
                 "HK239HG 城巿一條龍 has a confirmed derived TXT source rather "
                 "than the original Calvin timetable document."
             ),

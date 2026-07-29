@@ -29,4 +29,5 @@
 
 - MC106DS workbook header says 49 lessons / 196 hours, but the actual finalized assignment rows stop at L47 / 188 hours.
 - HK281DS CW7 L62 lists a 14:00-18:00 lesson but an 11:30-12:30 final exam; the conflict stays visibly flagged.
+- HK244EG FS has an impossible 2026-08-27 exam date in its header even though the course runs 2026-09-21 to 2026-11-03; the timetable follows the lesson table and keeps the final exam on 2026-11-03.
 - HK239HG 城巿一條龍 has a confirmed derived TXT source rather than the original Calvin timetable document.
