@@ -169,6 +169,42 @@ for row in ss:
     assert "上水彩園" in row["text"]
     assert "TIGHT TRAVEL" not in row["text"]
     assert "Calvin WhatsApp 2026-07-18 23:46" in row.get("source", "")
+
+if SUMMARY.get("override_revision") == "V19a":
+    ss_proposals = [
+        row
+        for row in CONTEXT
+        if "HK239HG" in row.get("text", "")
+        and "Class SS" in row.get("text", "")
+        and "PROPOSED availability only" in row.get("text", "")
+    ]
+    assert len(ss_proposals) == 5
+    assert {
+        (lesson(row), row["date"])
+        for row in ss_proposals
+    } == {
+        (1, "2026-09-23"),
+        (2, "2026-09-28"),
+        (4, "2026-10-05"),
+        (5, "2026-10-07"),
+        (6, "2026-10-12"),
+    }
+    assert all(
+        row["status"] == "unconfirmed"
+        and row.get("layer") == "mine"
+        and teacher(row) == "Garett"
+        and row.get("red")
+        for row in ss_proposals
+    )
+    rejected_hk280_dates = {"2026-09-22", "2026-09-24", "2026-09-29"}
+    assert not [
+        row
+        for row in ALL
+        if row["date"] in rejected_hk280_dates
+        and "HK280HG" in row.get("text", "")
+        and "Class SS" in row.get("text", "")
+        and teacher(row) == "Garett"
+    ]
 assert all("Calvin WhatsApp 2026-07-18 23:46" in row.get("source", "") for row in st)
 assert all("Calvin WhatsApp 2026-07-18 23:46" in row.get("source", "") for row in lt)
 assert not rows_with("人工智能知識2應用")
@@ -365,7 +401,8 @@ for number, marker in {
 }.items():
     row = next(item for item in hk280hs_ss if lesson(item) == number)
     assert marker in row["text"] and row.get("red")
-assert not any("PROPOSED availability only" in row["text"] for row in ALL)
+if SUMMARY.get("override_revision") != "V19a":
+    assert not any("PROPOSED availability only" in row["text"] for row in ALL)
 assert not any("Lesson TBC" in row["text"] for row in hk280hs_ss)
 
 # V18a does not displace any confirmed SEN, HK265HG, or HK244EG assignment.
@@ -433,9 +470,9 @@ version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
-assert '<span class="sample changed-sample"></span> Changed in V19' in index
-assert SUMMARY["changed_in_version"] == 12
-assert index.count('class="change-badge"') == 24
+assert '<span class="sample changed-sample"></span> Changed in V19a' in index
+assert SUMMARY["changed_in_version"] == 11
+assert index.count('class="change-badge"') == 22
 assert index.count('class="filter course-filter upcoming"') == 16
 assert index.count('class="filter course-filter pending"') == 0
 assert index.count('class="filter course-filter completed"') >= 2
@@ -448,7 +485,7 @@ assert '<span class="filter-status-swatch context"></span>Full-class context 1' 
 assert '<span class="span-course-breakdown">20 total = 18 ERB + 2 SEN</span>' in index
 assert index.count('class="span-bar-label"') == 20
 assert index.count('class="span-course-toggle ') == 20
-assert "PROPOSED availability only" not in index
+assert index.count("PROPOSED availability only") > 0
 assert index.count('data-day-hours hidden') >= 400
 assert 'data-teaching-intervals="480-590,660-780"' in index
 assert 'function refreshDailyHours()' in index
@@ -468,9 +505,9 @@ assert '<b>HK265HG</b><span>基督教勵行會</span><em>英文授課</em>' in c
 assert index.count('class="provider-badge provider-ca"') == 16
 assert index.count('class="provider-badge provider-mc"') == 1
 course_card_classes = re.findall(r'<div class="chip ([^"]*cat-(?:erb|methodist)[^"]*)"', index)
-# Calendar month grids include adjacent-month filler days, so the 269 source
-# course entries are rendered as 538 visible card instances across the page.
-assert len(course_card_classes) == 538
+# Calendar month grids include adjacent-month filler days; V19a adds five
+# proposal-only cards while retaining every confirmed original.
+assert len(course_card_classes) == 548
 assert all('erb-compact' in classes for classes in course_card_classes)
 july_25_start = index.index('<div class="cell wknd has" id="d-2026-07-25">')
 july_25_end = index.index('<div class="cell wknd" id="d-2026-07-26">', july_25_start)
@@ -568,6 +605,7 @@ for code, class_name, first_date, count in confirmed_ca_specs:
         if code in row["text"]
         and class_name in row["text"]
         and row["date"] >= first_date
+        and row["status"] == "confirmed"
         and (code != "HK244EG" or class_name != "Class FS" or "Class FS-1" not in row["text"])
     ]
     if code == "HK265HG":

@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v19-hk244hg-cw8-hk280hg-cw1-confirmed-20260729a"
+BUILD_ID = "v19a-hk239hg-ss-renovation-proposal-hk280hg-ss-unavailable-20260729a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-28-V18t"
-COMPARE_LABEL = "V19"
-COMPARE_BASELINE_LABEL = "V18t"
-EXPECTED_COMPARISON_CHANGES = 12
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-29-V19"
+COMPARE_LABEL = "V19a"
+COMPARE_BASELINE_LABEL = "V19"
+EXPECTED_COMPARISON_CHANGES = 11
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -735,7 +735,22 @@ def is_personal_assignment(event):
     return bool(re.search(r"\bGar(?:e|r)tt\b", teacher or text, re.I))
 
 
+def is_proposal_only(event):
+    return bool(
+        re.search(
+            r"PROPOSED availability only",
+            str(event.get("text", "")),
+            re.I,
+        )
+    )
+
+
 def lifecycle_status(group_events):
+    business_events = [
+        event for event in group_events if not is_proposal_only(event)
+    ]
+    if business_events:
+        group_events = business_events
     statuses = {event["status"] for event in group_events}
     if statuses == {"note"}:
         return "note"
@@ -1093,12 +1108,16 @@ def event_interval(ev):
     intervals = time_range_intervals(ev.get("text"))
     if not intervals:
         return None
-    return min(start for start, _end in intervals), max(end for _start, end in intervals)
+    # The first range is the lesson slot. Later ranges are assessment sub-times
+    # and must not move an afternoon or evening card into another broad slot.
+    return intervals[0]
 
 
 def teaching_intervals(ev):
     text = str(ev.get("text") or "")
     if event_layer(ev) != "mine" or ev.get("category") in {"holiday", "mike"}:
+        return []
+    if re.search(r"PROPOSED availability only", text, re.I):
         return []
     if CANCELLED_TEACHING_RE.search(text):
         return []
@@ -1339,7 +1358,11 @@ def provider_meta(code):
 
 def class_summary_button(group, section):
     label, slug, _group_status, first_class_date = group
-    all_group_events = [event for event in display_events if event["group"] == slug]
+    all_group_events = [
+        event
+        for event in display_events
+        if event["group"] == slug and not is_proposal_only(event)
+    ]
     mine_events = [
         event
         for event in all_group_events
