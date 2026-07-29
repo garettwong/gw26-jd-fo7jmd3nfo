@@ -1,9 +1,21 @@
 [
   {
+    "id": "2026-07-29-V20a",
+    "label": "2026-07-29 - V20a",
+    "summary": "HK239HG SS replacement mornings checked; HK280HG SS room gaps unavailable.",
+    "latest": true
+  },
+  {
+    "id": "2026-07-29-V20",
+    "label": "2026-07-29 - V20",
+    "summary": "Aug 31 - Chan Shuk Ki keeps HK244HG CW8; Garett starts HK280HG CW1.",
+    "latest": false
+  },
+  {
     "id": "2026-07-29-V19a",
     "label": "2026-07-29 - V19a",
-    "summary": "HK239HG SS renovation-date proposal; HK280HG SS offered slots unavailable.",
-    "latest": true
+    "summary": "Superseded incorrect old-table mapping; retained for audit only.",
+    "latest": false
   },
   {
     "id": "2026-07-29-V19",

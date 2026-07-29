@@ -1,4 +1,4 @@
-const BUILD_ID = 'v20a-hk239hg-ss-room-gap-checked-hk280hg-ss-unavailable-20260729a';
+const BUILD_ID = 'v20-aug31-substitution-hk280hg-cw1-confirmed-20260729a';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

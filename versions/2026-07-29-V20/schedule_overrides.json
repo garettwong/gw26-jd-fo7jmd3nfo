@@ -1,7 +1,7 @@
 {
-  "revision": "V20a",
-  "source": "V20 plus HK239HGSS_R2.docx and HK280HGSS_R5.docx; client instructed Garett to disregard both old lesson tables and check only the listed replacement room-gap dates.",
-  "confirmation": "V20 confirmed assignments remain unchanged. The old HK239HG SS table is superseded; six exact replacement mornings are shown dotted pending Calvin/client confirmation. HK280HS SS is corrected to HK280HG SS, but all five offered room-gap lessons clash with confirmed classes, so no new HK280HG SS assignment is added.",
+  "revision": "V20",
+  "source": "Clean V19 confirmed baseline retained as V20 before the two Sheung Shui renovation enquiries are applied.",
+  "confirmation": "Aug 31 remains confirmed: Chan Shuk Ki teaches HK244HG CW8 L7 14:00-18:00, while Garett starts HK280HG CW1 L1 14:00-18:00.",
   "default_status": "confirmed",
   "overrides": [
     {
@@ -325,9 +325,8 @@
       "lesson": 1,
       "teacher": "Garett",
       "status": "confirmed",
-      "source": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation and latest SS sheet, lesson 1; time corrected from 08:30-12:30 to 09:00-12:00; superseded by client instruction to disregard the old table on 2026-07-29",
-      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L1",
-      "exclude": true
+      "source": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation and latest SS sheet, lesson 1; time corrected from 08:30-12:30 to 09:00-12:00",
+      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L1"
     },
     {
       "date": "2026-09-23",
@@ -336,9 +335,8 @@
       "lesson": 2,
       "teacher": "Garett",
       "status": "confirmed",
-      "source": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation and latest SS sheet, lesson 2; time corrected from 08:30-12:30 to 09:00-12:00; superseded by client instruction to disregard the old table on 2026-07-29",
-      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L2",
-      "exclude": true
+      "source": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation and latest SS sheet, lesson 2; time corrected from 08:30-12:30 to 09:00-12:00",
+      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L2"
     },
     {
       "date": "2026-09-30",
@@ -347,9 +345,8 @@
       "lesson": 3,
       "teacher": "Garett",
       "status": "confirmed",
-      "source": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation and latest SS sheet, lesson 3; time corrected from 08:30-12:30 to 09:00-12:00; superseded by client instruction to disregard the old table on 2026-07-29",
-      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L3",
-      "exclude": true
+      "source": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation and latest SS sheet, lesson 3; time corrected from 08:30-12:30 to 09:00-12:00",
+      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L3"
     },
     {
       "date": "2026-10-07",
@@ -358,9 +355,8 @@
       "lesson": 4,
       "teacher": "Garett",
       "status": "confirmed",
-      "source": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation and latest SS sheet, lesson 4; time corrected from 08:30-12:30 to 09:00-12:00; superseded by client instruction to disregard the old table on 2026-07-29",
-      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L4",
-      "exclude": true
+      "source": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation and latest SS sheet, lesson 4; time corrected from 08:30-12:30 to 09:00-12:00",
+      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L4"
     },
     {
       "date": "2026-10-14",
@@ -369,9 +365,8 @@
       "lesson": 5,
       "teacher": "Garett",
       "status": "confirmed",
-      "source": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation and latest SS sheet, lesson 5; time corrected from 08:30-12:30 to 09:00-12:00; superseded by client instruction to disregard the old table on 2026-07-29",
-      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L5 [持續評估 / 小組討論及專題報告]",
-      "exclude": true
+      "source": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation and latest SS sheet, lesson 5; time corrected from 08:30-12:30 to 09:00-12:00",
+      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L5 [持續評估 / 小組討論及專題報告]"
     },
     {
       "date": "2026-10-21",
@@ -380,9 +375,8 @@
       "lesson": 6,
       "teacher": "Garett",
       "status": "confirmed",
-      "source": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation and latest SS sheet, lesson 6; time corrected from 08:30-12:30 to 09:00-12:00; superseded by client instruction to disregard the old table on 2026-07-29",
-      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L6 [期末筆試 1030-1130]",
-      "exclude": true
+      "source": "Calvin WhatsApp 2026-07-18 23:46 explicit ownership confirmation and latest SS sheet, lesson 6; time corrected from 08:30-12:30 to 09:00-12:00",
+      "text": "上水彩園 - HK239HG (Garett), Class SS / 人工智能知識及應用證書 (兼讀制) / 0900-1200 - L6 [期末筆試 1030-1130]"
     },
     {
       "date": "2026-10-03",

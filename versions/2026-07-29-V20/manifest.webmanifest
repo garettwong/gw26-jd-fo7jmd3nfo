@@ -3,7 +3,7 @@
   "name": "Garett's ERB",
   "short_name": "Garett's ERB",
   "description": "Garett's ERB teaching timetable",
-  "start_url": "./?v=redtext1&build=v20a-hk239hg-ss-room-gap-checked-hk280hg-ss-unavailable-20260729a",
+  "start_url": "./?v=redtext1&build=v20-aug31-substitution-hk280hg-cw1-confirmed-20260729a",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef1f6",

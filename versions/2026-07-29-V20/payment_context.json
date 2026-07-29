@@ -35,8 +35,8 @@
     "course_code": "HK239HG",
     "course_name": "人工智能知識及應用證書（兼讀制）",
     "provider": "基督教勵行會",
-    "full_course_start": "2026-09-23",
-    "full_course_end": "2026-10-12",
+    "full_course_start": "2026-09-16",
+    "full_course_end": "2026-10-21",
     "full_lesson_entries": 6
   },
   {
@@ -147,6 +147,16 @@
     "provider": "基督教勵行會",
     "full_course_start": "2026-09-18",
     "full_course_end": "2026-09-30",
+    "full_lesson_entries": 5
+  },
+  {
+    "group": "g21",
+    "label": "HK280HS · SS",
+    "course_code": "HK280HS",
+    "course_name": "生成式人工智能商務應用證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-09-14",
+    "full_course_end": "2026-09-22",
     "full_lesson_entries": 5
   },
   {

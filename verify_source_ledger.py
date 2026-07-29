@@ -11,6 +11,7 @@ EVENTS = json.loads((ROOT / "events.json").read_text(encoding="utf-8"))
 CONTEXT = json.loads((ROOT / "class_context.json").read_text(encoding="utf-8"))
 SUMMARY = json.loads((ROOT / "summary.json").read_text(encoding="utf-8"))
 ALL = EVENTS + CONTEXT
+IS_V20A = SUMMARY.get("override_revision") == "V20a"
 LESSON_RE = re.compile(r"\bL\s*(\d+)\b", re.I)
 TIME_RE = re.compile(r"(?<!\d)(\d{3,4})\s*-\s*(\d{3,4})(?!\d)")
 
@@ -143,22 +144,22 @@ assert len(fs) == 18
 assert_lessons(fs, range(1, 19), "HK244EG FS")
 assert_status(fs, "confirmed", "HK244EG FS")
 
-ss = rows_with("HK239HG", "Class SS", rows=EVENTS)
+ss = rows_with("HK239HG", "Class SS", rows=CONTEXT if IS_V20A else EVENTS)
 st = rows_with("HK239HG", "Class ST", rows=EVENTS)
 lt = rows_with("HK239HG", "Class LT", rows=EVENTS)
 assert_lessons(ss, range(1, 7), "HK239HG SS")
 assert_lessons(st, range(1, 7), "HK239HG ST")
 assert_lessons(lt, range(1, 7), "HK239HG LT")
-assert_status(ss, "confirmed", "HK239HG SS")
+assert_status(ss, "unconfirmed" if IS_V20A else "confirmed", "HK239HG SS")
 assert_status(st, "confirmed", "HK239HG ST")
 assert_status(lt, "confirmed", "HK239HG LT")
 ss_expected_dates = {
-    1: "2026-09-16",
-    2: "2026-09-23",
+    1: "2026-09-23" if IS_V20A else "2026-09-16",
+    2: "2026-09-28" if IS_V20A else "2026-09-23",
     3: "2026-09-30",
-    4: "2026-10-07",
-    5: "2026-10-14",
-    6: "2026-10-21",
+    4: "2026-10-05" if IS_V20A else "2026-10-07",
+    5: "2026-10-07" if IS_V20A else "2026-10-14",
+    6: "2026-10-12" if IS_V20A else "2026-10-21",
 }
 for row in ss:
     number = lesson(row)
@@ -168,34 +169,16 @@ for row in ss:
     assert match.groups() == ("0900", "1200")
     assert "上水彩園" in row["text"]
     assert "TIGHT TRAVEL" not in row["text"]
-    assert "Calvin WhatsApp 2026-07-18 23:46" in row.get("source", "")
+    if IS_V20A:
+        assert row.get("layer") == "mine"
+        assert teacher(row) == "Garett"
+        assert row.get("red")
+        assert "client renovation replacement list" in row.get("source", "")
+        assert "建議替補課節" in row["text"]
+    else:
+        assert "Calvin WhatsApp 2026-07-18 23:46" in row.get("source", "")
 
-if SUMMARY.get("override_revision") == "V19a":
-    ss_proposals = [
-        row
-        for row in CONTEXT
-        if "HK239HG" in row.get("text", "")
-        and "Class SS" in row.get("text", "")
-        and "PROPOSED availability only" in row.get("text", "")
-    ]
-    assert len(ss_proposals) == 5
-    assert {
-        (lesson(row), row["date"])
-        for row in ss_proposals
-    } == {
-        (1, "2026-09-23"),
-        (2, "2026-09-28"),
-        (4, "2026-10-05"),
-        (5, "2026-10-07"),
-        (6, "2026-10-12"),
-    }
-    assert all(
-        row["status"] == "unconfirmed"
-        and row.get("layer") == "mine"
-        and teacher(row) == "Garett"
-        and row.get("red")
-        for row in ss_proposals
-    )
+if IS_V20A:
     rejected_hk280_dates = {"2026-09-22", "2026-09-24", "2026-09-29"}
     assert not [
         row
@@ -365,44 +348,11 @@ for row in hk239_fs:
         f"HK239HG FS L{number}: layer {row.get('layer')!r}, expected {expected_layer!r}"
     )
 
-# HK280HS SS R4 is confirmed as a five-lesson class. The teacher column assigns
-# Garett only to L1; blank teacher cells remain Other tutor / TBC.
+# The client superseded the old typo-coded HK280HS SS table. The corrected
+# HK280HG SS room-gap options all clash and must not enter V20a.
 hk280hs_ss = rows_with("HK280HS", "Class SS")
-assert len(hk280hs_ss) == 5
-assert [(row["date"], lesson(row)) for row in hk280hs_ss] == [
-    ("2026-09-14", 1),
-    ("2026-09-15", 2),
-    ("2026-09-17", 3),
-    ("2026-09-22", 4),
-    ("2026-09-22", 5),
-]
-assert Counter(teacher(row) for row in hk280hs_ss) == Counter({
-    "Garett": 1,
-    "Other tutor / TBC": 4,
-})
-assert all(row["status"] == "confirmed" for row in hk280hs_ss)
-assert [row.get("layer") for row in hk280hs_ss] == [
-    "mine",
-    "class",
-    "class",
-    "class",
-    "class",
-]
-assert all("HK280HSSS_R4.docx" in row.get("source", "") for row in hk280hs_ss)
-assert "0900-1300" in hk280hs_ss[0]["text"]
-assert "0900-1230" in hk280hs_ss[1]["text"]
-assert "1400-1730" in hk280hs_ss[2]["text"]
-assert "0900-1230" in hk280hs_ss[3]["text"]
-assert "1400-1730" in hk280hs_ss[4]["text"]
-for number, marker in {
-    3: "Continuous Assessment - Individual Assignment 1",
-    4: "Continuous Assessment - Individual Assignment 2",
-    5: "Final Written Test 16:00-17:00",
-}.items():
-    row = next(item for item in hk280hs_ss if lesson(item) == number)
-    assert marker in row["text"] and row.get("red")
-if SUMMARY.get("override_revision") != "V19a":
-    assert not any("PROPOSED availability only" in row["text"] for row in ALL)
+assert not hk280hs_ss
+assert not any("PROPOSED availability only" in row["text"] for row in ALL)
 assert not any("Lesson TBC" in row["text"] for row in hk280hs_ss)
 
 # V18a does not displace any confirmed SEN, HK265HG, or HK244EG assignment.
@@ -428,12 +378,12 @@ assert not any(
 
 index = (ROOT / "index.html").read_text(encoding="utf-8")
 assert "May 2026" in index and "HK244HG" in index
-assert index.count('class="span-row"') == 20
+assert index.count('class="span-row"') == 19
 assert 'data-first="2026-07-24" data-last="2026-08-12"' in index
-assert 'data-first="2026-09-16" data-last="2026-10-14"' in index
+assert 'data-first="2026-09-23" data-last="2026-10-12"' in index
 assert 'data-first="2026-08-14" data-last="2026-08-21"' in index
 assert "HK265HG · FS · JUL 2026" in index and "HK265HG · FS · SEP 2026" in index
-assert index.count('data-span-course="') == 20
+assert index.count('data-span-course="') == 19
 assert all(control in index for control in (
     'id="spanLabelsToggle"', 'id="spanZoomOut"', 'id="spanZoomReset"', 'id="spanZoomIn"',
     'data-span-course-action="all"', 'data-span-course-action="none"',
@@ -470,22 +420,22 @@ version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
-assert '<span class="sample changed-sample"></span> Changed in V19a' in index
-assert SUMMARY["changed_in_version"] == 11
-assert index.count('class="change-badge"') == 22
-assert index.count('class="filter course-filter upcoming"') == 16
-assert index.count('class="filter course-filter pending"') == 0
+assert '<span class="sample changed-sample"></span> Changed in V20a' in index
+assert SUMMARY["changed_in_version"] == 6
+assert index.count('class="change-badge"') == 12
+assert index.count('class="filter course-filter upcoming"') == 14
+assert index.count('class="filter course-filter pending"') == 1
 assert index.count('class="filter course-filter completed"') >= 2
 assert index.count('class="filter course-filter context"') >= 1
-assert '<span class="filter-status-total">18 tracked ERB classes</span>' in index
-assert '<span class="filter-status-swatch upcoming"></span>Upcoming 15' in index
-assert '<span class="filter-status-swatch pending"></span>Pending 0' in index
+assert '<span class="filter-status-total">17 tracked ERB classes</span>' in index
+assert '<span class="filter-status-swatch upcoming"></span>Upcoming 13' in index
+assert '<span class="filter-status-swatch pending"></span>Pending 1' in index
 assert '<span class="filter-status-swatch completed"></span>Completed 2' in index
 assert '<span class="filter-status-swatch context"></span>Full-class context 1' in index
-assert '<span class="span-course-breakdown">20 total = 18 ERB + 2 SEN</span>' in index
-assert index.count('class="span-bar-label"') == 20
-assert index.count('class="span-course-toggle ') == 20
-assert index.count("PROPOSED availability only") > 0
+assert '<span class="span-course-breakdown">19 total = 17 ERB + 2 SEN</span>' in index
+assert index.count('class="span-bar-label"') == 19
+assert index.count('class="span-course-toggle ') == 19
+assert "建議替補課節" in index
 assert index.count('data-day-hours hidden') >= 400
 assert 'data-teaching-intervals="480-590,660-780"' in index
 assert 'function refreshDailyHours()' in index
@@ -497,17 +447,17 @@ legend_end = index.index('<section class="class-summary upcoming-summary"', lege
 course_legend = index[legend_start:legend_end]
 assert 'ERB course families' in course_legend and '4 course families' in course_legend
 assert course_legend.count('class="course-family-card"') == 4
-for code in ("HK239HG", "HK244EG", "HK244HG", "HK265HG", "HK280HG", "HK280HS", "HK281DS", "MC0106DS"):
+for code in ("HK239HG", "HK244EG", "HK244HG", "HK265HG", "HK280HG", "HK281DS", "MC0106DS"):
     assert f'<b>{code}</b>' in course_legend
-assert course_legend.count('基督教勵行會') == 7
+assert '<b>HK280HS</b>' not in course_legend
+assert course_legend.count('基督教勵行會') == 6
 assert course_legend.count('循道衞理中心') == 1
 assert '<b>HK265HG</b><span>基督教勵行會</span><em>英文授課</em>' in course_legend
-assert index.count('class="provider-badge provider-ca"') == 16
+assert index.count('class="provider-badge provider-ca"') == 15
 assert index.count('class="provider-badge provider-mc"') == 1
 course_card_classes = re.findall(r'<div class="chip ([^"]*cat-(?:erb|methodist)[^"]*)"', index)
-# Calendar month grids include adjacent-month filler days; V19a adds five
-# proposal-only cards while retaining every confirmed original.
-assert len(course_card_classes) == 548
+# Calendar month grids include adjacent-month filler days.
+assert len(course_card_classes) == 528
 assert all('erb-compact' in classes for classes in course_card_classes)
 july_25_start = index.index('<div class="cell wknd has" id="d-2026-07-25">')
 july_25_end = index.index('<div class="cell wknd" id="d-2026-07-26">', july_25_start)
@@ -548,9 +498,9 @@ assert "\u6211\u7684\u5802\u6578 1 / \u5168\u73ed 62" in upcoming
 assert "\u6211\u7684\u5802\u6578 6 / \u5168\u73ed 47" in upcoming
 assert "Helper: Fiona" in index
 assert "基督教勵行會" in upcoming
-assert "HK280HS · SS" in upcoming and "上水彩園邨彩湖樓2座地下129舖02室" in upcoming
+assert "HK239HG · SS" in upcoming and "上水彩園" in upcoming
 assert 'data-toggle-filter="1"' in upcoming
-assert upcoming.count('class="summary-class-dates"') == 15
+assert upcoming.count('class="summary-class-dates"') == 14
 assert '<span class="my-date-key"><i></i>你任教日期</span>' in index
 assert '<span class="other-date-key"><i></i>其他導師日期</span>' in index
 upcoming_cards = re.findall(r'<button class="class-summary-card[^>]+>.*?</button>', upcoming, re.S)
@@ -561,11 +511,11 @@ assert '<span class="summary-class-date" title="其他導師">Aug 21</span>' in 
 assert hk239_fs_card.count('class="summary-class-date mine"') == 2
 assert hk239_fs_card.count('class="summary-class-date" title="其他導師"') == 1
 assert '>CONFIRMED</span>' in upcoming
-assert upcoming.count('>CONFIRMED</span>') == 15
-assert upcoming.count('>UNCONFIRMED</span>') == 0
+assert upcoming.count('>CONFIRMED</span>') == 13
+assert upcoming.count('>UNCONFIRMED</span>') == 1
 assert 'HK239HG · ST' in upcoming and 'HK239HG · LT' in upcoming
 pending_filters = re.findall(r'class="filter course-filter pending"[^>]*>([^<]+)</button>', index)
-assert pending_filters == []
+assert any("HK239HG" in label and "SS" in label for label in pending_filters)
 assert "HK280HG" in upcoming
 assert 'class="filter course-filter context"' in index
 assert '<div id="completedHeading" class="section-h">Completed ERB classes</div>' in index
@@ -577,26 +527,24 @@ assert index.count('data-span-month-toggle="') == 8
 assert index.count('<input type="checkbox" data-span-month-toggle="') == 8
 assert index.count('data-span-row-toggle="') == 0
 assert '<section id="spanCoursePicker" class="span-course-picker" aria-label="Class visibility">' in index
-assert index.count('data-span-course="') == 20
+assert index.count('data-span-course="') == 19
 assert "spanCourseCount.textContent=enabled+'/'+spanCourseInputs.length+' ON'" in index
 assert index.count('class="span-day"') == 245
 assert 'const spanZoomLevels=[8,12,16,22,30,40]' in index
 assert 'function layoutSpanTimeline()' in index
 
-# The thirteen confirmed Christian Action course instances are independently present.
+# The confirmed Christian Action course instances are independently present.
 confirmed_ca_specs = [
     ("HK265HG", "Class FS", "2026-07-24", 12),
     ("HK244HG", "Class CW8", "2026-08-06", 12),
     ("HK239HG", "Class FS", "2026-08-14", 6),
     ("HK239HG", "Class CW10", "2026-08-27", 6),
     ("HK244EG", "Class CW", "2026-08-24", 18),
-    ("HK239HG", "Class SS", "2026-09-16", 6),
     ("HK239HG", "Class ST", "2026-10-03", 6),
     ("HK239HG", "Class LT", "2026-11-23", 6),
     ("HK265HG", "Class FS", "2026-09-16", 12),
     ("HK244EG", "Class FS", "2026-09-21", 18),
     ("HK239HG", "Class 城巿一條龍", "2026-11-11", 6),
-    ("HK280HS", "Class SS", "2026-09-14", 5),
     ("HK280HG", "Class CW1", "2026-08-31", 5),
 ]
 for code, class_name, first_date, count in confirmed_ca_specs:
@@ -635,8 +583,8 @@ assessment_cards = [
     ("2026-10-08", "HK265HG · FS · SEP 2026", "Lesson 10", "Written Test"),
     ("2026-10-12", "HK265HG · FS · SEP 2026", "Lesson 11", "Group Presentation"),
     ("2026-10-14", "HK265HG · FS · SEP 2026", "Lesson 12", "Final Practical Exam"),
-    ("2026-10-14", "HK239HG · SS", "Lesson 5", "小組討論及專題報告"),
-    ("2026-10-21", "HK239HG · SS", "Lesson 6", "期末筆試"),
+    ("2026-10-07", "HK239HG · SS", "Lesson 5", "小組討論及專題報告"),
+    ("2026-10-12", "HK239HG · SS", "Lesson 6", "期末筆試"),
     ("2026-10-05", "HK244EG · CW", "Lesson 16", "持續評估小組匯報"),
     ("2026-10-07", "HK244EG · CW", "Lesson 17", "持續筆試"),
     ("2026-10-08", "HK244EG · CW", "Lesson 18", "期末實務試"),
@@ -647,9 +595,6 @@ assessment_cards = [
     ("2026-11-13", "HK239HG · 城巿一條龍", "Lesson 6", "Final Exam"),
     ("2026-10-31", "HK239HG · ST", "Lesson 5", "小組討論及專題報告"),
     ("2026-11-07", "HK239HG · ST", "Lesson 6", "期末筆試"),
-    ("2026-09-17", "HK280HS · SS", "Lesson 3", "Continuous Assessment - Individual Assignment 1"),
-    ("2026-09-22", "HK280HS · SS", "Lesson 4", "Continuous Assessment - Individual Assignment 2"),
-    ("2026-09-22", "HK280HS · SS", "Lesson 5", "Final Written Test 16:00-17:00"),
     ("2026-11-27", "HK239HG · LT", "Lesson 5", "小組討論及專題報告"),
     ("2026-11-30", "HK239HG · LT", "Lesson 6", "期末筆試"),
 ]
