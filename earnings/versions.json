@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-07-30-V20b",
+    "label": "2026-07-30 - V20b",
+    "summary": "HK239HG SS - six replacement mornings confirmed.",
+    "latest": true
+  },
+  {
     "id": "2026-07-29-V20a",
     "label": "2026-07-29 - V20a",
     "summary": "HK239HG SS replacement mornings checked; HK280HG SS room gaps unavailable.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-29-V20",

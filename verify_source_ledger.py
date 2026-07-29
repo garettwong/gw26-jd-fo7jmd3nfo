@@ -11,7 +11,10 @@ EVENTS = json.loads((ROOT / "events.json").read_text(encoding="utf-8"))
 CONTEXT = json.loads((ROOT / "class_context.json").read_text(encoding="utf-8"))
 SUMMARY = json.loads((ROOT / "summary.json").read_text(encoding="utf-8"))
 ALL = EVENTS + CONTEXT
-IS_V20A = SUMMARY.get("override_revision") == "V20a"
+REVISION = SUMMARY.get("override_revision")
+IS_V20A = REVISION == "V20a"
+IS_V20B = REVISION == "V20b"
+USES_HK239_REPLACEMENTS = REVISION in {"V20a", "V20b"}
 LESSON_RE = re.compile(r"\bL\s*(\d+)\b", re.I)
 TIME_RE = re.compile(r"(?<!\d)(\d{3,4})\s*-\s*(\d{3,4})(?!\d)")
 
@@ -144,7 +147,11 @@ assert len(fs) == 18
 assert_lessons(fs, range(1, 19), "HK244EG FS")
 assert_status(fs, "confirmed", "HK244EG FS")
 
-ss = rows_with("HK239HG", "Class SS", rows=CONTEXT if IS_V20A else EVENTS)
+ss = rows_with(
+    "HK239HG",
+    "Class SS",
+    rows=CONTEXT if USES_HK239_REPLACEMENTS else EVENTS,
+)
 st = rows_with("HK239HG", "Class ST", rows=EVENTS)
 lt = rows_with("HK239HG", "Class LT", rows=EVENTS)
 assert_lessons(ss, range(1, 7), "HK239HG SS")
@@ -154,12 +161,12 @@ assert_status(ss, "unconfirmed" if IS_V20A else "confirmed", "HK239HG SS")
 assert_status(st, "confirmed", "HK239HG ST")
 assert_status(lt, "confirmed", "HK239HG LT")
 ss_expected_dates = {
-    1: "2026-09-23" if IS_V20A else "2026-09-16",
-    2: "2026-09-28" if IS_V20A else "2026-09-23",
+    1: "2026-09-23" if USES_HK239_REPLACEMENTS else "2026-09-16",
+    2: "2026-09-28" if USES_HK239_REPLACEMENTS else "2026-09-23",
     3: "2026-09-30",
-    4: "2026-10-05" if IS_V20A else "2026-10-07",
-    5: "2026-10-07" if IS_V20A else "2026-10-14",
-    6: "2026-10-12" if IS_V20A else "2026-10-21",
+    4: "2026-10-05" if USES_HK239_REPLACEMENTS else "2026-10-07",
+    5: "2026-10-07" if USES_HK239_REPLACEMENTS else "2026-10-14",
+    6: "2026-10-12" if USES_HK239_REPLACEMENTS else "2026-10-21",
 }
 for row in ss:
     number = lesson(row)
@@ -169,16 +176,22 @@ for row in ss:
     assert match.groups() == ("0900", "1200")
     assert "上水彩園" in row["text"]
     assert "TIGHT TRAVEL" not in row["text"]
-    if IS_V20A:
+    if USES_HK239_REPLACEMENTS:
         assert row.get("layer") == "mine"
         assert teacher(row) == "Garett"
-        assert row.get("red")
-        assert "client renovation replacement list" in row.get("source", "")
-        assert "建議替補課節" in row["text"]
+        if IS_V20A:
+            assert row.get("red")
+            assert "client renovation replacement list" in row.get("source", "")
+            assert "建議替補課節" in row["text"]
+        else:
+            assert row.get("red") == (number in {5, 6})
+            assert "Calvin WhatsApp confirmation 2026-07-30" in row.get("source", "")
+            assert "建議替補課節" not in row["text"]
+            assert "待 Calvin" not in row["text"]
     else:
         assert "Calvin WhatsApp 2026-07-18 23:46" in row.get("source", "")
 
-if IS_V20A:
+if USES_HK239_REPLACEMENTS:
     rejected_hk280_dates = {"2026-09-22", "2026-09-24", "2026-09-29"}
     assert not [
         row
@@ -420,22 +433,27 @@ version_selector_start = index.index('<details id="topVersionSelector"')
 version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
-assert '<span class="sample changed-sample"></span> Changed in V20a' in index
+assert f'<span class="sample changed-sample"></span> Changed in {REVISION}' in index
 assert SUMMARY["changed_in_version"] == 6
 assert index.count('class="change-badge"') == 12
-assert index.count('class="filter course-filter upcoming"') == 14
-assert index.count('class="filter course-filter pending"') == 1
+assert index.count('class="filter course-filter upcoming"') == (14 if IS_V20A else 15)
+assert index.count('class="filter course-filter pending"') == (1 if IS_V20A else 0)
 assert index.count('class="filter course-filter completed"') >= 2
 assert index.count('class="filter course-filter context"') >= 1
 assert '<span class="filter-status-total">17 tracked ERB classes</span>' in index
-assert '<span class="filter-status-swatch upcoming"></span>Upcoming 13' in index
-assert '<span class="filter-status-swatch pending"></span>Pending 1' in index
+expected_upcoming = 13 if IS_V20A else 14
+expected_pending = 1 if IS_V20A else 0
+assert f'<span class="filter-status-swatch upcoming"></span>Upcoming {expected_upcoming}' in index
+assert f'<span class="filter-status-swatch pending"></span>Pending {expected_pending}' in index
 assert '<span class="filter-status-swatch completed"></span>Completed 2' in index
 assert '<span class="filter-status-swatch context"></span>Full-class context 1' in index
 assert '<span class="span-course-breakdown">19 total = 17 ERB + 2 SEN</span>' in index
 assert index.count('class="span-bar-label"') == 19
 assert index.count('class="span-course-toggle ') == 19
-assert "建議替補課節" in index
+if IS_V20A:
+    assert "建議替補課節" in index
+else:
+    assert "建議替補課節" not in index
 assert index.count('data-day-hours hidden') >= 400
 assert 'data-teaching-intervals="480-590,660-780"' in index
 assert 'function refreshDailyHours()' in index
@@ -511,11 +529,14 @@ assert '<span class="summary-class-date" title="其他導師">Aug 21</span>' in 
 assert hk239_fs_card.count('class="summary-class-date mine"') == 2
 assert hk239_fs_card.count('class="summary-class-date" title="其他導師"') == 1
 assert '>CONFIRMED</span>' in upcoming
-assert upcoming.count('>CONFIRMED</span>') == 13
-assert upcoming.count('>UNCONFIRMED</span>') == 1
+assert upcoming.count('>CONFIRMED</span>') == (13 if IS_V20A else 14)
+assert upcoming.count('>UNCONFIRMED</span>') == (1 if IS_V20A else 0)
 assert 'HK239HG · ST' in upcoming and 'HK239HG · LT' in upcoming
 pending_filters = re.findall(r'class="filter course-filter pending"[^>]*>([^<]+)</button>', index)
-assert any("HK239HG" in label and "SS" in label for label in pending_filters)
+if IS_V20A:
+    assert any("HK239HG" in label and "SS" in label for label in pending_filters)
+else:
+    assert not any("HK239HG" in label and "SS" in label for label in pending_filters)
 assert "HK280HG" in upcoming
 assert 'class="filter course-filter context"' in index
 assert '<div id="completedHeading" class="section-h">Completed ERB classes</div>' in index

@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20a-hk239hg-ss-room-gap-checked-hk280hg-ss-unavailable-20260729a"
+BUILD_ID = "v20b-hk239hg-ss-replacement-dates-confirmed-20260730a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-29-V20"
-COMPARE_LABEL = "V20a"
-COMPARE_BASELINE_LABEL = "V20"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-07-29-V20a"
+COMPARE_LABEL = "V20b"
+COMPARE_BASELINE_LABEL = "V20a"
 EXPECTED_COMPARISON_CHANGES = 6
 
 COURSE_CHINESE_NAMES = {
