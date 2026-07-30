@@ -15,7 +15,8 @@ REVISION = SUMMARY.get("override_revision")
 IS_V20A = REVISION == "V20a"
 IS_V20B = REVISION == "V20b"
 IS_V20C = REVISION == "V20c"
-USES_HK239_REPLACEMENTS = REVISION in {"V20a", "V20b", "V20c"}
+IS_V20D = REVISION == "V20d"
+USES_HK239_REPLACEMENTS = REVISION in {"V20a", "V20b", "V20c", "V20d"}
 LESSON_RE = re.compile(r"\bL\s*(\d+)\b", re.I)
 TIME_RE = re.compile(r"(?<!\d)(\d{3,4})\s*-\s*(\d{3,4})(?!\d)")
 
@@ -49,6 +50,18 @@ def assert_lessons(rows: list[dict], expected: range, label: str) -> None:
 def assert_status(rows: list[dict], status: str, label: str) -> None:
     actual = {row["status"] for row in rows}
     assert actual == {status}, f"{label}: statuses {actual}, expected {status}"
+
+
+# Mike Sir lessons stay visible as timetable history but never count as Garett's salary.
+mike = rows_with("Mike Sir AI Lesson", rows=ALL)
+assert len(mike) == (5 if IS_V20D else 3)
+if IS_V20D:
+    mike_l3 = rows_with("Mike Sir AI Lesson - L3", rows=ALL)
+    assert {row["date"] for row in mike_l3} == {"2026-07-24", "2026-07-31"}
+    assert all(row["status"] == "confirmed" for row in mike_l3)
+    assert all(row.get("layer") == "mine" for row in mike_l3)
+    assert all(row.get("category") == "mike" for row in mike_l3)
+    assert all("CANCELLED" in row["text"] for row in mike_l3)
 
 
 # HK244EG HF2: 17 numbered lessons plus one unnumbered cancellation.
@@ -435,8 +448,17 @@ version_selector_end = index.index('</details>', version_selector_start)
 assert 'earnings' not in index[version_selector_start:version_selector_end].lower()
 assert 'data-filter="changed"' in index
 assert f'<span class="sample changed-sample"></span> Changed in {REVISION}' in index
-assert SUMMARY["changed_in_version"] == 42
-assert index.count('class="change-badge"') == 84
+expected_changed = 2 if IS_V20D else 42
+assert SUMMARY["changed_in_version"] == expected_changed
+assert index.count('class="change-badge"') == expected_changed * 2
+if IS_V20D:
+    for date in ("2026-07-24", "2026-07-31"):
+        day_start = index.index(f'id="d-{date}"')
+        day_end = index.index('<div class="cell', day_start + 20)
+        day = index[day_start:day_end]
+        assert "Mike Sir AI Lesson - L3" in day
+        assert "CANCELLED" in day
+        assert 'data-teaching-intervals=""' in day
 assert index.count('class="filter course-filter upcoming"') == (14 if IS_V20A else 15)
 assert index.count('class="filter course-filter pending"') == (1 if IS_V20A else 0)
 assert index.count('class="filter course-filter completed"') >= 2
