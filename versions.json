@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-08-03-V20g",
+    "label": "2026-08-03 - V20g",
+    "summary": "灣仔循道六堂週五晚班已確認；新增私人跨裝置課後記錄。",
+    "latest": true
+  },
+  {
     "id": "2026-08-03-V20f",
     "label": "2026-08-03 - V20f",
     "summary": "QAT7 SEN morning corrected to 09:30-12:30; matching salary recalculated.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-08-02-V20e",
