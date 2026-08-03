@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20g-wanchai-night-class-lesson-log-20260803a"
+BUILD_ID = "v20h-remaining-salary-lesson-detail-log-20260803a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-03-V20f"
-COMPARE_LABEL = "V20g"
-COMPARE_BASELINE_LABEL = "V20f"
-EXPECTED_COMPARISON_CHANGES = 6
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-03-V20g"
+COMPARE_LABEL = "V20h"
+COMPARE_BASELINE_LABEL = "V20g"
+EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -970,9 +970,8 @@ CSS += r'''
 '''
 
 CSS += r'''
-.lesson-log-control,.lesson-log-open{display:none}.lesson-log-enabled .lesson-log-control{display:inline-flex;align-items:center}.lesson-log-enabled .chip.has-lesson-log{position:relative;padding-bottom:27px}.lesson-log-enabled .lesson-log-open{position:absolute;right:5px;bottom:4px;display:inline-flex;align-items:center;justify-content:center;min-height:19px;padding:2px 7px;border:1px solid #0f7074;border-radius:4px;background:#fff;color:#0f7074;font-size:8px;font-weight:950;line-height:1;cursor:pointer;z-index:5}.lesson-log-enabled .lesson-log-open:hover,.lesson-log-enabled .lesson-log-open:focus-visible{background:#0f7074;color:#fff}.lesson-log-enabled .lesson-log-open.logged{border-color:#0b6b46;background:#e6f6ed;color:#0b6b46}.lesson-log-enabled .lesson-log-open.sync-error{border-color:#ad2d24;background:#fff0ee;color:#ad2d24}.lesson-log-card{max-width:680px}.lesson-log-form{display:grid;gap:12px;margin-top:12px}.lesson-log-meta{padding:9px 10px;border-left:4px solid #0f7074;border-radius:4px;background:#eef8f7;color:#314954;font-size:12px;font-weight:800;white-space:pre-wrap}.lesson-log-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.lesson-log-field{display:grid;gap:4px}.lesson-log-field.full{grid-column:1/-1}.lesson-log-field span,.lesson-log-settings label{color:#455365;font-size:11px;font-weight:850}.lesson-log-field textarea,.lesson-log-settings input{width:100%;border:1px solid #b9c5d2;border-radius:6px;padding:8px 9px;background:#fff;color:#1d2734;font:inherit;font-size:13px}.lesson-log-field textarea{min-height:76px;resize:vertical}.lesson-log-settings{margin-top:4px;padding:10px;border:1px solid #d8e0e9;border-radius:6px;background:#f8fafc}.lesson-log-settings summary{cursor:pointer;color:#405064;font-size:12px;font-weight:900}.lesson-log-settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.lesson-log-settings label{display:grid;gap:3px}.lesson-log-settings label:last-of-type{grid-column:1/-1}.lesson-log-actions{display:flex;gap:7px;flex-wrap:wrap}.lesson-log-action{border:1px solid #b8c4d0;border-radius:6px;padding:7px 11px;background:#fff;color:#405064;font:inherit;font-size:12px;font-weight:900;cursor:pointer}.lesson-log-action.primary{border-color:#0f7074;background:#0f7074;color:#fff}.lesson-log-status{min-height:18px;color:#526174;font-size:11px;font-weight:750}.lesson-log-status.ok{color:#0b6b46}.lesson-log-status.error{color:#ad2d24}.lesson-log-private-note{margin:7px 0 0;color:#697688;font-size:10px;line-height:1.35}
-@media(max-width:820px){.lesson-log-fields,.lesson-log-settings-grid{grid-template-columns:1fr}.lesson-log-field.full,.lesson-log-settings label:last-of-type{grid-column:auto}.lesson-log-card{padding:16px}.lesson-log-enabled .chip.has-lesson-log{padding-bottom:28px}}
-@media (orientation:landscape) and (max-height:540px){.lesson-log-enabled .chip.has-lesson-log{padding-bottom:15px}.lesson-log-enabled .lesson-log-open{right:2px;bottom:2px;min-height:11px;padding:1px 3px;font-size:5px}}
+.lesson-log-control,.lesson-log-open,.modal-lesson-log{display:none}.lesson-log-enabled .lesson-log-control{display:inline-flex;align-items:center}.lesson-log-enabled .modal-lesson-log:not([hidden]){display:inline-flex;align-items:center;justify-content:center}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-lesson-log{width:100%;min-height:42px;border:1px solid #0f7074;border-radius:7px;padding:9px 12px;background:#0f7074;color:#fff;font:inherit;font-size:13px;font-weight:900;cursor:pointer}.modal-lesson-log:hover,.modal-lesson-log:focus-visible{background:#0b5e62;outline:0}.lesson-log-card{max-width:680px}.lesson-log-form{display:grid;gap:12px;margin-top:12px}.lesson-log-meta{padding:9px 10px;border-left:4px solid #0f7074;border-radius:4px;background:#eef8f7;color:#314954;font-size:12px;font-weight:800;white-space:pre-wrap}.lesson-log-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.lesson-log-field{display:grid;gap:4px}.lesson-log-field.full{grid-column:1/-1}.lesson-log-field span,.lesson-log-settings label{color:#455365;font-size:11px;font-weight:850}.lesson-log-field textarea,.lesson-log-settings input{width:100%;border:1px solid #b9c5d2;border-radius:6px;padding:8px 9px;background:#fff;color:#1d2734;font:inherit;font-size:13px}.lesson-log-field textarea{min-height:76px;resize:vertical}.lesson-log-settings{margin-top:4px;padding:10px;border:1px solid #d8e0e9;border-radius:6px;background:#f8fafc}.lesson-log-settings summary{cursor:pointer;color:#405064;font-size:12px;font-weight:900}.lesson-log-settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.lesson-log-settings label{display:grid;gap:3px}.lesson-log-settings label:last-of-type{grid-column:1/-1}.lesson-log-actions{display:flex;gap:7px;flex-wrap:wrap}.lesson-log-action{border:1px solid #b8c4d0;border-radius:6px;padding:7px 11px;background:#fff;color:#405064;font:inherit;font-size:12px;font-weight:900;cursor:pointer}.lesson-log-action.primary{border-color:#0f7074;background:#0f7074;color:#fff}.lesson-log-status{min-height:18px;color:#526174;font-size:11px;font-weight:750}.lesson-log-status.ok{color:#0b6b46}.lesson-log-status.error{color:#ad2d24}.lesson-log-private-note{margin:7px 0 0;color:#697688;font-size:10px;line-height:1.35}
+@media(max-width:820px){.lesson-log-fields,.lesson-log-settings-grid{grid-template-columns:1fr}.lesson-log-field.full,.lesson-log-settings label:last-of-type{grid-column:auto}.lesson-log-card{padding:16px}}
 @media print{.lesson-log-control,.lesson-log-open{display:none!important}}
 '''
 
@@ -1094,11 +1093,7 @@ LESSON_LOG_JS = r'''
     if(config.token){setStatus('正在讀取最新私人記錄…');try{await pullRemote();setStatus('已同步最新記錄。','ok');if(active){const note=store.notes[active.key]||{};Object.keys(inputs).forEach(key=>inputs[key].value=note[key]||'');}}catch(error){setStatus('同步失敗：'+error.message,'error');}}
     else setStatus('目前只會儲存在本機；設定 token 後才能跨裝置同步。');
   };
-  document.querySelectorAll('.lesson-log-open').forEach(button=>{
-    const activate=event=>{event.preventDefault();event.stopPropagation();openPanel(button);};
-    button.addEventListener('click',activate);
-    button.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){activate(event);}});
-  });
+  window.openLessonLogForButton=openPanel;
   document.getElementById('lessonLogPanelBtn').addEventListener('click',()=>openPanel(null));
   document.getElementById('lessonLogClose').addEventListener('click',()=>modal.hidden=true);
   modal.addEventListener('click',event=>{if(event.target===modal)modal.hidden=true;});
@@ -1120,7 +1115,6 @@ LESSON_LOG_JS = r'''
     setStatus('已儲存，正在同步…');try{await pushRemote();setStatus('已儲存並同步。','ok');}catch(error){setStatus('已儲存在本機，但同步失敗：'+error.message,'error');}
   });
   updateBadges();
-  if(params.get('lessonlog')==='1'&&!config.token)setTimeout(()=>openPanel(null),250);
 })();
 '''
 
@@ -1348,7 +1342,7 @@ def lesson_log_trigger(ev):
         str(fields.get("time") or ""),
     ])
     button = (
-        f'<span class="lesson-log-open" role="button" tabindex="0" '
+        f'<span class="lesson-log-open" aria-hidden="true" '
         f'data-log-key="{ehtml(key)}" data-log-date="{ehtml(ev.get("date", ""))}" '
         f'data-log-class="{ehtml(ev.get("group_label", ""))}" '
         f'data-log-course="{ehtml(fields.get("course_name", ""))}" '
@@ -1870,7 +1864,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <meta http-equiv="Expires" content="0">
 <script>window.ERB_BUILD_ID='{BUILD_ID}';(function(){{if(!/^https?:$/.test(location.protocol))return;var p=new URLSearchParams(location.search);if(p.get('build')!==window.ERB_BUILD_ID){{p.set('build',window.ERB_BUILD_ID);location.replace(location.pathname+'?'+p.toString()+location.hash);}}}})();</script>
 <style>{CSS}</style></head><body><main class="wrap">
-<div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><button id="lessonLogPanelBtn" class="btn lesson-log-control" type="button">課後記錄</button><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
+<div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><button id="lessonLogPanelBtn" class="btn lesson-log-control" type="button">課堂記錄同步</button><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
 {version_selector_html}
 <div id="viewTabs" class="view-tabs" role="tablist" aria-label="Timetable layout"><button id="calendarTab" class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="calendarView" data-view="calendar">Calendar</button><button id="spansTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="spansView" data-view="spans">Class spans</button></div>
 <section id="calendarView" class="view-panel" role="tabpanel" aria-labelledby="calendarTab">
@@ -1886,7 +1880,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 </section><section id="spansView" class="view-panel" role="tabpanel" aria-labelledby="spansTab" hidden>
 <div id="spanShell" class="span-shell"><div class="span-head"><h2>Class spans</h2><p>Each row is one class. Every visible grid column is one calendar day; darker markers are Garett's lesson dates.</p></div><div class="span-control-bar"><div class="span-tools"><div class="span-mode-switch" role="group" aria-label="Class span lesson filter"><button class="span-mode-option" type="button" data-mode="mine-confirmed">ME CONF</button><button class="span-mode-option" type="button" data-mode="mine-all">ME ALL</button><button class="span-mode-option active" type="button" data-mode="both">ALL FULL</button></div><button id="spanLabelsToggle" class="span-tool-button" type="button" aria-pressed="true">Course names ON</button><div class="span-zoom" role="group" aria-label="Class span timeline zoom"><button id="spanZoomOut" type="button" aria-label="Zoom timeline out" title="Zoom timeline out">−</button><button id="spanZoomReset" class="span-zoom-value" type="button" aria-label="Reset timeline zoom" title="Reset timeline zoom">100%</button><button id="spanZoomIn" type="button" aria-label="Zoom timeline in" title="Zoom timeline in">+</button></div>{span_course_picker}{span_month_controls}<div class="span-legend"><span class="span-legend-item"><span class="span-key"></span>Garett teaches</span><span class="span-legend-item"><span class="span-key other"></span>Other tutor / TBC</span></div></div></div>{span_timeline_html}</div>
 </section>
-</main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view and navigation"><button id="floatingToday" class="today-option" type="button" aria-label="Go to today" title="Go to today"><span class="mode-main">TODAY</span></button><button id="floatingTop" class="top-option" type="button" aria-label="Back to course filters" title="Back to course filters"><span class="mode-main" aria-hidden="true">&uarr;</span><span class="mode-sub">FILTER</span></button><button id="floatingVersions" class="version-option" type="button" aria-label="Back to version selector" title="Back to version selector"><span class="mode-main">VER</span></button><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All full timetable and clear course filter" title="All full timetable and clear course filter"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div>{LESSON_LOG_HTML}<div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div></div></div>
+</main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view and navigation"><button id="floatingToday" class="today-option" type="button" aria-label="Go to today" title="Go to today"><span class="mode-main">TODAY</span></button><button id="floatingTop" class="top-option" type="button" aria-label="Back to course filters" title="Back to course filters"><span class="mode-main" aria-hidden="true">&uarr;</span><span class="mode-sub">FILTER</span></button><button id="floatingVersions" class="version-option" type="button" aria-label="Back to version selector" title="Back to version selector"><span class="mode-main">VER</span></button><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All full timetable and clear course filter" title="All full timetable and clear course filter"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div>{LESSON_LOG_HTML}<div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div><div class="modal-actions"><button id="modalLessonLogBtn" class="modal-lesson-log" type="button" hidden>填寫課後記錄</button></div></div></div>
 <script>
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){{window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?build='+window.ERB_BUILD_ID).then(r=>r.update()).catch(()=>{{}}));}}
 const primaryTabs=Array.from(document.querySelectorAll('.view-tab'));
@@ -1924,6 +1918,16 @@ function openChip(el){{
   const oldContent=changeKind==='new'?'<span class="comparison-new">Not present in {COMPARE_BASELINE_LABEL}</span>':esc(previous)+(previousStatus?'<div class="old-status">Status in {COMPARE_BASELINE_LABEL}: '+esc(previousStatus)+'</div>':'');
   const comparison=changed?'<div class="comparison-old"><strong>{COMPARE_BASELINE_LABEL} content</strong><div>'+oldContent+'</div></div>':'';
   modal.querySelector('.modal-body').innerHTML='<span class="modal-current-label">Current {COMPARE_LABEL} content</span><div class="modal-current">'+(html||txt)+'</div>'+comparison+(source?'<div class="modal-source">Source: '+esc(source)+'</div>':'');
+  const logTrigger=el.querySelector('.lesson-log-open');
+  const logAction=document.getElementById('modalLessonLogBtn');
+  const logEnabled=document.documentElement.classList.contains('lesson-log-enabled')&&Boolean(window.openLessonLogForButton);
+  logAction.hidden=!logTrigger||!logEnabled;
+  if(logTrigger&&logEnabled){{
+    logAction.textContent=logTrigger.classList.contains('logged')?'查看／修改課後記錄':'填寫課後記錄';
+    logAction.onclick=()=>{{modal.hidden=true;window.openLessonLogForButton(logTrigger);}};
+  }} else {{
+    logAction.onclick=null;
+  }}
   modal.hidden=false;
 }}
 document.querySelectorAll('.chip').forEach(el=>{{el.addEventListener('click',()=>openChip(el));el.addEventListener('keydown',e=>{{if(e.key==='Enter'||e.key===' '){{e.preventDefault();openChip(el)}}}})}});
@@ -1931,6 +1935,9 @@ function openSpanMarker(el){{
   modal.querySelector('.modal-h').textContent=el.dataset.groupLabel||'Class lesson';
   modal.querySelector('.modal-date').textContent=el.dataset.date||'';
   modal.querySelector('.modal-body').textContent=el.dataset.details||'';
+  const logAction=document.getElementById('modalLessonLogBtn');
+  logAction.hidden=true;
+  logAction.onclick=null;
   modal.hidden=false;
 }}
 document.querySelectorAll('.span-marker').forEach(el=>el.addEventListener('click',()=>openSpanMarker(el)));
