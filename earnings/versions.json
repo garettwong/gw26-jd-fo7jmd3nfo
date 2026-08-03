@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-08-03-V20f",
+    "label": "2026-08-03 - V20f",
+    "summary": "QAT7 SEN morning corrected to 09:30-12:30; matching salary recalculated.",
+    "latest": true
+  },
+  {
     "id": "2026-08-02-V20e",
     "label": "2026-08-02 - V20e",
     "summary": "Full 16-class source audit; course-folder copies synchronized; every class card shows its latest update and reminder.",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-07-30-V20d",
