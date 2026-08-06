@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20h-remaining-salary-lesson-detail-log-20260803a"
+BUILD_ID = "v20i-persistent-lesson-log-access-20260806a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-03-V20g"
-COMPARE_LABEL = "V20h"
-COMPARE_BASELINE_LABEL = "V20g"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-03-V20h"
+COMPARE_LABEL = "V20i"
+COMPARE_BASELINE_LABEL = "V20h"
 EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
@@ -1002,11 +1002,16 @@ LESSON_LOG_JS = r'''
 (function(){
   const CONFIG_KEY='erbLessonLogConfigV1';
   const LOCAL_KEY='erbLessonNotesV1';
+  const ACCESS_KEY='erbLessonLogAccessV1';
   const FILE_NAME='lesson-notes.json';
   const params=new URLSearchParams(location.search);
   let config={owner:'garettwong',repo:'erb-lesson-log',token:''};
   try{config=Object.assign(config,JSON.parse(localStorage.getItem(CONFIG_KEY)||'{}'));}catch(_e){}
-  const enabled=params.get('lessonlog')==='1'||Boolean(config.token);
+  const activationRequested=params.get('lessonlog')==='1';
+  if(activationRequested){try{localStorage.setItem(ACCESS_KEY,'1');}catch(_e){}}
+  let accessRemembered=false;
+  try{accessRemembered=localStorage.getItem(ACCESS_KEY)==='1';}catch(_e){}
+  const enabled=activationRequested||accessRemembered||Boolean(config.token);
   if(!enabled)return;
   document.documentElement.classList.add('lesson-log-enabled');
   const modal=document.getElementById('lessonLogModal');
