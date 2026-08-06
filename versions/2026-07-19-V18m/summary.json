@@ -1,0 +1,41 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "V18m",
+  "override_confirmation": "HK281DS CW7 L51 on 2026-10-03 09:00-13:00 confirmed for Demian Yuen with Helper Fiona; L52 on 2026-10-03 14:00-18:00 confirmed for Garett with Helper Fiona. Latest Calvin workbook also changes L47 and L48 helpers to Fiona.",
+  "events": 197,
+  "display_events": 337,
+  "context_events": 140,
+  "class_spans": 19,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-07-19-V18l",
+  "comparison_label": "V18m",
+  "changed_in_version": 29,
+  "counts": {
+    "confirmed": 248,
+    "unconfirmed": 82,
+    "note": 7
+  },
+  "layers": {
+    "mine": 194,
+    "class": 140,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 61,
+    "School": 1,
+    "勵行 / ERB": 217,
+    "Holiday": 6,
+    "Mike Sir": 3,
+    "DGS / UE": 2,
+    "循道": 47
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}

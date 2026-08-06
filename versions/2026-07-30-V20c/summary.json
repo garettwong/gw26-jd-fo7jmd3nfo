@@ -1,0 +1,41 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "V20c",
+  "override_confirmation": "MC106DS 第2班 rebuilt from its FINAL FINAL workbook L1-L47. The obsolete HK280HG/HS SS schedule was removed because the client explicitly instructed Calvin to disregard that table.",
+  "events": 185,
+  "display_events": 332,
+  "context_events": 147,
+  "class_spans": 18,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-07-30-V20b",
+  "comparison_label": "V20c",
+  "changed_in_version": 42,
+  "counts": {
+    "confirmed": 248,
+    "unconfirmed": 77,
+    "note": 7
+  },
+  "layers": {
+    "mine": 193,
+    "class": 136,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 61,
+    "School": 1,
+    "勵行 / ERB": 212,
+    "Holiday": 6,
+    "Mike Sir": 3,
+    "DGS / UE": 2,
+    "循道": 47
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "V18s",
+  "override_confirmation": "HK280HG CW remains unconfirmed. V18s proposes L1 on 2026-09-07 PM, L2-L3 on 2026-09-09 AM/PM, and L4-L5 on 2026-09-10 AM/PM. These are availability proposals pending Calvin confirmation; every new card must remain dotted.",
+  "events": 197,
+  "display_events": 342,
+  "context_events": 145,
+  "class_spans": 20,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-07-28-V18r",
+  "comparison_label": "V18s",
+  "changed_in_version": 5,
+  "counts": {
+    "confirmed": 253,
+    "unconfirmed": 82,
+    "note": 7
+  },
+  "layers": {
+    "mine": 195,
+    "class": 144,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 61,
+    "School": 1,
+    "勵行 / ERB": 222,
+    "Holiday": 6,
+    "Mike Sir": 3,
+    "DGS / UE": 2,
+    "循道": 47
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "20260717_V17A_CONFIRMED_BASELINE",
+  "override_confirmation": "Calvin confirmed HK239HG FS L1-L4 for Garett on 2026-08-14 and 2026-08-19. Calvin substitutes Garett for HK244HG CW8 L3 on 2026-08-14. HK280HS SS is not included in this clean baseline because it remains an enquiry.",
+  "events": 209,
+  "display_events": 316,
+  "context_events": 107,
+  "class_spans": 17,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-07-16-V15",
+  "comparison_label": "V17A",
+  "changed_in_version": 0,
+  "counts": {
+    "confirmed": 182,
+    "unconfirmed": 127,
+    "note": 7
+  },
+  "layers": {
+    "mine": 200,
+    "class": 113,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 61,
+    "School": 1,
+    "勵行 / ERB": 199,
+    "Holiday": 6,
+    "Mike Sir": 3,
+    "DGS / UE": 2,
+    "循道": 44
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}

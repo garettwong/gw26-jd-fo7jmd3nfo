@@ -1,0 +1,314 @@
+[
+  {
+    "id": "2026-07-30-V20c",
+    "label": "2026-07-30 - V20c",
+    "summary": "Full audit - MC106DS rebuilt from FINAL FINAL L1-L47; superseded HK280HG SS removed.",
+    "latest": true
+  },
+  {
+    "id": "2026-07-30-V20b",
+    "label": "2026-07-30 - V20b",
+    "summary": "HK239HG SS - six replacement mornings confirmed.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-29-V20a",
+    "label": "2026-07-29 - V20a",
+    "summary": "HK239HG SS replacement mornings checked; HK280HG SS room gaps unavailable.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-29-V20",
+    "label": "2026-07-29 - V20",
+    "summary": "Aug 31 - Chan Shuk Ki keeps HK244HG CW8; Garett starts HK280HG CW1.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-29-V19a",
+    "label": "2026-07-29 - V19a",
+    "summary": "Superseded incorrect old-table mapping; retained for audit only.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-29-V19",
+    "label": "2026-07-29 - V19",
+    "summary": "HK244HG CW8 and HK280HG CW1 - latest confirmed teacher and lesson schedules.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-28-V18t",
+    "label": "2026-07-28 - V18t",
+    "summary": "HK280HG CW - Sep 10 afternoon proposal changed to 14:00-17:30.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-28-V18s",
+    "label": "2026-07-28 - V18s",
+    "summary": "HK280HG CW - five proposed Choi Wan lessons, 18 hours; pending Calvin confirmation.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-28-V18r",
+    "label": "2026-07-28 - V18r",
+    "summary": "Salary - DGS marked received; five received payments hidden by default with the same reversible toggle.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-28-V18q",
+    "label": "2026-07-28 - V18q",
+    "summary": "Salary - four received payments hidden by default with a reversible show/hide toggle.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-28-V18p",
+    "label": "2026-07-28 - V18p",
+    "summary": "Salary - expected ERB/SEN receipt dates; HK244 group-presentation absence marking reminder.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-22-V18o",
+    "label": "2026-07-22 - V18o",
+    "summary": "Web - every upcoming class shows all course dates; Garett teaching dates highlighted.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-21-V18n",
+    "label": "2026-07-21 - V18n",
+    "summary": "HK280HS SS - R4 confirmed; Garett L1 only, L2-L5 other tutor / TBC.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-19-V18m",
+    "label": "2026-07-19 - V18m",
+    "summary": "HK281DS CW7 - Demian Yuen L51 and Garett L52 confirmed; latest Calvin helpers and both start dates shown.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-19-V18l",
+    "label": "2026-07-19 - V18l",
+    "summary": "HK281DS CW7 - revised L1-L62 schedule; Garett L52 PM only, Helper Fiona; pending Calvin confirmation.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-19-V18k",
+    "label": "2026-07-19 - V18k",
+    "summary": "Web - VER button returns to the in-page version selector.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-19-V18j",
+    "label": "2026-07-19 - V18j",
+    "summary": "Web - prominent CA/MC badges and one consistent clickable course-card format.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-19-V18i",
+    "label": "2026-07-19 - V18i",
+    "summary": "Web - eight ERB codes grouped into four course families with Chinese centre names.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-19-V18h",
+    "label": "2026-07-19 - V18h",
+    "summary": "Web - status-coloured filters and always-visible class-span labels.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-19-V18g",
+    "label": "2026-07-19 - V18g",
+    "summary": "HK239HG ST and corrected LT confirmed; SS time corrected to 09:00-12:00.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-18-V18f",
+    "label": "2026-07-18 - V18f",
+    "summary": "Audit - separate July and September HK265HG FS cohorts; restore LT assessment notes.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-18-V18e",
+    "label": "2026-07-18 - V18e",
+    "summary": "HK280HG SS - confirmed full-class schedule shown under Other tutor / TBC; not Garett's lesson.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-18-V18d",
+    "label": "2026-07-18 - V18d",
+    "summary": "Web - reversible class and month visibility switches in Class spans.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-18-V18c",
+    "label": "2026-07-18 - V18c",
+    "summary": "Web - daily spans and status sections; MC0106DS Room 306 lessons recorded as Calvin.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-17-V18b",
+    "label": "2026-07-17 - V18b",
+    "summary": "Calendar - daily teaching hours added for ME CONF and ME ALL; travel excluded.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-17-V18a",
+    "label": "2026-07-17 - V18a",
+    "summary": "HK280HS SS - five availability dates added; exact lessons and times pending Calvin.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-17-V18",
+    "label": "2026-07-17 - V18",
+    "summary": "HK281DS CW7 - Garett does not join; HK280HS SS Sep 14 AM remains proposed.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-17-V17D",
+    "label": "2026-07-17 - V17D",
+    "summary": "Web - MC0106DS legend and course-filter reset.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-17-V17C",
+    "label": "2026-07-17 - V17C",
+    "summary": "MC0106DS 第2班 - six Garett lessons confirmed; upcoming-course summary added.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-17-V17A",
+    "label": "2026-07-17 - V17A",
+    "summary": "HK239HG FS - Aug 14 and 19 confirmed; clean accepted schedule.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-17-V17B",
+    "label": "2026-07-17 - V17B",
+    "summary": "HK280HS SS - withdrawn because it reduces Sep 14 hours and income; do not use.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-16-V16",
+    "label": "2026-07-16 - V16",
+    "summary": "HK280HS SS - superseded incorrect five-session proposal; do not use.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-16-V15",
+    "label": "2026-07-16 - V15",
+    "summary": "HK239HG FS - Aug 14 and 19 confirmed; display corrected.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-16-V14",
+    "label": "2026-07-16 - V14",
+    "summary": "HK280HS SS - initial Sep 14 morning enquiry.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-16-V13",
+    "label": "2026-07-16 - V13",
+    "summary": "HK239HG FS - Aug 14 and 19 confirmed.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-16-V12",
+    "label": "2026-07-16 - V12",
+    "summary": "Class spans - zoom, scrolling, and cohort fixes.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-16-V11",
+    "label": "2026-07-16 - V11",
+    "summary": "Class spans - SEN rows and mode filters.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-16-V10",
+    "label": "2026-07-16 - V10",
+    "summary": "Class spans - first timeline view.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-16-V09",
+    "label": "2026-07-16 - V09",
+    "summary": "Web - tap a course code to filter that class.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-16-V08",
+    "label": "2026-07-16 - V08",
+    "summary": "HK239HG CW10 - six lessons confirmed.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-16-V07b",
+    "label": "2026-07-16 - V07b",
+    "summary": "HK239HG CW10 - eight morning options.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-15-V07a",
+    "label": "2026-07-15 - V07a",
+    "summary": "HK239HG CW10 - Aug 24 and 26 options.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-15-V07",
+    "label": "2026-07-15 - V07",
+    "summary": "HK239HG CW10 - first checked proposal.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-15-V06",
+    "label": "2026-07-15 - V06",
+    "summary": "Web - version button and 3x2 controls.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-14-V05c",
+    "label": "2026-07-14 - V05c",
+    "summary": "Audit - V04 changes highlighted.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-14-V05b",
+    "label": "2026-07-14 - V05b",
+    "summary": "Travel - route warnings added.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-14-V05a",
+    "label": "2026-07-14 - V05a",
+    "summary": "Audit - timetable files reconciled.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-14-V05",
+    "label": "2026-07-14 - V05",
+    "summary": "Full source audit: corrected lesson codes, times and numbering; completed FS-1 context.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-14-V04",
+    "label": "2026-07-14 - V04",
+    "summary": "Added a floating back-to-filters button; schedule data unchanged.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-14-V03",
+    "label": "2026-07-14 - V03",
+    "summary": "Instructor name corrected to Calvin; confirmed HK244EG Class CW retained.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-14-V02",
+    "label": "2026-07-14 - V02",
+    "summary": "HK244EG Class CW marked confirmed.",
+    "latest": false
+  },
+  {
+    "id": "2026-07-13-V01",
+    "label": "2026-07-13 - V01",
+    "summary": "Calvin's HK244EG Class CW schedule added for checking.",
+    "latest": false
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "V20d",
+  "override_confirmation": "Mike Sir AI Lesson L3 on 2026-07-24 and 2026-07-31 is cancelled. The records remain visible as history and are excluded from teaching hours and salary.",
+  "events": 185,
+  "display_events": 334,
+  "context_events": 149,
+  "class_spans": 18,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-07-30-V20d",
+  "comparison_label": "V20e",
+  "changed_in_version": 0,
+  "counts": {
+    "confirmed": 250,
+    "unconfirmed": 77,
+    "note": 7
+  },
+  "layers": {
+    "mine": 195,
+    "class": 136,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 61,
+    "School": 1,
+    "勵行 / ERB": 212,
+    "Holiday": 6,
+    "Mike Sir": 5,
+    "DGS / UE": 2,
+    "循道": 47
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}

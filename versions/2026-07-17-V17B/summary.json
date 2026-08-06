@@ -1,0 +1,41 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "20260717_V17B_HK280HS_SS_SINGLE_SAFE_SLOT",
+  "override_confirmation": "HK280HS SS remains unconfirmed and dotted. The proposal assigns L1 only on 2026-09-14 09:00-13:00 and requests four more dates. HK281DS CW7 L30-L31 are pending holds proposed for release. Confirmed SEN and ERB lessons are unchanged.",
+  "events": 209,
+  "display_events": 317,
+  "context_events": 108,
+  "class_spans": 18,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-07-17-V17A",
+  "comparison_label": "V17B",
+  "changed_in_version": 3,
+  "counts": {
+    "confirmed": 182,
+    "unconfirmed": 128,
+    "note": 7
+  },
+  "layers": {
+    "mine": 199,
+    "class": 115,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 61,
+    "School": 1,
+    "勵行 / ERB": 200,
+    "Holiday": 6,
+    "Mike Sir": 3,
+    "DGS / UE": 2,
+    "循道": 44
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "V19",
+  "override_confirmation": "HK244HG CW8 and HK280HG CW1 are confirmed. The latest HK244HG teacher sheet supersedes the earlier Aug 14 substitution record. Garett therefore teaches HK244HG CW8 L3; simultaneous HK239HG FS L2 is retained as confirmed full-class context under Other tutor / TBC.",
+  "events": 197,
+  "display_events": 342,
+  "context_events": 145,
+  "class_spans": 20,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-07-28-V18t",
+  "comparison_label": "V19",
+  "changed_in_version": 12,
+  "counts": {
+    "confirmed": 258,
+    "unconfirmed": 77,
+    "note": 7
+  },
+  "layers": {
+    "mine": 194,
+    "class": 145,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 61,
+    "School": 1,
+    "勵行 / ERB": 222,
+    "Holiday": 6,
+    "Mike Sir": 3,
+    "DGS / UE": 2,
+    "循道": 47
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "V20b",
+  "override_confirmation": "HK239HG SS is confirmed for Garett on Sep 23, Sep 28, Sep 30, Oct 5, Oct 7, and Oct 12, all 09:00-12:00. HK280HG SS remains unassigned to Garett; Calvin will arrange another tutor/class.",
+  "events": 191,
+  "display_events": 337,
+  "context_events": 146,
+  "class_spans": 19,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-07-29-V20a",
+  "comparison_label": "V20b",
+  "changed_in_version": 6,
+  "counts": {
+    "confirmed": 253,
+    "unconfirmed": 77,
+    "note": 7
+  },
+  "layers": {
+    "mine": 193,
+    "class": 141,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 61,
+    "School": 1,
+    "勵行 / ERB": 217,
+    "Holiday": 6,
+    "Mike Sir": 3,
+    "DGS / UE": 2,
+    "循道": 47
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "20260715_V07a_HK239HGCW10_WEEKDAY_ALTERNATIVES",
+  "override_confirmation": "V07a retains the V07 priority decisions. HK239HG Class CW10 lessons 2 and 4 remain rejected on their original dates because confirmed YMCA SEN cannot be replaced. Proposed weekday replacement slots are 2026-08-24 and 2026-08-26, 0900-1200, both at the same Choi Wan centre as Garett's confirmed 1400-1800 HK244HG CW8 lesson; no Saturday is proposed. The proposed dates and lesson numbering remain subject to Calvin and centre confirmation.",
+  "events": 209,
+  "display_events": 310,
+  "context_events": 101,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-07-15-V07",
+  "comparison_label": "V07a",
+  "changed_in_version": 2,
+  "counts": {
+    "confirmed": 170,
+    "unconfirmed": 133,
+    "note": 7
+  },
+  "layers": {
+    "mine": 199,
+    "class": 108,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 61,
+    "School": 1,
+    "勵行 / ERB": 193,
+    "Holiday": 6,
+    "Mike Sir": 3,
+    "DGS / UE": 2,
+    "循道": 44
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}

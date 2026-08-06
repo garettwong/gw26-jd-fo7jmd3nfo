@@ -1,0 +1,41 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "20260717_V18A_HK280HS_AVAILABILITY",
+  "override_confirmation": "HK281DS CW7 release remains unchanged. HK280HS SS has five availability-only dates; exact lesson dates and times remain unconfirmed pending Calvin.",
+  "events": 209,
+  "display_events": 324,
+  "context_events": 115,
+  "class_spans": 18,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-07-17-V18b",
+  "comparison_label": "V18c",
+  "changed_in_version": 6,
+  "counts": {
+    "confirmed": 229,
+    "unconfirmed": 88,
+    "note": 7
+  },
+  "layers": {
+    "mine": 193,
+    "class": 128,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 61,
+    "School": 1,
+    "勵行 / ERB": 204,
+    "Holiday": 6,
+    "Mike Sir": 3,
+    "DGS / UE": 2,
+    "循道": 47
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}

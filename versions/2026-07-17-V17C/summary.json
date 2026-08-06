@@ -1,0 +1,41 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "20260717_V17C_MC0106DS_FINAL",
+  "override_confirmation": "MC0106DS 第2班 is final. Garett teaches L3, L4, L7, L8, L15 and L16 (24 hours); the remaining populated lessons L1-L47 are full-class context. The source header says 49 lessons, but no L48-L49 rows are populated.",
+  "events": 209,
+  "display_events": 319,
+  "context_events": 110,
+  "class_spans": 17,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-07-17-V17A",
+  "comparison_label": "V17C",
+  "changed_in_version": 47,
+  "counts": {
+    "confirmed": 229,
+    "unconfirmed": 83,
+    "note": 7
+  },
+  "layers": {
+    "mine": 200,
+    "class": 116,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 61,
+    "School": 1,
+    "勵行 / ERB": 199,
+    "Holiday": 6,
+    "Mike Sir": 3,
+    "DGS / UE": 2,
+    "循道": 47
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}

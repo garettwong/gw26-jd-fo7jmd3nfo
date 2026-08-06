@@ -1,0 +1,55 @@
+V18f RELEASE VERIFICATION - 2026-07-18
+
+SCOPE
+- Separate the two confirmed HK265HG FS cohorts that share the same code/class label.
+- Restore missing assessment notes on HK239HG LT.
+- Keep the matching private salary release synchronized as V18f.
+
+SOURCE LEDGER RESULT
+- PASS: 209 personal events + 120 full-class context events = 329 display entries.
+- PASS: exact course/class lesson sequences, dates, status, and known teacher ownership.
+- PASS: no exact duplicate confirmed Garett event records.
+
+CONFIRMED CHRISTIAN ACTION CLASS INSTANCES
+1. 2026-07-24 - HK265HG FS - 12 lessons
+2. 2026-08-06 - HK244HG CW8 - 12 lessons
+3. 2026-08-14 - HK239HG FS - 6 lessons
+4. 2026-08-24 - HK244EG CW - 18 lessons
+5. 2026-08-27 - HK239HG CW10 - 6 lessons
+6. 2026-09-16 - HK239HG SS - 6 lessons
+7. 2026-09-16 - HK265HG FS - 12 lessons
+8. 2026-09-21 - HK244EG FS - 18 lessons
+9. 2026-11-11 - HK239HG City One-Dragon - 6 lessons
+
+SEPARATE CONFIRMED METHODIST CLASS
+- MC0106DS Class 2 - 47 full-class lessons; 6 Garett lessons.
+- Room 306 L18, L21, L25, L27, L29, and L33 remain Calvin-taught context.
+
+OWNERSHIP DECISION
+- HK280HG SS remains confirmed full-class context under Other tutor / TBC.
+- It is not Garett salary. Calvin's 2026-07-10 WhatsApp record says he would find another instructor and confirms HK265HG instead.
+
+WEB QA
+- PASS: the HK265HG FS July and September cohorts have distinct group IDs, labels, filters, upcoming cards, and Class spans rows.
+- PASS: selecting either cohort hides the other; selecting it again restores the prior mode; ALL FULL clears the course filter.
+- PASS: all assessment/report/test/exam card notes checked in the rendered page use the red card-note style.
+- PASS: portrait 390x844 and landscape 844x390 calendar views have no horizontal page overflow or browser errors.
+- PASS: 2560x1440 and 3840x2160 calendar views use the viewport width and have no browser errors.
+
+PRIVATE SALARY QA
+- PASS: salary selector latest version is V18f.
+- PASS: confirmed = HKD 173,250 from 168 counted source entries.
+- PASS: confirmed + unconfirmed = HKD 184,050 from 180 counted source entries.
+- PASS: totals are exactly unchanged from V18e, as expected for a cohort-label/assessment-note correction.
+- PASS: no Rates, Lock, or install-hint text is displayed.
+
+CALVIN-FACING UNCONFIRMED FILES
+- HK280HS SS availability remains unconfirmed.
+- HK239HG ST remains unconfirmed.
+- HK239HG LT remains unconfirmed.
+- All three DOCX packages pass OpenXML package validation.
+
+SOURCE LIMITATIONS DISCLOSED
+- No Calvin original attachment for the confirmed 2026-11-11 city class was found in the checked folder/export; a source-note file records this limitation.
+- The personal Excel source itself contains overlapping QAT7 entries (09:30-17:30 and 13:30-17:30). V18f does not change those source records; salary merges overlapping intervals instead of double-counting them.
+- Automated visual rendering of the three new DOCX files could not be completed because this PC's LibreOffice configuration is corrupt and Word automation hung. The processes were terminated; semantic text/table checks and OpenXML package checks passed.
