@@ -1,9 +1,6 @@
 name: Deploy GitHub Pages
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
@@ -16,14 +13,13 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout published site
         uses: actions/checkout@v6
+        with:
+          ref: gh-pages
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -33,8 +29,65 @@ jobs:
         with:
           path: .
 
-      - name: Deploy site
-        id: deployment
-        uses: actions/deploy-pages@v4
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Deploy site and wait for Pages
+        uses: actions/github-script@v8
         with:
-          timeout: 1800000
+          script: |
+            const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
+            const { owner, repo } = context.repo;
+            const runId = context.runId;
+
+            const artifacts = await github.paginate(
+              github.rest.actions.listWorkflowRunArtifacts,
+              { owner, repo, run_id: runId, per_page: 100 }
+            );
+            const artifact = artifacts.find(item => item.name === 'github-pages' && !item.expired);
+            if (!artifact) {
+              core.setFailed('The github-pages artifact was not found for this workflow run.');
+              return;
+            }
+
+            const idToken = await core.getIDToken();
+            const response = await github.request('POST /repos/{owner}/{repo}/pages/deployments', {
+              owner,
+              repo,
+              artifact_id: artifact.id,
+              pages_build_version: context.sha,
+              oidc_token: idToken
+            });
+            const deploymentId = response.data.id || context.sha;
+            const deadline = Date.now() + 30 * 60 * 1000;
+            const finalErrors = new Set([
+              'deployment_failed',
+              'deployment_perms_error',
+              'deployment_content_failed',
+              'deployment_cancelled',
+              'deployment_lost'
+            ]);
+
+            while (Date.now() < deadline) {
+              await sleep(15000);
+              const statusResponse = await github.request(
+                'GET /repos/{owner}/{repo}/pages/deployments/{deployment_id}',
+                { owner, repo, deployment_id: deploymentId }
+              );
+              const status = statusResponse.data.status;
+              core.info(`Pages deployment status: ${status}`);
+              if (status === 'succeed') {
+                core.info(`Published ${statusResponse.data.page_url || 'GitHub Pages'}`);
+                return;
+              }
+              if (finalErrors.has(status)) {
+                core.setFailed(`Pages deployment ended with status: ${status}`);
+                return;
+              }
+            }
+
+            core.setFailed('Pages deployment is still queued after 30 minutes; it was left active and was not cancelled.');
