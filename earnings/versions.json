@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-08-11-V20l",
+    "label": "2026-08-11 - V20l",
+    "summary": "8 月 14 日：Garett 在四海教授 HK239HG FS L1–L2；Calvin sit-in 教 HK244HG CW8 L3。8 月 19 日下午 L4 為小組討論及專題報告。",
+    "latest": true
+  },
+  {
     "id": "2026-08-11-V20k",
     "label": "2026-08-11 - V20k",
     "summary": "8 月 14 日修正：HK239HG FS L2 為 Other tutor / TBC；Garett 教 HK244HG CW8 L3。HK239HG FS L5 為 Judy，L6 為 Judy / TBC。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-08-10-V20j",
