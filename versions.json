@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-08-11-V20k",
+    "label": "2026-08-11 - V20k",
+    "summary": "8 月 14 日修正：HK239HG FS L2 為 Other tutor / TBC；Garett 教 HK244HG CW8 L3。HK239HG FS L5 為 Judy，L6 為 Judy / TBC。",
+    "latest": true
+  },
+  {
     "id": "2026-08-10-V20j",
     "label": "2026-08-10 - V20j",
     "summary": "8 月 14 日：Garett 教 HK239HG FS L1–L2；Calvin 代上 HK244HG CW8 L3。HK239HG FS L5–L6 由 Judy 教。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-08-06-V20i",
