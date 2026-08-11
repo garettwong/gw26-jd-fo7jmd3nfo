@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20k-hk239-l2-tbc-hk244-l3-garett-20260811a"
+BUILD_ID = "v20l-hk239-l2-garett-hk244-l3-calvin-20260811a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-10-V20j"
-COMPARE_LABEL = "V20k"
-COMPARE_BASELINE_LABEL = "V20j"
-EXPECTED_COMPARISON_CHANGES = 3
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-11-V20k"
+COMPARE_LABEL = "V20l"
+COMPARE_BASELINE_LABEL = "V20k"
+EXPECTED_COMPARISON_CHANGES = 4
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -84,8 +84,8 @@ CLASS_UPDATE_META = {
     "HK244EG · HF2": ("2026-07-16", "已完成；代課安排及評核／考試時間已按確認檔核對。"),
     "HK265HG · FS · JUL 2026": ("2026-06-10", "全班由 Garett 任教；8 月 12 日期末實務試 14:20–17:20。"),
     "MC0106DS · 第2班": ("2026-07-18", "FINAL Excel：Garett 任教 L3、L4、L8、L9、L16、L17，其餘按檔案列明導師。"),
-    "HK244HG · CW8": ("2026-08-11", "最新導師表：8 月 14 日 L3 由 Garett 任教；8 月 31 日 L7 由 Chan Shuk Ki 任教；9 月 4、7、8 日 L10–L12 由 Calvin 任教；9 月 8 日期末實務試 14:30–17:30。"),
-    "HK239HG · FS": ("2026-08-11", "最新導師表：Garett 任教 L1、L3、L4；8 月 14 日下午 L2 為 Other tutor / TBC；8 月 21 日 L5 由 Judy 任教，L6 為 Judy / TBC；期末考試 15:30–16:30。"),
+    "HK244HG · CW8": ("2026-08-11", "最新導師表：8 月 14 日 L3 由 Calvin sit-in 任教；8 月 31 日 L7 由 Chan Shuk Ki 任教；9 月 4、7、8 日 L10–L12 由 Calvin 任教；9 月 8 日期末實務試 14:30–17:30。"),
+    "HK239HG · FS": ("2026-08-11", "最新課堂表：Garett 任教 L1–L4；8 月 19 日下午 L4 為持續評估／小組討論及專題報告；8 月 21 日 L5 由 Judy 任教，L6 為 Judy / TBC；期末筆試 15:30–16:30。"),
     "HK239HG · CW10": ("2026-07-16", "六堂均由 Garett 任教；9 月 7 日期末考試 10:30–11:30。"),
     "HK244EG · CW": ("2026-07-14", "Ng Kai On 任教 L1–L4；Garett 任教 L5–L14、L17；Calvin 任教 L15、L16、L18。L16 為小組匯報、L17 為持續筆試、L18 為期末實務試。"),
     "HK280HG · CW1": ("2026-07-29", "五堂均由 Garett 任教；9 月 10 日期末筆試 10:30–11:30。"),
