@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20m-mike-l3-aug7-l4-aug14-cancelled-20260811a"
+BUILD_ID = "v20n-comfyui-aicu02-conflicts-20260814a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-11-V20l"
-COMPARE_LABEL = "V20m"
-COMPARE_BASELINE_LABEL = "V20l"
-EXPECTED_COMPARISON_CHANGES = 2
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-11-V20m"
+COMPARE_LABEL = "V20n"
+COMPARE_BASELINE_LABEL = "V20m"
+EXPECTED_COMPARISON_CHANGES = 4
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -565,10 +565,12 @@ if CONTEXT_SRC.exists():
     for index, item in enumerate(raw_context, 1):
         dt = datetime.date.fromisoformat(item["date"])
         text = norm_text(item["text"])
-        cat, cat_label = category(text)
-        if cat not in {"erb", "methodist", "mike"}:
+        inferred_cat, inferred_cat_label = category(text)
+        cat = str(item.get("category", inferred_cat)).strip()
+        cat_label = str(item.get("category_label", inferred_cat_label)).strip()
+        if cat not in {"erb", "methodist", "mike", "other"}:
             raise ValueError(
-                f"Context entry {index} must be an ERB, Methodist, or Mike Sir lesson"
+                f"Context entry {index} must be an ERB, Methodist, Mike Sir, or other lesson"
             )
         key = (dt.isoformat(),) + course_sort_parts(text)[:3]
         if key in baseline_keys:
@@ -589,7 +591,8 @@ if CONTEXT_SRC.exists():
             "status": item.get("status", "unconfirmed"), "fill": "", "category": cat,
             "category_label": cat_label, "html": html.escape(text, quote=True),
             "title_html": html.escape(title, quote=True), "detail_html": html.escape(detail, quote=True),
-            "red": bool(item.get("red", False)), "layer": layer,
+            "red": bool(item.get("red", False)), "conflict": bool(item.get("conflict", False)),
+            "layer": layer,
             "teacher": teacher, "helper": str(item.get("helper", "")).strip(),
             "source": item.get("source", ""),
         }
@@ -881,6 +884,12 @@ CSS += r'''
 .chip.changed-in-version{position:relative;outline:3px solid #f2a900;outline-offset:1px}.change-badge{position:absolute;z-index:3;top:4px;left:5px;padding:1px 4px;border:1px solid #8a5200;border-radius:3px;background:#ffd84d;color:#312300;font-size:7.5px;font-weight:950;line-height:1.15;white-space:nowrap;box-shadow:0 1px 2px rgba(35,27,0,.22)}.chip.erb-compact.changed-in-version .class-id{max-width:calc(100% - 76px)}.sample.changed-sample{border:3px solid #f2a900;background:#ffd84d}.filter.change-filter{border-color:#a96700;background:#fff4bd;color:#684000}.filter.change-filter.active{border-color:#6c4200;background:#f2a900;color:#241800}.pill.changed-pill{background:#ffd84d;color:#4d3200}.comparison-old{margin-top:16px;padding:12px;border:2px solid #e3aa24;border-radius:7px;background:#fff8d8;color:#3a3428;white-space:normal}.comparison-old strong{display:block;margin-bottom:5px;color:#6b4500}.comparison-old .old-status{margin-top:7px;color:#75694e;font-size:12px}.comparison-new{font-weight:800;color:#8a5300}.modal-current-label{display:block;margin-bottom:5px;color:#566273;font-size:11px;font-weight:850;text-transform:uppercase}.modal-current{white-space:pre-wrap}
 @media (orientation:landscape) and (max-height:540px){.chip.changed-in-version{outline-width:1.5px}.change-badge{top:2px;left:2px;padding:0 2px;border-width:1px;font-size:4.7px}.chip.erb-compact.changed-in-version .class-id{max-width:calc(100% - 38px)}}
 @media print{.change-badge{background:#ffd84d!important}.chip.changed-in-version{outline-color:#a96700}}
+'''
+
+CSS += r'''
+.chip.conflict-risk{position:relative;border-color:#bd1e1e!important;outline:4px solid #d32626!important;outline-offset:1px;box-shadow:0 0 0 2px rgba(211,38,38,.18),0 2px 5px rgba(90,0,0,.18)!important}.conflict-badge{position:absolute;z-index:5;top:4px;left:5px;padding:2px 5px;border:1px solid #6e0000;border-radius:3px;background:#c51f1f;color:#fff;font-size:8px;font-weight:950;line-height:1.1;white-space:nowrap;box-shadow:0 1px 2px rgba(50,0,0,.28)}.chip.conflict-risk.changed-in-version .change-badge{left:auto;right:22px}.chip.conflict-risk .top{padding-left:40px}.chip.erb-compact.conflict-risk .class-id{max-width:calc(100% - 88px)}
+@media (orientation:landscape) and (max-height:700px){.chip.conflict-risk{outline-width:2px!important}.conflict-badge{top:2px;left:2px;padding:1px 3px;font-size:5.5px}.chip.conflict-risk .top{padding-left:28px}.chip.erb-compact.conflict-risk .class-id{max-width:calc(100% - 48px)}}
+@media print{.chip.conflict-risk{outline-color:#b40000!important}.conflict-badge{background:#c51f1f!important;color:#fff!important}}
 '''
 
 CSS += r'''
@@ -1388,14 +1397,20 @@ def chip(ev):
         f' data-previous-status="{ehtml(ev.get("previous_status", ""))}"'
     )
     comparison_badge = f'<span class="change-badge" title="Changed in {COMPARE_LABEL}">Δ {COMPARE_LABEL}</span>' if changed else ""
+    conflict = bool(ev.get("conflict"))
+    conflict_cls = " conflict-risk" if conflict else ""
+    conflict_badge = (
+        '<span class="conflict-badge" title="Conflicts with an existing confirmed commitment">撞堂</span>'
+        if conflict else ""
+    )
     log_cls, log_html = lesson_log_trigger(ev)
     if ev["category"] not in {"erb", "methodist"}:
         teacher_suffix = ""
         if layer == "class" and ev.get("teacher"):
             teacher_suffix = f' / <span class="context-teacher">Teacher: {ehtml(ev["teacher"])}</span>'
-        return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{log_cls}" tabindex="0" role="button" '
+        return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}" tabindex="0" role="button" '
                 f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}>'
-                f'{comparison_badge}<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
+                f'{comparison_badge}{conflict_badge}<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
                 f'<div class="ttl">{title_html}</div><div class="det">{detail_html}{teacher_suffix}</div>{log_html}<div class="fulltxt">{full_html}</div></div>')
 
     fields = event_fields(ev)
@@ -1417,9 +1432,9 @@ def chip(ev):
         f'<span class="erb-sep">&middot;</span><span class="erb-helper">Helper: {ehtml(fields["helper"])}</span>'
         if fields["helper"] else ""
     )
-    return (f'<div class="chip erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{log_cls}" tabindex="0" role="button" '
+    return (f'<div class="chip erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}" tabindex="0" role="button" '
             f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}>'
-            f'{comparison_badge}<span class="status" aria-label="{ehtml(st)}">{mark}</span>{identity_html}'
+            f'{comparison_badge}{conflict_badge}<span class="status" aria-label="{ehtml(st)}">{mark}</span>{identity_html}'
             f'<div class="erb-meta"><span class="erb-location">{ehtml(fields["location"])}</span><span class="erb-sep">&middot;</span>'
             f'<span class="erb-teacher{teacher_cls}">Teacher: {ehtml(fields["teacher"])}</span>{helper_html}</div>'
             f'<div class="erb-course">{ehtml(fields["course_name"])}</div>'
