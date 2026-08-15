@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20n-comfyui-aicu02-conflicts-20260814a"
+BUILD_ID = "v20o-teaching-rooms-20260815a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-11-V20m"
-COMPARE_LABEL = "V20n"
-COMPARE_BASELINE_LABEL = "V20m"
-EXPECTED_COMPARISON_CHANGES = 4
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-14-V20n"
+COMPARE_LABEL = "V20o"
+COMPARE_BASELINE_LABEL = "V20n"
+EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -444,6 +444,42 @@ context_events = []
 by_date = {}
 INFERRED_CLASS_BY_CODE = {}
 
+ROOM_DISPLAY_START = datetime.date(2026, 8, 15)
+ROOM_PENDING = "課室待確認"
+ROOM_RULES = (
+    (re.compile(r"\bMC0?106DS\b", re.I), "306", "MC106DS FINAL timetable: classroom 306"),
+    (re.compile(r"\bHK244HG\b.*\bCW8\b", re.I), "103", "HK244HG CW8 FINAL timetable: room 103"),
+    (re.compile(r"\bHK239HG\b.*\bCW10\b", re.I), "101", "HK239HG CW10 FINAL timetable: room 101"),
+    (re.compile(r"\bHK280HG\b.*\bCW1\b", re.I), "101", "HK280HG CW1 FINAL timetable: room 101"),
+    (re.compile(r"\bHK281DS\b.*\bCW7\b", re.I), "104", "HK281DS CW7 FINAL timetable: classroom 104"),
+    (re.compile(r"\bHK244EG\b.*\bCW\b", re.I), "103", "HK244EG CW confirmed timetable: room 103"),
+    (re.compile(r"\bHK239HG\b.*\bST\b", re.I), "204-205號舖3室", "HK239HG ST FINAL timetable venue"),
+    (re.compile(r"\bHK239HG\b.*\bLT\b", re.I), "301", "HK239HG LT FINAL timetable venue"),
+    (re.compile(r"\bHK239HG\b.*\bSS\b", re.I), "129舖02室", "HK239HG SS FINAL timetable venue"),
+    (re.compile(r"\bHK239HG\b.*\bFS\b", re.I), "2樓全層", "HK239HG FS FINAL timetable venue"),
+    (re.compile(r"\bHK265HG\b.*\bFS\b", re.I), "205", "HK265HG FS confirmed timetable: classroom 205"),
+    (re.compile(r"\bHK244EG\b.*\bFS\b", re.I), "205", "HK244EG FS confirmed timetable: classroom 205"),
+)
+
+
+def resolve_teaching_room(event):
+    explicit = str(event.get("teaching_room") or "").strip()
+    if explicit:
+        return explicit, str(event.get("room_source") or "Explicit room metadata").strip()
+    try:
+        event_date = datetime.date.fromisoformat(str(event.get("date") or ""))
+    except ValueError:
+        return "", ""
+    if event_date < ROOM_DISPLAY_START or event.get("category") in {"holiday", "school", "mike"}:
+        return "", ""
+    text = str(event.get("text") or "")
+    for pattern, room, source in ROOM_RULES:
+        if pattern.search(text):
+            return room, source
+    if event.get("category") in {"erb", "methodist", "ymca", "other"}:
+        return ROOM_PENDING, "No confirmed classroom found in the reconciled source set"
+    return "", ""
+
 for sheet in MONTH_SHEETS:
     ws = wb[sheet]
     month = MONTH_MAP[sheet]
@@ -594,12 +630,19 @@ if CONTEXT_SRC.exists():
             "red": bool(item.get("red", False)), "conflict": bool(item.get("conflict", False)),
             "layer": layer,
             "teacher": teacher, "helper": str(item.get("helper", "")).strip(),
+            "teaching_room": str(item.get("teaching_room", "")).strip(),
+            "room_source": str(item.get("room_source", "")).strip(),
             "source": item.get("source", ""),
         }
         context_events.append(ev)
         by_date.setdefault(dt.isoformat(), []).append(ev)
 
 display_events = events + context_events
+
+for event in display_events:
+    room, room_source = resolve_teaching_room(event)
+    event["teaching_room"] = room
+    event["room_source"] = room_source
 
 baseline_events = json.loads((COMPARE_BASELINE / "events.json").read_text(encoding="utf-8"))
 baseline_context = json.loads((COMPARE_BASELINE / "class_context.json").read_text(encoding="utf-8"))
@@ -1132,6 +1175,12 @@ LESSON_LOG_JS = r'''
 })();
 '''
 
+CSS += r'''
+.teaching-room{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin-top:2px;padding:2px 4px;border:1px solid #bfd2d9;border-radius:4px;background:#edf6f8;color:#284854;font-size:9px;font-weight:800;line-height:1.12}.teaching-room span{color:#667785;font-size:8px;font-weight:850}.teaching-room strong{color:#173b46;font-weight:950}.teaching-room.room-pending{border-color:#e2b56f;background:#fff3df}.teaching-room.room-pending strong{color:#9a4f00}
+@media (orientation:landscape) and (max-height:700px){.teaching-room{gap:2px;margin-top:1px;padding:1px 2px;border-radius:2px;font-size:5.8px}.teaching-room span{font-size:5.2px}}
+@media print{.teaching-room{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+'''
+
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
 TEACHER_RE = re.compile(r"\b(Garett|Garrett|Andy|Calvin|Mike(?:\s+Sir)?)\b", re.I)
 NOTE_WORD_RE = re.compile(
@@ -1255,6 +1304,7 @@ def event_fields(ev):
         "lesson": lesson,
         "notes": display_notes(text),
         "helper": str(ev.get("helper") or "").strip(),
+        "room": str(ev.get("teaching_room") or "").strip(),
     }
 
 
@@ -1372,7 +1422,16 @@ def chip(ev):
     mark = '✓' if st == 'confirmed' else '?' if st == 'unconfirmed' else '•'
     title_html = ev.get("title_html") or ehtml(ev["title"])
     detail_html = ev.get("detail_html") or ehtml(ev["detail"])
+    fields = event_fields(ev)
+    room = fields["room"]
+    room_cls = " room-pending" if room == ROOM_PENDING else ""
+    room_html = (
+        f'<div class="teaching-room{room_cls}"><span>課室</span><strong>{ehtml(room)}</strong></div>'
+        if room else ""
+    )
     full_html = ev.get("html") or ehtml(ev["text"])
+    if room:
+        full_html += f'<br><strong>課室：</strong>{ehtml(room)}'
     red_cls = " has-red" if ev.get("red") else ""
     layer = event_layer(ev)
     layer_cls = f" layer-{layer}"
@@ -1387,7 +1446,9 @@ def chip(ev):
                    f' data-course="{1 if ev["category"] in {"erb", "methodist"} else 0}"'
                    f' data-centre="{ehtml(centre_code(ev))}"{interval_attrs}'
                    f' data-teaching-intervals="{lesson_intervals_attr}"'
-                   f' data-source="{ehtml(ev.get("source", ""))}"')
+                   f' data-source="{ehtml(ev.get("source", ""))}"'
+                   f' data-teaching-room="{ehtml(room)}"'
+                   f' data-room-source="{ehtml(ev.get("room_source", ""))}"')
     changed = bool(ev.get("changed_in_version"))
     comparison_cls = " changed-in-version" if changed else ""
     comparison_attrs = (
@@ -1411,9 +1472,8 @@ def chip(ev):
         return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}" tabindex="0" role="button" '
                 f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}>'
                 f'{comparison_badge}{conflict_badge}<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
-                f'<div class="ttl">{title_html}</div><div class="det">{detail_html}{teacher_suffix}</div>{log_html}<div class="fulltxt">{full_html}</div></div>')
+                f'<div class="ttl">{title_html}</div><div class="det">{detail_html}{teacher_suffix}</div>{room_html}{log_html}<div class="fulltxt">{full_html}</div></div>')
 
-    fields = event_fields(ev)
     class_label = fields["class_label"]
     class_hue = zlib.crc32(class_label.encode("utf-8")) % 360
     identity_html = (f'<span class="class-id card-course-filter" role="button" tabindex="0" '
@@ -1437,7 +1497,7 @@ def chip(ev):
             f'{comparison_badge}{conflict_badge}<span class="status" aria-label="{ehtml(st)}">{mark}</span>{identity_html}'
             f'<div class="erb-meta"><span class="erb-location">{ehtml(fields["location"])}</span><span class="erb-sep">&middot;</span>'
             f'<span class="erb-teacher{teacher_cls}">Teacher: {ehtml(fields["teacher"])}</span>{helper_html}</div>'
-            f'<div class="erb-course">{ehtml(fields["course_name"])}</div>'
+            f'{room_html}<div class="erb-course">{ehtml(fields["course_name"])}</div>'
             f'<div class="erb-foot"><span class="erb-time">{ehtml(fields["time"])}</span><span class="erb-sep">&middot;</span>'
             f'<span class="erb-lesson">{ehtml(fields["lesson"])}{note_html}</span></div>{assessment_html}{log_html}'
             f'<div class="fulltxt">{full_html}</div></div>')
