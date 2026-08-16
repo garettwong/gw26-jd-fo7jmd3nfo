@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20o-teaching-rooms-20260815a"
+BUILD_ID = "v20p-lesson-log-room-transit-20260816a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-14-V20n"
-COMPARE_LABEL = "V20o"
-COMPARE_BASELINE_LABEL = "V20n"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-15-V20o"
+COMPARE_LABEL = "V20p"
+COMPARE_BASELINE_LABEL = "V20o"
 EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
@@ -73,6 +73,7 @@ UPCOMING_CLASS_META = {
     "HK239HG · CW10": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓101室", "CHI"),
     "HK281DS · CW7": ("基督教勵行會", "彩雲邨（未有確實街道／房號）", "CHI"),
     "HK239HG · SS": ("基督教勵行會", "上水彩園", "CHI"),
+    "HK239HG · FS": ("基督教勵行會", "四海大廈2樓205室", "CHI"),
     "HK244EG · FS": ("基督教勵行會", "四海大廈", "CHI"),
     "HK239HG · ST": ("基督教勵行會", "順天", "CHI"),
     "HK239HG · 城巿一條龍": ("基督教勵行會", "彩雲邨", "CHI"),
@@ -456,7 +457,7 @@ ROOM_RULES = (
     (re.compile(r"\bHK239HG\b.*\bST\b", re.I), "204-205號舖3室", "HK239HG ST FINAL timetable venue"),
     (re.compile(r"\bHK239HG\b.*\bLT\b", re.I), "301", "HK239HG LT FINAL timetable venue"),
     (re.compile(r"\bHK239HG\b.*\bSS\b", re.I), "129舖02室", "HK239HG SS FINAL timetable venue"),
-    (re.compile(r"\bHK239HG\b.*\bFS\b", re.I), "2樓全層", "HK239HG FS FINAL timetable venue"),
+    (re.compile(r"\bHK239HG\b.*\bFS\b", re.I), "205", "Latest HK239HG FS timetable: room 205"),
     (re.compile(r"\bHK265HG\b.*\bFS\b", re.I), "205", "HK265HG FS confirmed timetable: classroom 205"),
     (re.compile(r"\bHK244EG\b.*\bFS\b", re.I), "205", "HK244EG FS confirmed timetable: classroom 205"),
 )
@@ -466,13 +467,15 @@ def resolve_teaching_room(event):
     explicit = str(event.get("teaching_room") or "").strip()
     if explicit:
         return explicit, str(event.get("room_source") or "Explicit room metadata").strip()
+    text = str(event.get("text") or "")
+    if re.search(r"\bHK239HG\b.*\b(?:Class\s*)?FS\b", text, re.I):
+        return "205", "Latest HK239HG FS timetable: room 205"
     try:
         event_date = datetime.date.fromisoformat(str(event.get("date") or ""))
     except ValueError:
         return "", ""
     if event_date < ROOM_DISPLAY_START or event.get("category") in {"holiday", "school", "mike"}:
         return "", ""
-    text = str(event.get("text") or "")
     for pattern, room, source in ROOM_RULES:
         if pattern.search(text):
             return room, source
@@ -975,7 +978,7 @@ CSS += r'''
 
 CSS += r'''
 html{overflow-x:auto;overflow-y:scroll}
-.time-slot{display:contents}.time-slot.slot-hidden{display:none}.transit-notice{margin:10px 0 12px;padding:8px 10px;border:1px solid #9fc7c6;border-left:5px solid #0f7074;border-radius:5px;background:#f4fbfa;color:#36545a;font-size:11.5px;font-weight:750}.transit-bar{margin:3px 0;padding:3px 6px;border:1px solid #91bab8;border-radius:3px;background:#edf8f7;color:#255b5d;font-size:8.5px;font-weight:850;line-height:1.2;text-align:center}.transit-bar.tight{border-color:#c9342d;background:#fff0ee;color:#951f1a}.transit-bar strong{font-weight:950}
+.time-slot{display:contents}.time-slot.slot-hidden{display:none}.transit-notice{margin:10px 0 12px;padding:8px 10px;border:1px solid #9fc7c6;border-left:5px solid #0f7074;border-radius:5px;background:#f4fbfa;color:#36545a;font-size:11.5px;font-weight:750}.transit-bar{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:3px 0;color:#255b5d;font-size:8.5px;font-weight:850;line-height:1.2;text-align:center}.transit-metric{display:flex;align-items:center;justify-content:center;min-width:0;padding:3px 4px;border:1px solid #91bab8;border-radius:3px;background:#edf8f7}.transit-bar.tight .transit-meal{border-color:#c9342d;background:#fff0ee;color:#951f1a}.transit-bar.impossible .transit-travel{border-color:#c9342d;background:#fff0ee;color:#951f1a}
 .filter-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-top:22px}.filter-heading .section-h{margin:0}.filter-master{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.filter-groups{display:grid;gap:7px;margin:10px 0 16px}.filter-group{display:grid;grid-template-columns:92px minmax(0,1fr);align-items:start;gap:10px;padding-top:7px;border-top:1px solid #dbe2ec}.filter-group:first-child{border-top:0}.filter-group-label{padding:8px 0;color:#657285;font-size:11px;font-weight:900;text-transform:uppercase}.filter-group-buttons{display:flex;gap:7px;flex-wrap:wrap}.filter-group .filter{padding:6px 10px}
 .upcoming-summary{margin:18px 0 4px}.upcoming-summary .section-h{margin:0 2px 9px}.upcoming-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.upcoming-course{display:grid;grid-template-columns:58px minmax(0,1fr) 40px minmax(112px,.72fr);align-items:center;gap:8px;min-width:0;border:2.5px solid #1d2734;border-radius:6px;padding:7px 9px;background:#fff;color:#263343;text-align:left;font:inherit;cursor:pointer;box-shadow:0 1px 2px rgba(20,30,50,.05)}.upcoming-course.unconfirmed,.upcoming-course.mixed{border-style:dashed}.upcoming-course:hover{background:#f7fbfb}.upcoming-course:focus-visible{outline:3px solid #ffc857;outline-offset:2px}.upcoming-course.active{background:#0f7074;color:#fff}.upcoming-course.active.unconfirmed,.upcoming-course.active.mixed{border-width:3px;border-style:dashed;border-color:#fff;box-shadow:0 0 0 3px #e5a900,0 1px 3px rgba(20,30,50,.24)}.upcoming-date{font-size:13px;font-weight:950;color:#0f7074;white-space:nowrap}.upcoming-course.active .upcoming-date{color:#fff}.upcoming-course-copy,.upcoming-place{display:flex;min-width:0;flex-direction:column}.upcoming-course-copy strong{font-size:12px;font-weight:950;line-height:1.15}.upcoming-course-copy span{margin-top:2px;color:#536174;font-size:9.5px;font-weight:750;line-height:1.18;overflow-wrap:anywhere}.upcoming-place{padding-left:8px;border-left:1px solid #dce3ec}.upcoming-place strong{font-size:9.5px;font-weight:900;line-height:1.16}.upcoming-place span{margin-top:2px;color:#647285;font-size:9px;font-weight:700;line-height:1.16;overflow-wrap:anywhere}.upcoming-course.active .upcoming-course-copy span,.upcoming-course.active .upcoming-place span{color:#e4f3f3}.upcoming-course.active .upcoming-place{border-left-color:#7eb1b2}.upcoming-language{justify-self:center;border:1px solid #a8b5c4;border-radius:4px;padding:2px 4px;background:#eef3f7;color:#405064;font-size:8.5px;font-weight:950}.upcoming-course.active .upcoming-language{border-color:#b9d7d8;background:#fff;color:#0f7074}
 .span-shell{--span-label-width:280px;--span-timeline-width:1760px;margin-top:16px}.span-head{display:block;max-width:980px;margin-bottom:10px}.span-head p{max-width:900px}.span-control-bar{position:sticky;left:16px;z-index:8;display:flex;align-items:flex-start;gap:8px;max-width:calc(100vw - 52px);margin-bottom:10px;flex-wrap:wrap}.span-tools{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:8px;flex-wrap:wrap}.span-tool-button,.span-zoom button,.span-course-picker summary,.span-course-actions button{min-height:40px;border:1px solid #cfd8e5;border-radius:6px;background:#fff;color:#405064;font:inherit;font-size:11px;font-weight:850;cursor:pointer}.span-tool-button{padding:7px 10px}.span-tool-button[aria-pressed="false"]{background:#405064;color:#fff}.span-zoom{display:grid;grid-template-columns:40px 64px 40px;gap:3px}.span-zoom button{padding:0;font-size:19px}.span-zoom .span-zoom-value{font-size:10px}.span-tool-button:focus-visible,.span-zoom button:focus-visible,.span-course-picker summary:focus-visible,.span-course-actions button:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.span-course-picker{position:relative}.span-course-picker summary{display:flex;align-items:center;gap:7px;padding:7px 10px;list-style:none}.span-course-picker summary::-webkit-details-marker{display:none}.span-course-picker summary::before{content:"+";font-size:15px}.span-course-picker[open] summary::before{content:"−"}.span-course-picker-body{position:absolute;top:46px;left:0;z-index:20;width:min(680px,calc(100vw - 48px));padding:10px;border:1px solid #cfd8e5;border-radius:7px;background:#fff;box-shadow:0 8px 24px rgba(20,30,50,.20)}.span-course-actions{display:flex;gap:6px;margin-bottom:8px}.span-course-actions button{min-height:32px;padding:4px 9px}.span-course-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:min(52vh,440px);overflow:auto;border-top:1px solid #e2e7ef}.span-course-toggle{display:flex;align-items:flex-start;gap:8px;min-width:0;padding:8px;border-bottom:1px solid #e8edf3;cursor:pointer}.span-course-toggle:nth-child(odd){border-right:1px solid #e8edf3}.span-course-toggle input{width:17px;height:17px;margin:1px 0 0;accent-color:#0f7074;flex:0 0 auto}.span-course-toggle span{display:flex;min-width:0;flex-direction:column}.span-course-toggle strong{font-size:10.5px;line-height:1.2}.span-course-toggle small{margin-top:2px;color:#748092;font-size:9px}.span-legend{justify-content:flex-start}.span-scroll{width:max-content;min-width:100%;overflow:visible;border:1px solid #dbe2ec;border-radius:8px;scrollbar-gutter:auto}.span-table{width:calc(var(--span-label-width) + var(--span-timeline-width));min-width:calc(var(--span-label-width) + var(--span-timeline-width))}.span-axis,.span-row{grid-template-columns:var(--span-label-width) var(--span-timeline-width)}.span-axis{border-bottom:1px solid #dbe2ec}.span-row{border-bottom:1px solid #dbe2ec}.span-axis-label,.span-label{border-right:1px solid #dbe2ec}.span-month{border-left:1px solid #dbe2ec}.span-month:first-child{border-left:0}.span-month:last-child{border-right:0}.span-guide{border-left:1px solid #dbe2ec}.span-shell.hide-span-labels{--span-label-width:0px}.span-shell.hide-span-labels .span-axis-label,.span-shell.hide-span-labels .span-label{display:none}.span-row[data-course-hidden="1"]{display:none!important}
@@ -1022,7 +1025,7 @@ CSS += r'''
 '''
 
 CSS += r'''
-.lesson-log-control,.lesson-log-open,.modal-lesson-log{display:none}.lesson-log-enabled .lesson-log-control{display:inline-flex;align-items:center}.lesson-log-enabled .modal-lesson-log:not([hidden]){display:inline-flex;align-items:center;justify-content:center}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-lesson-log{width:100%;min-height:42px;border:1px solid #0f7074;border-radius:7px;padding:9px 12px;background:#0f7074;color:#fff;font:inherit;font-size:13px;font-weight:900;cursor:pointer}.modal-lesson-log:hover,.modal-lesson-log:focus-visible{background:#0b5e62;outline:0}.lesson-log-card{max-width:680px}.lesson-log-form{display:grid;gap:12px;margin-top:12px}.lesson-log-meta{padding:9px 10px;border-left:4px solid #0f7074;border-radius:4px;background:#eef8f7;color:#314954;font-size:12px;font-weight:800;white-space:pre-wrap}.lesson-log-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.lesson-log-field{display:grid;gap:4px}.lesson-log-field.full{grid-column:1/-1}.lesson-log-field span,.lesson-log-settings label{color:#455365;font-size:11px;font-weight:850}.lesson-log-field textarea,.lesson-log-settings input{width:100%;border:1px solid #b9c5d2;border-radius:6px;padding:8px 9px;background:#fff;color:#1d2734;font:inherit;font-size:13px}.lesson-log-field textarea{min-height:76px;resize:vertical}.lesson-log-settings{margin-top:4px;padding:10px;border:1px solid #d8e0e9;border-radius:6px;background:#f8fafc}.lesson-log-settings summary{cursor:pointer;color:#405064;font-size:12px;font-weight:900}.lesson-log-settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.lesson-log-settings label{display:grid;gap:3px}.lesson-log-settings label:last-of-type{grid-column:1/-1}.lesson-log-actions{display:flex;gap:7px;flex-wrap:wrap}.lesson-log-action{border:1px solid #b8c4d0;border-radius:6px;padding:7px 11px;background:#fff;color:#405064;font:inherit;font-size:12px;font-weight:900;cursor:pointer}.lesson-log-action.primary{border-color:#0f7074;background:#0f7074;color:#fff}.lesson-log-status{min-height:18px;color:#526174;font-size:11px;font-weight:750}.lesson-log-status.ok{color:#0b6b46}.lesson-log-status.error{color:#ad2d24}.lesson-log-private-note{margin:7px 0 0;color:#697688;font-size:10px;line-height:1.35}
+.lesson-log-control,.lesson-log-open,.modal-lesson-log{display:none}.lesson-log-enabled .lesson-log-control{display:inline-flex;align-items:center}.lesson-log-enabled .lesson-log-open{position:absolute;right:4px;bottom:3px;z-index:3;display:inline-flex;align-items:center;justify-content:center;min-width:31px;min-height:20px;border:1px solid #0f7074;border-radius:4px;padding:2px 5px;background:#fff;color:#0f6266;font-size:8px;font-weight:950;line-height:1;box-shadow:0 1px 2px rgba(20,30,50,.15);cursor:pointer}.lesson-log-enabled .lesson-log-open.logged{background:#0f7074;color:#fff}.chip.has-lesson-log{position:relative}.lesson-log-enabled .modal-lesson-log:not([hidden]){display:inline-flex;align-items:center;justify-content:center}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-lesson-log{width:100%;min-height:42px;border:1px solid #0f7074;border-radius:7px;padding:9px 12px;background:#0f7074;color:#fff;font:inherit;font-size:13px;font-weight:900;cursor:pointer}.modal-lesson-log:hover,.modal-lesson-log:focus-visible,.lesson-log-open:hover,.lesson-log-open:focus-visible{background:#0b5e62!important;color:#fff!important;outline:2px solid #ffc857;outline-offset:1px}.lesson-log-card{max-width:680px}.lesson-log-form{display:grid;gap:12px;margin-top:12px}.lesson-log-meta{padding:9px 10px;border-left:4px solid #0f7074;border-radius:4px;background:#eef8f7;color:#314954;font-size:12px;font-weight:800;white-space:pre-wrap}.lesson-log-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.lesson-log-field{display:grid;gap:4px}.lesson-log-field.full{grid-column:1/-1}.lesson-log-field span,.lesson-log-settings label{color:#455365;font-size:11px;font-weight:850}.lesson-log-field textarea,.lesson-log-settings input{width:100%;border:1px solid #b9c5d2;border-radius:6px;padding:8px 9px;background:#fff;color:#1d2734;font:inherit;font-size:13px}.lesson-log-field textarea{min-height:76px;resize:vertical}.lesson-log-settings{margin-top:4px;padding:10px;border:1px solid #d8e0e9;border-radius:6px;background:#f8fafc}.lesson-log-settings summary{cursor:pointer;color:#405064;font-size:12px;font-weight:900}.lesson-log-settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.lesson-log-settings label{display:grid;gap:3px}.lesson-log-settings label:last-of-type{grid-column:1/-1}.lesson-log-actions{display:flex;gap:7px;flex-wrap:wrap}.lesson-log-action{border:1px solid #b8c4d0;border-radius:6px;padding:7px 11px;background:#fff;color:#405064;font:inherit;font-size:12px;font-weight:900;cursor:pointer}.lesson-log-action.primary{border-color:#0f7074;background:#0f7074;color:#fff}.lesson-log-status{min-height:18px;color:#526174;font-size:11px;font-weight:750}.lesson-log-status.ok{color:#0b6b46}.lesson-log-status.error{color:#ad2d24}.lesson-log-private-note{margin:7px 0 0;color:#697688;font-size:10px;line-height:1.35}
 @media(max-width:820px){.lesson-log-fields,.lesson-log-settings-grid{grid-template-columns:1fr}.lesson-log-field.full,.lesson-log-settings label:last-of-type{grid-column:auto}.lesson-log-card{padding:16px}}
 @media print{.lesson-log-control,.lesson-log-open{display:none!important}}
 '''
@@ -1145,12 +1148,18 @@ LESSON_LOG_JS = r'''
     }else{
       meta.textContent='私人同步狀態與設定';
     }
-    settings.open=!config.token;
+    settings.open=!config.token&&!active;
     modal.hidden=false;
     if(config.token){setStatus('正在讀取最新私人記錄…');try{await pullRemote();setStatus('已同步最新記錄。','ok');if(active){const note=store.notes[active.key]||{};Object.keys(inputs).forEach(key=>inputs[key].value=note[key]||'');}}catch(error){setStatus('同步失敗：'+error.message,'error');}}
     else setStatus('目前只會儲存在本機；設定 token 後才能跨裝置同步。');
   };
   window.openLessonLogForButton=openPanel;
+  document.querySelectorAll('.lesson-log-open').forEach(button=>{
+    button.setAttribute('aria-hidden','false');button.setAttribute('role','button');button.tabIndex=0;
+    const open=event=>{event.preventDefault();event.stopPropagation();openPanel(button);};
+    button.addEventListener('click',open);
+    button.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){open(event);}});
+  });
   document.getElementById('lessonLogPanelBtn').addEventListener('click',()=>openPanel(null));
   document.getElementById('lessonLogClose').addEventListener('click',()=>modal.hidden=true);
   modal.addEventListener('click',event=>{if(event.target===modal)modal.hidden=true;});
@@ -1177,6 +1186,7 @@ LESSON_LOG_JS = r'''
 
 CSS += r'''
 .teaching-room{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin-top:2px;padding:2px 4px;border:1px solid #bfd2d9;border-radius:4px;background:#edf6f8;color:#284854;font-size:9px;font-weight:800;line-height:1.12}.teaching-room span{color:#667785;font-size:8px;font-weight:850}.teaching-room strong{color:#173b46;font-weight:950}.teaching-room.room-pending{border-color:#e2b56f;background:#fff3df}.teaching-room.room-pending strong{color:#9a4f00}
+.card-location{margin-top:2px;color:#3f5b69;font-size:9px;font-weight:850;line-height:1.15;text-align:center}
 @media (orientation:landscape) and (max-height:700px){.teaching-room{gap:2px;margin-top:1px;padding:1px 2px;border-radius:2px;font-size:5.8px}.teaching-room span{font-size:5.2px}}
 @media print{.teaching-room{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 '''
@@ -1194,7 +1204,7 @@ CANCELLED_TEACHING_RE = re.compile(r"\b(?:cancelled|canceled)\b|取消", re.I)
 
 def clean_location(title, category):
     if category == "ymca":
-        return "YMCA"
+        return "油麻地 YMCA"
     if category == "dgs":
         return "DGS"
     if category in {"holiday", "mike"}:
@@ -1469,10 +1479,14 @@ def chip(ev):
         teacher_suffix = ""
         if layer == "class" and ev.get("teacher"):
             teacher_suffix = f' / <span class="context-teacher">Teacher: {ehtml(ev["teacher"])}</span>'
+        location_html = (
+            f'<div class="card-location">{ehtml(fields["location"])}</div>'
+            if ev["category"] == "ymca" else ""
+        )
         return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}" tabindex="0" role="button" '
                 f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}>'
                 f'{comparison_badge}{conflict_badge}<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
-                f'<div class="ttl">{title_html}</div><div class="det">{detail_html}{teacher_suffix}</div>{room_html}{log_html}<div class="fulltxt">{full_html}</div></div>')
+                f'<div class="ttl">{title_html}</div><div class="det">{detail_html}{teacher_suffix}</div>{location_html}{room_html}{log_html}<div class="fulltxt">{full_html}</div></div>')
 
     class_label = fields["class_label"]
     class_hue = zlib.crc32(class_label.encode("utf-8")) % 360
@@ -1950,7 +1964,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <section id="calendarView" class="view-panel" role="tabpanel" aria-labelledby="calendarTab">
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
 <div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div>{comparison_legend_html}<div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
-<div id="transitNotice" class="transit-notice" hidden>Transit reminders appear between your lesson slots. Red means less than 30 minutes remains after travel, so there is no reliable meal break.</div>
+<div id="transitNotice" class="transit-notice" hidden>每段課堂之間會分開顯示交通時間及可用膳時間；用膳不足 30 分鐘會以紅色標示。</div>
 <div class="course-code-heading"><div class="section-h">ERB course families</div><span class="course-code-count">{len(COURSE_FAMILIES)} course families</span></div><div class="course-code-legend">{erb_code_legend}</div>
 {upcoming_summary_html}
 {completed_summary_html}
@@ -2175,7 +2189,7 @@ const transitMinutes={{
   'shun_tin|choi_wan':30,'choi_wan|shun_tin':30,
   'sheung_shui|choi_wan':65,'choi_wan|sheung_shui':65
 }};
-const centreLabels={{sheung_shui:'Sheung Shui',four_seas:'Four Seas',choi_wan:'Choi Wan',ymca_yau_ma_tei:'YMCA',wan_chai:'Wan Chai',lam_tin:'Lam Tin',shun_tin:'Shun Tin'}};
+const centreLabels={{sheung_shui:'上水',four_seas:'四海大廈',choi_wan:'彩雲',ymca_yau_ma_tei:'油麻地 YMCA',wan_chai:'灣仔',lam_tin:'藍田',shun_tin:'順天'}};
 function visibleMineChips(slot){{
   return Array.from(slot.querySelectorAll('.chip')).filter(ch=>ch.style.display!=='none'&&ch.dataset.layer==='mine'&&ch.dataset.start&&ch.dataset.end&&ch.dataset.centre);
 }}
@@ -2207,12 +2221,13 @@ function refreshTransitBars(){{
       }}));
       if(!routes.length) continue;
       routes.sort((a,b)=>a.spare-b.spare||b.travel-a.travel);
-      const route=routes[0],tight=route.spare<30;
+      const route=routes[0],tight=route.spare<30,impossible=route.spare<0;
       const bar=document.createElement('div');
-      bar.className='transit-bar'+(tight?' tight':'');
+      bar.className='transit-bar'+(tight?' tight':'')+(impossible?' impossible':'');
       const routeLabel=route.a===route.b?'Same centre':(centreLabels[route.a]||route.a)+' to '+(centreLabels[route.b]||route.b);
-      const timing=route.spare<0?Math.abs(route.spare)+'m short':route.spare+'m spare';
-      bar.innerHTML='<strong>'+routeLabel+'</strong> · '+route.travel+'m transit · '+timing+(tight?' · NO MEAL BUFFER':'');
+      const mealText=impossible?'不足 '+Math.abs(route.spare)+' 分鐘':'用膳 '+route.spare+' 分鐘';
+      bar.title=routeLabel;
+      bar.innerHTML='<span class="transit-metric transit-travel">交通 '+route.travel+' 分鐘</span><span class="transit-metric transit-meal">'+mealText+'</span>';
       fromSlot.after(bar);
     }}
   }});
