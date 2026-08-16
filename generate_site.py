@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20p-lesson-log-room-transit-20260816a"
+BUILD_ID = "v20q-one-link-lesson-records-20260816a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-15-V20o"
-COMPARE_LABEL = "V20p"
-COMPARE_BASELINE_LABEL = "V20o"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-16-V20p"
+COMPARE_LABEL = "V20q"
+COMPARE_BASELINE_LABEL = "V20p"
 EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
@@ -1033,7 +1033,7 @@ CSS += r'''
 LESSON_LOG_HTML = r'''
 <div id="lessonLogModal" class="modal" hidden><div class="modal-card lesson-log-card">
 <button id="lessonLogClose" class="modal-x" type="button" aria-label="Close">×</button>
-<div class="modal-h">私人課後教學記錄</div>
+<div class="modal-h">課後教學記錄</div>
 <div id="lessonLogMeta" class="lesson-log-meta">選擇一堂課後即可記錄。</div>
 <form id="lessonLogForm" class="lesson-log-form">
 <div id="lessonLogFields" class="lesson-log-fields" hidden>
@@ -1042,14 +1042,14 @@ LESSON_LOG_HTML = r'''
 <label class="lesson-log-field"><span>功課／下堂跟進</span><textarea id="lessonLogFollowUp" autocomplete="off"></textarea></label>
 <label class="lesson-log-field full"><span>其他備註</span><textarea id="lessonLogRemarks" autocomplete="off"></textarea></label>
 </div>
-<div class="lesson-log-actions"><button id="lessonLogSave" class="lesson-log-action primary" type="submit" hidden>儲存及同步</button><button id="lessonLogSync" class="lesson-log-action" type="button">立即同步</button></div>
+<div class="lesson-log-actions"><button id="lessonLogSave" class="lesson-log-action primary" type="submit" hidden>儲存記錄</button><button id="lessonLogSync" class="lesson-log-action" type="button">讀取最新記錄</button></div>
 <div id="lessonLogStatus" class="lesson-log-status"></div>
-<details id="lessonLogSettings" class="lesson-log-settings"><summary>私人同步設定</summary><div class="lesson-log-settings-grid">
+<details id="lessonLogSettings" class="lesson-log-settings"><summary>手機／電腦同步設定</summary><div class="lesson-log-settings-grid">
 <label>GitHub 帳戶<input id="lessonLogOwner" value="garettwong" autocomplete="username"></label>
 <label>私人儲存庫<input id="lessonLogRepo" value="erb-lesson-log" autocomplete="off"></label>
 <label>Fine-grained token<input id="lessonLogToken" type="password" autocomplete="off" placeholder="只限 erb-lesson-log Contents 讀寫"></label>
-</div><div class="lesson-log-actions" style="margin-top:8px"><button id="lessonLogSaveSettings" class="lesson-log-action" type="button">儲存設定</button></div>
-<p class="lesson-log-private-note">Token 只儲存在這部裝置。公開時間表不含 token 或私人筆記；未設定 token 時仍會先儲存在本機。</p></details>
+</div><div class="lesson-log-actions" style="margin-top:8px"><button id="lessonLogSaveSettings" class="lesson-log-action" type="button">儲存同步設定</button></div>
+<p class="lesson-log-private-note">Token 只儲存在目前這部裝置，不會寫入時間表。未設定 token 時，記錄仍會先儲存在這部裝置；要讓手機和電腦看到同一份記錄，兩部裝置都需要設定 token。</p></details>
 </form></div></div>
 '''
 
@@ -1057,17 +1057,9 @@ LESSON_LOG_JS = r'''
 (function(){
   const CONFIG_KEY='erbLessonLogConfigV1';
   const LOCAL_KEY='erbLessonNotesV1';
-  const ACCESS_KEY='erbLessonLogAccessV1';
   const FILE_NAME='lesson-notes.json';
-  const params=new URLSearchParams(location.search);
   let config={owner:'garettwong',repo:'erb-lesson-log',token:''};
   try{config=Object.assign(config,JSON.parse(localStorage.getItem(CONFIG_KEY)||'{}'));}catch(_e){}
-  const activationRequested=params.get('lessonlog')==='1';
-  if(activationRequested){try{localStorage.setItem(ACCESS_KEY,'1');}catch(_e){}}
-  let accessRemembered=false;
-  try{accessRemembered=localStorage.getItem(ACCESS_KEY)==='1';}catch(_e){}
-  const enabled=activationRequested||accessRemembered||Boolean(config.token);
-  if(!enabled)return;
   document.documentElement.classList.add('lesson-log-enabled');
   const modal=document.getElementById('lessonLogModal');
   const form=document.getElementById('lessonLogForm');
@@ -1146,11 +1138,11 @@ LESSON_LOG_JS = r'''
       const note=store.notes[active.key]||{};
       Object.keys(inputs).forEach(key=>inputs[key].value=note[key]||'');
     }else{
-      meta.textContent='私人同步狀態與設定';
+      meta.textContent='手機／電腦同步狀態與設定';
     }
     settings.open=!config.token&&!active;
     modal.hidden=false;
-    if(config.token){setStatus('正在讀取最新私人記錄…');try{await pullRemote();setStatus('已同步最新記錄。','ok');if(active){const note=store.notes[active.key]||{};Object.keys(inputs).forEach(key=>inputs[key].value=note[key]||'');}}catch(error){setStatus('同步失敗：'+error.message,'error');}}
+    if(config.token){setStatus('正在讀取最新記錄…');try{await pullRemote();setStatus('已讀取最新記錄。','ok');if(active){const note=store.notes[active.key]||{};Object.keys(inputs).forEach(key=>inputs[key].value=note[key]||'');}}catch(error){setStatus('同步失敗：'+error.message,'error');}}
     else setStatus('目前只會儲存在本機；設定 token 後才能跨裝置同步。');
   };
   window.openLessonLogForButton=openPanel;
@@ -1167,7 +1159,7 @@ LESSON_LOG_JS = r'''
     config={owner:ownerInput.value.trim()||'garettwong',repo:repoInput.value.trim()||'erb-lesson-log',token:tokenInput.value.trim()};
     localStorage.setItem(CONFIG_KEY,JSON.stringify(config));
     if(!config.token){setStatus('設定已儲存，但尚未提供 token；目前只會儲存在本機。');return;}
-    setStatus('正在測試私人同步…');try{await pullRemote();settings.open=false;setStatus('私人同步已連接。','ok');}catch(error){setStatus('連接失敗：'+error.message,'error');}
+    setStatus('正在測試同步…');try{await pullRemote();settings.open=false;setStatus('手機／電腦同步已連接。','ok');}catch(error){setStatus('連接失敗：'+error.message,'error');}
   });
   document.getElementById('lessonLogSync').addEventListener('click',async()=>{
     setStatus('正在同步…');try{await pullRemote();setStatus('已同步最新記錄。','ok');}catch(error){setStatus('同步失敗：'+error.message,'error');}
@@ -1958,7 +1950,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <meta http-equiv="Expires" content="0">
 <script>window.ERB_BUILD_ID='{BUILD_ID}';(function(){{if(!/^https?:$/.test(location.protocol))return;var p=new URLSearchParams(location.search);if(p.get('build')!==window.ERB_BUILD_ID){{p.set('build',window.ERB_BUILD_ID);location.replace(location.pathname+'?'+p.toString()+location.hash);}}}})();</script>
 <style>{CSS}</style></head><body><main class="wrap">
-<div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><button id="lessonLogPanelBtn" class="btn lesson-log-control" type="button">課堂記錄同步</button><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
+<div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><button id="lessonLogPanelBtn" class="btn lesson-log-control" type="button">課後記錄設定</button><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
 {version_selector_html}
 <div id="viewTabs" class="view-tabs" role="tablist" aria-label="Timetable layout"><button id="calendarTab" class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="calendarView" data-view="calendar">Calendar</button><button id="spansTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="spansView" data-view="spans">Class spans</button></div>
 <section id="calendarView" class="view-panel" role="tabpanel" aria-labelledby="calendarTab">
