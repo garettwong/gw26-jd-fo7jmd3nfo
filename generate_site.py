@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20t-cohort-shades-next-new-course-20260821a"
+BUILD_ID = "v20u-upcoming-limits-completed-hatch-20260821a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-18-V20s"
-COMPARE_LABEL = "V20t"
-COMPARE_BASELINE_LABEL = "V20s"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-21-V20t"
+COMPARE_LABEL = "V20u"
+COMPARE_BASELINE_LABEL = "V20t"
 EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
@@ -1057,11 +1057,13 @@ CSS += r'''
 
 CSS += r'''
 .chip.cohort-shade.cat-erb,.chip.cohort-shade.cat-methodist{background:hsl(var(--cohort-hue),var(--cohort-sat),var(--cohort-light))}.chip.cohort-shade.layer-class::before{background:var(--context-color)}.span-bar{border-color:hsl(var(--span-hue),var(--span-sat),38%);background:hsl(var(--span-hue),var(--span-sat),var(--span-light))}.span-bar-label{border-color:hsla(var(--span-hue),var(--span-sat),38%,.45);color:hsl(var(--span-hue),var(--span-sat),28%)}
-.next-new-course{display:grid;grid-template-columns:minmax(250px,1.2fr) auto minmax(420px,1.8fr);align-items:center;gap:18px;margin:16px 0 4px;padding:14px 16px;border:2px solid #0f7074;border-radius:8px;background:#e8f7f5;box-shadow:0 2px 7px rgba(20,30,50,.08)}.next-new-main{min-width:0}.next-new-kicker{display:block;color:#0f7074;font-size:10px;font-weight:950;text-transform:uppercase;letter-spacing:.7px}.next-new-course h2{margin:2px 0 0;color:#172a38;font-size:20px;font-weight:950}.next-new-course p{margin:2px 0 0;color:#506274;font-size:12px;font-weight:750}.next-new-countdown{min-width:102px;border-left:1px solid #a9d4d0;border-right:1px solid #a9d4d0;padding:4px 18px;text-align:center}.next-new-countdown small,.next-new-facts small{display:block;color:#69798a;font-size:9px;font-weight:900}.next-new-countdown strong{display:block;color:#0f7074;font-size:23px;font-weight:950;white-space:nowrap}.next-new-facts{display:grid;grid-template-columns:1fr .8fr 1.45fr;gap:12px}.next-new-facts span{min-width:0}.next-new-facts strong{display:block;color:#233345;font-size:11px;font-weight:900;line-height:1.25}
-@media(max-width:980px){.next-new-course{grid-template-columns:1fr auto}.next-new-facts{grid-column:1/-1}.next-new-countdown{border-right:0}}
-@media(max-width:620px){.next-new-course{grid-template-columns:1fr auto;gap:10px;padding:11px}.next-new-course h2{font-size:17px}.next-new-course p{font-size:11px}.next-new-countdown{min-width:78px;padding:3px 0 3px 10px}.next-new-countdown strong{font-size:18px}.next-new-facts{grid-template-columns:1fr 1fr}.next-new-facts span:last-child{grid-column:1/-1}.next-new-facts strong{font-size:10px}}
-@media (orientation:landscape) and (max-height:700px) and (max-width:1400px){.next-new-course{margin:4px 0;padding:5px 8px;gap:8px}.next-new-kicker{font-size:7px}.next-new-course h2{font-size:12px}.next-new-course p{font-size:8px}.next-new-countdown{min-width:70px;padding:2px 8px}.next-new-countdown small,.next-new-facts small{font-size:6px}.next-new-countdown strong{font-size:14px}.next-new-facts{gap:7px}.next-new-facts strong{font-size:7px}}
-@media print{.next-new-course{box-shadow:none}}
+.next-new-courses{margin:16px 0 4px;padding:14px 16px;border:2px solid #0f7074;border-radius:8px;background:#e8f7f5;box-shadow:0 2px 7px rgba(20,30,50,.08)}.next-new-header{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:11px}.next-new-kicker{display:block;color:#0f7074;font-size:12px;font-weight:950;text-transform:uppercase}.next-new-header h2{margin:2px 0 0;color:#172a38;font-size:23px;font-weight:950}.next-course-controls{display:inline-grid;grid-template-columns:repeat(3,minmax(76px,1fr));gap:4px;padding:4px;border:1px solid #a9d4d0;border-radius:7px;background:#d8efec}.next-course-limit{min-height:38px;border:0;border-radius:5px;padding:6px 10px;background:transparent;color:#38585c;font:inherit;font-size:13px;font-weight:950;cursor:pointer}.next-course-limit:hover{background:#f4fbfa}.next-course-limit:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.next-course-limit.active{background:#0f7074;color:#fff;box-shadow:0 1px 3px rgba(20,30,50,.18)}.next-course-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.next-course-card{display:grid;grid-template-columns:minmax(210px,1fr) 100px minmax(330px,1.45fr);align-items:center;gap:14px;min-width:0;padding:12px 14px;border:1px solid #9dc9c6;border-radius:6px;background:#f7fcfb}.next-course-card[hidden]{display:none!important}.next-course-main{min-width:0}.next-course-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.next-course-card h3{margin:0;color:#172a38;font-size:19px;font-weight:950;line-height:1.12}.next-course-card p{margin:4px 0 0;color:#506274;font-size:13px;font-weight:800;line-height:1.25}.next-new-badge{border-radius:4px;padding:3px 6px;background:#8b4fa3;color:#fff;font-size:9px;font-weight:950;white-space:nowrap}.next-new-countdown{min-width:94px;border-left:1px solid #a9d4d0;border-right:1px solid #a9d4d0;padding:4px 13px;text-align:center}.next-new-countdown small,.next-new-facts small{display:block;color:#69798a;font-size:10px;font-weight:900}.next-new-countdown strong{display:block;color:#0f7074;font-size:25px;font-weight:950;white-space:nowrap}.next-new-facts{display:grid;grid-template-columns:1fr .8fr 1.35fr;gap:10px}.next-new-facts span{min-width:0}.next-new-facts strong{display:block;color:#233345;font-size:12px;font-weight:900;line-height:1.25;overflow-wrap:anywhere}
+@media(max-width:1450px){.next-course-list{grid-template-columns:1fr}.next-course-card{grid-template-columns:minmax(240px,1fr) 100px minmax(360px,1.5fr)}}
+@media(max-width:900px){.next-new-header{align-items:stretch;flex-direction:column}.next-course-controls{width:100%}.next-course-card{grid-template-columns:minmax(0,1fr) 88px}.next-new-facts{grid-column:1/-1}.next-new-countdown{border-right:0}}
+@media(max-width:620px){.next-new-courses{padding:11px}.next-new-header h2{font-size:20px}.next-course-limit{font-size:12px}.next-course-card{gap:9px;padding:10px}.next-course-card h3{font-size:17px}.next-course-card p{font-size:12px}.next-new-countdown{min-width:72px;padding:3px 0 3px 9px}.next-new-countdown strong{font-size:20px}.next-new-facts{grid-template-columns:1fr 1fr}.next-new-facts span:last-child{grid-column:1/-1}.next-new-facts strong{font-size:11px}}
+@media (orientation:landscape) and (max-height:700px) and (max-width:1400px){.next-new-courses{margin:4px 0;padding:7px 9px}.next-new-header{align-items:center;flex-direction:row;margin-bottom:5px}.next-new-kicker{font-size:9px}.next-new-header h2{font-size:16px}.next-course-controls{width:auto;padding:2px}.next-course-limit{min-height:30px;padding:3px 7px;font-size:10px}.next-course-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.next-course-card{grid-template-columns:minmax(150px,1fr) 66px minmax(220px,1.35fr);gap:6px;padding:6px 7px}.next-course-card h3{font-size:13px}.next-course-card p{margin-top:2px;font-size:9.5px}.next-new-badge{padding:2px 4px;font-size:7px}.next-new-countdown{min-width:60px;padding:2px 5px}.next-new-countdown small,.next-new-facts small{font-size:7px}.next-new-countdown strong{font-size:16px}.next-new-facts{grid-column:auto;gap:5px}.next-new-facts strong{font-size:8.5px}}
+@media (orientation:landscape) and (max-height:700px) and (max-width:999px){.next-course-list{grid-template-columns:1fr}}
+@media print{.next-new-courses{box-shadow:none}.next-course-controls{display:none}}
 '''
 
 LESSON_LOG_HTML = r'''
@@ -1215,6 +1217,13 @@ CSS += r'''
 .card-location{margin-top:2px;color:#3f5b69;font-size:9px;font-weight:850;line-height:1.15;text-align:center}
 @media (orientation:landscape) and (max-height:700px){.teaching-room{gap:2px;margin-top:1px;padding:1px 2px;border-radius:2px;font-size:5.8px}.teaching-room span{font-size:5.2px}}
 @media print{.teaching-room{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+'''
+
+CSS += r'''
+.upcoming-summary .upcoming-course-copy strong{font-size:15px;line-height:1.18}.upcoming-summary .upcoming-course-copy span{font-size:11px;line-height:1.22}.upcoming-summary .summary-date small{font-size:8.5px}.upcoming-summary .summary-date strong{font-size:14px}.upcoming-summary .upcoming-place strong{font-size:11px}.upcoming-summary .upcoming-place span{font-size:10.5px}.upcoming-summary .summary-lesson-count{font-size:11px!important}
+.class-summary-card.completed{border-color:#64748b;background-color:#f3f6f9;background-image:repeating-linear-gradient(45deg,transparent 0 8px,rgba(100,116,139,.14) 8px 10px),repeating-linear-gradient(-45deg,transparent 0 8px,rgba(100,116,139,.14) 8px 10px)}.completed .summary-status{background:#4b5563}.completed-summary .class-summary-card{opacity:1}
+@media(max-width:620px){.upcoming-summary .upcoming-course-copy strong{font-size:14px}.upcoming-summary .upcoming-course-copy span{font-size:10.5px}.upcoming-summary .upcoming-place strong{font-size:10.5px}.upcoming-summary .upcoming-place span{font-size:10px}}
+@media print{.class-summary-card.completed{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 '''
 
 TIME_RANGE_RE = re.compile(r"(?<!\d)(2[0-3]|[01]?\d):?([0-5]\d)\s*(am|pm)?\s*-\s*(2[0-3]|[01]?\d):?([0-5]\d)(?!\d)\s*(am|pm)?", re.I)
@@ -1794,7 +1803,7 @@ def event_course_family(event):
     return COURSE_FAMILY_BY_CODE.get(event_course_code(event), "")
 
 
-def next_brand_new_course_panel():
+def next_upcoming_course_panel():
     personal_erb = [
         event
         for event in display_events
@@ -1809,56 +1818,84 @@ def next_brand_new_course_panel():
         for event in personal_erb
         if datetime.date.fromisoformat(event["date"]) <= RELEASE_AS_OF
     }
-    future = sorted(
-        (
-            event
-            for event in personal_erb
-            if datetime.date.fromisoformat(event["date"]) > RELEASE_AS_OF
-            and event_course_family(event) not in previously_taught_families
-        ),
-        key=lambda event: (event["date"], display_times(event.get("text", "")), natural_key(event["group_label"])),
-    )
-    if not future:
-        return (
-            '<section class="next-new-course" aria-labelledby="nextNewCourseHeading">'
-            '<div><span class="next-new-kicker">下一個全新課程</span>'
-            '<h2 id="nextNewCourseHeading">目前沒有待開始的全新課程</h2></div></section>'
+    candidates = []
+    for label, slug, _group_status, _first_class_date in GROUPS:
+        mine_group_events = [
+            event for event in personal_erb
+            if event["group"] == slug
+        ]
+        if not mine_group_events:
+            continue
+        my_first = min(
+            mine_group_events,
+            key=lambda event: (event["date"], display_times(event.get("text", ""))),
         )
-
-    first_event = future[0]
-    label = first_event["group_label"]
-    code = event_course_code(first_event)
-    family = event_course_family(first_event)
-    mine_group_events = [
-        event for event in personal_erb
-        if event["group_label"] == label
-    ]
-    all_group_events = [
-        event for event in display_events
-        if event["group_label"] == label and not is_proposal_only(event)
-    ]
-    my_first = min(mine_group_events, key=lambda event: (event["date"], display_times(event.get("text", ""))))
-    class_first = min(all_group_events, key=lambda event: (event["date"], display_times(event.get("text", ""))))
-    my_day = datetime.date.fromisoformat(my_first["date"])
-    class_day = datetime.date.fromisoformat(class_first["date"])
-    my_fields = event_fields(my_first)
-    centre, location, _language = summary_class_meta(label, all_group_events)
-    days_left = (my_day - RELEASE_AS_OF).days
-    day_word = f"{days_left} 日" if days_left != 1 else "1 日"
+        my_day = datetime.date.fromisoformat(my_first["date"])
+        if my_day <= RELEASE_AS_OF:
+            continue
+        all_group_events = [
+            event for event in display_events
+            if event["group"] == slug and not is_proposal_only(event)
+        ]
+        class_first = min(
+            all_group_events,
+            key=lambda event: (event["date"], display_times(event.get("text", ""))),
+        )
+        class_day = datetime.date.fromisoformat(class_first["date"])
+        family = event_course_family(my_first)
+        my_fields = event_fields(my_first)
+        centre, location, _language = summary_class_meta(label, all_group_events)
+        candidates.append({
+            "label": label,
+            "slug": slug,
+            "family": family,
+            "my_day": my_day,
+            "class_day": class_day,
+            "time": my_fields["time"],
+            "centre": centre,
+            "location": location,
+            "is_new_family": family not in previously_taught_families,
+        })
+    candidates.sort(key=lambda item: (item["my_day"], item["time"], natural_key(item["label"])))
+    candidates = candidates[:15]
+    if not candidates:
+        return (
+            '<section class="next-new-courses" aria-labelledby="nextNewCourseHeading">'
+            '<div class="next-new-header"><div><span class="next-new-kicker">接下來的課程</span>'
+            '<h2 id="nextNewCourseHeading">目前沒有待開始的課程</h2></div></div></section>'
+        )
+    cards = []
+    for index, item in enumerate(candidates):
+        days_left = (item["my_day"] - RELEASE_AS_OF).days
+        day_word = f"{days_left} 日" if days_left != 1 else "1 日"
+        new_badge = '<span class="next-new-badge">全新課程</span>' if item["is_new_family"] else ""
+        hidden = " hidden" if index >= 5 else ""
+        cards.append(
+            f'<article class="next-course-card" data-next-course-index="{index}"{hidden}>'
+            '<div class="next-course-main">'
+            f'<div class="next-course-title-row"><h3>{ehtml(item["label"])}</h3>{new_badge}</div>'
+            f'<p>{ehtml(item["family"])}</p></div>'
+            f'<div class="next-new-countdown"><small>距離你首堂</small><strong>{ehtml(day_word)}</strong></div>'
+            '<div class="next-new-facts">'
+            f'<span><small>你首堂</small><strong>{item["my_day"].isoformat()} · {ehtml(item["time"])}</strong></span>'
+            f'<span><small>全班首堂</small><strong>{item["class_day"].isoformat()}</strong></span>'
+            f'<span><small>中心／地點</small><strong>{ehtml(item["centre"])} · {ehtml(item["location"])}</strong></span>'
+            '</div></article>'
+        )
     return (
-        '<section class="next-new-course" aria-labelledby="nextNewCourseHeading">'
-        '<div class="next-new-main"><span class="next-new-kicker">下一個全新課程</span>'
-        f'<h2 id="nextNewCourseHeading">{ehtml(label)}</h2><p>{ehtml(family)}</p></div>'
-        f'<div class="next-new-countdown"><small>距離你首堂</small><strong>{ehtml(day_word)}</strong></div>'
-        '<div class="next-new-facts">'
-        f'<span><small>你首堂</small><strong>{my_day.isoformat()} · {ehtml(my_fields["time"])}</strong></span>'
-        f'<span><small>全班首堂</small><strong>{class_day.isoformat()}</strong></span>'
-        f'<span><small>中心／地點</small><strong>{ehtml(centre)} · {ehtml(location)}</strong></span>'
-        '</div></section>'
+        '<section class="next-new-courses" aria-labelledby="nextNewCourseHeading">'
+        '<div class="next-new-header"><div><span class="next-new-kicker">接下來的課程</span>'
+        '<h2 id="nextNewCourseHeading">Upcoming classes</h2></div>'
+        '<div class="next-course-controls" role="group" aria-label="Number of upcoming courses">'
+        '<button class="next-course-limit active" type="button" data-next-course-limit="5" aria-pressed="true">Next 5</button>'
+        '<button class="next-course-limit" type="button" data-next-course-limit="10" aria-pressed="false">Next 10</button>'
+        '<button class="next-course-limit" type="button" data-next-course-limit="15" aria-pressed="false">Next 15</button>'
+        '</div></div>'
+        f'<div id="nextCourseList" class="next-course-list">{"".join(cards)}</div></section>'
     )
 
 
-next_new_course_html = next_brand_new_course_panel()
+next_new_course_html = next_upcoming_course_panel()
 
 TIMELINE_START = datetime.date(YEAR, 5, 1)
 TIMELINE_END = datetime.date(YEAR, 12, 31)
@@ -2546,6 +2583,18 @@ document.querySelectorAll('.span-mode-option').forEach(btn=>btn.addEventListener
   syncLayerModeUI();
   applyFilters();
 }}));
+const nextCourseLimitButtons=Array.from(document.querySelectorAll('.next-course-limit'));
+const nextCourseCards=Array.from(document.querySelectorAll('.next-course-card'));
+function setNextCourseLimit(limit){{
+  nextCourseCards.forEach((card,index)=>{{card.hidden=index>=limit;}});
+  nextCourseLimitButtons.forEach(button=>{{
+    const active=Number(button.dataset.nextCourseLimit)===limit;
+    button.classList.toggle('active',active);
+    button.setAttribute('aria-pressed',String(active));
+  }});
+}}
+nextCourseLimitButtons.forEach(button=>button.addEventListener('click',()=>setNextCourseLimit(Number(button.dataset.nextCourseLimit))));
+if(nextCourseLimitButtons.length) setNextCourseLimit(5);
 syncCourseFilterUI();
 syncLayerModeUI();
 syncSpanLabels();
