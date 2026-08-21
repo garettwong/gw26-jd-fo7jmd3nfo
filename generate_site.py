@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20s-remove-delayed-ymca-sen-qat7-20260818a"
+BUILD_ID = "v20t-cohort-shades-next-new-course-20260821a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-16-V20r"
-COMPARE_LABEL = "V20s"
-COMPARE_BASELINE_LABEL = "V20r"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-18-V20s"
+COMPARE_LABEL = "V20t"
+COMPARE_BASELINE_LABEL = "V20s"
 EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
@@ -62,7 +62,9 @@ COURSE_FAMILIES = [
     },
 ]
 UPCOMING_AS_OF = datetime.date(2026, 8, 2)
+RELEASE_AS_OF = datetime.date(2026, 8, 21)
 UPCOMING_CLASS_META = {
+    "HK280HG · CW1": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓", "CHI"),
     "HK280HG · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
     "HK265HG · FS": ("基督教勵行會", "四海大廈", "ENG"),
     "HK265HG · FS · JUL 2026": ("基督教勵行會", "四海大廈", "ENG"),
@@ -791,6 +793,29 @@ for ev in display_events:
 def ehtml(s):
     return html.escape(str(s or ""), quote=True)
 
+
+def cohort_palette(label):
+    """Return a stable warm-family palette for one exact ERB cohort."""
+    slug = _group_slugs.get(label, "")
+    match = re.fullmatch(r"g(\d+)", slug)
+    if match:
+        # The registry slug is stable and unique, so the same cohort keeps its
+        # shade across releases without making nearby cohorts look identical.
+        palette_index = int(match.group(1)) - 1
+        hue_order = (8, 28, 13, 33, 18, 38, 23, 43)
+        lightness_order = (84, 90, 95, 87)
+        saturation_order = (68, 74, 62, 70)
+        hue = hue_order[palette_index % len(hue_order)]
+        block = (palette_index // len(hue_order)) % len(lightness_order)
+        saturation = saturation_order[block]
+        lightness = lightness_order[block]
+        return hue, saturation, lightness
+    digest = zlib.crc32(str(label).encode("utf-8"))
+    hue = 8 + digest % 36
+    saturation = 64 + (digest >> 8) % 11
+    lightness = 84 + (digest >> 16) % 11
+    return hue, saturation, lightness
+
 GROUPS = []
 
 def is_personal_assignment(event):
@@ -1028,6 +1053,15 @@ CSS += r'''
 .lesson-log-control,.lesson-log-open,.modal-lesson-log{display:none}.lesson-log-enabled .lesson-log-control{display:inline-flex;align-items:center}.lesson-log-enabled .lesson-log-open{position:absolute;right:4px;bottom:3px;z-index:3;display:inline-flex;align-items:center;justify-content:center;min-width:31px;min-height:20px;border:1px solid #0f7074;border-radius:4px;padding:2px 5px;background:#fff;color:#0f6266;font-size:8px;font-weight:950;line-height:1;box-shadow:0 1px 2px rgba(20,30,50,.15);cursor:pointer}.lesson-log-enabled .lesson-log-open.logged{background:#0f7074;color:#fff}.chip.has-lesson-log{position:relative}.lesson-log-enabled .modal-lesson-log:not([hidden]){display:inline-flex;align-items:center;justify-content:center}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-lesson-log{width:100%;min-height:42px;border:1px solid #0f7074;border-radius:7px;padding:9px 12px;background:#0f7074;color:#fff;font:inherit;font-size:13px;font-weight:900;cursor:pointer}.modal-lesson-log:hover,.modal-lesson-log:focus-visible,.lesson-log-open:hover,.lesson-log-open:focus-visible{background:#0b5e62!important;color:#fff!important;outline:2px solid #ffc857;outline-offset:1px}.lesson-log-card{max-width:680px}.lesson-log-form{display:grid;gap:12px;margin-top:12px}.lesson-log-meta{padding:9px 10px;border-left:4px solid #0f7074;border-radius:4px;background:#eef8f7;color:#314954;font-size:12px;font-weight:800;white-space:pre-wrap}.lesson-log-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.lesson-log-field{display:grid;gap:4px}.lesson-log-field.full{grid-column:1/-1}.lesson-log-field span,.lesson-log-settings label{color:#455365;font-size:11px;font-weight:850}.lesson-log-field textarea,.lesson-log-settings input{width:100%;border:1px solid #b9c5d2;border-radius:6px;padding:8px 9px;background:#fff;color:#1d2734;font:inherit;font-size:13px}.lesson-log-field textarea{min-height:76px;resize:vertical}.lesson-log-settings{margin-top:4px;padding:10px;border:1px solid #d8e0e9;border-radius:6px;background:#f8fafc}.lesson-log-settings summary{cursor:pointer;color:#405064;font-size:12px;font-weight:900}.lesson-log-settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.lesson-log-settings label{display:grid;gap:3px}.lesson-log-settings label:last-of-type{grid-column:1/-1}.lesson-log-actions{display:flex;gap:7px;flex-wrap:wrap}.lesson-log-action{border:1px solid #b8c4d0;border-radius:6px;padding:7px 11px;background:#fff;color:#405064;font:inherit;font-size:12px;font-weight:900;cursor:pointer}.lesson-log-action.primary{border-color:#0f7074;background:#0f7074;color:#fff}.lesson-log-status{min-height:18px;color:#526174;font-size:11px;font-weight:750}.lesson-log-status.ok{color:#0b6b46}.lesson-log-status.error{color:#ad2d24}.lesson-log-private-note{margin:7px 0 0;color:#697688;font-size:10px;line-height:1.35}
 @media(max-width:820px){.lesson-log-fields,.lesson-log-settings-grid{grid-template-columns:1fr}.lesson-log-field.full,.lesson-log-settings label:last-of-type{grid-column:auto}.lesson-log-card{padding:16px}}
 @media print{.lesson-log-control,.lesson-log-open{display:none!important}}
+'''
+
+CSS += r'''
+.chip.cohort-shade.cat-erb,.chip.cohort-shade.cat-methodist{background:hsl(var(--cohort-hue),var(--cohort-sat),var(--cohort-light))}.chip.cohort-shade.layer-class::before{background:var(--context-color)}.span-bar{border-color:hsl(var(--span-hue),var(--span-sat),38%);background:hsl(var(--span-hue),var(--span-sat),var(--span-light))}.span-bar-label{border-color:hsla(var(--span-hue),var(--span-sat),38%,.45);color:hsl(var(--span-hue),var(--span-sat),28%)}
+.next-new-course{display:grid;grid-template-columns:minmax(250px,1.2fr) auto minmax(420px,1.8fr);align-items:center;gap:18px;margin:16px 0 4px;padding:14px 16px;border:2px solid #0f7074;border-radius:8px;background:#e8f7f5;box-shadow:0 2px 7px rgba(20,30,50,.08)}.next-new-main{min-width:0}.next-new-kicker{display:block;color:#0f7074;font-size:10px;font-weight:950;text-transform:uppercase;letter-spacing:.7px}.next-new-course h2{margin:2px 0 0;color:#172a38;font-size:20px;font-weight:950}.next-new-course p{margin:2px 0 0;color:#506274;font-size:12px;font-weight:750}.next-new-countdown{min-width:102px;border-left:1px solid #a9d4d0;border-right:1px solid #a9d4d0;padding:4px 18px;text-align:center}.next-new-countdown small,.next-new-facts small{display:block;color:#69798a;font-size:9px;font-weight:900}.next-new-countdown strong{display:block;color:#0f7074;font-size:23px;font-weight:950;white-space:nowrap}.next-new-facts{display:grid;grid-template-columns:1fr .8fr 1.45fr;gap:12px}.next-new-facts span{min-width:0}.next-new-facts strong{display:block;color:#233345;font-size:11px;font-weight:900;line-height:1.25}
+@media(max-width:980px){.next-new-course{grid-template-columns:1fr auto}.next-new-facts{grid-column:1/-1}.next-new-countdown{border-right:0}}
+@media(max-width:620px){.next-new-course{grid-template-columns:1fr auto;gap:10px;padding:11px}.next-new-course h2{font-size:17px}.next-new-course p{font-size:11px}.next-new-countdown{min-width:78px;padding:3px 0 3px 10px}.next-new-countdown strong{font-size:18px}.next-new-facts{grid-template-columns:1fr 1fr}.next-new-facts span:last-child{grid-column:1/-1}.next-new-facts strong{font-size:10px}}
+@media (orientation:landscape) and (max-height:700px) and (max-width:1400px){.next-new-course{margin:4px 0;padding:5px 8px;gap:8px}.next-new-kicker{font-size:7px}.next-new-course h2{font-size:12px}.next-new-course p{font-size:8px}.next-new-countdown{min-width:70px;padding:2px 8px}.next-new-countdown small,.next-new-facts small{font-size:6px}.next-new-countdown strong{font-size:14px}.next-new-facts{gap:7px}.next-new-facts strong{font-size:7px}}
+@media print{.next-new-course{box-shadow:none}}
 '''
 
 LESSON_LOG_HTML = r'''
@@ -1481,9 +1515,14 @@ def chip(ev):
                 f'<div class="ttl">{title_html}</div><div class="det">{detail_html}{teacher_suffix}</div>{location_html}{room_html}{log_html}<div class="fulltxt">{full_html}</div></div>')
 
     class_label = fields["class_label"]
-    class_hue = zlib.crc32(class_label.encode("utf-8")) % 360
+    cohort_hue, cohort_sat, cohort_light = cohort_palette(ev["group_label"])
+    cohort_style = (
+        f"--class-hue:{cohort_hue};--cohort-hue:{cohort_hue};"
+        f"--cohort-sat:{cohort_sat}%;--cohort-light:{cohort_light}%;"
+        f"--context-color:hsl({cohort_hue},{max(46, cohort_sat - 8)}%,38%)"
+    )
     identity_html = (f'<span class="class-id card-course-filter" role="button" tabindex="0" '
-                     f'data-card-group="{ehtml(ev["group"])}" style="--class-hue:{class_hue}" '
+                     f'data-card-group="{ehtml(ev["group"])}" '
                      f'title="Show only {ehtml(class_label)}; click again to restore" '
                      f'aria-label="Show only {ehtml(class_label)} lessons; activate again to restore the previous filter">'
                      f'<span class="class-dot" aria-hidden="true"></span>{ehtml(class_label)}</span>')
@@ -1498,7 +1537,7 @@ def chip(ev):
         f'<span class="erb-sep">&middot;</span><span class="erb-helper">Helper: {ehtml(fields["helper"])}</span>'
         if fields["helper"] else ""
     )
-    return (f'<div class="chip erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}" tabindex="0" role="button" '
+    return (f'<div class="chip cohort-shade erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}" style="{cohort_style}" tabindex="0" role="button" '
             f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}>'
             f'{comparison_badge}{conflict_badge}<span class="status" aria-label="{ehtml(st)}">{mark}</span>{identity_html}'
             f'<div class="erb-meta"><span class="erb-location">{ehtml(fields["location"])}</span><span class="erb-sep">&middot;</span>'
@@ -1739,6 +1778,88 @@ def class_summary_section(section, heading, heading_id):
 upcoming_summary_html = class_summary_section("upcoming", "Upcoming ERB classes", "upcomingHeading")
 completed_summary_html = class_summary_section("completed", "Completed ERB classes", "completedHeading")
 
+COURSE_FAMILY_BY_CODE = {
+    code: family["name"]
+    for family in COURSE_FAMILIES
+    for code, _provider, _note in family["members"]
+}
+
+
+def event_course_code(event):
+    match = COURSE_CODE_RE.search(str(event.get("group_label") or event.get("text") or ""))
+    return match.group(0).upper() if match else ""
+
+
+def event_course_family(event):
+    return COURSE_FAMILY_BY_CODE.get(event_course_code(event), "")
+
+
+def next_brand_new_course_panel():
+    personal_erb = [
+        event
+        for event in display_events
+        if event_layer(event) == "mine"
+        and event["category"] in {"erb", "methodist"}
+        and event["status"] == "confirmed"
+        and not is_proposal_only(event)
+        and event_course_family(event)
+    ]
+    previously_taught_families = {
+        event_course_family(event)
+        for event in personal_erb
+        if datetime.date.fromisoformat(event["date"]) <= RELEASE_AS_OF
+    }
+    future = sorted(
+        (
+            event
+            for event in personal_erb
+            if datetime.date.fromisoformat(event["date"]) > RELEASE_AS_OF
+            and event_course_family(event) not in previously_taught_families
+        ),
+        key=lambda event: (event["date"], display_times(event.get("text", "")), natural_key(event["group_label"])),
+    )
+    if not future:
+        return (
+            '<section class="next-new-course" aria-labelledby="nextNewCourseHeading">'
+            '<div><span class="next-new-kicker">下一個全新課程</span>'
+            '<h2 id="nextNewCourseHeading">目前沒有待開始的全新課程</h2></div></section>'
+        )
+
+    first_event = future[0]
+    label = first_event["group_label"]
+    code = event_course_code(first_event)
+    family = event_course_family(first_event)
+    mine_group_events = [
+        event for event in personal_erb
+        if event["group_label"] == label
+    ]
+    all_group_events = [
+        event for event in display_events
+        if event["group_label"] == label and not is_proposal_only(event)
+    ]
+    my_first = min(mine_group_events, key=lambda event: (event["date"], display_times(event.get("text", ""))))
+    class_first = min(all_group_events, key=lambda event: (event["date"], display_times(event.get("text", ""))))
+    my_day = datetime.date.fromisoformat(my_first["date"])
+    class_day = datetime.date.fromisoformat(class_first["date"])
+    my_fields = event_fields(my_first)
+    centre, location, _language = summary_class_meta(label, all_group_events)
+    days_left = (my_day - RELEASE_AS_OF).days
+    day_word = f"{days_left} 日" if days_left != 1 else "1 日"
+    return (
+        '<section class="next-new-course" aria-labelledby="nextNewCourseHeading">'
+        '<div class="next-new-main"><span class="next-new-kicker">下一個全新課程</span>'
+        f'<h2 id="nextNewCourseHeading">{ehtml(label)}</h2><p>{ehtml(family)}</p></div>'
+        f'<div class="next-new-countdown"><small>距離你首堂</small><strong>{ehtml(day_word)}</strong></div>'
+        '<div class="next-new-facts">'
+        f'<span><small>你首堂</small><strong>{my_day.isoformat()} · {ehtml(my_fields["time"])}</strong></span>'
+        f'<span><small>全班首堂</small><strong>{class_day.isoformat()}</strong></span>'
+        f'<span><small>中心／地點</small><strong>{ehtml(centre)} · {ehtml(location)}</strong></span>'
+        '</div></section>'
+    )
+
+
+next_new_course_html = next_brand_new_course_panel()
+
 TIMELINE_START = datetime.date(YEAR, 5, 1)
 TIMELINE_END = datetime.date(YEAR, 12, 31)
 TIMELINE_DAYS = (TIMELINE_END - TIMELINE_START).days + 1
@@ -1821,7 +1942,11 @@ for group in sorted(
     span_days = (last_day - first_day).days + 1
     bar_left = timeline_percent(first_day)
     bar_width = span_days / TIMELINE_DAYS * 100
-    class_hue = zlib.crc32(group["label"].encode("utf-8")) % 360
+    class_type = "sen" if all(ev["category"] == "ymca" for ev in group_events) else "erb"
+    if class_type == "erb":
+        class_hue, span_sat, span_light = cohort_palette(group["label"])
+    else:
+        class_hue, span_sat, span_light = 188, 55, 91
     events_by_day = {}
     for ev in group_events:
         events_by_day.setdefault(ev["date"], []).append(ev)
@@ -1852,7 +1977,6 @@ for group in sorted(
 
     range_label = f"{short_date(first_day)}–{short_date(last_day)}"
     lifecycle = lifecycle_status(group_events)
-    class_type = "sen" if all(ev["category"] == "ymca" for ev in group_events) else "erb"
     span_controls.append((slug, group["label"], range_label, lifecycle, class_type))
     span_rows.append(
         f'<div class="span-row" data-span-group="{ehtml(slug)}" data-base-group="{ehtml(group["base_slug"])}" data-first="{first_day.isoformat()}" '
@@ -1861,7 +1985,7 @@ for group in sorted(
         f'<span class="span-course-name">{ehtml(group["chinese_name"])}</span>'
         f'<small>{ehtml(range_label)} · My dates {my_dates}/{len(events_by_day)}</small></div>'
         f'<div class="span-track"><div class="span-track-grid">{"".join(span_track_months)}</div>'
-        f'<div class="span-bar status-{lifecycle}" style="--span-hue:{class_hue}" '
+        f'<div class="span-bar status-{lifecycle}" style="--span-hue:{class_hue};--span-sat:{span_sat}%;--span-light:{span_light}%" '
         f'data-first-label="{ehtml(short_date(first_day))}" data-last-label="{ehtml(short_date(last_day))}" '
         f'title="{ehtml(group["label"])} · {ehtml(range_label)}">'
         f'<span class="span-bar-label">{ehtml(group["label"])}</span>{"".join(markers)}</div></div></div>'
@@ -1952,6 +2076,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <style>{CSS}</style></head><body><main class="wrap">
 <div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><button id="lessonLogPanelBtn" class="btn lesson-log-control" type="button">課後記錄設定</button><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
 {version_selector_html}
+{next_new_course_html}
 <div id="viewTabs" class="view-tabs" role="tablist" aria-label="Timetable layout"><button id="calendarTab" class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="calendarView" data-view="calendar">Calendar</button><button id="spansTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="spansView" data-view="spans">Class spans</button></div>
 <section id="calendarView" class="view-panel" role="tabpanel" aria-labelledby="calendarTab">
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
