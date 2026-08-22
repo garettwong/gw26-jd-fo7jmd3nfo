@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-08-22-V20v",
+    "label": "2026-08-22 - V20v",
+    "summary": "新增 8 月 21 日晚上 Mike Sir AI Lesson L4；8 月 14 日取消記錄保留。",
+    "latest": true
+  },
+  {
     "id": "2026-08-21-V20u",
     "label": "2026-08-21 - V20u",
     "summary": "放大即將開課資料，新增 Next 5／10／15；已完成班別加斜線及 COMPLETED。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-08-21-V20t",
