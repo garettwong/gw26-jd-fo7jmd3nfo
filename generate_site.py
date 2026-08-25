@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20v-mike-l4-aug21-20260822a"
+BUILD_ID = "v20w-simple-synced-lesson-log-20260825a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-21-V20u"
-COMPARE_LABEL = "V20v"
-COMPARE_BASELINE_LABEL = "V20u"
-EXPECTED_COMPARISON_CHANGES = 1
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-22-V20v"
+COMPARE_LABEL = "V20w"
+COMPARE_BASELINE_LABEL = "V20v"
+EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -1050,8 +1050,8 @@ CSS += r'''
 '''
 
 CSS += r'''
-.lesson-log-control,.lesson-log-open,.modal-lesson-log{display:none}.lesson-log-enabled .lesson-log-control{display:inline-flex;align-items:center}.lesson-log-enabled .lesson-log-open{position:absolute;right:4px;bottom:3px;z-index:3;display:inline-flex;align-items:center;justify-content:center;min-width:31px;min-height:20px;border:1px solid #0f7074;border-radius:4px;padding:2px 5px;background:#fff;color:#0f6266;font-size:8px;font-weight:950;line-height:1;box-shadow:0 1px 2px rgba(20,30,50,.15);cursor:pointer}.lesson-log-enabled .lesson-log-open.logged{background:#0f7074;color:#fff}.chip.has-lesson-log{position:relative}.lesson-log-enabled .modal-lesson-log:not([hidden]){display:inline-flex;align-items:center;justify-content:center}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-lesson-log{width:100%;min-height:42px;border:1px solid #0f7074;border-radius:7px;padding:9px 12px;background:#0f7074;color:#fff;font:inherit;font-size:13px;font-weight:900;cursor:pointer}.modal-lesson-log:hover,.modal-lesson-log:focus-visible,.lesson-log-open:hover,.lesson-log-open:focus-visible{background:#0b5e62!important;color:#fff!important;outline:2px solid #ffc857;outline-offset:1px}.lesson-log-card{max-width:680px}.lesson-log-form{display:grid;gap:12px;margin-top:12px}.lesson-log-meta{padding:9px 10px;border-left:4px solid #0f7074;border-radius:4px;background:#eef8f7;color:#314954;font-size:12px;font-weight:800;white-space:pre-wrap}.lesson-log-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.lesson-log-field{display:grid;gap:4px}.lesson-log-field.full{grid-column:1/-1}.lesson-log-field span,.lesson-log-settings label{color:#455365;font-size:11px;font-weight:850}.lesson-log-field textarea,.lesson-log-settings input{width:100%;border:1px solid #b9c5d2;border-radius:6px;padding:8px 9px;background:#fff;color:#1d2734;font:inherit;font-size:13px}.lesson-log-field textarea{min-height:76px;resize:vertical}.lesson-log-settings{margin-top:4px;padding:10px;border:1px solid #d8e0e9;border-radius:6px;background:#f8fafc}.lesson-log-settings summary{cursor:pointer;color:#405064;font-size:12px;font-weight:900}.lesson-log-settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.lesson-log-settings label{display:grid;gap:3px}.lesson-log-settings label:last-of-type{grid-column:1/-1}.lesson-log-actions{display:flex;gap:7px;flex-wrap:wrap}.lesson-log-action{border:1px solid #b8c4d0;border-radius:6px;padding:7px 11px;background:#fff;color:#405064;font:inherit;font-size:12px;font-weight:900;cursor:pointer}.lesson-log-action.primary{border-color:#0f7074;background:#0f7074;color:#fff}.lesson-log-status{min-height:18px;color:#526174;font-size:11px;font-weight:750}.lesson-log-status.ok{color:#0b6b46}.lesson-log-status.error{color:#ad2d24}.lesson-log-private-note{margin:7px 0 0;color:#697688;font-size:10px;line-height:1.35}
-@media(max-width:820px){.lesson-log-fields,.lesson-log-settings-grid{grid-template-columns:1fr}.lesson-log-field.full,.lesson-log-settings label:last-of-type{grid-column:auto}.lesson-log-card{padding:16px}}
+.lesson-log-control,.lesson-log-open,.modal-lesson-log{display:none}.lesson-log-enabled .lesson-log-control{display:inline-flex;align-items:center}.lesson-log-enabled .lesson-log-open{position:absolute;right:4px;bottom:3px;z-index:3;display:inline-flex;align-items:center;justify-content:center;min-width:31px;min-height:20px;border:1px solid #0f7074;border-radius:4px;padding:2px 5px;background:#fff;color:#0f6266;font-size:8px;font-weight:950;line-height:1;box-shadow:0 1px 2px rgba(20,30,50,.15);cursor:pointer}.lesson-log-enabled .lesson-log-open.logged{background:#0f7074;color:#fff}.chip.has-lesson-log{position:relative}.lesson-log-enabled .modal-lesson-log:not([hidden]){display:inline-flex;align-items:center;justify-content:center}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-lesson-log{width:100%;min-height:42px;border:1px solid #0f7074;border-radius:7px;padding:9px 12px;background:#0f7074;color:#fff;font:inherit;font-size:13px;font-weight:900;cursor:pointer}.modal-lesson-log:hover,.modal-lesson-log:focus-visible,.lesson-log-open:hover,.lesson-log-open:focus-visible{background:#0b5e62!important;color:#fff!important;outline:2px solid #ffc857;outline-offset:1px}.lesson-log-card{max-width:760px}.lesson-log-form{display:grid;gap:12px;margin-top:12px}.lesson-log-meta{padding:9px 10px;border-left:4px solid #0f7074;border-radius:4px;background:#eef8f7;color:#314954;font-size:12px;font-weight:800;white-space:pre-wrap}.lesson-log-fields{display:block}.lesson-log-field{display:grid;gap:7px}.lesson-log-field span,.lesson-log-settings label{color:#455365;font-size:12px;font-weight:900}.lesson-log-field textarea,.lesson-log-settings input{width:100%;border:1px solid #aebdca;border-radius:6px;padding:12px;background:#fff;color:#1d2734;font:inherit;font-size:16px;line-height:1.5}.lesson-log-field textarea{min-height:300px;resize:vertical}.lesson-log-help{margin:0;color:#667587;font-size:11px;line-height:1.4}.lesson-log-settings[hidden]{display:none}.lesson-log-settings{margin-top:4px;padding:10px;border:1px solid #d8e0e9;border-radius:6px;background:#f8fafc}.lesson-log-settings summary{cursor:pointer;color:#405064;font-size:12px;font-weight:900}.lesson-log-settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.lesson-log-settings label{display:grid;gap:3px}.lesson-log-settings label:last-of-type{grid-column:1/-1}.lesson-log-actions{display:flex;gap:7px;flex-wrap:wrap}.lesson-log-action{min-height:42px;border:1px solid #b8c4d0;border-radius:6px;padding:8px 14px;background:#fff;color:#405064;font:inherit;font-size:13px;font-weight:900;cursor:pointer}.lesson-log-action.primary{border-color:#0f7074;background:#0f7074;color:#fff}.lesson-log-status{min-height:20px;color:#526174;font-size:11px;font-weight:750}.lesson-log-status.ok{color:#0b6b46}.lesson-log-status.error{color:#ad2d24}.lesson-log-private-note{margin:7px 0 0;color:#697688;font-size:10px;line-height:1.35}
+@media(max-width:820px){.lesson-log-settings-grid{grid-template-columns:1fr}.lesson-log-settings label:last-of-type{grid-column:auto}.lesson-log-card{padding:16px}.lesson-log-field textarea{min-height:48vh;font-size:16px}.lesson-log-action.primary{width:100%}}
 @media print{.lesson-log-control,.lesson-log-open{display:none!important}}
 '''
 
@@ -1073,19 +1073,16 @@ LESSON_LOG_HTML = r'''
 <div id="lessonLogMeta" class="lesson-log-meta">選擇一堂課後即可記錄。</div>
 <form id="lessonLogForm" class="lesson-log-form">
 <div id="lessonLogFields" class="lesson-log-fields" hidden>
-<label class="lesson-log-field full"><span>今堂教了甚麼</span><textarea id="lessonLogTaught" autocomplete="off"></textarea></label>
-<label class="lesson-log-field"><span>進度／未完成</span><textarea id="lessonLogProgress" autocomplete="off"></textarea></label>
-<label class="lesson-log-field"><span>功課／下堂跟進</span><textarea id="lessonLogFollowUp" autocomplete="off"></textarea></label>
-<label class="lesson-log-field full"><span>其他備註</span><textarea id="lessonLogRemarks" autocomplete="off"></textarea></label>
+<label class="lesson-log-field"><span>今堂教了甚麼</span><textarea id="lessonLogTaught" autocomplete="off" placeholder="直接輸入今堂教過的內容，每項一行便可以。"></textarea><p class="lesson-log-help">按「整理並儲存」後，系統會整理大小寫、項目格式及重複內容，然後同步到其他已連接裝置。</p></label>
 </div>
-<div class="lesson-log-actions"><button id="lessonLogSave" class="lesson-log-action primary" type="submit" hidden>儲存記錄</button><button id="lessonLogSync" class="lesson-log-action" type="button">讀取最新記錄</button></div>
+<div class="lesson-log-actions"><button id="lessonLogSave" class="lesson-log-action primary" type="submit" hidden>整理並儲存</button></div>
 <div id="lessonLogStatus" class="lesson-log-status"></div>
-<details id="lessonLogSettings" class="lesson-log-settings"><summary>手機／電腦同步設定</summary><div class="lesson-log-settings-grid">
+<details id="lessonLogSettings" class="lesson-log-settings" hidden><summary>同步設定</summary><div class="lesson-log-settings-grid">
 <label>GitHub 帳戶<input id="lessonLogOwner" value="garettwong" autocomplete="username"></label>
 <label>私人儲存庫<input id="lessonLogRepo" value="erb-lesson-log" autocomplete="off"></label>
 <label>Fine-grained token<input id="lessonLogToken" type="password" autocomplete="off" placeholder="只限 erb-lesson-log Contents 讀寫"></label>
 </div><div class="lesson-log-actions" style="margin-top:8px"><button id="lessonLogSaveSettings" class="lesson-log-action" type="button">儲存同步設定</button></div>
-<p class="lesson-log-private-note">Token 只儲存在目前這部裝置，不會寫入時間表。未設定 token 時，記錄仍會先儲存在這部裝置；要讓手機和電腦看到同一份記錄，兩部裝置都需要設定 token。</p></details>
+<p class="lesson-log-private-note">每部新裝置只需設定一次。Token 只保留在該裝置，不會寫入公開時間表。</p></details>
 </form></div></div>
 '''
 
@@ -1104,24 +1101,19 @@ LESSON_LOG_JS = r'''
   const status=document.getElementById('lessonLogStatus');
   const saveBtn=document.getElementById('lessonLogSave');
   const settings=document.getElementById('lessonLogSettings');
-  const inputs={
-    taught:document.getElementById('lessonLogTaught'),
-    progress:document.getElementById('lessonLogProgress'),
-    follow_up:document.getElementById('lessonLogFollowUp'),
-    remarks:document.getElementById('lessonLogRemarks')
-  };
+  const taughtInput=document.getElementById('lessonLogTaught');
   const ownerInput=document.getElementById('lessonLogOwner');
   const repoInput=document.getElementById('lessonLogRepo');
   const tokenInput=document.getElementById('lessonLogToken');
   ownerInput.value=config.owner;repoInput.value=config.repo;tokenInput.value=config.token;
   let active=null;
-  let store={schema_version:1,updated_at:null,notes:{}};
+  let store={schema_version:2,updated_at:null,notes:{}};
   try{store=Object.assign(store,JSON.parse(localStorage.getItem(LOCAL_KEY)||'{}'));store.notes=store.notes||{};}catch(_e){}
   const setStatus=(message,kind='')=>{status.textContent=message;status.className='lesson-log-status '+kind;};
   const saveLocal=()=>localStorage.setItem(LOCAL_KEY,JSON.stringify(store));
   const newer=(a,b)=>String((a&&a.updated_at)||'')>=String((b&&b.updated_at)||'')?a:b;
   const mergeStores=(left,right)=>{
-    const merged={schema_version:1,updated_at:new Date().toISOString(),notes:{}};
+    const merged={schema_version:2,updated_at:new Date().toISOString(),notes:{}};
     const keys=new Set([...Object.keys((left&&left.notes)||{}),...Object.keys((right&&right.notes)||{})]);
     keys.forEach(key=>{merged.notes[key]=newer(left&&left.notes&&left.notes[key],right&&right.notes&&right.notes[key]);});
     return merged;
@@ -1163,6 +1155,38 @@ LESSON_LOG_JS = r'''
     }
     saveLocal();updateBadges();
   };
+  const composeLegacyNote=note=>{
+    if(!note)return '';
+    if(String(note.combined_text||'').trim())return String(note.combined_text).trim();
+    const parts=[];
+    if(String(note.taught||'').trim())parts.push(String(note.taught).trim());
+    if(String(note.progress||'').trim())parts.push('進度／未完成：'+String(note.progress).trim());
+    if(String(note.follow_up||'').trim())parts.push('功課／下堂跟進：'+String(note.follow_up).trim());
+    if(String(note.remarks||'').trim())parts.push('其他備註：'+String(note.remarks).trim());
+    return parts.join('\n');
+  };
+  const polishTeachingText=value=>{
+    const preferred=new Map([
+      ['magic layers','Magic Layers'],['magic layer','Magic Layer'],['flip','Flip'],
+      ['remove background','Remove Background'],['change background','Change Background'],
+      ['change color','Change Color'],['change colour','Change Colour'],
+      ['comfyui','ComfyUI'],['chatgpt','ChatGPT'],['canva','Canva'],
+      ['gemini','Gemini'],['notebooklm','NotebookLM'],['notebook lm','NotebookLM']
+    ]);
+    const seen=new Set();
+    const lines=String(value||'').replace(/\r/g,'\n').split(/\n+/).map(raw=>raw
+      .replace(/^\s*(?:[-*•·]+|\d+[.)、])\s*/,'').replace(/\s+/g,' ').trim()
+    ).filter(Boolean).map(line=>{
+      const key=line.toLocaleLowerCase('en-US').replace(/[.!。！]+$/,'').trim();
+      if(preferred.has(key))return preferred.get(key);
+      return /^[a-z]/.test(line)?line.charAt(0).toUpperCase()+line.slice(1):line;
+    }).filter(line=>{
+      const key=line.toLocaleLowerCase('en-US');
+      if(seen.has(key))return false;seen.add(key);return true;
+    });
+    return lines.length>1?lines.map(line=>'• '+line).join('\n'):(lines[0]||'');
+  };
+  const loadActiveNote=()=>{if(active)taughtInput.value=composeLegacyNote(store.notes[active.key]||{});};
   const openPanel=async(button)=>{
     active=button?{
       key:button.dataset.logKey,date:button.dataset.logDate,class_label:button.dataset.logClass,
@@ -1171,15 +1195,15 @@ LESSON_LOG_JS = r'''
     fields.hidden=!active;saveBtn.hidden=!active;
     if(active){
       meta.textContent=active.date+' · '+active.class_label+' · '+active.lesson+' · '+active.time;
-      const note=store.notes[active.key]||{};
-      Object.keys(inputs).forEach(key=>inputs[key].value=note[key]||'');
+      loadActiveNote();
     }else{
-      meta.textContent='手機／電腦同步狀態與設定';
+      meta.textContent='同步設定';
     }
-    settings.open=!config.token&&!active;
+    settings.hidden=Boolean(config.token&&active);
+    settings.open=!config.token;
     modal.hidden=false;
-    if(config.token){setStatus('正在讀取最新記錄…');try{await pullRemote();setStatus('已讀取最新記錄。','ok');if(active){const note=store.notes[active.key]||{};Object.keys(inputs).forEach(key=>inputs[key].value=note[key]||'');}}catch(error){setStatus('同步失敗：'+error.message,'error');}}
-    else setStatus('目前只會儲存在本機；設定 token 後才能跨裝置同步。');
+    if(config.token){setStatus('正在讀取其他裝置的最新記錄…');try{await pullRemote();loadActiveNote();setStatus('已讀取最新記錄。','ok');}catch(error){settings.hidden=false;setStatus('同步失敗：'+error.message,'error');}}
+    else setStatus('首次在這部裝置使用：請先完成下方同步設定。');
   };
   window.openLessonLogForButton=openPanel;
   document.querySelectorAll('.lesson-log-open').forEach(button=>{
@@ -1195,18 +1219,24 @@ LESSON_LOG_JS = r'''
     config={owner:ownerInput.value.trim()||'garettwong',repo:repoInput.value.trim()||'erb-lesson-log',token:tokenInput.value.trim()};
     localStorage.setItem(CONFIG_KEY,JSON.stringify(config));
     if(!config.token){setStatus('設定已儲存，但尚未提供 token；目前只會儲存在本機。');return;}
-    setStatus('正在測試同步…');try{await pullRemote();settings.open=false;setStatus('手機／電腦同步已連接。','ok');}catch(error){setStatus('連接失敗：'+error.message,'error');}
-  });
-  document.getElementById('lessonLogSync').addEventListener('click',async()=>{
-    setStatus('正在同步…');try{await pullRemote();setStatus('已同步最新記錄。','ok');}catch(error){setStatus('同步失敗：'+error.message,'error');}
+    setStatus('正在測試同步…');try{await pullRemote();settings.open=false;if(active)settings.hidden=true;loadActiveNote();setStatus('手機／電腦同步已連接。','ok');}catch(error){settings.hidden=false;setStatus('連接失敗：'+error.message,'error');}
   });
   form.addEventListener('submit',async event=>{
     event.preventDefault();if(!active)return;
+    const polished=polishTeachingText(taughtInput.value);
+    if(!polished){setStatus('請先輸入今堂教過的內容。','error');taughtInput.focus();return;}
+    taughtInput.value=polished;
     const now=new Date().toISOString();
-    store.notes[active.key]=Object.assign({},active,{taught:inputs.taught.value.trim(),progress:inputs.progress.value.trim(),follow_up:inputs.follow_up.value.trim(),remarks:inputs.remarks.value.trim(),updated_at:now,source_build:window.ERB_BUILD_ID});
+    const previous=store.notes[active.key]||{};
+    store.schema_version=2;
+    store.notes[active.key]=Object.assign({},previous,active,{combined_text:polished,updated_at:now,source_build:window.ERB_BUILD_ID});
     store.updated_at=now;saveLocal();updateBadges();
-    if(!config.token){setStatus('已儲存在本機；設定 token 後才會跨裝置同步。','ok');return;}
-    setStatus('已儲存，正在同步…');try{await pushRemote();setStatus('已儲存並同步。','ok');}catch(error){setStatus('已儲存在本機，但同步失敗：'+error.message,'error');}
+    if(!config.token){settings.hidden=false;settings.open=true;setStatus('文字已整理並暫存在這部裝置；完成一次同步設定後便會在所有裝置顯示。','error');return;}
+    saveBtn.disabled=true;setStatus('文字已整理，正在同步到所有裝置…');
+    try{await pushRemote();setStatus('已整理、儲存並同步。','ok');}catch(error){settings.hidden=false;setStatus('已保存在本機，但同步失敗：'+error.message,'error');}finally{saveBtn.disabled=false;}
+  });
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden&&modal.hidden&&config.token)pullRemote().catch(()=>{});
   });
   updateBadges();
 })();

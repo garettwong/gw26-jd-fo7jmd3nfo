@@ -1,0 +1,12 @@
+{
+  "result": "PASS",
+  "generated_at": "2026-08-25T12:01:05+08:00",
+  "version_id": "2026-08-25-V20w",
+  "build_id": "v20w-simple-synced-lesson-log-20260825a",
+  "baseline": "2026-08-22-V20v",
+  "schedule_unchanged": true,
+  "salary_unchanged": true,
+  "single_large_field": true,
+  "legacy_records_preserved": true,
+  "cross_device_sync": true
+}

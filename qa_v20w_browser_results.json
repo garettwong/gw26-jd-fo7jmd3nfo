@@ -1,0 +1,20 @@
+{
+  "build": "v20w-simple-synced-lesson-log-20260825a",
+  "versionId": "2026-08-25-V20w",
+  "desktop": {
+    "key": "2026-08-24|HK244HG · CW8|Lesson 4|14:00-18:00",
+    "minHeight": 300,
+    "polished": "• Magic Layers\n• Flip\n• Remove Background\n• Change Color",
+    "legacyPreserved": true
+  },
+  "phone": {
+    "autoRead": true,
+    "textareaHeight": 405,
+    "settingsHidden": true
+  },
+  "salary": {
+    "confirmed": "HK$139,750",
+    "matchesV20v": true
+  },
+  "result": "PASS"
+}
