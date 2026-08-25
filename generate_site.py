@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20x-auto-cross-device-lesson-log-20260825a"
+BUILD_ID = "v20y-hk239-city-dec-first-lesson-marker-20260825a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-22-V20v"
-COMPARE_LABEL = "V20x"
-COMPARE_BASELINE_LABEL = "V20v"
-EXPECTED_COMPARISON_CHANGES = 0
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-25-V20x"
+COMPARE_LABEL = "V20y"
+COMPARE_BASELINE_LABEL = "V20x"
+EXPECTED_COMPARISON_CHANGES = 6
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -78,7 +78,7 @@ UPCOMING_CLASS_META = {
     "HK239HG · FS": ("基督教勵行會", "四海大廈2樓205室", "CHI"),
     "HK244EG · FS": ("基督教勵行會", "四海大廈", "CHI"),
     "HK239HG · ST": ("基督教勵行會", "順天", "CHI"),
-    "HK239HG · 城巿一條龍": ("基督教勵行會", "彩雲邨", "CHI"),
+    "HK239HG · 城市一條龍": ("基督教勵行會", "彩雲邨 · 課室 102", "CHI"),
     "HK239HG · LT": ("基督教勵行會", "藍田", "CHI"),
     "HK239HG · 循道灣仔晚班": ("循道衛理中心", "香港灣仔軒尼詩道22號", "CHI"),
 }
@@ -97,7 +97,7 @@ CLASS_UPDATE_META = {
     "HK239HG · SS": ("2026-07-30", "上水消防／水務工程後已改期：9 月 23、28、30 日及 10 月 5、7、12 日。"),
     "HK239HG · ST": ("2026-07-18", "Calvin 已確認六堂均由 Garett 任教；11 月 7 日期末考試 10:30–11:30。"),
     "HK281DS · CW7": ("2026-07-19", "10 月 3 日上午 L51 由 Demian Yuen 任教，與 Garett 的 HK239HG ST 撞期；Garett 只任教下午 L52，兩堂 helper 均為 Fiona。"),
-    "HK239HG · 城巿一條龍": ("2026-07-18", "六堂均由 Garett 任教；現以已確認個人時間表為依據，原 Calvin 附件尚未尋回。"),
+    "HK239HG · 城市一條龍": ("2026-08-25", "六堂均由 Garett 任教；已改為 12 月 16 至 18 日，課室 102；12 月 18 日上午為持續評估／小組討論／專題報告，下午期末考試 15:30–16:30。"),
     "HK239HG · LT": ("2026-07-19", "六堂均由 Garett 任教；11 月 30 日期末考試 15:30–16:30。"),
     "HK239HG · 循道灣仔晚班": ("2026-08-03", "Calvin 已確認六個星期五晚 18:45–21:45；原 9 月 18 日改為 10 月 30 日。正式班別編號待補。"),
 }
@@ -762,6 +762,8 @@ _baseline_group_slugs = {
     for item in baseline_events
     if item.get("group_label") and item.get("group")
 }
+if "HK239HG · 城巿一條龍" in _baseline_group_slugs:
+    _baseline_group_slugs["HK239HG · 城市一條龍"] = _baseline_group_slugs["HK239HG · 城巿一條龍"]
 _baseline_index = (COMPARE_BASELINE / "index.html").read_text(encoding="utf-8")
 for match in re.finditer(r'data-group="([^"]+)" data-group-label="([^"]+)"', _baseline_index):
     slug, label = html.unescape(match.group(1)), html.unescape(match.group(2))
@@ -789,6 +791,32 @@ for label in _group_labels:
     _next_group_number += 1
 for ev in display_events:
     ev["group"] = _group_slugs[ev["group_label"]]
+
+first_lesson_groups = set()
+for group in sorted({event["group"] for event in display_events}):
+    candidates = [
+        event
+        for event in display_events
+        if event["group"] == group
+        and event["category"] in {"erb", "methodist"}
+        and not re.search(
+            r"PROPOSED availability only|\b(?:cancelled|canceled)\b|取消",
+            str(event.get("text") or ""),
+            re.I,
+        )
+    ]
+    if not candidates:
+        continue
+    lesson_one = [
+        event
+        for event in candidates
+        if (match := LESSON_RE.search(str(event.get("text") or "")))
+        and int(match.group(1)) == 1
+    ]
+    first_event = min(lesson_one or candidates, key=event_sort_key)
+    first_event["is_first_lesson"] = True
+    first_lesson_groups.add(group)
+
 
 def ehtml(s):
     return html.escape(str(s or ""), quote=True)
@@ -930,7 +958,9 @@ CSS += r'''
 .card-note{color:#d60000;font-weight:850}
 .assessment-reminder{width:100%;margin-top:2px;padding-top:3px;border-top:1px solid rgba(214,0,0,.25);color:#c40000;font-size:8.5px;font-weight:900;line-height:1.18;text-align:center}
 .chip.erb-compact .fulltxt{display:none!important}
+.first-lesson-banner{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:28px;margin:2px 0 3px;padding:4px 7px;border:2px solid #8f2500;border-radius:5px;background:#ffd43b;color:#571800;font-size:11px;font-weight:950;line-height:1.1;box-shadow:0 2px 0 rgba(87,24,0,.22);white-space:nowrap}.first-lesson-banner::before{content:"!";display:inline-grid;place-items:center;width:18px;height:18px;flex:0 0 18px;border-radius:50%;background:#8f2500;color:#fff;font-size:12px;font-weight:950;line-height:1}.chip.first-lesson{outline:3px solid #f2a900;outline-offset:1px}
 @media (orientation:landscape) and (max-height:540px){.chip.erb-compact{gap:1px;padding:3px 4px 4px}.chip.erb-compact .class-id{min-height:10px;max-width:calc(100% - 14px);padding:1px 3px;font-size:6px;border-width:1.3px;border-radius:2px}.chip.erb-compact .class-dot{width:4px;height:4px;flex-basis:4px}.erb-meta,.erb-course,.erb-foot{font-size:6px;line-height:1.08}.assessment-reminder{font-size:5.5px;padding-top:2px}.chip.erb-compact .status{top:2px;right:3px;font-size:5.8px}}
+@media (orientation:landscape) and (max-height:540px){.first-lesson-banner{min-height:13px;gap:2px;margin:1px 0;padding:1px 2px;border-width:1px;border-radius:2px;font-size:6px;box-shadow:none}.first-lesson-banner::before{width:9px;height:9px;flex-basis:9px;font-size:6px}.chip.first-lesson{outline-width:1.5px}}
 @media (max-width:520px){.layer-switch{display:grid;width:100%;grid-template-columns:repeat(3,minmax(0,1fr))}.mode-filter{padding:6px 4px}}
 @media (orientation:landscape) and (max-height:540px){.layer-controls{display:none}}
 '''
@@ -1051,7 +1081,9 @@ CSS += r'''
 
 CSS += r'''
 .lesson-log-open,.modal-lesson-log{display:none}.lesson-log-enabled .lesson-log-open{position:absolute;right:4px;bottom:3px;z-index:3;display:inline-flex;align-items:center;justify-content:center;min-width:31px;min-height:20px;border:1px solid #0f7074;border-radius:4px;padding:2px 5px;background:#fff;color:#0f6266;font-size:8px;font-weight:950;line-height:1;box-shadow:0 1px 2px rgba(20,30,50,.15);cursor:pointer}.lesson-log-enabled .lesson-log-open.logged{background:#0f7074;color:#fff}.chip.has-lesson-log{position:relative}.lesson-log-enabled .modal-lesson-log:not([hidden]){display:inline-flex;align-items:center;justify-content:center}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-lesson-log{width:100%;min-height:42px;border:1px solid #0f7074;border-radius:7px;padding:9px 12px;background:#0f7074;color:#fff;font:inherit;font-size:13px;font-weight:900;cursor:pointer}.modal-lesson-log:hover,.modal-lesson-log:focus-visible,.lesson-log-open:hover,.lesson-log-open:focus-visible{background:#0b5e62!important;color:#fff!important;outline:2px solid #ffc857;outline-offset:1px}.lesson-log-card{max-width:760px}.lesson-log-form{display:grid;gap:12px;margin-top:12px}.lesson-log-meta{padding:9px 10px;border-left:4px solid #0f7074;border-radius:4px;background:#eef8f7;color:#314954;font-size:12px;font-weight:800;white-space:pre-wrap}.lesson-log-fields{display:block}.lesson-log-field{display:grid;gap:7px}.lesson-log-field span{color:#455365;font-size:12px;font-weight:900}.lesson-log-field textarea{width:100%;min-height:360px;border:1px solid #aebdca;border-radius:6px;padding:12px;background:#fff;color:#1d2734;font:inherit;font-size:16px;line-height:1.5;resize:vertical}.lesson-log-help{margin:0;color:#667587;font-size:11px;line-height:1.4}.lesson-log-actions{display:flex;gap:7px;flex-wrap:wrap}.lesson-log-action{min-height:42px;border:1px solid #b8c4d0;border-radius:6px;padding:8px 14px;background:#fff;color:#405064;font:inherit;font-size:13px;font-weight:900;cursor:pointer}.lesson-log-action.primary{border-color:#0f7074;background:#0f7074;color:#fff}.lesson-log-status{min-height:20px;color:#526174;font-size:11px;font-weight:750}.lesson-log-status.ok{color:#0b6b46}.lesson-log-status.error{color:#ad2d24}
+.lesson-log-enabled .chip.erb-compact.has-lesson-log{padding-bottom:29px}
 @media(max-width:820px){.lesson-log-card{padding:16px}.lesson-log-field textarea{min-height:56vh;font-size:16px}.lesson-log-action.primary{width:100%}}
+@media (orientation:landscape) and (max-height:540px){.lesson-log-enabled .chip.erb-compact.has-lesson-log{padding-bottom:17px}.lesson-log-enabled .chip.erb-compact .lesson-log-open{right:2px;bottom:2px;min-width:22px;min-height:12px;padding:1px 3px;font-size:5px}}
 @media print{.lesson-log-control,.lesson-log-open{display:none!important}}
 '''
 
@@ -1528,6 +1560,13 @@ def chip(ev):
         if conflict else ""
     )
     log_cls, log_html = lesson_log_trigger(ev)
+    first_lesson = bool(ev.get("is_first_lesson"))
+    first_lesson_cls = " first-lesson" if first_lesson else ""
+    first_lesson_attr = ' data-first-lesson="1"' if first_lesson else ""
+    first_lesson_html = (
+        '<div class="first-lesson-banner" role="note" aria-label="此班第一堂">此班第一堂</div>'
+        if first_lesson else ""
+    )
     if ev["category"] not in {"erb", "methodist"}:
         teacher_suffix = ""
         if layer == "class" and ev.get("teacher"):
@@ -1564,9 +1603,9 @@ def chip(ev):
         f'<span class="erb-sep">&middot;</span><span class="erb-helper">Helper: {ehtml(fields["helper"])}</span>'
         if fields["helper"] else ""
     )
-    return (f'<div class="chip cohort-shade erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}" style="{cohort_style}" tabindex="0" role="button" '
-            f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}>'
-            f'{comparison_badge}{conflict_badge}<span class="status" aria-label="{ehtml(st)}">{mark}</span>{identity_html}'
+    return (f'<div class="chip cohort-shade erb-compact {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}{first_lesson_cls}" style="{cohort_style}" tabindex="0" role="button" '
+            f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}{first_lesson_attr}>'
+            f'{comparison_badge}{conflict_badge}<span class="status" aria-label="{ehtml(st)}">{mark}</span>{identity_html}{first_lesson_html}'
             f'<div class="erb-meta"><span class="erb-location">{ehtml(fields["location"])}</span><span class="erb-sep">&middot;</span>'
             f'<span class="erb-teacher{teacher_cls}">Teacher: {ehtml(fields["teacher"])}</span>{helper_html}</div>'
             f'{room_html}<div class="erb-course">{ehtml(fields["course_name"])}</div>'
@@ -2688,7 +2727,7 @@ self.addEventListener('fetch', event => {{
 (OUTDIR / 'sw.js').write_text(SW, encoding='utf-8')
 (OUTDIR / 'events.json').write_text(json.dumps(events, ensure_ascii=False, indent=2), encoding='utf-8')
 (OUTDIR / 'payment_context.json').write_text(json.dumps(PAYMENT_CONTEXT, ensure_ascii=False, indent=2), encoding='utf-8')
-(OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "override_source": str(OVERRIDES_SRC), "override_revision": override_revision, "override_confirmation": override_confirmation, "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "class_spans": len(span_rows), "comparison_baseline": str(COMPARE_BASELINE), "comparison_label": COMPARE_LABEL, "changed_in_version": len(changed_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
+(OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "override_source": str(OVERRIDES_SRC), "override_revision": override_revision, "override_confirmation": override_confirmation, "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "class_spans": len(span_rows), "first_lesson_markers": len(first_lesson_groups), "comparison_baseline": str(COMPARE_BASELINE), "comparison_label": COMPARE_LABEL, "changed_in_version": len(changed_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
 (OUTDIR / 'manifest.webmanifest').write_text(json.dumps({"id":"./","name":"Garett's ERB","short_name":"Garett's ERB","description":"Garett's ERB teaching timetable","start_url":"./?v=redtext1&build=" + BUILD_ID,"scope":"./","display":"standalone","background_color":"#eef1f6","theme_color":"#0f7074","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}, ensure_ascii=False, indent=2), encoding='utf-8')
 try:
     from PIL import Image, ImageDraw, ImageFont

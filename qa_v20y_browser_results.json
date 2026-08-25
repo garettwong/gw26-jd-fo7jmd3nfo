@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "versionId": "2026-08-25-V20y",
+  "build": "v20y-hk239-city-dec-first-lesson-marker-20260825a",
+  "desktop": {
+    "targetCards": 6,
+    "marker": {
+      "count": 17,
+      "groups": 17,
+      "minFontSize": 11
+    },
+    "bodyWidth": {
+      "scroll": 2560,
+      "client": 2560
+    },
+    "browserErrors": []
+  },
+  "phone": {
+    "targetCards": 6,
+    "marker": {
+      "count": 17,
+      "groups": 17,
+      "minFontSize": 11
+    },
+    "bodyWidth": {
+      "scroll": 390,
+      "client": 390
+    },
+    "browserErrors": []
+  },
+  "master": {
+    "latest": "V20y",
+    "href": "../versions/2026-08-25-V20y/?v=redtext1&build=v20y-hk239-city-dec-first-lesson-marker-20260825a"
+  },
+  "salary": {
+    "latest": "V20y",
+    "confirmedTotal": "HK$139,750",
+    "countedEntries": 147,
+    "novemberHours": 26,
+    "decemberHours": 18,
+    "expectedPayment": "2027-01-08",
+    "browserErrors": []
+  },
+  "lessonLog": {
+    "localMockOnly": true,
+    "phoneSave": true,
+    "desktopAutoRead": true,
+    "normalizedText": true,
+    "liveRecordsModified": false,
+    "browserErrors": []
+  }
+}

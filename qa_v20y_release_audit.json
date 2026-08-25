@@ -1,0 +1,289 @@
+{
+  "result": "PASS",
+  "generated_at": "2026-08-25T16:30:37+08:00",
+  "version_id": "2026-08-25-V20y",
+  "baseline_id": "2026-08-25-V20x",
+  "build_id": "v20y-hk239-city-dec-first-lesson-marker-20260825a",
+  "source_workbook": {
+    "path": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+    "size": 28127,
+    "sha256": "188FD76D18CC4A4170B185843CD71BFAB3FE81362F826C2CC5A524FC69893240",
+    "modified_by_release": false
+  },
+  "historical_preservation": {
+    "v20x_timetable_hashes": {
+      "class_context.json": "51FF939DD9E11768032F9BCC0FBE33E0A53CFB7C996110E221F46A512F1DBC7D",
+      "events.json": "86EA43EAFE39876366758980E37B09FD50E40EFC7DE117D3F4DC5A701FE42900",
+      "favicon-32.png": "BAD3B3070ADAF8A24C2F440AB3196D64401CDE54115B9EAAAD3E3D5D7418953C",
+      "icon-180.png": "C29B53D9392EA5C2800E9896178749465E69E22F20186492DEC1B80A74F14CF2",
+      "icon-192.png": "39AE37C8A01B913547BC77A57B0DDFDB6145140D82FE8478BDBEBB5F5CA8FF77",
+      "icon-512.png": "3A7AD8CEC1688943FF8533EF8A24BE678BDCE9C7AA4A25223477B28E74EB4B23",
+      "index.html": "97A6AC6F33169A0A02A44BB497EE9DDBD7A35545981E6D8D5A4D928B8FF4D8C1",
+      "manifest.webmanifest": "002997A3ADFE4D44CF298551FFA659F54F1CBDC0D450307EEA237BB357C4D3ED",
+      "payment_context.json": "C7DF87B45C1573C7BC4447C7FC1D74188A76099E93DD5155DEF2F8D3CDF33686",
+      "schedule_overrides.json": "5269FBE90C03BE03101DCEB771C6864F5013EB91E150AE12445E6AE4E49FFDFD",
+      "summary.json": "1F9E1C40258F1D61778C7A41B724B1A2677EB7AF5022FD9A7F5784E919ACD650",
+      "sw.js": "29DF695A94F0CEF039458D673649BD6888DE7AD5AD960563B37DA27EA3D9CCD2"
+    },
+    "v20x_salary_hashes": {
+      "earnings.enc.json": "EB516813BC4AB9EA3BB2D437A450A1E64D7644A63E838BEBA88DE6A2E888564D",
+      "index.html": "57A5A762C10298E9B59EF1ADB2E90111B5823C17A42E8534FDAE4660B43995EF"
+    },
+    "all_tracked_historical_snapshots_unchanged": true
+  },
+  "snapshot_parity": {
+    "root_matches_v20y_snapshot": true,
+    "matching_files": [
+      "index.html",
+      "events.json",
+      "class_context.json",
+      "payment_context.json",
+      "summary.json",
+      "schedule_overrides.json",
+      "sw.js",
+      "manifest.webmanifest",
+      "favicon-32.png",
+      "icon-180.png",
+      "icon-192.png",
+      "icon-512.png"
+    ],
+    "root_salary_matches_v20y_encrypted_payload": true
+  },
+  "source_preservation": {
+    "baseline_workbook_rows": 141,
+    "current_workbook_rows": 135,
+    "removed_target_rows": 6,
+    "surviving_workbook_rows_unchanged": true,
+    "baseline_context_rows": 160,
+    "current_context_rows": 166,
+    "added_target_context_rows": 6,
+    "existing_context_rows_unchanged": true
+  },
+  "timetable": {
+    "lessons": [
+      {
+        "lesson": 1,
+        "date": "2026-12-16",
+        "weekday": "Wednesday",
+        "start_minutes": 540,
+        "end_minutes": 720,
+        "duration_minutes": 180,
+        "text": "勵行-彩雲 (Garett) - HK239HG, Class 城市一條龍 / 人工智能知識及應用證書 (兼讀制) / 09:00-12:00 - L1"
+      },
+      {
+        "lesson": 2,
+        "date": "2026-12-16",
+        "weekday": "Wednesday",
+        "start_minutes": 780,
+        "end_minutes": 960,
+        "duration_minutes": 180,
+        "text": "勵行-彩雲 (Garett) - HK239HG, Class 城市一條龍 / 人工智能知識及應用證書 (兼讀制) / 13:00-16:00 - L2"
+      },
+      {
+        "lesson": 3,
+        "date": "2026-12-17",
+        "weekday": "Thursday",
+        "start_minutes": 540,
+        "end_minutes": 720,
+        "duration_minutes": 180,
+        "text": "勵行-彩雲 (Garett) - HK239HG, Class 城市一條龍 / 人工智能知識及應用證書 (兼讀制) / 09:00-12:00 - L3"
+      },
+      {
+        "lesson": 4,
+        "date": "2026-12-17",
+        "weekday": "Thursday",
+        "start_minutes": 780,
+        "end_minutes": 960,
+        "duration_minutes": 180,
+        "text": "勵行-彩雲 (Garett) - HK239HG, Class 城市一條龍 / 人工智能知識及應用證書 (兼讀制) / 13:00-16:00 - L4"
+      },
+      {
+        "lesson": 5,
+        "date": "2026-12-18",
+        "weekday": "Friday",
+        "start_minutes": 540,
+        "end_minutes": 720,
+        "duration_minutes": 180,
+        "text": "勵行-彩雲 (Garett) - HK239HG, Class 城市一條龍 / 人工智能知識及應用證書 (兼讀制) / 09:00-12:00 - L5 [持續評估／小組討論／專題報告]"
+      },
+      {
+        "lesson": 6,
+        "date": "2026-12-18",
+        "weekday": "Friday",
+        "start_minutes": 780,
+        "end_minutes": 960,
+        "duration_minutes": 180,
+        "text": "勵行-彩雲 (Garett) - HK239HG, Class 城市一條龍 / 人工智能知識及應用證書 (兼讀制) / 13:00-16:00 - L6 [期末考試 15:30-16:30]"
+      }
+    ],
+    "lesson_count": 6,
+    "teaching_minutes_block_sum": 1080,
+    "teaching_hours_block_sum": 18.0,
+    "elapsed_minutes": 1260,
+    "meal_minutes": 180,
+    "teaching_minutes_elapsed_minus_meals": 1080,
+    "daily_gaps": [
+      {
+        "date": "2026-12-16",
+        "meal_gap_minutes": 60,
+        "travel_minutes": 0
+      },
+      {
+        "date": "2026-12-17",
+        "meal_gap_minutes": 60,
+        "travel_minutes": 0
+      },
+      {
+        "date": "2026-12-18",
+        "meal_gap_minutes": 60,
+        "travel_minutes": 0
+      }
+    ],
+    "same_centre_travel_minutes": 0,
+    "other_commitments_on_target_dates": 0,
+    "old_november_target_rows": 0,
+    "l6_supplied_exam_interval": "15:30-16:30",
+    "l6_exam_extends_beyond_nominal_lesson_minutes": 30,
+    "salary_uses_explicit_nominal_lesson_block": "13:00-16:00",
+    "payment_context": {
+      "group": "g07",
+      "label": "HK239HG · 城市一條龍",
+      "course_code": "HK239HG",
+      "course_name": "人工智能知識及應用證書（兼讀制）",
+      "provider": "基督教勵行會",
+      "full_course_start": "2026-12-16",
+      "full_course_end": "2026-12-18",
+      "full_lesson_entries": 6
+    }
+  },
+  "salary": {
+    "encrypted_v20x_decrypted": true,
+    "encrypted_v20y_decrypted": true,
+    "modes": {
+      "confirmed": {
+        "grand_total_before": 139750.0,
+        "grand_total_after": 139750.0,
+        "counted_entries_before": 147,
+        "counted_entries_after": 147,
+        "november_hours_before": 44.0,
+        "november_hours_after": 26.0,
+        "november_pay_before": 13200.0,
+        "november_pay_after": 7800.0,
+        "december_hours_before": 0.0,
+        "december_hours_after": 18.0,
+        "december_pay_before": 0.0,
+        "december_pay_after": 5400.0,
+        "salary_transfer": 5400,
+        "target_expected_payment": {
+          "kind": "ERB",
+          "label": "HK239HG · 城市一條龍",
+          "course_name": "人工智能知識及應用證書（兼讀制）",
+          "provider": "基督教勵行會",
+          "service_period": "2026-12-16 to 2026-12-18",
+          "invoice_date": "2026-12-18",
+          "expected_payment_date": "2027-01-08",
+          "basis": "全班最後一課後開單；按 Calvin 所述以 3 星期規劃",
+          "hours": 18.0,
+          "amount": 5400.0,
+          "received": false
+        },
+        "dated_total_unchanged": 132750.0
+      },
+      "confirmed_and_unconfirmed": {
+        "grand_total_before": 139750.0,
+        "grand_total_after": 139750.0,
+        "counted_entries_before": 147,
+        "counted_entries_after": 147,
+        "november_hours_before": 44.0,
+        "november_hours_after": 26.0,
+        "november_pay_before": 13200.0,
+        "november_pay_after": 7800.0,
+        "december_hours_before": 0.0,
+        "december_hours_after": 18.0,
+        "december_pay_before": 0.0,
+        "december_pay_after": 5400.0,
+        "salary_transfer": 5400,
+        "target_expected_payment": {
+          "kind": "ERB",
+          "label": "HK239HG · 城市一條龍",
+          "course_name": "人工智能知識及應用證書（兼讀制）",
+          "provider": "基督教勵行會",
+          "service_period": "2026-12-16 to 2026-12-18",
+          "invoice_date": "2026-12-18",
+          "expected_payment_date": "2027-01-08",
+          "basis": "全班最後一課後開單；按 Calvin 所述以 3 星期規劃",
+          "hours": 18.0,
+          "amount": 5400.0,
+          "received": false
+        },
+        "dated_total_unchanged": 132750.0
+      }
+    }
+  },
+  "selectors": {
+    "public_latest": "2026-08-25-V20y",
+    "private_latest": "2026-08-25-V20y",
+    "metadata_equal": true,
+    "sole_latest": true,
+    "root_selector": true,
+    "master_selector": true,
+    "private_selector": true,
+    "matching_salary_report": true
+  },
+  "first_lesson_and_lesson_log": {
+    "logical_erb_cohorts": 17,
+    "logical_first_lesson_markers": 17,
+    "rendered_markers_grid_plus_agenda": 34,
+    "each_marker_renders_twice": true,
+    "target_marker_date": "2026-12-16",
+    "marker_text": "此班第一堂",
+    "unchanged_lesson_log_keys_preserved": 146,
+    "removed_rescheduled_lesson_log_keys": 6,
+    "added_rescheduled_lesson_log_keys": 6,
+    "cross_device_lesson_log_code_preserved": true
+  },
+  "candidate_sha256": {
+    "index.html": "0E892600600A0E8BEF645D5346ECC14F3DB70815F960986D97C067B230D49020",
+    "events.json": "8CC48083F95FCF0F2FBBC1400C03E53CC869A582C61BE63A0C50D55526463DFB",
+    "class_context.json": "7E62AD8DFDECEA832CD5B486CE6B5C3D28EC67EBF374086C84934D3AD1E2BC1A",
+    "payment_context.json": "649A3464AC521C88C28BF42679B9E0495E759A4686EA8B6342BCE2AF107EAD1D",
+    "schedule_overrides.json": "0BBE55CAD754EC80CB1F17F3F19DE40B53B9E64F9A24F41EAFB09CFE95E32BF6",
+    "summary.json": "70998E497F76631DB4E8385A987F1290687EA03198EAFDE4A809D508CC2932E9",
+    "versions.json": "24D321546D5B16051D3F15FE0414F192725C5DDE5DA0B2D118098EE93778C701",
+    "master/index.html": "000ED61C48E76FCA34ED3C9091FEF3FA640A3E517E5706287F9AF0D2F2ABC65A",
+    "master/sw.js": "39DCE1D229A2803ABE82CC586F174347F4C9CE144D49760129DB10EC3C13B1ED",
+    "earnings/index.html": "7701BF88420292979B40C0288A4CFB9DCF04F4BE90B0E01570A2F1A6A5BC549A",
+    "earnings/versions.json": "A181C13101F7270F343FD1698ACFAA576899EF262195FCC1EBA5310B0C93CBFA",
+    "earnings/earnings.enc.json": "F456E1F01ED315DAF5EF428F97D0296E6770AD5A890E690C54EF0998E8CAE02E",
+    "earnings/versions/2026-08-25-V20y/index.html": "57A5A762C10298E9B59EF1ADB2E90111B5823C17A42E8534FDAE4660B43995EF",
+    "earnings/versions/2026-08-25-V20y/earnings.enc.json": "F456E1F01ED315DAF5EF428F97D0296E6770AD5A890E690C54EF0998E8CAE02E",
+    "versions/2026-08-25-V20y/index.html": "0E892600600A0E8BEF645D5346ECC14F3DB70815F960986D97C067B230D49020",
+    "versions/2026-08-25-V20y/events.json": "8CC48083F95FCF0F2FBBC1400C03E53CC869A582C61BE63A0C50D55526463DFB",
+    "versions/2026-08-25-V20y/class_context.json": "7E62AD8DFDECEA832CD5B486CE6B5C3D28EC67EBF374086C84934D3AD1E2BC1A",
+    "versions/2026-08-25-V20y/payment_context.json": "649A3464AC521C88C28BF42679B9E0495E759A4686EA8B6342BCE2AF107EAD1D",
+    "versions/2026-08-25-V20y/summary.json": "70998E497F76631DB4E8385A987F1290687EA03198EAFDE4A809D508CC2932E9",
+    "versions/2026-08-25-V20y/schedule_overrides.json": "0BBE55CAD754EC80CB1F17F3F19DE40B53B9E64F9A24F41EAFB09CFE95E32BF6",
+    "versions/2026-08-25-V20y/sw.js": "BF9BF1B09620C4A7EA4A7F1E709170224E0FC5C05459FB8F2B9658B95AEC95A5",
+    "versions/2026-08-25-V20y/manifest.webmanifest": "9FD08EE6635C9AE4DA3B966924BE42C0EBEDC71660BE73DDE9E3079D6C314E28",
+    "versions/2026-08-25-V20y/favicon-32.png": "BAD3B3070ADAF8A24C2F440AB3196D64401CDE54115B9EAAAD3E3D5D7418953C",
+    "versions/2026-08-25-V20y/icon-180.png": "C29B53D9392EA5C2800E9896178749465E69E22F20186492DEC1B80A74F14CF2",
+    "versions/2026-08-25-V20y/icon-192.png": "39AE37C8A01B913547BC77A57B0DDFDB6145140D82FE8478BDBEBB5F5CA8FF77",
+    "versions/2026-08-25-V20y/icon-512.png": "3A7AD8CEC1688943FF8533EF8A24BE678BDCE9C7AA4A25223477B28E74EB4B23"
+  },
+  "checks": [
+    "exact six-row November removal and December replacement",
+    "Wednesday/Thursday/Friday date agreement",
+    "six sequential three-hour nominal lesson blocks",
+    "three exact 60-minute same-centre meal gaps",
+    "18 hours by block sum and elapsed-minus-meal calculation",
+    "no other commitments on December 16-18",
+    "room 102, Garett, confirmed, and assessment notes",
+    "HKD 5,400 transfer from November to December",
+    "unchanged HKD 139,750 grand totals and 147 counted entries",
+    "January 8, 2027 expected payment date",
+    "17 ERB cohorts with exactly one logical first-lesson marker each",
+    "unchanged lesson-log keys preserved and cross-device code retained",
+    "public/private V20y selector parity and encrypted report decryption",
+    "root/V20y snapshot parity and immutable V20x hashes"
+  ]
+}
