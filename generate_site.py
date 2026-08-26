@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20y-hk239-city-dec-first-lesson-marker-20260825a"
+BUILD_ID = "v20z-iphone-lesson-log-activation-20260826a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-25-V20x"
-COMPARE_LABEL = "V20y"
-COMPARE_BASELINE_LABEL = "V20x"
-EXPECTED_COMPARISON_CHANGES = 6
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-25-V20y"
+COMPARE_LABEL = "V20z"
+COMPARE_BASELINE_LABEL = "V20y"
+EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -1081,8 +1081,8 @@ CSS += r'''
 
 CSS += r'''
 .lesson-log-open,.modal-lesson-log{display:none}.lesson-log-enabled .lesson-log-open{position:absolute;right:4px;bottom:3px;z-index:3;display:inline-flex;align-items:center;justify-content:center;min-width:31px;min-height:20px;border:1px solid #0f7074;border-radius:4px;padding:2px 5px;background:#fff;color:#0f6266;font-size:8px;font-weight:950;line-height:1;box-shadow:0 1px 2px rgba(20,30,50,.15);cursor:pointer}.lesson-log-enabled .lesson-log-open.logged{background:#0f7074;color:#fff}.chip.has-lesson-log{position:relative}.lesson-log-enabled .modal-lesson-log:not([hidden]){display:inline-flex;align-items:center;justify-content:center}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-lesson-log{width:100%;min-height:42px;border:1px solid #0f7074;border-radius:7px;padding:9px 12px;background:#0f7074;color:#fff;font:inherit;font-size:13px;font-weight:900;cursor:pointer}.modal-lesson-log:hover,.modal-lesson-log:focus-visible,.lesson-log-open:hover,.lesson-log-open:focus-visible{background:#0b5e62!important;color:#fff!important;outline:2px solid #ffc857;outline-offset:1px}.lesson-log-card{max-width:760px}.lesson-log-form{display:grid;gap:12px;margin-top:12px}.lesson-log-meta{padding:9px 10px;border-left:4px solid #0f7074;border-radius:4px;background:#eef8f7;color:#314954;font-size:12px;font-weight:800;white-space:pre-wrap}.lesson-log-fields{display:block}.lesson-log-field{display:grid;gap:7px}.lesson-log-field span{color:#455365;font-size:12px;font-weight:900}.lesson-log-field textarea{width:100%;min-height:360px;border:1px solid #aebdca;border-radius:6px;padding:12px;background:#fff;color:#1d2734;font:inherit;font-size:16px;line-height:1.5;resize:vertical}.lesson-log-help{margin:0;color:#667587;font-size:11px;line-height:1.4}.lesson-log-actions{display:flex;gap:7px;flex-wrap:wrap}.lesson-log-action{min-height:42px;border:1px solid #b8c4d0;border-radius:6px;padding:8px 14px;background:#fff;color:#405064;font:inherit;font-size:13px;font-weight:900;cursor:pointer}.lesson-log-action.primary{border-color:#0f7074;background:#0f7074;color:#fff}.lesson-log-status{min-height:20px;color:#526174;font-size:11px;font-weight:750}.lesson-log-status.ok{color:#0b6b46}.lesson-log-status.error{color:#ad2d24}
-.lesson-log-enabled .chip.erb-compact.has-lesson-log{padding-bottom:29px}
-@media(max-width:820px){.lesson-log-card{padding:16px}.lesson-log-field textarea{min-height:56vh;font-size:16px}.lesson-log-action.primary{width:100%}}
+.lesson-log-activation{display:grid;gap:8px;padding:11px;border:1px solid #e4b85b;border-radius:7px;background:#fff7df;color:#5f4a16}.lesson-log-activation[hidden]{display:none}.lesson-log-activation strong{font-size:13px;font-weight:950}.lesson-log-activation p{margin:0;font-size:11px;line-height:1.4}.lesson-log-activation-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px}.lesson-log-activation input{min-width:0;min-height:42px;border:1px solid #b8c4d0;border-radius:6px;padding:8px 10px;background:#fff;color:#1d2734;font:inherit;font-size:13px}.lesson-log-enabled .chip.erb-compact.has-lesson-log{padding-bottom:29px}
+@media(max-width:820px){.lesson-log-card{padding:16px}.lesson-log-field textarea{min-height:56vh;font-size:16px}.lesson-log-action.primary,.lesson-log-activation .lesson-log-action{width:100%}.lesson-log-activation-row{grid-template-columns:1fr}}
 @media (orientation:landscape) and (max-height:540px){.lesson-log-enabled .chip.erb-compact.has-lesson-log{padding-bottom:17px}.lesson-log-enabled .chip.erb-compact .lesson-log-open{right:2px;bottom:2px;min-width:22px;min-height:12px;padding:1px 3px;font-size:5px}}
 @media print{.lesson-log-control,.lesson-log-open{display:none!important}}
 '''
@@ -1109,6 +1109,12 @@ LESSON_LOG_HTML = r'''
 </div>
 <div class="lesson-log-actions"><button id="lessonLogSave" class="lesson-log-action primary" type="submit">整理並儲存</button></div>
 <div id="lessonLogStatus" class="lesson-log-status"></div>
+<div id="lessonLogActivation" class="lesson-log-activation" hidden>
+<strong>首次啟用這部 iPhone／電腦</strong>
+<p>複製私人啟用連結後按下面按鈕。只需做一次；之後每次儲存都會自動同步。</p>
+<button id="lessonLogActivateClipboard" class="lesson-log-action primary" type="button">從剪貼簿啟用並儲存</button>
+<div class="lesson-log-activation-row"><input id="lessonLogActivationInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="或貼上私人啟用連結"><button id="lessonLogActivateManual" class="lesson-log-action" type="button">啟用並儲存</button></div>
+</div>
 </form></div></div>
 '''
 
@@ -1134,11 +1140,23 @@ LESSON_LOG_JS = r'''
   const status=document.getElementById('lessonLogStatus');
   const saveBtn=document.getElementById('lessonLogSave');
   const taughtInput=document.getElementById('lessonLogTaught');
+  const activation=document.getElementById('lessonLogActivation');
+  const activationInput=document.getElementById('lessonLogActivationInput');
+  const activateClipboard=document.getElementById('lessonLogActivateClipboard');
+  const activateManual=document.getElementById('lessonLogActivateManual');
   let active=null;
   let dirty=false;
   let store={schema_version:3,updated_at:null,notes:{}};
   try{store=Object.assign(store,JSON.parse(localStorage.getItem(LOCAL_KEY)||'{}'));store.notes=store.notes||{};}catch(_e){}
   const setStatus=(message,kind='')=>{status.textContent=message;status.className='lesson-log-status '+kind;};
+  const setActivationVisible=show=>{activation.hidden=!show;};
+  const clearWriteKey=()=>{writeKey='';try{localStorage.removeItem(WRITE_KEY_STORE);}catch(_e){}};
+  const extractWriteKey=value=>{
+    const raw=String(value||'').trim();if(!raw)return '';
+    try{const url=new URL(raw);const params=new URLSearchParams(url.hash.replace(/^#/,''));const key=params.get('lesson-log-key');if(key)return key.trim();}catch(_e){}
+    const match=raw.match(/(?:^|#|&)lesson-log-key=([^&]+)/);if(match)return decodeURIComponent(match[1]).trim();
+    return /^[A-Za-z0-9_-]{32,}$/.test(raw)?raw:'';
+  };
   const saveLocal=()=>localStorage.setItem(LOCAL_KEY,JSON.stringify(store));
   const lessonIdFor=raw=>{
     const bytes=new TextEncoder().encode(raw);let binary='';
@@ -1155,7 +1173,7 @@ LESSON_LOG_JS = r'''
       method,headers,cache:'no-store',body:method==='PUT'?JSON.stringify({content}):undefined
     });
     const payload=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(payload.error||payload.message||('伺服器錯誤 '+response.status));
+    if(!response.ok){const error=new Error(payload.error||payload.message||('伺服器錯誤 '+response.status));error.status=response.status;throw error;}
     return payload;
   };
   const updateBadges=()=>{
@@ -1204,6 +1222,28 @@ LESSON_LOG_JS = r'''
     store.notes[active.key]=Object.assign({},previous,active,{content,combined_text:content,updated_at:updatedAt||new Date().toISOString(),source_build:window.ERB_BUILD_ID});
     store.updated_at=store.notes[active.key].updated_at;saveLocal();updateBadges();
   };
+  const saveRemote=async polished=>{
+    saveBtn.disabled=true;activateClipboard.disabled=true;activateManual.disabled=true;setStatus('正在整理及儲存…');
+    try{
+      const payload=await api('PUT',active.id,polished);
+      dirty=false;setLocalNote(polished,payload.updated_at);setActivationVisible(false);activationInput.value='';
+      setStatus('已整理並儲存；其他裝置會自動更新。','ok');
+      return true;
+    }catch(error){
+      if(error.status===401||error.status===403){clearWriteKey();setActivationVisible(true);}
+      setStatus('已保存在這部裝置；未能上載：'+error.message,'error');return false;
+    }finally{saveBtn.disabled=false;activateClipboard.disabled=false;activateManual.disabled=false;}
+  };
+  const activateAndSave=async value=>{
+    if(!active)return;
+    const key=extractWriteKey(value);
+    if(!key){setStatus('找不到有效的私人啟用連結，請重新複製後再試。','error');setActivationVisible(true);return;}
+    const polished=polishTeachingText(taughtInput.value);
+    if(!polished){setStatus('請先輸入今堂教過的內容。','error');taughtInput.focus();return;}
+    taughtInput.value=polished;setLocalNote(polished,new Date().toISOString());
+    try{localStorage.setItem(WRITE_KEY_STORE,key);writeKey=key;}catch(_e){setStatus('這部裝置無法保存啟用資料。','error');return;}
+    await saveRemote(polished);
+  };
   const loadActiveNote=()=>{if(active&&!dirty)taughtInput.value=composeLegacyNote(store.notes[active.key]||{});};
   const pullActive=async(showStatus=false)=>{
     if(!active)return;
@@ -1215,7 +1255,7 @@ LESSON_LOG_JS = r'''
       if(showStatus)setStatus('已讀取最新記錄。','ok');
     }else{
       loadActiveNote();
-      if(showStatus)setStatus(writeKey?'尚未有記錄，可以直接輸入。':'只可閱讀；請在這部裝置開啟一次私人啟用連結。');
+      if(showStatus)setStatus(writeKey?'尚未有記錄，可以直接輸入。':'可以先輸入及本機保存；首次跨裝置同步只需在下方啟用一次。');
     }
   };
   const openPanel=async(button)=>{
@@ -1228,6 +1268,7 @@ LESSON_LOG_JS = r'''
     dirty=false;
     meta.textContent=active.date+' · '+active.class_label+' · '+active.lesson+' · '+active.time;
     taughtInput.value=composeLegacyNote(store.notes[active.key]||{});
+    setActivationVisible(!writeKey);
     modal.hidden=false;
     try{await pullActive(true);}catch(error){setStatus('暫時未能讀取：'+error.message,'error');}
   };
@@ -1241,18 +1282,18 @@ LESSON_LOG_JS = r'''
   document.getElementById('lessonLogClose').addEventListener('click',()=>modal.hidden=true);
   modal.addEventListener('click',event=>{if(event.target===modal)modal.hidden=true;});
   taughtInput.addEventListener('input',()=>{dirty=true;});
+  activateClipboard.addEventListener('click',async()=>{
+    try{await activateAndSave(await navigator.clipboard.readText());}catch(_e){setStatus('iPhone 未准讀取剪貼簿，請在下方貼上私人啟用連結。','error');setActivationVisible(true);activationInput.focus();}
+  });
+  activateManual.addEventListener('click',()=>activateAndSave(activationInput.value));
   form.addEventListener('submit',async event=>{
     event.preventDefault();if(!active)return;
     const polished=polishTeachingText(taughtInput.value);
     if(!polished){setStatus('請先輸入今堂教過的內容。','error');taughtInput.focus();return;}
     taughtInput.value=polished;
-    if(!writeKey){setStatus('這部裝置尚未啟用編輯功能，請開啟一次私人啟用連結。','error');return;}
-    saveBtn.disabled=true;setStatus('正在整理及儲存…');
-    try{
-      const payload=await api('PUT',active.id,polished);
-      dirty=false;setLocalNote(polished,payload.updated_at);
-      setStatus('已整理並儲存；其他裝置會自動更新。','ok');
-    }catch(error){setStatus('未能儲存：'+error.message,'error');}finally{saveBtn.disabled=false;}
+    setLocalNote(polished,new Date().toISOString());dirty=false;
+    if(!writeKey){setActivationVisible(true);setStatus('內容已安全保存在這部裝置。首次跨裝置同步：複製私人啟用連結，再按「從剪貼簿啟用並儲存」。','ok');return;}
+    await saveRemote(polished);
   });
   const refresh=()=>{if(active&&!modal.hidden&&!dirty)pullActive(false).catch(()=>{});};
   window.addEventListener('focus',refresh);
