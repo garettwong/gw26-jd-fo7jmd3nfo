@@ -13,20 +13,21 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20aa-payment-13500-probable-match-20260827a"
+BUILD_ID = "v20ab-hk267hg-cw2-unconfirmed-20260828a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-26-V20z"
-COMPARE_LABEL = "V20aa"
-COMPARE_BASELINE_LABEL = "V20z"
-EXPECTED_COMPARISON_CHANGES = 0
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-27-V20aa"
+COMPARE_LABEL = "V20ab"
+COMPARE_BASELINE_LABEL = "V20aa"
+EXPECTED_COMPARISON_CHANGES = 8
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
     "HK244EG": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
     "HK244HG": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
     "HK265HG": "人工智能強化營銷社交媒體內容創作證書（英文授課／兼讀制）",
+    "HK267HG": "生成式人工智能圖像及影片創作技巧證書（英語授課／兼讀制）",
     "HK280HG": "生成式人工智能商業應用證書（兼讀制）",
     "HK281DS": "創意數碼媒體設計及製作助理證書",
     "MC0106DS": "創意數碼媒體設計及製作助理證書",
@@ -60,10 +61,17 @@ COURSE_FAMILIES = [
             ("HK280HG", "基督教勵行會", ""),
         ],
     },
+    {
+        "name": "生成式人工智能圖像及影片創作技巧證書（英語授課／兼讀制）",
+        "members": [
+            ("HK267HG", "基督教勵行會", "英文授課"),
+        ],
+    },
 ]
 UPCOMING_AS_OF = datetime.date(2026, 8, 2)
 RELEASE_AS_OF = datetime.date(2026, 8, 21)
 UPCOMING_CLASS_META = {
+    "HK267HG · CW2": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓104室", "ENG"),
     "HK280HG · CW1": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓", "CHI"),
     "HK280HG · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
     "HK265HG · FS": ("基督教勵行會", "四海大廈", "ENG"),
@@ -83,6 +91,7 @@ UPCOMING_CLASS_META = {
     "HK239HG · 循道灣仔晚班": ("循道衛理中心", "香港灣仔軒尼詩道22號", "CHI"),
 }
 CLASS_UPDATE_META = {
+    "HK267HG · CW2": ("2026-08-28", "Calvin 新查詢；11 月 11 至 20 日共 8 節、30 小時，課室 104；暫列未確認。"),
     "HK244EG · FS-1": ("2026-06-29", "已完成；6 月 18 日黑雨取消，補課為 6 月 27 日。"),
     "HK244EG · HF2": ("2026-07-16", "已完成；代課安排及評核／考試時間已按確認檔核對。"),
     "HK265HG · FS · JUL 2026": ("2026-06-10", "全班由 Garett 任教；8 月 12 日期末實務試 14:20–17:20。"),

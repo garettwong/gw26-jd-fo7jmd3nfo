@@ -23,7 +23,7 @@ TIME_RE = re.compile(
     r"(\d{1,2})(?::?(\d{2}))?\s*(?:[AaPp][Mm])?(?!\d)"
 )
 CANCELLED_RE = re.compile(r"cancel(?:led|ed)", re.I)
-PROPOSED_AVAILABILITY_RE = re.compile(r"PROPOSED availability only", re.I)
+PROPOSED_AVAILABILITY_RE = re.compile(r"PROPOSED availability only|未確認查詢", re.I)
 HK280HS_SS_RE = re.compile(r"HK280HS\s*,?\s*Class\s+SS", re.I)
 GARETT_RE = re.compile(r"\bGar(?:e|r)tt\b", re.I)
 MONTHS = ("June", "July", "August", "September", "October", "November", "December")
