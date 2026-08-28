@@ -1,0 +1,43 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "V20y",
+  "override_confirmation": "HK239HG 城市一條龍 is confirmed for Garett: L1-L2 on 2026-12-16, L3-L4 on 2026-12-17, and L5-L6 on 2026-12-18, room 102, exactly 18 hours. The superseded 2026-11-11 to 2026-11-13 rows are excluded. Salary moves from November to December with no grand-total change.",
+  "events": 135,
+  "display_events": 309,
+  "context_events": 174,
+  "class_spans": 19,
+  "first_lesson_markers": 18,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-08-28-V20ab",
+  "comparison_label": "V20ac",
+  "changed_in_version": 8,
+  "counts": {
+    "confirmed": 221,
+    "unconfirmed": 81,
+    "note": 7
+  },
+  "layers": {
+    "mine": 170,
+    "class": 136,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 17,
+    "School": 1,
+    "勵行 / ERB": 220,
+    "Holiday": 6,
+    "Mike Sir": 6,
+    "DGS / UE": 2,
+    "循道": 53,
+    "ComfyUI": 4
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}
