@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ab-hk267hg-cw2-unconfirmed-20260828a"
+BUILD_ID = "v20ac-hk267hg-cw2-confirmed-20260828a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-27-V20aa"
-COMPARE_LABEL = "V20ab"
-COMPARE_BASELINE_LABEL = "V20aa"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-28-V20ab"
+COMPARE_LABEL = "V20ac"
+COMPARE_BASELINE_LABEL = "V20ab"
 EXPECTED_COMPARISON_CHANGES = 8
 
 COURSE_CHINESE_NAMES = {
@@ -91,7 +91,7 @@ UPCOMING_CLASS_META = {
     "HK239HG · 循道灣仔晚班": ("循道衛理中心", "香港灣仔軒尼詩道22號", "CHI"),
 }
 CLASS_UPDATE_META = {
-    "HK267HG · CW2": ("2026-08-28", "Calvin 新查詢；11 月 11 至 20 日共 8 節、30 小時，課室 104；暫列未確認。"),
+    "HK267HG · CW2": ("2026-08-28", "Calvin 已確認全 8 節由 Garett 任教；11 月 11 至 20 日共 30 小時，課室 104。"),
     "HK244EG · FS-1": ("2026-06-29", "已完成；6 月 18 日黑雨取消，補課為 6 月 27 日。"),
     "HK244EG · HF2": ("2026-07-16", "已完成；代課安排及評核／考試時間已按確認檔核對。"),
     "HK265HG · FS · JUL 2026": ("2026-06-10", "全班由 Garett 任教；8 月 12 日期末實務試 14:20–17:20。"),
