@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ac-hk267hg-cw2-confirmed-20260828a"
+BUILD_ID = "v20ad-mc244eg-1-official-source-20260831a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-28-V20ab"
-COMPARE_LABEL = "V20ac"
-COMPARE_BASELINE_LABEL = "V20ab"
-EXPECTED_COMPARISON_CHANGES = 8
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-28-V20ac"
+COMPARE_LABEL = "V20ad"
+COMPARE_BASELINE_LABEL = "V20ac"
+EXPECTED_COMPARISON_CHANGES = 6
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -30,6 +30,7 @@ COURSE_CHINESE_NAMES = {
     "HK267HG": "生成式人工智能圖像及影片創作技巧證書（英語授課／兼讀制）",
     "HK280HG": "生成式人工智能商業應用證書（兼讀制）",
     "HK281DS": "創意數碼媒體設計及製作助理證書",
+    "MC244EG": "人工智能知識及應用證書（兼讀制）",
     "MC0106DS": "創意數碼媒體設計及製作助理證書",
 }
 COURSE_FAMILIES = [
@@ -45,7 +46,7 @@ COURSE_FAMILIES = [
         "name": "人工智能知識及應用證書（兼讀制）",
         "members": [
             ("HK239HG", "基督教勵行會", ""),
-            ("HK239HG", "循道衛理中心", "灣仔晚班"),
+            ("MC244EG", "循道衞理中心", "班號 1"),
         ],
     },
     {
@@ -88,7 +89,7 @@ UPCOMING_CLASS_META = {
     "HK239HG · ST": ("基督教勵行會", "順天", "CHI"),
     "HK239HG · 城市一條龍": ("基督教勵行會", "彩雲邨 · 課室 102", "CHI"),
     "HK239HG · LT": ("基督教勵行會", "藍田", "CHI"),
-    "HK239HG · 循道灣仔晚班": ("循道衛理中心", "香港灣仔軒尼詩道22號", "CHI"),
+    "MC244EG · 1": ("循道衞理中心", "灣仔軒尼詩道22號循道衞理中心3樓305室", "CHI"),
 }
 CLASS_UPDATE_META = {
     "HK267HG · CW2": ("2026-08-28", "Calvin 已確認全 8 節由 Garett 任教；11 月 11 至 20 日共 30 小時，課室 104。"),
@@ -108,7 +109,7 @@ CLASS_UPDATE_META = {
     "HK281DS · CW7": ("2026-07-19", "10 月 3 日上午 L51 由 Demian Yuen 任教，與 Garett 的 HK239HG ST 撞期；Garett 只任教下午 L52，兩堂 helper 均為 Fiona。"),
     "HK239HG · 城市一條龍": ("2026-08-25", "六堂均由 Garett 任教；已改為 12 月 16 至 18 日，課室 102；12 月 18 日上午為持續評估／小組討論／專題報告，下午期末考試 15:30–16:30。"),
     "HK239HG · LT": ("2026-07-19", "六堂均由 Garett 任教；11 月 30 日期末考試 15:30–16:30。"),
-    "HK239HG · 循道灣仔晚班": ("2026-08-03", "Calvin 已確認六個星期五晚 18:45–21:45；原 9 月 18 日改為 10 月 30 日。正式班別編號待補。"),
+    "MC244EG · 1": ("2026-08-31", "循道衞理中心正式時間表確認 MC244EG 班號 1；六個星期五晚 18:45–21:45，灣仔 305 室，共 18 小時。"),
 }
 SEN_CODE_RE = re.compile(r"\((PFSA2|QAT7)\)", re.I)
 
@@ -459,6 +460,7 @@ INFERRED_CLASS_BY_CODE = {}
 ROOM_DISPLAY_START = datetime.date(2026, 8, 15)
 ROOM_PENDING = "課室待確認"
 ROOM_RULES = (
+    (re.compile(r"\bMC244EG\b.*\bClass\s*1\b", re.I), "305", "MC244EG Class 1 FINAL FINAL PDF: classroom 305"),
     (re.compile(r"\bMC0?106DS\b", re.I), "306", "MC106DS FINAL timetable: classroom 306"),
     (re.compile(r"\bHK244HG\b.*\bCW8\b", re.I), "103", "HK244HG CW8 FINAL timetable: room 103"),
     (re.compile(r"\bHK239HG\b.*\bCW10\b", re.I), "101", "HK239HG CW10 FINAL timetable: room 101"),
@@ -777,6 +779,8 @@ _baseline_index = (COMPARE_BASELINE / "index.html").read_text(encoding="utf-8")
 for match in re.finditer(r'data-group="([^"]+)" data-group-label="([^"]+)"', _baseline_index):
     slug, label = html.unescape(match.group(1)), html.unescape(match.group(2))
     _baseline_group_slugs.setdefault(label, slug)
+if "HK239HG · 循道灣仔晚班" in _baseline_group_slugs:
+    _baseline_group_slugs["MC244EG · 1"] = _baseline_group_slugs["HK239HG · 循道灣仔晚班"]
 
 _group_slugs = {}
 _used_group_slugs = set()
