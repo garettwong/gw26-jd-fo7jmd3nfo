@@ -13,12 +13,12 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ae-central-lesson-log-full-class-history-20260901a"
+BUILD_ID = "v20af-legacy-lesson-log-recovery-20260901a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
 COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-31-V20ad"
-COMPARE_LABEL = "V20ae"
+COMPARE_LABEL = "V20af"
 COMPARE_BASELINE_LABEL = "V20ad"
 EXPECTED_COMPARISON_CHANGES = 0
 
@@ -1323,6 +1323,7 @@ LESSON_LOG_HTML = ""
 LESSON_LOG_JS = r'''
 (function(){
   const APP_BASE='https://garett-erb-lesson-log.garettwong3.chatgpt.site';
+  const LOCAL_KEY='erbLessonNotesV1';
   document.documentElement.classList.add('lesson-log-enabled');
   const lessonIdFor=raw=>{
     const bytes=new TextEncoder().encode(raw);let binary='';
@@ -1339,6 +1340,43 @@ LESSON_LOG_JS = r'''
     return APP_BASE+'/lesson/'+encodeURIComponent(lessonIdFor(button.dataset.logKey||''))+'?'+params.toString();
   };
   const openEditor=button=>{if(button)location.href=editorUrl(button);};
+  const composeLegacyNote=note=>{
+    if(!note)return '';
+    if(String(note.content||'').trim())return String(note.content).trim();
+    if(String(note.combined_text||'').trim())return String(note.combined_text).trim();
+    const parts=[];
+    if(String(note.taught||'').trim())parts.push(String(note.taught).trim());
+    if(String(note.progress||'').trim())parts.push('進度／未完成：'+String(note.progress).trim());
+    if(String(note.follow_up||'').trim())parts.push('功課／下堂跟進：'+String(note.follow_up).trim());
+    if(String(note.remarks||'').trim())parts.push('其他備註：'+String(note.remarks).trim());
+    return parts.join('\n');
+  };
+  const migrateLegacyNotes=async()=>{
+    let notes={};
+    try{
+      const legacy=JSON.parse(localStorage.getItem(LOCAL_KEY)||'{}');
+      notes=legacy&&legacy.notes&&typeof legacy.notes==='object'?legacy.notes:{};
+    }catch(_error){return 0;}
+    let migrated=0;
+    for(const [key,note] of Object.entries(notes)){
+      const content=composeLegacyNote(note);
+      if(!content)continue;
+      const lessonId=lessonIdFor(key);
+      try{
+        const currentResponse=await fetch(APP_BASE+'/api/notes/'+encodeURIComponent(lessonId),{cache:'no-store'});
+        if(!currentResponse.ok)continue;
+        const current=await currentResponse.json();
+        if(String(current.content||'').trim())continue;
+        const saveResponse=await fetch(APP_BASE+'/api/notes/'+encodeURIComponent(lessonId),{
+          method:'PUT',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({content})
+        });
+        if(saveResponse.ok)migrated+=1;
+      }catch(_error){}
+    }
+    return migrated;
+  };
   const refreshBadge=async button=>{
     try{
       const lessonId=lessonIdFor(button.dataset.logKey||'');
@@ -1359,9 +1397,9 @@ LESSON_LOG_JS = r'''
     const open=event=>{event.preventDefault();event.stopPropagation();openEditor(button);};
     button.addEventListener('click',open);
     button.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){open(event);}});
-    refreshBadge(button);
   });
   const refresh=()=>buttons.forEach(refreshBadge);
+  migrateLegacyNotes().finally(refresh);
   window.addEventListener('focus',refresh);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
 })();
