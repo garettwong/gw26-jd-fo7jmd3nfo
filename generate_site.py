@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ad-mc244eg-1-official-source-20260831a"
+BUILD_ID = "v20ae-central-lesson-log-full-class-history-20260901a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-28-V20ac"
-COMPARE_LABEL = "V20ad"
-COMPARE_BASELINE_LABEL = "V20ac"
-EXPECTED_COMPARISON_CHANGES = 6
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-31-V20ad"
+COMPARE_LABEL = "V20ae"
+COMPARE_BASELINE_LABEL = "V20ad"
+EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -1316,6 +1316,57 @@ LESSON_LOG_JS = r'''
 })();
 '''
 
+# Lesson records are edited on the central Sites app.  Keeping the editor on one
+# authenticated origin means iPhone and PC always read and write the same row;
+# the public timetable only needs to open that editor and refresh its badge.
+LESSON_LOG_HTML = ""
+LESSON_LOG_JS = r'''
+(function(){
+  const APP_BASE='https://garett-erb-lesson-log.garettwong3.chatgpt.site';
+  document.documentElement.classList.add('lesson-log-enabled');
+  const lessonIdFor=raw=>{
+    const bytes=new TextEncoder().encode(raw);let binary='';
+    bytes.forEach(byte=>binary+=String.fromCharCode(byte));
+    return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  };
+  const editorUrl=button=>{
+    const params=new URLSearchParams({
+      date:button.dataset.logDate||'',
+      class:button.dataset.logClass||'',
+      lesson:button.dataset.logLesson||'',
+      time:button.dataset.logTime||''
+    });
+    return APP_BASE+'/lesson/'+encodeURIComponent(lessonIdFor(button.dataset.logKey||''))+'?'+params.toString();
+  };
+  const openEditor=button=>{if(button)location.href=editorUrl(button);};
+  const refreshBadge=async button=>{
+    try{
+      const lessonId=lessonIdFor(button.dataset.logKey||'');
+      const response=await fetch(APP_BASE+'/api/notes/'+encodeURIComponent(lessonId),{cache:'no-store'});
+      if(!response.ok)return;
+      const payload=await response.json();
+      const exists=Boolean(String(payload.content||'').trim());
+      button.classList.toggle('logged',exists);
+      button.textContent=exists?'已記錄':'記錄';
+    }catch(_error){}
+  };
+  const buttons=Array.from(document.querySelectorAll('.lesson-log-open'));
+  window.openLessonLogForButton=openEditor;
+  buttons.forEach(button=>{
+    button.setAttribute('aria-hidden','false');
+    button.setAttribute('role','button');
+    button.tabIndex=0;
+    const open=event=>{event.preventDefault();event.stopPropagation();openEditor(button);};
+    button.addEventListener('click',open);
+    button.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){open(event);}});
+    refreshBadge(button);
+  });
+  const refresh=()=>buttons.forEach(refreshBadge);
+  window.addEventListener('focus',refresh);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
+})();
+'''
+
 CSS += r'''
 .teaching-room{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin-top:2px;padding:2px 4px;border:1px solid #bfd2d9;border-radius:4px;background:#edf6f8;color:#284854;font-size:9px;font-weight:800;line-height:1.12}.teaching-room span{color:#667785;font-size:8px;font-weight:850}.teaching-room strong{color:#173b46;font-weight:950}.teaching-room.room-pending{border-color:#e2b56f;background:#fff3df}.teaching-room.room-pending strong{color:#9a4f00}
 .card-location{margin-top:2px;color:#3f5b69;font-size:9px;font-weight:850;line-height:1.15;text-align:center}
@@ -1643,8 +1694,8 @@ def chip(ev):
     )
     identity_html = (f'<span class="class-id card-course-filter" role="button" tabindex="0" '
                      f'data-card-group="{ehtml(ev["group"])}" '
-                     f'title="Show only {ehtml(class_label)}; click again to restore" '
-                     f'aria-label="Show only {ehtml(class_label)} lessons; activate again to restore the previous filter">'
+                     f'title="顯示 {ehtml(class_label)} Lesson 1 至最後一課；再按一次返回" '
+                     f'aria-label="顯示 {ehtml(class_label)} Lesson 1 至最後一課；再按一次返回之前畫面">'
                      f'<span class="class-dot" aria-hidden="true"></span>{ehtml(class_label)}</span>')
     teacher_cls = " is-missing" if fields["teacher"] == "-" else " is-alert" if fields["teacher"] in {"Andy", "Calvin"} else ""
     note_html = "".join(f' <span class="card-note">[{ehtml(note)}]</span>' for note in fields["notes"])
@@ -2551,7 +2602,8 @@ function applyFilters(){{
     const isMike=ch.dataset.cat==='Mike Sir';
     const isHoliday=ch.dataset.cat==='Holiday';
     const isMine=ch.dataset.layer==='mine';
-    const layerMatch=mode==='both'||(mode==='mine-all'&&(isMine||isMike))||(mode==='mine-confirmed'&&(isMike||isHoliday||(isMine&&ch.dataset.status==='confirmed')));
+    const fullClassFocus=Boolean(window.__cardCourseFilter&&window.__cardCourseFilter.group===f&&courseMatch);
+    const layerMatch=fullClassFocus||mode==='both'||(mode==='mine-all'&&(isMine||isMike))||(mode==='mine-confirmed'&&(isMike||isHoliday||(isMine&&ch.dataset.status==='confirmed')));
     ch.style.display=courseMatch&&layerMatch?'':'none';
   }});
   document.querySelectorAll('.overlap-group').forEach(group=>{{

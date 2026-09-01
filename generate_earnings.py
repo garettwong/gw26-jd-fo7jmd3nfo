@@ -38,8 +38,6 @@ RECEIVED_PAYMENTS = {
     ("SEN", "YMCA SEN · July 2026", "2026-07-31"): {},
     ("ERB", "HK265HG · FS · JUL 2026", "2026-08-12"): {
         "received_on": "2026-08-26",
-        "match_status": "probable",
-        "match_note": "HK$13,500 金額與此課程完全相符；待核實付款資料",
     },
 }
 
