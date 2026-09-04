@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20af-legacy-lesson-log-recovery-20260901a"
+BUILD_ID = "v20ag-upcoming-column-order-place-readability-20260904a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-08-31-V20ad"
-COMPARE_LABEL = "V20af"
-COMPARE_BASELINE_LABEL = "V20ad"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-01-V20af"
+COMPARE_LABEL = "V20ag"
+COMPARE_BASELINE_LABEL = "V20af"
 EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
@@ -69,8 +69,9 @@ COURSE_FAMILIES = [
         ],
     },
 ]
+TIMETABLE_AS_OF = datetime.date(2026, 9, 4)
 UPCOMING_AS_OF = datetime.date(2026, 8, 2)
-RELEASE_AS_OF = datetime.date(2026, 8, 21)
+RELEASE_AS_OF = TIMETABLE_AS_OF
 UPCOMING_CLASS_META = {
     "HK267HG · CW2": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓104室", "ENG"),
     "HK280HG · CW1": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓", "CHI"),
@@ -1102,12 +1103,12 @@ CSS += r'''
 
 CSS += r'''
 .chip.cohort-shade.cat-erb,.chip.cohort-shade.cat-methodist{background:hsl(var(--cohort-hue),var(--cohort-sat),var(--cohort-light))}.chip.cohort-shade.layer-class::before{background:var(--context-color)}.span-bar{border-color:hsl(var(--span-hue),var(--span-sat),38%);background:hsl(var(--span-hue),var(--span-sat),var(--span-light))}.span-bar-label{border-color:hsla(var(--span-hue),var(--span-sat),38%,.45);color:hsl(var(--span-hue),var(--span-sat),28%)}
-.next-new-courses{margin:16px 0 4px;padding:14px 16px;border:2px solid #0f7074;border-radius:8px;background:#e8f7f5;box-shadow:0 2px 7px rgba(20,30,50,.08)}.next-new-header{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:11px}.next-new-kicker{display:block;color:#0f7074;font-size:12px;font-weight:950;text-transform:uppercase}.next-new-header h2{margin:2px 0 0;color:#172a38;font-size:23px;font-weight:950}.next-course-controls{display:inline-grid;grid-template-columns:repeat(3,minmax(76px,1fr));gap:4px;padding:4px;border:1px solid #a9d4d0;border-radius:7px;background:#d8efec}.next-course-limit{min-height:38px;border:0;border-radius:5px;padding:6px 10px;background:transparent;color:#38585c;font:inherit;font-size:13px;font-weight:950;cursor:pointer}.next-course-limit:hover{background:#f4fbfa}.next-course-limit:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.next-course-limit.active{background:#0f7074;color:#fff;box-shadow:0 1px 3px rgba(20,30,50,.18)}.next-course-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.next-course-card{display:grid;grid-template-columns:minmax(210px,1fr) 100px minmax(330px,1.45fr);align-items:center;gap:14px;min-width:0;padding:12px 14px;border:1px solid #9dc9c6;border-radius:6px;background:#f7fcfb}.next-course-card[hidden]{display:none!important}.next-course-main{min-width:0}.next-course-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.next-course-card h3{margin:0;color:#172a38;font-size:19px;font-weight:950;line-height:1.12}.next-course-card p{margin:4px 0 0;color:#506274;font-size:13px;font-weight:800;line-height:1.25}.next-new-badge{border-radius:4px;padding:3px 6px;background:#8b4fa3;color:#fff;font-size:9px;font-weight:950;white-space:nowrap}.next-new-countdown{min-width:94px;border-left:1px solid #a9d4d0;border-right:1px solid #a9d4d0;padding:4px 13px;text-align:center}.next-new-countdown small,.next-new-facts small{display:block;color:#69798a;font-size:10px;font-weight:900}.next-new-countdown strong{display:block;color:#0f7074;font-size:25px;font-weight:950;white-space:nowrap}.next-new-facts{display:grid;grid-template-columns:1fr .8fr 1.35fr;gap:10px}.next-new-facts span{min-width:0}.next-new-facts strong{display:block;color:#233345;font-size:12px;font-weight:900;line-height:1.25;overflow-wrap:anywhere}
-@media(max-width:1450px){.next-course-list{grid-template-columns:1fr}.next-course-card{grid-template-columns:minmax(240px,1fr) 100px minmax(360px,1.5fr)}}
+.next-new-courses{margin:16px 0 4px;padding:14px 16px;border:2px solid #0f7074;border-radius:8px;background:#e8f7f5;box-shadow:0 2px 7px rgba(20,30,50,.08)}.next-new-header{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:11px}.next-new-kicker{display:block;color:#0f7074;font-size:12px;font-weight:950;text-transform:uppercase}.next-new-header h2{margin:2px 0 0;color:#172a38;font-size:23px;font-weight:950}.next-course-controls{display:inline-grid;grid-template-columns:repeat(3,minmax(76px,1fr));gap:4px;padding:4px;border:1px solid #a9d4d0;border-radius:7px;background:#d8efec}.next-course-limit{min-height:38px;border:0;border-radius:5px;padding:6px 10px;background:transparent;color:#38585c;font:inherit;font-size:13px;font-weight:950;cursor:pointer}.next-course-limit:hover{background:#f4fbfa}.next-course-limit:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.next-course-limit.active{background:#0f7074;color:#fff;box-shadow:0 1px 3px rgba(20,30,50,.18)}.next-course-list{--next-course-rows:3;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(var(--next-course-rows),auto);grid-auto-flow:column;gap:8px}.next-course-card{display:grid;grid-template-columns:minmax(165px,.9fr) 96px minmax(270px,1.55fr);align-items:center;gap:10px;min-width:0;padding:12px 14px;border:1px solid #9dc9c6;border-radius:6px;background:#f7fcfb}.next-course-card[hidden]{display:none!important}.next-course-main{min-width:0}.next-course-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.next-course-card h3{margin:0;color:#172a38;font-size:19px;font-weight:950;line-height:1.12}.next-course-card p{margin:4px 0 0;color:#506274;font-size:13px;font-weight:800;line-height:1.25}.next-new-badge{border-radius:4px;padding:3px 6px;background:#8b4fa3;color:#fff;font-size:9px;font-weight:950;white-space:nowrap}.next-new-countdown{min-width:90px;border-left:1px solid #a9d4d0;border-right:1px solid #a9d4d0;padding:4px 6px;text-align:center}.next-new-countdown small{display:block;color:#69798a;font-size:10px;font-weight:900}.next-new-countdown strong{display:block;color:#0f7074;font-size:25px;font-weight:950;white-space:nowrap}.next-new-facts{display:grid;grid-template-columns:minmax(118px,.8fr) minmax(165px,1.2fr);gap:7px 9px;min-width:0;align-self:stretch}.next-course-fact{min-width:0;padding-left:8px;border-left:3px solid #cbd6e0}.next-course-fact dt{color:#69798a;font-size:10.5px;font-weight:900;line-height:1.15}.next-course-fact dd{margin:2px 0 0;color:#233345;font-size:12.5px;font-weight:900;line-height:1.25;overflow-wrap:anywhere}.next-course-fact.place{padding-top:6px;border-top:1px solid #d7e0e8}.next-course-fact.centre{border-left-color:#0f7074}.next-course-fact.location{border-left-color:#b36a16}.next-course-fact.place dt{color:#405766;font-size:11.5px}.next-course-fact.centre dt{color:#0c6669}.next-course-fact.location dt{color:#8b4b08}.next-course-fact.place dd{font-size:14px;line-height:1.28}
+@media(max-width:1260px){.next-course-list{grid-template-columns:1fr;grid-template-rows:none!important;grid-auto-flow:row}.next-course-card{grid-template-columns:minmax(240px,1fr) 96px minmax(360px,1.5fr)}}
 @media(max-width:900px){.next-new-header{align-items:stretch;flex-direction:column}.next-course-controls{width:100%}.next-course-card{grid-template-columns:minmax(0,1fr) 88px}.next-new-facts{grid-column:1/-1}.next-new-countdown{border-right:0}}
-@media(max-width:620px){.next-new-courses{padding:11px}.next-new-header h2{font-size:20px}.next-course-limit{font-size:12px}.next-course-card{gap:9px;padding:10px}.next-course-card h3{font-size:17px}.next-course-card p{font-size:12px}.next-new-countdown{min-width:72px;padding:3px 0 3px 9px}.next-new-countdown strong{font-size:20px}.next-new-facts{grid-template-columns:1fr 1fr}.next-new-facts span:last-child{grid-column:1/-1}.next-new-facts strong{font-size:11px}}
-@media (orientation:landscape) and (max-height:700px) and (max-width:1400px){.next-new-courses{margin:4px 0;padding:7px 9px}.next-new-header{align-items:center;flex-direction:row;margin-bottom:5px}.next-new-kicker{font-size:9px}.next-new-header h2{font-size:16px}.next-course-controls{width:auto;padding:2px}.next-course-limit{min-height:30px;padding:3px 7px;font-size:10px}.next-course-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.next-course-card{grid-template-columns:minmax(150px,1fr) 66px minmax(220px,1.35fr);gap:6px;padding:6px 7px}.next-course-card h3{font-size:13px}.next-course-card p{margin-top:2px;font-size:9.5px}.next-new-badge{padding:2px 4px;font-size:7px}.next-new-countdown{min-width:60px;padding:2px 5px}.next-new-countdown small,.next-new-facts small{font-size:7px}.next-new-countdown strong{font-size:16px}.next-new-facts{grid-column:auto;gap:5px}.next-new-facts strong{font-size:8.5px}}
-@media (orientation:landscape) and (max-height:700px) and (max-width:999px){.next-course-list{grid-template-columns:1fr}}
+@media(max-width:620px){.next-new-courses{padding:11px}.next-new-header h2{font-size:20px}.next-course-limit{font-size:12px}.next-course-card{gap:9px;padding:10px}.next-course-card h3{font-size:17px}.next-course-card p{font-size:12px}.next-new-countdown{min-width:72px;padding:3px 0 3px 9px}.next-new-countdown strong{font-size:20px}.next-new-facts{grid-template-columns:1fr 1fr}.next-course-fact.centre,.next-course-fact.location{grid-column:1/-1}.next-course-fact.place dd{font-size:13px}}
+@media (orientation:landscape) and (max-height:700px) and (max-width:1400px){.next-new-courses{margin:4px 0;padding:7px 9px}.next-new-header{align-items:center;flex-direction:row;margin-bottom:5px}.next-new-kicker{font-size:9px}.next-new-header h2{font-size:16px}.next-course-controls{width:auto;padding:2px}.next-course-limit{min-height:30px;padding:3px 7px;font-size:10px}.next-course-list{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(var(--next-course-rows),auto);grid-auto-flow:column;gap:4px}.next-course-card{grid-template-columns:minmax(150px,1fr) 66px minmax(220px,1.35fr);gap:6px;padding:6px 7px}.next-course-card h3{font-size:13px}.next-course-card p{margin-top:2px;font-size:9.5px}.next-new-badge{padding:2px 4px;font-size:7px}.next-new-countdown{min-width:60px;padding:2px 5px}.next-new-countdown small{font-size:7px}.next-new-countdown strong{font-size:16px}.next-new-facts{grid-column:auto;grid-template-columns:minmax(80px,.8fr) minmax(120px,1.2fr);gap:4px 5px}.next-course-fact{padding-left:4px;border-left-width:2px}.next-course-fact dt{font-size:7px}.next-course-fact dd{font-size:8.5px}.next-course-fact.place{padding-top:3px}.next-course-fact.place dt{font-size:7.5px}.next-course-fact.place dd{font-size:9px}}
+@media (orientation:landscape) and (max-height:700px) and (max-width:999px){.next-course-list{grid-template-columns:1fr;grid-template-rows:none!important;grid-auto-flow:row}}
 @media print{.next-new-courses{box-shadow:none}.next-course-controls{display:none}}
 '''
 
@@ -2052,6 +2053,7 @@ def next_upcoming_course_panel():
             "my_day": my_day,
             "class_day": class_day,
             "time": my_fields["time"],
+            "lesson": my_fields["lesson"],
             "centre": centre,
             "location": location,
             "is_new_family": family not in previously_taught_families,
@@ -2071,17 +2073,22 @@ def next_upcoming_course_panel():
         new_badge = '<span class="next-new-badge">全新課程</span>' if item["is_new_family"] else ""
         hidden = " hidden" if index >= 5 else ""
         cards.append(
-            f'<article class="next-course-card" data-next-course-index="{index}"{hidden}>'
+            f'<article class="next-course-card" data-next-course-index="{index}" '
+            f'data-first-date="{item["my_day"].isoformat()}" data-first-time="{ehtml(item["time"])}" '
+            f'data-first-lesson="{ehtml(item["lesson"])}" data-class-first-date="{item["class_day"].isoformat()}" '
+            f'data-centre="{ehtml(item["centre"])}" data-location="{ehtml(item["location"])}"{hidden}>'
             '<div class="next-course-main">'
             f'<div class="next-course-title-row"><h3>{ehtml(item["label"])}</h3>{new_badge}</div>'
             f'<p>{ehtml(item["family"])}</p></div>'
             f'<div class="next-new-countdown"><small>距離你首堂</small><strong>{ehtml(day_word)}</strong></div>'
-            '<div class="next-new-facts">'
-            f'<span><small>你首堂</small><strong>{item["my_day"].isoformat()} · {ehtml(item["time"])}</strong></span>'
-            f'<span><small>全班首堂</small><strong>{item["class_day"].isoformat()}</strong></span>'
-            f'<span><small>中心／地點</small><strong>{ehtml(item["centre"])} · {ehtml(item["location"])}</strong></span>'
-            '</div></article>'
+            '<dl class="next-new-facts">'
+            f'<div class="next-course-fact my-first"><dt>你首堂</dt><dd>{item["my_day"].isoformat()} · {ehtml(item["time"])}</dd></div>'
+            f'<div class="next-course-fact class-first"><dt>全班首堂</dt><dd>{item["class_day"].isoformat()}</dd></div>'
+            f'<div class="next-course-fact place centre"><dt>中心</dt><dd>{ehtml(item["centre"])}</dd></div>'
+            f'<div class="next-course-fact place location"><dt>地點／課室</dt><dd>{ehtml(item["location"])}</dd></div>'
+            '</dl></article>'
         )
+    default_rows = max(1, (min(5, len(candidates)) + 1) // 2)
     return (
         '<section class="next-new-courses" aria-labelledby="nextNewCourseHeading">'
         '<div class="next-new-header"><div><span class="next-new-kicker">接下來的課程</span>'
@@ -2091,7 +2098,8 @@ def next_upcoming_course_panel():
         '<button class="next-course-limit" type="button" data-next-course-limit="10" aria-pressed="false">Next 10</button>'
         '<button class="next-course-limit" type="button" data-next-course-limit="15" aria-pressed="false">Next 15</button>'
         '</div></div>'
-        f'<div id="nextCourseList" class="next-course-list">{"".join(cards)}</div></section>'
+        f'<div id="nextCourseList" class="next-course-list" style="--next-course-rows:{default_rows}">'
+        f'{"".join(cards)}</div></section>'
     )
 
 
@@ -2786,8 +2794,15 @@ document.querySelectorAll('.span-mode-option').forEach(btn=>btn.addEventListener
 }}));
 const nextCourseLimitButtons=Array.from(document.querySelectorAll('.next-course-limit'));
 const nextCourseCards=Array.from(document.querySelectorAll('.next-course-card'));
+const nextCourseList=document.getElementById('nextCourseList');
 function setNextCourseLimit(limit){{
   nextCourseCards.forEach((card,index)=>{{card.hidden=index>=limit;}});
+  const visibleCount=Math.min(limit,nextCourseCards.length);
+  if(nextCourseList){{
+    nextCourseList.style.setProperty('--next-course-rows',String(Math.max(1,Math.ceil(visibleCount/2))));
+    nextCourseList.dataset.visibleCount=String(visibleCount);
+    nextCourseList.dataset.activeLimit=String(limit);
+  }}
   nextCourseLimitButtons.forEach(button=>{{
     const active=Number(button.dataset.nextCourseLimit)===limit;
     button.classList.toggle('active',active);
