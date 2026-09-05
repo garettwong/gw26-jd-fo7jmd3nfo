@@ -1,0 +1,182 @@
+[
+  {
+    "group": "g02",
+    "label": "HK239HG · CW10",
+    "course_code": "HK239HG",
+    "course_name": "人工智能知識及應用證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-08-27",
+    "full_course_end": "2026-09-07",
+    "full_lesson_entries": 6
+  },
+  {
+    "group": "g03",
+    "label": "HK239HG · FS",
+    "course_code": "HK239HG",
+    "course_name": "人工智能知識及應用證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-08-14",
+    "full_course_end": "2026-08-21",
+    "full_lesson_entries": 6
+  },
+  {
+    "group": "g04",
+    "label": "HK239HG · LT",
+    "course_code": "HK239HG",
+    "course_name": "人工智能知識及應用證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-11-23",
+    "full_course_end": "2026-11-30",
+    "full_lesson_entries": 6
+  },
+  {
+    "group": "g05",
+    "label": "HK239HG · SS",
+    "course_code": "HK239HG",
+    "course_name": "人工智能知識及應用證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-09-23",
+    "full_course_end": "2026-10-12",
+    "full_lesson_entries": 6
+  },
+  {
+    "group": "g06",
+    "label": "HK239HG · ST",
+    "course_code": "HK239HG",
+    "course_name": "人工智能知識及應用證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-10-03",
+    "full_course_end": "2026-11-07",
+    "full_lesson_entries": 6
+  },
+  {
+    "group": "g07",
+    "label": "HK239HG · 城市一條龍",
+    "course_code": "HK239HG",
+    "course_name": "人工智能知識及應用證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-12-16",
+    "full_course_end": "2026-12-18",
+    "full_lesson_entries": 6
+  },
+  {
+    "group": "g08",
+    "label": "HK244EG · CW",
+    "course_code": "HK244EG",
+    "course_name": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-08-24",
+    "full_course_end": "2026-10-08",
+    "full_lesson_entries": 18
+  },
+  {
+    "group": "g09",
+    "label": "HK244EG · FS",
+    "course_code": "HK244EG",
+    "course_name": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-09-21",
+    "full_course_end": "2026-11-03",
+    "full_lesson_entries": 18
+  },
+  {
+    "group": "g10",
+    "label": "HK244EG · FS-1",
+    "course_code": "HK244EG",
+    "course_name": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-05-14",
+    "full_course_end": "2026-06-29",
+    "full_lesson_entries": 19
+  },
+  {
+    "group": "g11",
+    "label": "HK244EG · HF2",
+    "course_code": "HK244EG",
+    "course_name": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-06-15",
+    "full_course_end": "2026-07-16",
+    "full_lesson_entries": 18
+  },
+  {
+    "group": "g12",
+    "label": "HK244HG · CW8",
+    "course_code": "HK244HG",
+    "course_name": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-08-06",
+    "full_course_end": "2026-09-08",
+    "full_lesson_entries": 12
+  },
+  {
+    "group": "g23",
+    "label": "HK265HG · FS · JUL 2026",
+    "course_code": "HK265HG",
+    "course_name": "人工智能強化營銷社交媒體內容創作證書（英文授課／兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-07-24",
+    "full_course_end": "2026-08-12",
+    "full_lesson_entries": 12
+  },
+  {
+    "group": "g24",
+    "label": "HK265HG · FS · SEP 2026",
+    "course_code": "HK265HG",
+    "course_name": "人工智能強化營銷社交媒體內容創作證書（英文授課／兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-09-16",
+    "full_course_end": "2026-10-14",
+    "full_lesson_entries": 12
+  },
+  {
+    "group": "g28",
+    "label": "HK267HG · CW2",
+    "course_code": "HK267HG",
+    "course_name": "生成式人工智能圖像及影片創作技巧證書（英語授課／兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-11-11",
+    "full_course_end": "2026-11-20",
+    "full_lesson_entries": 8
+  },
+  {
+    "group": "g25",
+    "label": "HK280HG · CW1",
+    "course_code": "HK280HG",
+    "course_name": "生成式人工智能商業應用證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-08-31",
+    "full_course_end": "2026-09-10",
+    "full_lesson_entries": 5
+  },
+  {
+    "group": "g14",
+    "label": "HK281DS · CW7",
+    "course_code": "HK281DS",
+    "course_name": "創意數碼媒體設計及製作助理證書",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-08-31",
+    "full_course_end": "2026-10-09",
+    "full_lesson_entries": 50
+  },
+  {
+    "group": "g15",
+    "label": "MC0106DS · 第2班",
+    "course_code": "MC0106DS",
+    "course_name": "創意數碼媒體設計及製作助理證書",
+    "provider": "循道衞理中心",
+    "full_course_start": "2026-07-25",
+    "full_course_end": "2026-09-10",
+    "full_lesson_entries": 47
+  },
+  {
+    "group": "g26",
+    "label": "MC244EG · 1",
+    "course_code": "MC244EG",
+    "course_name": "人工智能知識及應用證書（兼讀制）",
+    "provider": "循道衞理中心",
+    "full_course_start": "2026-09-11",
+    "full_course_end": "2026-10-30",
+    "full_lesson_entries": 6
+  }
+]

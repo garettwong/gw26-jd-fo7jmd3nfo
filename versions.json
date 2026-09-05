@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-09-05-V20ai",
+    "label": "2026-09-05 - V20ai",
+    "summary": "HK281DS CW7 按 8 月 28 日 R5 圖片修正為50節；Garett 10月3日下午改為L40，日期、時間及4小時任教不變。",
+    "latest": true
+  },
+  {
     "id": "2026-09-05-V20ah",
     "label": "2026-09-05 - V20ah",
     "summary": "HK281DS HF8 荃灣班：33 節暫覆可教，待 Calvin 確認；薪酬暫不更新。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-09-04-V20ag",
