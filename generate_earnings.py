@@ -59,6 +59,8 @@ def event_interval(text: str) -> tuple[int, int] | None:
 
 
 def is_garetts(event: dict) -> bool:
+    if event.get("salary_excluded"):
+        return False
     category = event["category"]
     if category in {"ymca", "dgs"}:
         return True

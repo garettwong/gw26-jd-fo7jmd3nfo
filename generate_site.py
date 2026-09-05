@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ah-hk281ds-hf8-proposed-20260905a"
+BUILD_ID = "v20ai-hk281ds-cw7-r5-corrected-20260905a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-04-V20ag"
-COMPARE_LABEL = "V20ah"
-COMPARE_BASELINE_LABEL = "V20ag"
-EXPECTED_COMPARISON_CHANGES = 63
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-05-V20ah"
+COMPARE_LABEL = "V20ai"
+COMPARE_BASELINE_LABEL = "V20ah"
+EXPECTED_COMPARISON_CHANGES = 50
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -84,7 +84,7 @@ UPCOMING_CLASS_META = {
     "HK244HG · CW8": ("基督教勵行會", "彩雲邨", "CHI"),
     "HK244EG · CW": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓103室", "CHI"),
     "HK239HG · CW10": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓101室", "CHI"),
-    "HK281DS · CW7": ("基督教勵行會", "彩雲邨（未有確實街道／房號）", "CHI"),
+    "HK281DS · CW7": ("基督教勵行會", "彩雲邨 · 課室 104（10 月 8 日職涯規劃：205）", "CHI"),
     "HK239HG · SS": ("基督教勵行會", "上水彩園", "CHI"),
     "HK239HG · FS": ("基督教勵行會", "四海大廈2樓205室", "CHI"),
     "HK244EG · FS": ("基督教勵行會", "四海大廈", "CHI"),
@@ -109,7 +109,7 @@ CLASS_UPDATE_META = {
     "HK244EG · FS": ("2026-07-10", "18 堂均由 Garett 任教；11 月 3 日期末實務試 18:45–21:45。"),
     "HK239HG · SS": ("2026-07-30", "上水消防／水務工程後已改期：9 月 23、28、30 日及 10 月 5、7、12 日。"),
     "HK239HG · ST": ("2026-07-18", "Calvin 已確認六堂均由 Garett 任教；11 月 7 日期末考試 10:30–11:30。"),
-    "HK281DS · CW7": ("2026-07-19", "10 月 3 日上午 L51 由 Demian Yuen 任教，與 Garett 的 HK239HG ST 撞期；Garett 只任教下午 L52，兩堂 helper 均為 Fiona。"),
+    "HK281DS · CW7": ("2026-08-28", "按 R5 圖片更新全班 L1–L50。Garett 只任教 10 月 3 日 14:00–18:00 L40（原 L52），課室 104，helper Fiona。L50 筆試時間與下午課堂矛盾，待 Calvin 核實。"),
     "HK239HG · 城市一條龍": ("2026-08-25", "六堂均由 Garett 任教；已改為 12 月 16 至 18 日，課室 102；12 月 18 日上午為持續評估／小組討論／專題報告，下午期末考試 15:30–16:30。"),
     "HK239HG · LT": ("2026-07-19", "六堂均由 Garett 任教；11 月 30 日期末考試 15:30–16:30。"),
     "MC244EG · 1": ("2026-08-31", "循道衞理中心正式時間表確認 MC244EG 班號 1；六個星期五晚 18:45–21:45，灣仔 305 室，共 18 小時。"),

@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-09-05-V20ai",
+    "label": "2026-09-05 - V20ai",
+    "summary": "HK281DS CW7 按 8 月 28 日 R5 圖片修正為50節；Garett 10月3日下午改為L40，日期、時間及4小時任教不變。",
+    "latest": true
+  },
+  {
     "id": "2026-09-04-V20ag",
     "label": "2026-09-04 - V20ag",
     "summary": "改善 Upcoming classes 閱讀次序：桌面先讀完整左欄再讀右欄；中心及地點／課室分開放大。Next 5／10／15、課堂及薪酬資料不變。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-09-01-V20af",
