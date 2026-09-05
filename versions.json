@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-09-05-V20ah",
+    "label": "2026-09-05 - V20ah",
+    "summary": "HK281DS HF8 荃灣班：33 節暫覆可教，待 Calvin 確認；薪酬暫不更新。",
+    "latest": true
+  },
+  {
     "id": "2026-09-04-V20ag",
     "label": "2026-09-04 - V20ag",
     "summary": "改善 Upcoming classes 閱讀次序：桌面先讀完整左欄再讀右欄；中心及地點／課室分開放大。Next 5／10／15、課堂及薪酬資料不變。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-09-01-V20af",

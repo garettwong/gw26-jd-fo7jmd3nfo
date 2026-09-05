@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ag-upcoming-column-order-place-readability-20260904a"
+BUILD_ID = "v20ah-hk281ds-hf8-proposed-20260905a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-01-V20af"
-COMPARE_LABEL = "V20ag"
-COMPARE_BASELINE_LABEL = "V20af"
-EXPECTED_COMPARISON_CHANGES = 0
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-04-V20ag"
+COMPARE_LABEL = "V20ah"
+COMPARE_BASELINE_LABEL = "V20ag"
+EXPECTED_COMPARISON_CHANGES = 63
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -69,10 +69,11 @@ COURSE_FAMILIES = [
         ],
     },
 ]
-TIMETABLE_AS_OF = datetime.date(2026, 9, 4)
+TIMETABLE_AS_OF = datetime.date(2026, 9, 5)
 UPCOMING_AS_OF = datetime.date(2026, 8, 2)
 RELEASE_AS_OF = TIMETABLE_AS_OF
 UPCOMING_CLASS_META = {
+    "HK281DS · HF8": ("基督教勵行會", "荃灣 · 課室 1（確實地址待確認）", "CHI"),
     "HK267HG · CW2": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓104室", "ENG"),
     "HK280HG · CW1": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓", "CHI"),
     "HK280HG · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
@@ -93,6 +94,7 @@ UPCOMING_CLASS_META = {
     "MC244EG · 1": ("循道衞理中心", "灣仔軒尼詩道22號循道衞理中心3樓305室", "CHI"),
 }
 CLASS_UPDATE_META = {
+    "HK281DS · HF8": ("2026-09-05", "暫覆 33 節可教，待 Calvin 確認；其餘由其他導師待定。來源實列 63 節，原標題 47 節有誤；薪酬暫不更新。"),
     "HK267HG · CW2": ("2026-08-28", "Calvin 已確認全 8 節由 Garett 任教；11 月 11 至 20 日共 30 小時，課室 104。"),
     "HK244EG · FS-1": ("2026-06-29", "已完成；6 月 18 日黑雨取消，補課為 6 月 27 日。"),
     "HK244EG · HF2": ("2026-07-16", "已完成；代課安排及評核／考試時間已按確認檔核對。"),
@@ -918,6 +920,9 @@ for label in _group_labels:
 
 PAYMENT_CONTEXT = []
 for label, slug, _group_status, _first_date in GROUPS:
+    # Garett explicitly deferred HF8 salary records on 5 September.
+    if label == "HK281DS · HF8":
+        continue
     group_events = [
         event
         for event in display_events
@@ -1613,6 +1618,8 @@ def event_slot(ev):
 
 
 def centre_code(ev):
+    if "荃灣" in ev.get("text", ""):
+        return "tsuen_wan"
     text = str(ev.get("text") or "")
     category = ev.get("category")
     if category == "ymca":
@@ -2543,6 +2550,8 @@ function applySpanFilters(){{
   }});
 }}
 const transitMinutes={{
+  'tsuen_wan|wan_chai':75,'wan_chai|tsuen_wan':75,
+  'tsuen_wan|four_seas':55,'four_seas|tsuen_wan':55,
   'sheung_shui|four_seas':64,'four_seas|sheung_shui':64,
   'four_seas|choi_wan':40,'choi_wan|four_seas':40,
   'ymca_yau_ma_tei|choi_wan':37,'choi_wan|ymca_yau_ma_tei':37,
@@ -2551,7 +2560,7 @@ const transitMinutes={{
   'shun_tin|choi_wan':30,'choi_wan|shun_tin':30,
   'sheung_shui|choi_wan':65,'choi_wan|sheung_shui':65
 }};
-const centreLabels={{sheung_shui:'上水',four_seas:'四海大廈',choi_wan:'彩雲',ymca_yau_ma_tei:'油麻地 YMCA',wan_chai:'灣仔',lam_tin:'藍田',shun_tin:'順天'}};
+const centreLabels={{tsuen_wan:'荃灣',sheung_shui:'上水',four_seas:'四海大廈',choi_wan:'彩雲',ymca_yau_ma_tei:'油麻地 YMCA',wan_chai:'灣仔',lam_tin:'藍田',shun_tin:'順天'}};
 function visibleMineChips(slot){{
   return Array.from(slot.querySelectorAll('.chip')).filter(ch=>ch.style.display!=='none'&&ch.dataset.layer==='mine'&&ch.dataset.start&&ch.dataset.end&&ch.dataset.centre);
 }}
