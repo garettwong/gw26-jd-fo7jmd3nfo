@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ai-hk281ds-cw7-r5-corrected-20260905a"
+BUILD_ID = "v20aj-live-hk-date-countdown-audit-20260908a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-05-V20ah"
-COMPARE_LABEL = "V20ai"
-COMPARE_BASELINE_LABEL = "V20ah"
-EXPECTED_COMPARISON_CHANGES = 50
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-05-V20ai"
+COMPARE_LABEL = "V20aj"
+COMPARE_BASELINE_LABEL = "V20ai"
+EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -69,8 +69,8 @@ COURSE_FAMILIES = [
         ],
     },
 ]
-TIMETABLE_AS_OF = datetime.date(2026, 9, 5)
-UPCOMING_AS_OF = datetime.date(2026, 8, 2)
+TIMETABLE_AS_OF = datetime.date(2026, 9, 8)
+UPCOMING_AS_OF = TIMETABLE_AS_OF
 RELEASE_AS_OF = TIMETABLE_AS_OF
 UPCOMING_CLASS_META = {
     "HK281DS · HF8": ("基督教勵行會", "荃灣 · 課室 1（確實地址待確認）", "CHI"),
@@ -84,7 +84,7 @@ UPCOMING_CLASS_META = {
     "HK244HG · CW8": ("基督教勵行會", "彩雲邨", "CHI"),
     "HK244EG · CW": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓103室", "CHI"),
     "HK239HG · CW10": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓101室", "CHI"),
-    "HK281DS · CW7": ("基督教勵行會", "彩雲邨 · 課室 104（10 月 8 日職涯規劃：205）", "CHI"),
+    "HK281DS · CW7": ("基督教勵行會", "彩雲邨 · 課室 104（10 月 8 日職涯規劃：205待確認）", "CHI"),
     "HK239HG · SS": ("基督教勵行會", "上水彩園", "CHI"),
     "HK239HG · FS": ("基督教勵行會", "四海大廈2樓205室", "CHI"),
     "HK244EG · FS": ("基督教勵行會", "四海大廈", "CHI"),
@@ -97,7 +97,7 @@ CLASS_UPDATE_META = {
     "HK281DS · HF8": ("2026-09-05", "暫覆 33 節可教，待 Calvin 確認；其餘由其他導師待定。來源實列 63 節，原標題 47 節有誤；薪酬暫不更新。"),
     "HK267HG · CW2": ("2026-08-28", "Calvin 已確認全 8 節由 Garett 任教；11 月 11 至 20 日共 30 小時，課室 104。"),
     "HK244EG · FS-1": ("2026-06-29", "已完成；6 月 18 日黑雨取消，補課為 6 月 27 日。"),
-    "HK244EG · HF2": ("2026-07-16", "已完成；代課安排及評核／考試時間已按確認檔核對。"),
+    "HK244EG · HF2": ("2026-09-08", "已完成；日期及評核時間與原件相符。L7／L10原件仍寫Andy，現有任教紀錄為Garett，須補齊逐堂代課確認；未改動實際任教紀錄。"),
     "HK265HG · FS · JUL 2026": ("2026-06-10", "全班由 Garett 任教；8 月 12 日期末實務試 14:20–17:20。"),
     "MC0106DS · 第2班": ("2026-07-18", "FINAL Excel：Garett 任教 L3、L4、L8、L9、L16、L17，其餘按檔案列明導師。"),
     "HK244HG · CW8": ("2026-08-11", "最新導師表：8 月 14 日 L3 由 Calvin sit-in 任教；8 月 31 日 L7 由 Chan Shuk Ki 任教；9 月 4、7、8 日 L10–L12 由 Calvin 任教；9 月 8 日期末實務試 14:30–17:30。"),
@@ -105,14 +105,14 @@ CLASS_UPDATE_META = {
     "HK239HG · CW10": ("2026-07-16", "六堂均由 Garett 任教；9 月 7 日期末考試 10:30–11:30。"),
     "HK244EG · CW": ("2026-07-14", "Ng Kai On 任教 L1–L4；Garett 任教 L5–L14、L17；Calvin 任教 L15、L16、L18。L16 為小組匯報、L17 為持續筆試、L18 為期末實務試。"),
     "HK280HG · CW1": ("2026-07-29", "五堂均由 Garett 任教；9 月 10 日期末筆試 10:30–11:30。"),
-    "HK265HG · FS · SEP 2026": ("2026-07-10", "全班由 Garett 任教；來源中的 July 誤字已按 9 月 28／30 日修正；10 月 14 日期末實務試 14:20–17:20。"),
+    "HK265HG · FS · SEP 2026": ("2026-09-08", "正式班別FS-6；原件列Wong Wai Hon。全班12節，10月14日期末實務試14:20–17:20；另列補考12月1日及2027年2月2日，時間及導師未定。"),
     "HK244EG · FS": ("2026-07-10", "18 堂均由 Garett 任教；11 月 3 日期末實務試 18:45–21:45。"),
     "HK239HG · SS": ("2026-07-30", "上水消防／水務工程後已改期：9 月 23、28、30 日及 10 月 5、7、12 日。"),
     "HK239HG · ST": ("2026-07-18", "Calvin 已確認六堂均由 Garett 任教；11 月 7 日期末考試 10:30–11:30。"),
     "HK281DS · CW7": ("2026-08-28", "按 R5 圖片更新全班 L1–L50。Garett 只任教 10 月 3 日 14:00–18:00 L40（原 L52），課室 104，helper Fiona。L50 筆試時間與下午課堂矛盾，待 Calvin 核實。"),
-    "HK239HG · 城市一條龍": ("2026-08-25", "六堂均由 Garett 任教；已改為 12 月 16 至 18 日，課室 102；12 月 18 日上午為持續評估／小組討論／專題報告，下午期末考試 15:30–16:30。"),
+    "HK239HG · 城市一條龍": ("2026-09-08", "整理紀錄為12月16–18日六堂Garett任教，課室102；尚欠原始改期確認。12月18日上午小組評估；下午考試15:30–16:30超出13:00–16:00課堂，待核實。"),
     "HK239HG · LT": ("2026-07-19", "六堂均由 Garett 任教；11 月 30 日期末考試 15:30–16:30。"),
-    "MC244EG · 1": ("2026-08-31", "循道衞理中心正式時間表確認 MC244EG 班號 1；六個星期五晚 18:45–21:45，灣仔 305 室，共 18 小時。"),
+    "MC244EG · 1": ("2026-09-08", "正式班號1，六個星期五晚18:45–21:45，灣仔305室，共18小時。10月30日期末筆試：表內20:30–21:30，頁底20:15–21:15，待中心確認。"),
 }
 SEN_CODE_RE = re.compile(r"\((PFSA2|QAT7)\)", re.I)
 
@@ -463,6 +463,7 @@ INFERRED_CLASS_BY_CODE = {}
 ROOM_DISPLAY_START = datetime.date(2026, 8, 15)
 ROOM_PENDING = "課室待確認"
 ROOM_RULES = (
+    (re.compile(r"\bHK244EG\b.*\bHF2\b", re.I), "101", "HK244EG HF2 central completed timetable: room 101"),
     (re.compile(r"\bMC244EG\b.*\bClass\s*1\b", re.I), "305", "MC244EG Class 1 FINAL FINAL PDF: classroom 305"),
     (re.compile(r"\bMC0?106DS\b", re.I), "306", "MC106DS FINAL timetable: classroom 306"),
     (re.compile(r"\bHK244HG\b.*\bCW8\b", re.I), "103", "HK244HG CW8 FINAL timetable: room 103"),
@@ -490,7 +491,14 @@ def resolve_teaching_room(event):
         event_date = datetime.date.fromisoformat(str(event.get("date") or ""))
     except ValueError:
         return "", ""
-    if event_date < ROOM_DISPLAY_START or event.get("category") in {"holiday", "school", "mike"}:
+    if event.get("category") in {"holiday", "school", "mike"}:
+        return "", ""
+    historical_source_room = (
+        re.search(r"\bHK244EG\b.*\b(?:HF2|FS-1)\b", text, re.I)
+        or re.search(r"\bHK265HG\b.*\bFS\b", text, re.I)
+        or re.search(r"\bMC0?106DS\b|\bHK244HG\b.*\bCW8\b", text, re.I)
+    )
+    if event_date < ROOM_DISPLAY_START and not historical_source_room:
         return "", ""
     for pattern, room, source in ROOM_RULES:
         if pattern.search(text):
@@ -1494,6 +1502,22 @@ def assessment_attendance_reminder(ev, notes):
     )
 
 
+def display_group_label(label):
+    # Display the official alias without changing stable lesson-log identities.
+    return "HK265HG · FS-6 · SEP 2026" if label == "HK265HG · FS · SEP 2026" else label
+
+
+def audited_source_note(ev):
+    group = ev.get("group_label", "")
+    lesson = LESSON_RE.search(str(ev.get("text") or ""))
+    number = int(lesson.group(1)) if lesson else None
+    if group == "MC244EG · 1" and number == 6:
+        return "期末筆試：原件表內為20:30-21:30，頁底為20:15-21:15，確實考試時間待中心確認；課堂維持18:45-21:45。"
+    if group == "HK265HG · FS · SEP 2026" and number == 12:
+        return "原件另列實務補考2026-12-01及2027-02-02；時間及導師未定，不代表Garett任教安排。"
+    return ""
+
+
 def event_fields(ev):
     text = str(ev.get("text") or "")
     title = str(ev.get("title") or "")
@@ -1526,7 +1550,9 @@ def event_fields(ev):
             course_name = course_name[:time_m.start()]
         course_name = course_name.strip(" ,-/") or "-"
 
-    class_label = ev.get("group_label") or "-"
+    class_label = display_group_label(ev.get("group_label") or "-")
+    if ev.get("group_label") == "HK265HG · FS · SEP 2026":
+        course_name = "Certificate in AI-enhanced Social Media Content Creation in Marketing (English Medium) (Part-time)"
     if category in {"holiday", "school", "mike"}:
         class_label = "-"
     lesson_m = LESSON_RE.search(text)
@@ -1546,7 +1572,7 @@ def event_fields(ev):
         "course_name": course_name,
         "time": display_times(text),
         "lesson": lesson,
-        "notes": display_notes(text),
+        "notes": display_notes(text) + ([audited_source_note(ev)] if audited_source_note(ev) else []),
         "helper": str(ev.get("helper") or "").strip(),
         "room": str(ev.get("teaching_room") or "").strip(),
     }
@@ -1676,6 +1702,10 @@ def chip(ev):
         if room else ""
     )
     full_html = ev.get("html") or ehtml(ev["text"])
+    if audited_source_note(ev):
+        full_html += f'<br><strong>來源核對：</strong>{ehtml(audited_source_note(ev))}'
+    if ev.get("group_label") == "HK265HG · FS · SEP 2026":
+        full_html += f'<br><strong>正式班別：</strong>FS-6<br>{ehtml(fields["course_name"])}'
     if room:
         full_html += f'<br><strong>課室：</strong>{ehtml(room)}'
     red_cls = " has-red" if ev.get("red") else ""
@@ -1825,7 +1855,7 @@ def calendar_filter_button(group):
     return (
         f'<button class="filter course-filter {ehtml(group_status)}" data-filter="{ehtml(slug)}" '
         f'data-first-date="{ehtml(first_date)}" data-status-summary="{ehtml(group_status)}" '
-        f'title="{ehtml(label)} · {ehtml(group_status)}">{ehtml(label)} ({count})</button>'
+        f'title="{ehtml(display_group_label(label))} · {ehtml(group_status)}">{ehtml(display_group_label(label))} ({count})</button>'
     )
 
 
@@ -1902,6 +1932,7 @@ def class_summary_button(group, section):
         event
         for event in display_events
         if event["group"] == slug and not is_proposal_only(event)
+        and not CANCELLED_TEACHING_RE.search(event["text"])
     ]
     mine_events = [
         event
@@ -1954,12 +1985,12 @@ def class_summary_button(group, section):
     html_button = (
         f'<button class="class-summary-card upcoming-course course-filter {card_classes}" type="button" '
         f'data-filter="{ehtml(slug)}" data-toggle-filter="1" data-first-date="{display_day.isoformat()}" '
-        f'aria-label="Filter {ehtml(label)}; {ehtml(status_label)}; {ehtml(lesson_count_label)}">'
+        f'aria-label="Filter {ehtml(display_group_label(label))}; {ehtml(status_label)}; {ehtml(lesson_count_label)}">'
         f'<span class="summary-dates">'
         f'<span class="summary-date"><small>我首堂</small><strong>{ehtml(my_first_label)}</strong></span>'
         f'<span class="summary-date"><small>全班首堂</small><strong>{ehtml(class_first_label)}</strong></span>'
         f'</span>'
-        f'<span class="upcoming-course-copy"><strong>{ehtml(label)}</strong>'
+        f'<span class="upcoming-course-copy"><strong>{ehtml(display_group_label(label))}</strong>'
         f'<span>{ehtml(course_name)}</span><span class="summary-lesson-count">{ehtml(lesson_count_label)}</span></span>'
         f'<span class="upcoming-language">{ehtml(language)}</span>'
         f'<span class="provider-badge provider-{ehtml(provider_class)}" title="{ehtml(centre)}" '
@@ -2020,12 +2051,8 @@ def next_upcoming_course_panel():
         and event["status"] == "confirmed"
         and not is_proposal_only(event)
         and event_course_family(event)
+        and not CANCELLED_TEACHING_RE.search(event["text"])
     ]
-    previously_taught_families = {
-        event_course_family(event)
-        for event in personal_erb
-        if datetime.date.fromisoformat(event["date"]) <= RELEASE_AS_OF
-    }
     candidates = []
     for label, slug, _group_status, _first_class_date in GROUPS:
         mine_group_events = [
@@ -2039,11 +2066,10 @@ def next_upcoming_course_panel():
             key=lambda event: (event["date"], display_times(event.get("text", ""))),
         )
         my_day = datetime.date.fromisoformat(my_first["date"])
-        if my_day <= RELEASE_AS_OF:
-            continue
         all_group_events = [
             event for event in display_events
             if event["group"] == slug and not is_proposal_only(event)
+            and not CANCELLED_TEACHING_RE.search(event["text"])
         ]
         class_first = min(
             all_group_events,
@@ -2054,7 +2080,7 @@ def next_upcoming_course_panel():
         my_fields = event_fields(my_first)
         centre, location, _language = summary_class_meta(label, all_group_events)
         candidates.append({
-            "label": label,
+            "label": display_group_label(label),
             "slug": slug,
             "family": family,
             "my_day": my_day,
@@ -2063,10 +2089,12 @@ def next_upcoming_course_panel():
             "lesson": my_fields["lesson"],
             "centre": centre,
             "location": location,
-            "is_new_family": family not in previously_taught_families,
+            "is_new_family": not any(
+                event_course_family(event) == family and event["date"] < my_first["date"]
+                for event in personal_erb
+            ),
         })
     candidates.sort(key=lambda item: (item["my_day"], item["time"], natural_key(item["label"])))
-    candidates = candidates[:15]
     if not candidates:
         return (
             '<section class="next-new-courses" aria-labelledby="nextNewCourseHeading">'
@@ -2075,10 +2103,8 @@ def next_upcoming_course_panel():
         )
     cards = []
     for index, item in enumerate(candidates):
-        days_left = (item["my_day"] - RELEASE_AS_OF).days
-        day_word = f"{days_left} 日" if days_left != 1 else "1 日"
         new_badge = '<span class="next-new-badge">全新課程</span>' if item["is_new_family"] else ""
-        hidden = " hidden" if index >= 5 else ""
+        hidden = " hidden"
         cards.append(
             f'<article class="next-course-card" data-next-course-index="{index}" '
             f'data-first-date="{item["my_day"].isoformat()}" data-first-time="{ehtml(item["time"])}" '
@@ -2087,7 +2113,7 @@ def next_upcoming_course_panel():
             '<div class="next-course-main">'
             f'<div class="next-course-title-row"><h3>{ehtml(item["label"])}</h3>{new_badge}</div>'
             f'<p>{ehtml(item["family"])}</p></div>'
-            f'<div class="next-new-countdown"><small>距離你首堂</small><strong>{ehtml(day_word)}</strong></div>'
+            '<div class="next-new-countdown"><small>距離你首堂</small><strong></strong></div>'
             '<dl class="next-new-facts">'
             f'<div class="next-course-fact my-first"><dt>你首堂</dt><dd>{item["my_day"].isoformat()} · {ehtml(item["time"])}</dd></div>'
             f'<div class="next-course-fact class-first"><dt>全班首堂</dt><dd>{item["class_day"].isoformat()}</dd></div>'
@@ -2106,7 +2132,7 @@ def next_upcoming_course_panel():
         '<button class="next-course-limit" type="button" data-next-course-limit="15" aria-pressed="false">Next 15</button>'
         '</div></div>'
         f'<div id="nextCourseList" class="next-course-list" style="--next-course-rows:{default_rows}">'
-        f'{"".join(cards)}</div></section>'
+        f'{"".join(cards)}</div><p id="nextCourseEmpty" hidden>目前沒有待開始的課程</p></section>'
     )
 
 
@@ -2151,7 +2177,7 @@ def span_identity(ev):
         return f"sen-{code.lower()}", f"YMCA SEN · {code}", "特殊教育需要支援課程"
     label = ev["group_label"]
     name = next((name for code, name in COURSE_CHINESE_NAMES.items() if code in label.upper()), "")
-    return ev["group"], label, name
+    return ev["group"], display_group_label(label), name
 
 
 span_group_map = {}
@@ -2329,6 +2355,17 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
 {version_selector_html}
 {next_new_course_html}
+<details class="source-audit" style="margin:14px 0;padding:8px 12px;border-left:4px solid #a64b00;font-size:13px;background:#fffaf0">
+<summary style="cursor:pointer;font-weight:800">來源核對：仍有待 Calvin／中心確認的資料</summary>
+<ul>
+<li>MC244EG 第1班：10月30日期末筆試，表內20:30–21:30與頁底20:15–21:15不一致；課堂18:45–21:45不變。</li>
+<li>HK281DS CW7：10月9日L50課堂14:00–18:00，但原件考試註記11:30–12:30；L47–48課室205仍待確認。50節鐘面時間200小時，技能欄188小時，3節職涯欄未填。</li>
+<li>MC106DS 第2班：原件47節有日期課堂共188小時，但標題及課程大綱寫49節／196小時；不能將49項內容直接當作47節的逐堂教學內容。</li>
+<li>HK239HG 城市一條龍：12月16–18日來自已整理紀錄，尚欠原始確認；12月18日L6課堂13:00–16:00，考試註記15:30–16:30超出課堂。</li>
+<li>HK244EG FS：L2／L5按原件改期註記採用9月23／30日；期末表列11月3日，但標題仍印8月27日。HK239HG FS／FS11正式班別、部分舊班導師更改紀錄仍需補齊。</li>
+<li>HK281DS HF8仍是未確認查詢；ComfyUI四堂的時間及地點未提供。歷史Mike Sir時段原文1915–1015含糊，未擅自改寫。</li>
+</ul>
+</details>
 <div id="viewTabs" class="view-tabs" role="tablist" aria-label="Timetable layout"><button id="calendarTab" class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="calendarView" data-view="calendar">Calendar</button><button id="spansTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="spansView" data-view="spans">Class spans</button></div>
 <section id="calendarView" class="view-panel" role="tabpanel" aria-labelledby="calendarTab">
 <div class="stats"><div class="stat"><b>{len(display_events)}</b> total entries</div><div class="stat"><b>{layer_counts['mine']}</b> my schedule</div><div class="stat"><b>{layer_counts['class']}</b> other class lessons</div><div class="stat"><b>{counts.get('confirmed',0)}</b> confirmed</div><div class="stat"><b>{counts.get('unconfirmed',0)}</b> unconfirmed</div></div>
@@ -2801,25 +2838,7 @@ document.querySelectorAll('.span-mode-option').forEach(btn=>btn.addEventListener
   syncLayerModeUI();
   applyFilters();
 }}));
-const nextCourseLimitButtons=Array.from(document.querySelectorAll('.next-course-limit'));
-const nextCourseCards=Array.from(document.querySelectorAll('.next-course-card'));
-const nextCourseList=document.getElementById('nextCourseList');
-function setNextCourseLimit(limit){{
-  nextCourseCards.forEach((card,index)=>{{card.hidden=index>=limit;}});
-  const visibleCount=Math.min(limit,nextCourseCards.length);
-  if(nextCourseList){{
-    nextCourseList.style.setProperty('--next-course-rows',String(Math.max(1,Math.ceil(visibleCount/2))));
-    nextCourseList.dataset.visibleCount=String(visibleCount);
-    nextCourseList.dataset.activeLimit=String(limit);
-  }}
-  nextCourseLimitButtons.forEach(button=>{{
-    const active=Number(button.dataset.nextCourseLimit)===limit;
-    button.classList.toggle('active',active);
-    button.setAttribute('aria-pressed',String(active));
-  }});
-}}
-nextCourseLimitButtons.forEach(button=>button.addEventListener('click',()=>setNextCourseLimit(Number(button.dataset.nextCourseLimit))));
-if(nextCourseLimitButtons.length) setNextCourseLimit(5);
+{(Path(__file__).resolve().parent / 'timetable_dates.js').read_text(encoding='utf-8')}
 syncCourseFilterUI();
 syncLayerModeUI();
 syncSpanLabels();
@@ -2827,18 +2846,21 @@ syncSpanCourseCount();
 applySpanZoom();
 applyFilters();
 (function(){{
- const pad=n=>String(n).padStart(2,'0');
- const localDate=d=>`${{d.getFullYear()}}-${{pad(d.getMonth()+1)}}-${{pad(d.getDate())}}`;
- const params=new URLSearchParams(location.search);
- const override=params.get('today');
- const ds=/^\\d{{4}}-\\d{{2}}-\\d{{2}}$/.test(override||'') ? override : localDate(new Date());
- const gridToday=document.getElementById('d-'+ds);
- const agendaToday=document.getElementById('a-d-'+ds);
- if(gridToday) gridToday.classList.add('today');
- if(agendaToday){{agendaToday.classList.add('today');agendaToday.classList.remove('empty-day');}}
+ let gridToday=null, agendaToday=null;
+ function refreshTodayTargets(){{
+   const ds=window.erbTodayDate();
+   document.querySelectorAll('.cell.today,.aday.today').forEach(el=>el.classList.remove('today'));
+   gridToday=document.getElementById('d-'+ds);
+   agendaToday=document.getElementById('a-d-'+ds);
+   if(gridToday) gridToday.classList.add('today');
+   if(agendaToday){{agendaToday.classList.add('today');agendaToday.classList.remove('empty-day');}}
+ }}
+ refreshTodayTargets();
+ window.addEventListener('erb-date-changed', refreshTodayTargets);
  const todayBtn=document.getElementById('todayBtn');
  function isPortraitAgenda(){{return window.matchMedia('(orientation: portrait) and (max-width: 820px)').matches;}}
  function focusToday(force=false){{
+   refreshTodayTargets();
    if(window.__filterActive&&!force) return;
    const portrait=isPortraitAgenda();
    const target=portrait ? agendaToday : gridToday;
