@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ak-final-mc244eg-source-clarification-20260908a"
+BUILD_ID = "v20al-mc244eg-exam-confirmed-2030-2130-20260908a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-08-V20aj"
-COMPARE_LABEL = "V20ak"
-COMPARE_BASELINE_LABEL = "V20aj"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-08-V20ak"
+COMPARE_LABEL = "V20al"
+COMPARE_BASELINE_LABEL = "V20ak"
 EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
@@ -112,7 +112,7 @@ CLASS_UPDATE_META = {
     "HK281DS · CW7": ("2026-08-28", "按 R5 圖片更新全班 L1–L50。Garett 只任教 10 月 3 日 14:00–18:00 L40（原 L52），課室 104，helper Fiona。L50 筆試時間與下午課堂矛盾，待 Calvin 核實。"),
     "HK239HG · 城市一條龍": ("2026-09-08", "整理紀錄為12月16–18日六堂Garett任教，課室102；尚欠原始改期確認。12月18日上午小組評估；下午考試15:30–16:30超出13:00–16:00課堂，待核實。"),
     "HK239HG · LT": ("2026-07-19", "六堂均由 Garett 任教；11 月 30 日期末考試 15:30–16:30。"),
-    "MC244EG · 1": ("2026-09-08", "已按Garett指定FINAL PDF確認：班號1，六堂18:45–21:45，灣仔305室，共18小時。10月30日L6含期末筆試50%；原件主表20:30–21:30、頁底20:15–21:15，兩處文字不一致，不影響課堂已確認狀態。"),
+    "MC244EG · 1": ("2026-09-08", "六堂18:45–21:45，灣仔305室，共18小時；10月30日期末筆試20:30–21:30。"),
 }
 SEN_CODE_RE = re.compile(r"\((PFSA2|QAT7)\)", re.I)
 
@@ -1512,9 +1512,8 @@ def audited_source_note(ev):
     lesson = LESSON_RE.search(str(ev.get("text") or ""))
     number = int(lesson.group(1)) if lesson else None
     if group == "MC244EG · 1" and number == 6:
-        return "已確認FINAL排期：技能訓練及課程評核；期末筆試（1小時，佔50%）。原件主表20:30-21:30、頁底20:15-21:15（兩處文字不一致）；課堂18:45-21:45不變，每節小息10分鐘。"
-    if group == "MC244EG · 1" and number == 1:
-        return "已確認FINAL排期：技能訓練；每節小息10分鐘。持續評估（小組討論及專題報告）佔50%，由導師安排，原件未指定堂次。"
+        # Garett confirmed the main-table exam time on 2026-09-08.
+        return "期末筆試 20:30–21:30"
     if group == "HK265HG · FS · SEP 2026" and number == 12:
         return "原件另列實務補考2026-12-01及2027-02-02；時間及導師未定，不代表Garett任教安排。"
     return ""
@@ -2360,7 +2359,6 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <details class="source-audit" style="margin:14px 0;padding:8px 12px;border-left:4px solid #a64b00;font-size:13px;background:#fffaf0">
 <summary style="cursor:pointer;font-weight:800">來源附註與待核對細節（不改變各班確認狀態）</summary>
 <ul>
-<li>MC244EG 第1班已確認：採用Garett指定FINAL PDF，六堂均18:45–21:45、課室305。只有10月30日筆試附註兩處不一致：主表20:30–21:30、頁底20:15–21:15；不是課堂排期待確認。</li>
 <li>HK281DS CW7：10月9日L50課堂14:00–18:00，但原件考試註記11:30–12:30；L47–48課室205仍待確認。50節鐘面時間200小時，技能欄188小時，3節職涯欄未填。</li>
 <li>MC106DS 第2班：原件47節有日期課堂共188小時，但標題及課程大綱寫49節／196小時；不能將49項內容直接當作47節的逐堂教學內容。</li>
 <li>HK239HG 城市一條龍：12月16–18日來自已整理紀錄，尚欠原始確認；12月18日L6課堂13:00–16:00，考試註記15:30–16:30超出課堂。</li>
