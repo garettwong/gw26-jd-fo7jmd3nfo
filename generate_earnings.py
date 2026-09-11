@@ -565,6 +565,7 @@ def main() -> None:
             page = page.replace("const monthLabel=parts.length", "const monthLabel=!group.month?'待提交／未有日期':parts.length")
             page = page.replace("+' hours</td>", "+' hours<br>'+esc(r.invoice_status||'')+'</td>")
             page = page.replace('ERB：全班完結後 21 日；SEN：月結後 7 日。', 'ERB：有提交日期按提交後約 21 日；未完班按完班即提交推算。SEN：月結後 7 日。')
+            page = page.replace('href="../../">Versions', 'href="../../?history=1">Versions')
             report_page.write_text(page, encoding="utf-8")
         totals[item["id"]] = {
             "confirmed": report["confirmed"]["grand_total"],
@@ -577,6 +578,7 @@ def main() -> None:
     rows = "".join(version_row(item) for item in VERSIONS)
     selector = SELECTOR_PAGE.substitute(version_rows=rows, latest_id=latest["id"])
     selector = selector.replace('Select a saved timetable version.', 'Latest salary records and cash forecast; historical timetable snapshots below.')
+    selector = selector.replace("localStorage.setItem(STORAGE_KEY,raw);document", "localStorage.setItem(STORAGE_KEY,raw);if(!new URLSearchParams(location.search).has('history')){location.replace('versions/" + latest['id'] + "/#key='+raw);return}document")
     (OUT / "index.html").write_text(selector, encoding="utf-8")
     (OUT / "versions.json").write_text(
         json.dumps(VERSIONS, ensure_ascii=False, indent=2), encoding="utf-8"
