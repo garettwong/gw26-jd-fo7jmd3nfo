@@ -6,6 +6,7 @@ import html
 import json
 import os
 import re
+import sys
 from collections import defaultdict
 from datetime import date, timedelta
 from pathlib import Path
@@ -256,6 +257,7 @@ def calculate_expected_payments(
         full_end = date.fromisoformat(context["full_course_end"])
         rows.append({
             "kind": "ERB",
+            "group": group,
             "label": context["label"],
             "course_name": context["course_name"],
             "provider": context["provider"],
@@ -368,6 +370,9 @@ def build_report(
             "SEN 預計到賬日以每月最後一日後 7 個曆日規劃。",
             "DGS 只有 HKD 7,000 最終總額，未有到賬週期，因此不列入有日期的預計到賬合計。",
         ])
+    if item.get("latest"):
+        from salary_cashflow import reconcile_current
+        reconcile_current(report, payment_context or [])
     return report
 
 
@@ -509,6 +514,8 @@ def main() -> None:
     latest_payload = None
 
     for item in VERSIONS:
+        if "--latest-only" in sys.argv and not item.get("latest"):
+            continue
         source = ROOT / "versions" / item["id"] / "events.json"
         if not source.exists():
             raise FileNotFoundError(f"Missing version event ledger: {source}")
@@ -551,7 +558,14 @@ def main() -> None:
             )
         report_page = destination / "index.html"
         if item.get("latest") or not report_page.exists():
-            report_page.write_text(REPORT_PAGE, encoding="utf-8")
+            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js"></script>\n<script>\nconst STORAGE_KEY')
+            page = page.replace("    render('confirmed');", "    render('confirmed');\n    if(data.cashflow) window.mountCashflow(data);")
+            page = page.replace("+' · Updated '+data.generated", "+' · Records checked '+(data.records_as_of||data.generated)")
+            page = page.replace("esc(r.expected_payment_date)", "esc(r.expected_payment_date||'待提交／核實')")
+            page = page.replace("const monthLabel=parts.length", "const monthLabel=!group.month?'待提交／未有日期':parts.length")
+            page = page.replace("+' hours</td>", "+' hours<br>'+esc(r.invoice_status||'')+'</td>")
+            page = page.replace('ERB：全班完結後 21 日；SEN：月結後 7 日。', 'ERB：有提交日期按提交後約 21 日；未完班按完班即提交推算。SEN：月結後 7 日。')
+            report_page.write_text(page, encoding="utf-8")
         totals[item["id"]] = {
             "confirmed": report["confirmed"]["grand_total"],
             "confirmed_and_unconfirmed": report["confirmed_and_unconfirmed"]["grand_total"],
@@ -562,6 +576,7 @@ def main() -> None:
     latest = next(item for item in VERSIONS if item.get("latest"))
     rows = "".join(version_row(item) for item in VERSIONS)
     selector = SELECTOR_PAGE.substitute(version_rows=rows, latest_id=latest["id"])
+    selector = selector.replace('Select a saved timetable version.', 'Latest salary records and cash forecast; historical timetable snapshots below.')
     (OUT / "index.html").write_text(selector, encoding="utf-8")
     (OUT / "versions.json").write_text(
         json.dumps(VERSIONS, ensure_ascii=False, indent=2), encoding="utf-8"
@@ -573,7 +588,7 @@ def main() -> None:
     )
 
     print(OUT)
-    print("PRIVATE_URL_FRAGMENT=" + encode(key))
+    print("Existing private key preserved; not printed.")
     print(json.dumps(totals, indent=2))
 
 
