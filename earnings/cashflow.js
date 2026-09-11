@@ -26,17 +26,33 @@ window.mountCashflow=function(data){
  <label>未來 <span class="cfN"></span> 日生活費／必付開支（HK$）<input id="cfReserve" type="number" min="0" step="0.01" inputmode="decimal" placeholder="租金、日常開支等；沒有則填 0"><small>切換日數時，請重新填寫該期間生活費。</small></label>
  <label>我想保留的安全底線（HK$）<input id="cfBuffer" type="number" min="0" step="0.01" inputmode="decimal" placeholder="不想動用的存款；不保留則填 0"><small>與上面的生活費分開，不要重複填同一筆錢。</small></label></div>
  <div id="cfResult" class="cf-result" aria-live="polite"></div><button type="button" id="cfReset" class="cf-reset">清除試算</button><p class="cf-note">輸入只存在此瀏覽器，不上傳、不改正式記錄。預計收入可能遲到；「安全」是按你自己設定的開支與底線評估，不是保證。</p></div>
- <div class="cf-panel"><div class="cf-ledger-head"><h3>每筆錢：發票、實收、預計日期</h3><select id="cfFilter" aria-label="收款記錄篩選"><option value="window">這段期間預計入賬</option><option value="unpaid" selected>全部未確認收款</option><option value="action">待提交／待核實</option><option value="paid">已確認收款</option><option value="all">全部紀錄</option></select></div><div id="cfLedgerSummary" class="cf-muted"></div><div id="cfItems" class="cf-items"></div><p class="cf-note">「交 Calvin 日期」是實際提交日期，不是發票上列印的日期，也不是寄給自己的日期。記錄沒有日期時會明示；已確認收款但日期缺失，不會用估計日期代替。</p></div>`;
+ <div class="cf-panel"><div class="cf-ledger-head"><h3>課程及收款進度</h3><select id="cfFilter" aria-label="收款記錄篩選"><option value="window">這段期間預計入賬</option><option value="unpaid" selected>全部未確認收款</option><option value="action">待提交／待核實</option><option value="paid">已確認收款</option><option value="all">全部紀錄</option></select></div><div id="cfLedgerSummary" class="cf-muted"></div><div id="cfItems" class="cf-items"></div><p class="cf-note">「交 Calvin 日期」是實際提交日期，不是發票上列印的日期，也不是寄給自己的日期。記錄沒有日期時會明示；已確認收款但日期缺失，不會用估計日期代替。</p></div>`;
  const inputs=['cfBalance','cfReserve','cfPurchase','cfBuffer'];inputs.forEach(id=>{if(saved[id]!==undefined)document.getElementById(id).value=saved[id];});document.getElementById('cfDays').value=days;
  function buckets(){const unpaid=all.filter(r=>!r.received),unissued=r=>r.forecast_stage==='future_course'&&r.invoice_date<today;
  const eligible=unpaid.filter(r=>r.expected_payment_date&&r.expected_payment_date>=today&&!unissued(r)),selected=eligible.filter(r=>r.expected_payment_date<=add(today,days));
  return {unpaid,selected,submitted:selected.filter(r=>['submitted','submitted_date_unknown'].includes(r.forecast_stage)),future:selected.filter(r=>!['submitted','submitted_date_unknown'].includes(r.forecast_stage)),overdue:unpaid.filter(r=>r.expected_payment_date&&r.expected_payment_date<today),pending:unpaid.filter(r=>!r.expected_payment_date||unissued(r))};}
  function invoiceText(r){if(r.kind!=='ERB')return r.submitted_on||'非 Calvin 款項／日期未記錄';if(r.submitted_on)return r.submitted_on+(r.submitted_at?' '+r.submitted_at.slice(11,16):'');if(r.submission_state==='submitted')return '已交；實際日期未記錄';if(r.received)return '已收款；交單日期未記錄';if(r.forecast_stage==='awaiting_submission')return '尚未確認提交';return '尚未開單';}
- function card(r){const paid=r.received?(r.received_on||'已收款；實際日期未記錄'):'未確認收到';
- const expected=r.received?'已收款，不再預測':r.expected_payment_date||'待提交後再估算';
- const qualifier=r.received?'':r.forecast_stage==='submitted_date_unknown'?'暫估；提交日期未記錄':r.forecast_stage==='future_course'?'需先完班及提交發票':r.expected_payment_date?'估計，非保證日期':'未計入近期預測';
- const badge=r.received?'已收款':r.forecast_stage==='awaiting_submission'?'發票備妥，待確認交 Calvin':r.forecast_stage==='future_course'?'未交發票／未到收款階段':'已交發票，收款待確認';
- return `<article class="cf-item ${r.received?'cf-paid':''}" data-group="${esc(r.group||r.label)}"><header><b>${esc(r.label)}</b><strong class="cf-amount">${cash(r.amount)}</strong></header><p class="cf-course-name">${esc(r.course_name||r.label)}</p><span class="cf-badge">${esc(badge)}</span><dl class="cf-dates"><div><dt>金額</dt><dd>${cash(r.amount)}</dd></div><div><dt>發票日期（單上）</dt><dd>${esc(r.invoice_issued_on||(r.received?'已開單；日期未記錄':r.forecast_stage==='future_course'?'尚未開單':'日期未記錄'))}</dd></div><div><dt>${r.kind==='ERB'?'交 Calvin 日期':'提交發票日期'}</dt><dd>${esc(invoiceText(r))}</dd></div><div><dt>實際收款日期</dt><dd>${esc(paid)}</dd></div><div><dt>預計收到日期</dt><dd>${esc(expected)}${qualifier?'<br><span class="cf-muted">'+esc(qualifier)+'</span>':''}</dd></div></dl><details><summary>查看估算依據／課程資料</summary>${esc(r.basis||r.reason||'沿用已確認收款記錄')}<br>${r.submission_confirmed_on?'你確認已交單的日期：'+esc(r.submission_confirmed_on)+'（不是實際提交日）<br>':''}${r.invoice_date?'全班完結／月結日：'+esc(r.invoice_date)+'<br>':''}${esc(r.course_name||'')}</details></article>`;}
+ function card(r){
+ const submitted=r.submission_state==='submitted',future=!r.received&&!submitted;
+ const line=(label,value,note='')=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+(note?'<br><span class="cf-muted">'+esc(note)+'</span>':'')+'</dd></div>';
+ let fields='',badge='';
+ if(r.received){
+   badge='已收款';
+   fields=line(r.kind==='ERB'?'已提交 Calvin':'已提交發票',invoiceText(r))+line('實際收到付款',r.received_on||'已收款；日期未記錄');
+ }else if(submitted){
+   badge='已交發票，等收款';
+   fields=line('已提交 Calvin',invoiceText(r))+line('預計收到付款',r.expected_payment_date||'日期待核實','估計，非保證日期；實際收款未確認');
+ }else if(r.kind==='ERB'){
+   const ended=r.class_end<today;
+   badge=ended?'按課表已完班，待提交':'待全班完結後開單';
+   fields=line('全班開始',r.class_start||'待核實')+line('全班結束',r.class_end||'待核實')+line('何時提交發票',r.invoice_submit_from||'待核實',ended?'確認全班已完成後，請提交 Calvin':'全班最後一課完結後，便可提交 Calvin');
+ }else{
+   badge='待月結／提交';
+   fields=line('服務期間',r.service_period||'未記錄')+line('何時提交發票',r.invoice_date||'待核實','月結後提交');
+ }
+ const extra=[r.invoice_issued_on?'發票日期（單上）：'+r.invoice_issued_on:'',r.class_start&&r.class_end?'全班期間：'+r.class_start+' 至 '+r.class_end:'',future&&r.expected_payment_date?'若完班即交單，預計收款：'+r.expected_payment_date:'',r.basis||r.reason||''].filter(Boolean).map(esc).join('<br>');
+ return '<article class="cf-item '+(r.received?'cf-paid':'')+'" data-group="'+esc(r.group||r.label)+'"><header><b>'+esc(r.label)+'</b><strong class="cf-amount">'+cash(r.amount)+'</strong></header><p class="cf-course-name">'+esc(r.course_name||r.label)+'</p><span class="cf-badge">'+esc(badge)+'</span><dl class="cf-dates">'+fields+'</dl><details><summary>其他記錄／估算依據</summary>'+extra+'</details></article>';
+ }
  function renderLedger(){const b=buckets(),rs=filter==='window'?b.selected:filter==='unpaid'?b.unpaid:filter==='paid'?all.filter(r=>r.received):filter==='action'?[...new Set([...b.pending,...b.overdue])]:all;
  document.getElementById('cfLedgerSummary').textContent=`${rs.length} 筆 · 合共 ${cash(sum(rs))}${filter==='window'?' · 對應上方所選期間總額':''}`;document.getElementById('cfItems').innerHTML=rs.map(card).join('')||'<p>這個分類暫時沒有款項。</p>';}
  function plan(){const values=Object.fromEntries(inputs.map(id=>[id,document.getElementById(id).value]));try{localStorage.setItem(storage,JSON.stringify({...values,days}));}catch{}
