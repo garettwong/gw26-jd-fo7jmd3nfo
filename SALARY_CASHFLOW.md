@@ -21,7 +21,8 @@ the existing device key; no salary navigation/key is added to the public timetab
 ## Cash-flow semantics
 
 The top panel always uses confirmed work, independently of the historical salary
-mode buttons below. Rolling 30/60/90-day figures are cumulative and exclude paid
+mode buttons below. One selectable N-day total (presets or 1-365 custom days)
+is cumulative from today to the displayed end date and excludes paid
 items, estimates whose dates have passed, and prepared invoices with no confirmed
 client submission. No row becomes paid because its expected date passed.
 
@@ -36,10 +37,18 @@ The browser computes today's date in Hong Kong, warns when payment evidence is
 older than seven days, and refreshes the forecast after a date change. Reloading
 fetches encrypted records without using the browser cache.
 
+Each payment card has separate actual client-submission date, actual receipt date,
+and expected receipt date fields. Never substitute invoice-face dates, self-email
+dates or confirmation dates for actual client submission. Unknown dates remain
+explicitly unknown, even for already-paid invoices. All records, received,
+unreceived and action-needed items are available through the ledger filter.
+
 The purchase calculator stores inputs only in browser localStorage. It shows both
-cash-only and forecast-inclusive balances; it requires explicit current balance,
-reserved expenditure and purchase budget. It is not a bank balance or promise of
-affordability. Local inputs do not sync between devices.
+cash-only and forecast-inclusive margins above a user-defined safety cushion. It
+requires current balance, purchase price, N-day living expenses and a separate
+minimum savings cushion. Changing N clears the living-expense input so a shorter
+period's costs cannot silently be reused for a longer period. It is not a bank
+balance or promise of affordability. Local inputs do not sync between devices.
 
 ## Release checks
 

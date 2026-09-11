@@ -1,60 +1,55 @@
-/* Private records are supplied only after the existing AES-GCM unlock. */
-window.mountCashflow = function (data) {
-  const cash = n => new Intl.NumberFormat('en-HK', {style:'currency', currency:'HKD', maximumFractionDigits:0}).format(n);
-  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const hkToday = () => new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Hong_Kong',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-  const add = (day,n) => {const d=new Date(day+'T00:00:00Z'); d.setUTCDate(d.getUTCDate()+n); return d.toISOString().slice(0,10);};
-  const sum = rows => rows.reduce((n,r)=>n+r.amount,0);
-  const rows = data.confirmed.expected_payments.rows;
-  const unpaid = rows.filter(r=>!r.received);
-  const style = document.createElement('style');
-  style.textContent = `.cashflow{margin:20px 0;padding:20px;background:#fff;border:1px solid #c4dbd8;border-top:5px solid #0f7074;border-radius:12px}.cashflow h2{font-size:24px;margin:0 0 5px}.cashflow h3{font-size:16px;margin:20px 0 8px}.cf-muted{color:#667387;font-size:13px;line-height:1.6}.cf-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:15px 0}.cf-card{background:#edf7f5;border-radius:8px;padding:14px}.cf-card strong{display:block;font-size:27px;color:#0f7074;margin:5px 0}.cf-card small{display:block;color:#52666a;font-size:12px}.cf-warn{padding:12px;border-radius:8px;background:#fff4df;color:#785000;margin:12px 0;line-height:1.6}.cf-list{list-style:none;padding:0;margin:0}.cf-list li{display:flex;justify-content:space-between;gap:15px;padding:13px 0;border-bottom:1px solid #d7dee8}.cf-list span{display:block}.cf-list strong{white-space:nowrap}.cf-planner{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cf-planner label{font-size:13px;font-weight:700}.cf-planner input,.cf-planner select{display:block;width:100%;min-width:0;padding:10px;margin-top:5px;border:1px solid #aabdc4;border-radius:6px;font:16px 'Segoe UI',sans-serif;background:white;color:#1d2734}.cf-result{margin-top:12px;padding:14px;background:#edf7f5;border-radius:8px;line-height:1.6}.cf-result strong{font-size:23px}.cf-reset{background:white;border:1px solid #aabdc4;border-radius:6px;padding:9px;margin-top:10px;color:#1d2734}.cf-toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center}.cf-toolbar button{background:#0f7074;color:white;border:0;border-radius:6px;padding:9px;font:inherit;white-space:nowrap}@media(max-width:620px){.cashflow{padding:14px;margin-top:14px}.cashflow h2{font-size:21px}.cf-grid{grid-template-columns:1fr}.cf-card{display:grid;grid-template-columns:1fr auto;align-items:center;gap:0 8px}.cf-card strong{grid-column:2;grid-row:1/3;font-size:25px}.cf-card small{grid-column:1}.cf-planner{grid-template-columns:1fr}.cf-list li{font-size:14px}.cf-toolbar{align-items:flex-start}}`;
-  document.head.append(style);
-  style.textContent += '.cf-result strong{white-space:nowrap}';
-  const section=document.createElement('section'); section.className='cashflow'; section.id='cashflow';
-  document.querySelector('main').prepend(section);
-  let today='';
-  function render(){
-    today=hkToday();
-    const future=unpaid.filter(r=>r.expected_payment_date && r.expected_payment_date>=today);
-    const overdue=unpaid.filter(r=>r.expected_payment_date && r.expected_payment_date<today);
-    const pending=unpaid.filter(r=>!r.expected_payment_date);
-    const completed=unpaid.filter(r=>r.kind==='ERB' && r.invoice_date<today);
-    const eligibleUnissued=unpaid.filter(r=>r.forecast_stage==='future_course' && r.invoice_date<today);
-    const reliableFuture=future.filter(r=>!eligibleUnissued.includes(r));
-    const inDays=n=>reliableFuture.filter(r=>r.expected_payment_date<=add(today,n));
-    const age=Math.floor((Date.parse(today)-Date.parse(data.records_as_of.slice(0,10)))/86400000);
-    section.innerHTML=`<div class="cf-toolbar"><div><h2>接下來有多少錢可收？</h2><div class="cf-muted">今天 ${esc(today)} · 香港時間<br>發票核對：${esc(data.records_as_of.slice(0,16).replace('T',' '))}<br>課表：${esc(data.version_id)} · 已確認課程；不包括未確認工作</div></div><button id="cfRefresh" type="button">重新整理</button></div>
-    ${age>7?'<div class="cf-warn">記錄已超過 7 日未核對。下列預測使用已存資料，不代表最新銀行入賬。</div>':''}
-    <div class="cf-grid">${[30,60,90].map(n=>`<div class="cf-card"><span>未來 ${n} 日預計可收</span><strong data-horizon="${n}">${cash(sum(inDays(n)))}</strong><small>累計至 ${add(today,n)}</small></div>`).join('')}</div>
-    <p class="cf-muted">三個數字是累計，不能相加。只計尚未確認收款、具規劃日期的已確認工作；未完班款項仍以完成教學及即時提交發票為前提。這是預測，不是銀行結餘或保證收入。</p>
-    <div class="cf-warn"><strong>已完班、未確認收款（Calvin）：${cash(sum(completed))}</strong><br>其中待提交／未有日期：${cash(sum(pending))}；已過規劃日但收款未核實：${cash(sum(overdue))}。這些不會自動當作已收款。${eligibleUnissued.length?'<br>另有 '+eligibleUnissued.length+' 班按課表已完結，但未有發票更新；已暫停計入近期到賬預測。':''}</div>
-    <h3>下一批預計入賬</h3><ul class="cf-list">${reliableFuture.slice(0,6).map(r=>`<li><div><span>${esc(r.expected_payment_date)} · ${esc(r.label)}</span><span class="cf-muted">${esc(r.invoice_status)}<br>${esc(r.basis)}</span></div><strong>${cash(r.amount)}</strong></li>`).join('')||'<li>目前沒有可列日期的未來款項。</li>'}</ul>
-    ${pending.length?'<h3>要先處理</h3><ul class="cf-list">'+pending.map(r=>`<li><div>${esc(r.label)}<span class="cf-muted">${esc(r.invoice_status)}<br>若今天提交，按 21 日規劃約 ${add(today,21)}；未計入以上預測。</span></div><strong>${cash(r.amount)}</strong></li>`).join('')+'</ul>':''}
-    ${overdue.length?'<h3>已過規劃日：待核實</h3><ul class="cf-list">'+overdue.map(r=>`<li><div>${esc(r.label)}<span class="cf-muted">原規劃 ${esc(r.expected_payment_date)}；不是已證實逾期欠款。</span></div><strong>${cash(r.amount)}</strong></li>`).join('')+'</ul>':''}
-    <h3>買東西前，試算一下</h3><p class="cf-muted">填入目前銀行可用結餘、這段期間預留生活費及購物預算。資料只留在這個瀏覽器，不上傳，也不會更改正式薪酬紀錄。</p>
-    <div class="cf-planner"><label>目前可用結餘（HK$）<input id="cfBalance" type="number" min="0" step="0.01" inputmode="decimal" placeholder="未提供，不會假設為零"></label><label>期間內生活費／預留款（HK$）<input id="cfReserve" type="number" min="0" step="0.01" inputmode="decimal" placeholder="請填寫；沒有則填 0"></label><label>想買的東西預算（HK$）<input id="cfPurchase" type="number" min="0" step="0.01" inputmode="decimal" placeholder="例如新電話的實際售價"></label><label>預計購買日期<input id="cfTarget" type="date" min="${today}" value="${add(today,30)}"></label></div><div id="cfResult" class="cf-result" aria-live="polite"></div><button id="cfReset" class="cf-reset" type="button">清除本機試算資料</button>
-    <h3>完整薪酬及每筆收款紀錄</h3><p class="cf-muted">下方保留月度工資、已收款切換及所有未來班別。到賬倒數每天按香港日期重算；實際收款必須有記錄或你的確認，不會因日期到了而自動標成已收。</p>`;
-    document.getElementById('cfRefresh').onclick=()=>location.reload();
-    const ids=['cfBalance','cfReserve','cfPurchase','cfTarget'];
-    const store='garett-private-purchase-planner-v1';
-    try{const saved=JSON.parse(localStorage.getItem(store)||'{}');ids.forEach(id=>{if(saved[id]!==undefined)document.getElementById(id).value=saved[id];});}catch{}
-    function plan(){
-      const values=Object.fromEntries(ids.map(id=>[id,document.getElementById(id).value]));
-      localStorage.setItem(store,JSON.stringify(values));
-      const result=document.getElementById('cfResult');
-      if(!/^\d{4}-\d{2}-\d{2}$/.test(values.cfTarget)||values.cfTarget<today){result.textContent='請選擇今天或以後的購買日期。';return;}
-      if(['cfBalance','cfReserve','cfPurchase'].some(id=>values[id]===''||!Number.isFinite(Number(values[id]))||Number(values[id])<0)){result.textContent='填齊結餘、預留款及購物預算後，才可計算預計餘額。';return;}
-      const inflow=sum(reliableFuture.filter(r=>r.expected_payment_date<=values.cfTarget));
-      const now=Number(values.cfBalance)-Number(values.cfReserve)-Number(values.cfPurchase);
-      const later=now+inflow;
-      result.innerHTML=`不靠未入賬薪酬，買後餘額：<strong>${cash(now)}</strong><br>若截至 ${esc(values.cfTarget)} 的預計收入 ${cash(inflow)} 全部到賬，買後約剩：<strong>${cash(later)}</strong><br><span class="cf-muted">${now<0?'目前可用款不足以同時保留預留款並購買。':'按你填寫的結餘可覆蓋預留款及購物。'} 未入賬收入不能當作現有現金；本試算不含未知開支及未登記工作。</span>`;
-    }
-    ids.forEach(id=>document.getElementById(id).addEventListener('input',plan));
-    document.getElementById('cfReset').onclick=()=>{localStorage.removeItem(store);ids.slice(0,3).forEach(id=>document.getElementById(id).value='');document.getElementById('cfTarget').value=add(today,30);plan();};
-    plan();
-  }
-  render();
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&hkToday()!==today)render();});
-  setInterval(()=>{if(hkToday()!==today)render();},60000);
+/* Receives private records only after AES-GCM unlock. No bank connection. */
+window.mountCashflow=function(data){
+ const cash=n=>new Intl.NumberFormat('en-HK',{style:'currency',currency:'HKD',maximumFractionDigits:0}).format(n);
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const hkToday=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Hong_Kong',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+ const add=(day,n)=>{const d=new Date(day+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);};
+ const sum=rs=>rs.reduce((n,r)=>n+r.amount,0),schedule=data.confirmed.expected_payments,all=[...schedule.rows,...schedule.undated];
+ const storage='garett-private-purchase-planner-v2';let saved={};try{saved=JSON.parse(localStorage.getItem(storage)||localStorage.getItem('garett-private-purchase-planner-v1')||'{}');}catch{}
+ let today=hkToday(),days=Number(saved.days)||30,filter='window';
+ if(!Number.isInteger(days)||days<1||days>365)days=30;
+ const main=document.querySelector('main'),archive=document.createElement('details');archive.id='salaryArchive';archive.innerHTML='<summary>按任教月份查看工資（不是入賬月份）</summary>';
+ while(main.firstChild)archive.append(main.firstChild);main.append(archive);
+ // Keep legacy handlers' targets mounted, but avoid a second conflicting ledger.
+ archive.querySelector('.expected').style.display='none';archive.querySelector('[data-mode="remaining"]').style.display='none';
+ const section=document.createElement('section');section.id='cashflow';main.prepend(section);
+ const style=document.createElement('style');style.textContent=`
+ #cashflow{margin:18px 0 24px;font-family:"Segoe UI","Microsoft JhengHei",sans-serif;color:#193337;line-height:1.5}#cashflow h2{font-size:25px;margin:0}#cashflow h3{font-size:20px;margin:0 0 12px}.cf-panel{padding:22px;background:white;border:1px solid #d2dfdf;border-radius:12px;margin-bottom:16px}.cf-muted{font-size:13px;color:#586d73}.cf-top{display:flex;justify-content:space-between;gap:12px}.cf-top button,.cf-reset{background:white;border:1px solid #b4c9c9;border-radius:6px;padding:8px 10px;color:#23474c;height:40px}.cf-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0}.cf-controls button{padding:9px 15px;border:1px solid #b4c9c9;border-radius:7px;background:white;color:#23474c;font:inherit}.cf-controls button[aria-pressed=true]{background:#0f7074;color:white;border-color:#0f7074}.cf-controls input{width:76px;padding:8px;border:1px solid #b4c9c9;border-radius:6px;font-size:16px}.cf-hero{background:#eaf5f2;border-radius:10px;padding:20px}.cf-hero strong{display:block;font-size:39px;color:#096a66;line-height:1.3}.cf-split{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.cf-split div{border-top:1px solid #bedad4;padding-top:10px}.cf-split b{display:block;font-size:21px}.cf-warning{padding:12px 14px;background:#fff4df;border-left:4px solid #dba244;border-radius:6px;font-size:14px;margin-top:14px}.cf-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.cf-form label{font-size:14px;font-weight:650}.cf-form input{display:block;width:100%;min-width:0;padding:11px;border:1px solid #afc5c6;border-radius:7px;font:16px "Segoe UI",sans-serif;margin-top:5px}.cf-form small{display:block;font-weight:400;color:#586d73;margin-top:3px}.cf-result{margin-top:16px;padding:16px;background:#eef4f5;border-radius:9px}.cf-result h4{margin:0 0 10px;font-size:18px}.cf-result dl{margin:0}.cf-result dl div{display:flex;justify-content:space-between;gap:14px;padding:7px 0}.cf-result dd{margin:0;white-space:nowrap;font-weight:750}.cf-result .cf-total{border-top:1px solid #b4c9c9;margin-top:6px;padding-top:10px}.cf-result.good{background:#eaf5f2}.cf-result.caution{background:#fff4df}.cf-reset{margin-top:10px}.cf-ledger-head{display:flex;justify-content:space-between;gap:14px;align-items:center}.cf-ledger-head select{padding:10px;border:1px solid #afc5c6;border-radius:6px;font-size:16px;max-width:100%}.cf-items{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.cf-item{padding:16px;border:1px solid #cadcdb;border-radius:10px;background:white;min-width:0}.cf-item header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;border:0;background:none}.cf-item header b{font-size:17px}.cf-amount{font-size:20px;white-space:nowrap;color:#0f7074}.cf-badge{display:inline-block;border-radius:4px;padding:3px 7px;background:#eef4f5;font-size:12px;margin:6px 0 10px}.cf-dates{margin:0}.cf-dates div{display:grid;grid-template-columns:112px 1fr;gap:9px;border-top:1px solid #e0e8e8;padding:9px 0}.cf-dates dt{font-size:13px;color:#586d73}.cf-dates dd{font-size:15px;margin:0;font-weight:650;overflow-wrap:anywhere}.cf-item details{font-size:12px;color:#586d73;margin-top:8px}.cf-item summary{cursor:pointer}.cf-paid{background:#f6faf9}#salaryArchive{margin-bottom:30px}#salaryArchive>summary{padding:16px;background:white;border:1px solid #d2dfdf;border-radius:8px;cursor:pointer;font-weight:700}.cf-note{margin-top:12px;font-size:13px;color:#586d73}@media(max-width:620px){.cf-panel{padding:15px}.cf-items,.cf-form{grid-template-columns:1fr}.cf-top h2{font-size:22px}.cf-hero{padding:15px}.cf-hero strong{font-size:35px}.cf-controls{gap:6px}.cf-controls button{padding:8px 10px}.cf-ledger-head{display:block}.cf-ledger-head select{width:100%}.cf-split{gap:12px}.cf-split b{font-size:19px}.cf-dates div{grid-template-columns:103px 1fr}.cf-item{padding:14px}.cf-result dl div{font-size:14px}.cf-top button{flex-shrink:0}}
+ `;document.head.append(style);
+ section.innerHTML=`<div class="cf-panel"><div class="cf-top"><div><h2>買之前，先看收款</h2><div class="cf-muted" id="cfFresh"></div></div><button id="cfRefresh">更新頁面</button></div>
+ <div class="cf-controls"><span>看未來</span>${[7,14,30,60,90].map(n=>`<button type="button" data-days="${n}">${n} 日</button>`).join('')}<label>自訂 <input id="cfDays" type="number" min="1" max="365" step="1" inputmode="numeric" aria-label="未來日數"> 日</label></div>
+ <div class="cf-hero"><div id="cfRange"></div><strong id="cfForecast"></strong><div class="cf-muted">這是整段期間合共可收的預測，不是每天收到的錢。</div><div class="cf-split"><div>已交發票，等收款<b id="cfSubmitted"></b></div><div>未完班，之後才可開單<b id="cfFuture"></b></div></div></div>
+ <p class="cf-note">只顯示一個期間總額。選 60 日已包含前 30 日；不要把不同期間的總額相加。未入賬的錢不能當作現有現金。</p><div id="cfAlerts"></div></div>
+ <div class="cf-panel"><h3>如果我現在買，還有多少餘裕？</h3><p class="cf-muted">先預留未來 <span class="cfN"></span> 日生活費，再保留你希望不動用的安全底線。</p><div class="cf-form">
+ <label>目前銀行可用結餘（HK$）<input id="cfBalance" type="number" min="0" step="0.01" inputmode="decimal" placeholder="填現在實際可用的錢"></label>
+ <label>想買的東西，售價（HK$）<input id="cfPurchase" type="number" min="0" step="0.01" inputmode="decimal" placeholder="例如電話的實際售價"></label>
+ <label>未來 <span class="cfN"></span> 日生活費／必付開支（HK$）<input id="cfReserve" type="number" min="0" step="0.01" inputmode="decimal" placeholder="租金、日常開支等；沒有則填 0"><small>切換日數時，請重新填寫該期間生活費。</small></label>
+ <label>我想保留的安全底線（HK$）<input id="cfBuffer" type="number" min="0" step="0.01" inputmode="decimal" placeholder="不想動用的存款；不保留則填 0"><small>與上面的生活費分開，不要重複填同一筆錢。</small></label></div>
+ <div id="cfResult" class="cf-result" aria-live="polite"></div><button type="button" id="cfReset" class="cf-reset">清除試算</button><p class="cf-note">輸入只存在此瀏覽器，不上傳、不改正式記錄。預計收入可能遲到；「安全」是按你自己設定的開支與底線評估，不是保證。</p></div>
+ <div class="cf-panel"><div class="cf-ledger-head"><h3>每筆錢：發票、實收、預計日期</h3><select id="cfFilter" aria-label="收款記錄篩選"><option value="window">這段期間預計入賬</option><option value="unpaid">全部未確認收款</option><option value="action">待提交／待核實</option><option value="paid">已確認收款</option><option value="all">全部紀錄</option></select></div><div id="cfLedgerSummary" class="cf-muted"></div><div id="cfItems" class="cf-items"></div><p class="cf-note">「交 Calvin 日期」是實際提交日期，不是發票上列印的日期，也不是寄給自己的日期。記錄沒有日期時會明示；已確認收款但日期缺失，不會用估計日期代替。</p></div>`;
+ const inputs=['cfBalance','cfReserve','cfPurchase','cfBuffer'];inputs.forEach(id=>{if(saved[id]!==undefined)document.getElementById(id).value=saved[id];});document.getElementById('cfDays').value=days;
+ function buckets(){const unpaid=all.filter(r=>!r.received),unissued=r=>r.forecast_stage==='future_course'&&r.invoice_date<today;
+ const eligible=unpaid.filter(r=>r.expected_payment_date&&r.expected_payment_date>=today&&!unissued(r)),selected=eligible.filter(r=>r.expected_payment_date<=add(today,days));
+ return {unpaid,selected,submitted:selected.filter(r=>['submitted','submitted_date_unknown'].includes(r.forecast_stage)),future:selected.filter(r=>!['submitted','submitted_date_unknown'].includes(r.forecast_stage)),overdue:unpaid.filter(r=>r.expected_payment_date&&r.expected_payment_date<today),pending:unpaid.filter(r=>!r.expected_payment_date||unissued(r))};}
+ function invoiceText(r){if(r.kind!=='ERB')return r.submitted_on||'非 Calvin 款項／日期未記錄';if(r.submitted_on)return r.submitted_on;if(r.submission_state==='submitted')return '已交；實際日期未記錄';if(r.received)return '已收款；交單日期未記錄';if(r.forecast_stage==='awaiting_submission')return '尚未確認提交';return '尚未開單';}
+ function card(r){const paid=r.received?(r.received_on||'已收款；實際日期未記錄'):'未確認收到';
+ const expected=r.received?'已收款，不再預測':r.expected_payment_date||'待提交後再估算';
+ const qualifier=r.received?'':r.forecast_stage==='submitted_date_unknown'?'暫估；提交日期未記錄':r.forecast_stage==='future_course'?'需先完班及提交發票':r.expected_payment_date?'估計，非保證日期':'未計入近期預測';
+ const badge=r.received?'已收款':r.forecast_stage==='awaiting_submission'?'發票備妥，待確認交 Calvin':r.forecast_stage==='future_course'?'未交發票／未到收款階段':'已交發票，收款待確認';
+ return `<article class="cf-item ${r.received?'cf-paid':''}" data-group="${esc(r.group||r.label)}"><header><b>${esc(r.label)}</b><strong class="cf-amount">${cash(r.amount)}</strong></header><span class="cf-badge">${esc(badge)}</span><dl class="cf-dates"><div><dt>① ${r.kind==='ERB'?'交 Calvin 日期':'提交發票日期'}</dt><dd>${esc(invoiceText(r))}</dd></div><div><dt>② 實際收款日期</dt><dd>${esc(paid)}</dd></div><div><dt>③ 預計收到日期</dt><dd>${esc(expected)}${qualifier?'<br><span class="cf-muted">'+esc(qualifier)+'</span>':''}</dd></div></dl><details><summary>查看估算依據／課程資料</summary>${esc(r.basis||r.reason||'沿用已確認收款記錄')}<br>${r.submission_confirmed_on?'你確認已交單的日期：'+esc(r.submission_confirmed_on)+'（不是實際提交日）<br>':''}${r.invoice_date?'全班完結／月結日：'+esc(r.invoice_date)+'<br>':''}${esc(r.course_name||'')}</details></article>`;}
+ function renderLedger(){const b=buckets(),rs=filter==='window'?b.selected:filter==='unpaid'?b.unpaid:filter==='paid'?all.filter(r=>r.received):filter==='action'?[...new Set([...b.pending,...b.overdue])]:all;
+ document.getElementById('cfLedgerSummary').textContent=`${rs.length} 筆 · 合共 ${cash(sum(rs))}${filter==='window'?' · 對應上方所選期間總額':''}`;document.getElementById('cfItems').innerHTML=rs.map(card).join('')||'<p>這個分類暫時沒有款項。</p>';}
+ function plan(){const values=Object.fromEntries(inputs.map(id=>[id,document.getElementById(id).value]));try{localStorage.setItem(storage,JSON.stringify({...values,days}));}catch{}
+ const out=document.getElementById('cfResult');out.className='cf-result';if(inputs.some(id=>values[id]===''||!Number.isFinite(Number(values[id]))||Number(values[id])<0)){out.textContent='填齊以上四個數字，便可看到「現在買」與「預計收入到賬後」的差別。';return;}
+ const balance=+values.cfBalance,price=+values.cfPurchase,expense=+values.cfReserve,buffer=+values.cfBuffer,inflow=sum(buckets().selected),after=balance-price,available=after-expense,margin=available-buffer,later=margin+inflow;
+ const heading=after<0?'目前結餘不夠支付售價':margin>=0?'按你設定的安全底線，現在買仍有餘裕':later>=0?'現在買會低於安全底線；需要等待收入':'即使預計收入全到，仍低於安全底線';out.classList.add(margin>=0?'good':'caution');
+ out.innerHTML=`<h4>${heading}</h4><dl><div><dt>現在買完，銀行剩下</dt><dd>${cash(after)}</dd></div><div><dt>再扣未來 ${days} 日生活費</dt><dd>${cash(available)}</dd></div><div class="cf-total"><dt>高於／低於你的安全底線</dt><dd id="cfMargin">${cash(margin)}</dd></div><div><dt>這 ${days} 日另外預計可收</dt><dd>+ ${cash(inflow)}</dd></div><div class="cf-total"><dt>若全部到賬，底線以上約剩</dt><dd id="cfLater">${cash(later)}</dd></div></dl><p class="cf-note">負數代表不足。最後一行是假設款項如期收到後的結果，不能用來支付今天的購物；不包括未知開支。</p>`;}
+ function render(){today=hkToday();const b=buckets();document.getElementById('cfFresh').textContent=`香港日期 ${today} · 發票記錄核對 ${data.records_as_of.slice(0,10)}`;
+ document.getElementById('cfRange').textContent=`未來 ${days} 日合共預計可收（${today} 至 ${add(today,days)}）`;document.getElementById('cfForecast').textContent=cash(sum(b.selected));document.getElementById('cfSubmitted').textContent=cash(sum(b.submitted));document.getElementById('cfFuture').textContent=cash(sum(b.future));document.querySelectorAll('.cfN').forEach(e=>e.textContent=days);document.querySelectorAll('[data-days]').forEach(e=>e.setAttribute('aria-pressed',String(+e.dataset.days===days)));
+ const age=(Date.parse(today)-Date.parse(data.records_as_of.slice(0,10)))/86400000;document.getElementById('cfAlerts').innerHTML=`<div class="cf-warning">未計入上方：待提交／缺資料 ${cash(sum(b.pending))}；已過預計日、收款待核實 ${cash(sum(b.overdue))}。<br>這不是銀行即時資料；收款後仍需更新記錄。${age>7?'<br><b>記錄已超過 7 日未核對，請勿單靠此預測作購物決定。</b>':''}</div>`;renderLedger();plan();}
+ document.querySelectorAll('[data-days]').forEach(e=>e.onclick=()=>{if(days!==+e.dataset.days)document.getElementById('cfReserve').value='';days=+e.dataset.days;document.getElementById('cfDays').value=days;document.getElementById('cfDays').setCustomValidity('');render();});
+ document.getElementById('cfDays').oninput=e=>{const n=Number(e.target.value);if(Number.isInteger(n)&&n>=1&&n<=365){if(days!==n)document.getElementById('cfReserve').value='';days=n;e.target.setCustomValidity('');render();}else e.target.setCustomValidity('請輸入 1 至 365 的整數');};
+ document.getElementById('cfFilter').onchange=e=>{filter=e.target.value;renderLedger();};inputs.forEach(id=>document.getElementById(id).oninput=plan);
+ document.getElementById('cfReset').onclick=()=>{inputs.forEach(id=>document.getElementById(id).value='');plan();};document.getElementById('cfRefresh').onclick=()=>location.reload();
+ render();setInterval(()=>{if(today!==hkToday())render();},60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden&&today!==hkToday())render();});
 };

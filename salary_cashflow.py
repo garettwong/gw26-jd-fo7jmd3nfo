@@ -25,6 +25,11 @@ def reconcile_current(report, contexts):
                 continue
             context = contexts[row["group"]]
             delivery = by_group.get(row["group"])
+            submission = (delivery or {}).get("client_submission", {})
+            row["submitted_on"] = submission.get("submitted_date") or submission.get("submitted_timestamp", "")[:10] or None
+            row["submission_confirmed_on"] = submission.get("confirmed_by_user_date")
+            row["submission_state"] = ("submitted" if row["submitted_on"] or submission.get("status") == "confirmed_by_user" else "unknown" if delivery else "not_issued")
+            row["invoice_prepared_on"] = (delivery or {}).get("completion_date")
             legacy = [r for key, r in paid.items() if key.split("|")[0] == context["course_code"] and key.split("|")[-1] == context["full_course_start"]]
             if len(legacy) > 1:
                 raise ValueError("Ambiguous paid cohort")
