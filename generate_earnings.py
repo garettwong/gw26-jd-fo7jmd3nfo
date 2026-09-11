@@ -575,13 +575,14 @@ def main() -> None:
             latest_payload = payload
 
     latest = next(item for item in VERSIONS if item.get("latest"))
-    rows = "".join(version_row(item) for item in VERSIONS)
+    salary_versions = [item for item in VERSIONS if (versions_out / item["id"] / "earnings.enc.json").exists()]
+    rows = "".join(version_row(item) for item in salary_versions)
     selector = SELECTOR_PAGE.substitute(version_rows=rows, latest_id=latest["id"])
     selector = selector.replace('Select a saved timetable version.', 'Latest salary records and cash forecast; historical timetable snapshots below.')
     selector = selector.replace("localStorage.setItem(STORAGE_KEY,raw);document", "localStorage.setItem(STORAGE_KEY,raw);if(!new URLSearchParams(location.search).has('history')){location.replace('versions/" + latest['id'] + "/#key='+raw);return}document")
     (OUT / "index.html").write_text(selector, encoding="utf-8")
     (OUT / "versions.json").write_text(
-        json.dumps(VERSIONS, ensure_ascii=False, indent=2), encoding="utf-8"
+        json.dumps(salary_versions, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     if latest_payload is None:
         raise ValueError("versions.json has no latest earnings version")
