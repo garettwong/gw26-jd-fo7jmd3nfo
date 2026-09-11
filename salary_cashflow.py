@@ -24,6 +24,9 @@ def reconcile_current(report, contexts):
                 row["invoice_status"] = "已收款（既有確認記錄）" if row.get("received") else "按月結週期估算；未連接銀行"
                 continue
             context = contexts[row["group"]]
+            row["class_start"] = context["full_course_start"]
+            row["class_end"] = context["full_course_end"]
+            row["invoice_submit_from"] = context["full_course_end"]
             delivery = by_group.get(row["group"])
             submission = (delivery or {}).get("client_submission", {})
             row["submitted_on"] = submission.get("submitted_date") or submission.get("submitted_timestamp", "")[:10] or None

@@ -46,9 +46,15 @@ unreceived and action-needed items are available through the ledger filter.
 Keep the all-record unreceived total permanently visible, separately from the
 N-day forecast; show total scheduled pay minus confirmed received pay and split
 unreceived amounts into submitted invoices and unfinished courses. Default the
-ledger to all unreceived records, not only the short-term forecast. Course name,
-amount, actual invoice-face date, client-submission date/time, receipt status/date
-and expected receipt date must be visible on every card without expanding details.
+ledger to all unreceived records, not only the short-term forecast. Keep the course
+name and amount visible, with stage-specific rows: before submission show whole-class
+start, whole-class end, and submit-after-final-lesson date; after submission show
+actual client-submission date/time and expected receipt date; paid records show
+submission and actual receipt dates. Keep invoice-face dates and secondary estimates
+in expandable details. Do not repeat blank/not-issued/not-received rows on future
+course cards. Whole-class dates must come from the matching payment context, not
+Garett's personal service period. Existing total and spending calculations remain
+independent of card presentation.
 Historical salary HTML must carry a clear historical-snapshot warning and link to
 the current salary entry point. Do not rewrite historical encrypted data.
 
