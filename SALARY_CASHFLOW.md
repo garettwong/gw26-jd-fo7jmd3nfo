@@ -50,5 +50,10 @@ affordability. Local inputs do not sync between devices.
 4. Test a Hong Kong date rollover and purchase arithmetic, including blank inputs.
 5. Inspect phone and desktop output. Keep the existing private URL/key and ensure
    salary/timetable selectors have matching latest IDs.
-6. Commit only intended files, preserve unrelated changes, push the existing main
-   branch, and verify the deployed page and encrypted payload.
+6. Commit only intended source files to `main`, preserving unrelated changes.
+   Publication is separate: fetch `origin/gh-pages`, use a clean isolated worktree
+   from that ref, and promote only generated `earnings/` files. Push the resulting
+   commit to `gh-pages` without forcing. Dispatch `deploy-pages.yml` on `main`
+   (`gh workflow run deploy-pages.yml --ref main`); its checkout uses `gh-pages`.
+   A source push alone does not deploy this site. Wait for deployment and verify
+   the actual old private link and encrypted payload before reporting success.
