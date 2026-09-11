@@ -43,6 +43,15 @@ dates or confirmation dates for actual client submission. Unknown dates remain
 explicitly unknown, even for already-paid invoices. All records, received,
 unreceived and action-needed items are available through the ledger filter.
 
+Keep the all-record unreceived total permanently visible, separately from the
+N-day forecast; show total scheduled pay minus confirmed received pay and split
+unreceived amounts into submitted invoices and unfinished courses. Default the
+ledger to all unreceived records, not only the short-term forecast. Course name,
+amount, actual invoice-face date, client-submission date/time, receipt status/date
+and expected receipt date must be visible on every card without expanding details.
+Historical salary HTML must carry a clear historical-snapshot warning and link to
+the current salary entry point. Do not rewrite historical encrypted data.
+
 The purchase calculator stores inputs only in browser localStorage. It shows both
 cash-only and forecast-inclusive margins above a user-defined safety cushion. It
 requires current balance, purchase price, N-day living expenses and a separate

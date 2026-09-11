@@ -575,6 +575,14 @@ def main() -> None:
             latest_payload = payload
 
     latest = next(item for item in VERSIONS if item.get("latest"))
+    # Historical financial snapshots must not look like current receipt records.
+    history_notice = '<aside id="salaryHistoryNotice" style="padding:16px;background:#fff0cc;color:#563900;font:16px/1.5 sans-serif">歷史薪酬快照：這不是最新交單或收款紀錄。 <a href="../../" style="font-weight:bold;color:#075e65">查看最新完整薪酬紀錄</a></aside>'
+    for historical in versions_out.glob("*/index.html"):
+        if historical.parent.name == latest["id"]:
+            continue
+        historical_html = historical.read_text(encoding="utf-8")
+        if 'id="salaryHistoryNotice"' not in historical_html:
+            historical.write_text(historical_html.replace('<body>', '<body>' + history_notice, 1), encoding="utf-8")
     salary_versions = [item for item in VERSIONS if (versions_out / item["id"] / "earnings.enc.json").exists()]
     rows = "".join(version_row(item) for item in salary_versions)
     selector = SELECTOR_PAGE.substitute(version_rows=rows, latest_id=latest["id"])

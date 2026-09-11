@@ -30,6 +30,8 @@ def reconcile_current(report, contexts):
             row["submission_confirmed_on"] = submission.get("confirmed_by_user_date")
             row["submission_state"] = ("submitted" if row["submitted_on"] or submission.get("status") == "confirmed_by_user" else "unknown" if delivery else "not_issued")
             row["invoice_prepared_on"] = (delivery or {}).get("completion_date")
+            row["invoice_issued_on"] = (delivery or {}).get("invoice_date") or (delivery or {}).get("completion_date")
+            row["submitted_at"] = submission.get("submitted_timestamp")
             legacy = [r for key, r in paid.items() if key.split("|")[0] == context["course_code"] and key.split("|")[-1] == context["full_course_start"]]
             if len(legacy) > 1:
                 raise ValueError("Ambiguous paid cohort")
@@ -40,6 +42,8 @@ def reconcile_current(report, contexts):
                 raise ValueError(f"Invoice/salary mismatch: {row['group']}")
             row["received"] = received is not None
             if received:
+                if received.get("invoice_date"):
+                    row["invoice_issued_on"] = received["invoice_date"]
                 if row["amount"] != received["amount_hkd"]:
                     raise ValueError("Paid amount differs from salary")
                 row["invoice_status"] = "已確認收款"
@@ -77,6 +81,7 @@ def reconcile_current(report, contexts):
     if completed_unpaid != reconciliation["not_confirmed_received_hkd"]:
         raise ValueError("Completed unpaid salary differs from reconciliation")
     report["records_as_of"] = as_of
+    report["submission_records_as_of"] = reconciliation.get("submission_records_updated_at", as_of)
     report["cashflow"] = {"schema": 1, "calvin_completed_unpaid": completed_unpaid, "calvin_received": reconciliation["confirmed_received_hkd"], "bank_connected": False}
     report["notes"] = [n for n in report["notes"] if not n.startswith("ERB 預計到賬日")]
     report["notes"].append("最新發票／Calvin 收款狀態已與發票登記冊核對；SEN 及 DGS 沿用先前已確認收款記錄。沒有銀行即時連線，未確認收款不等於銀行一定未入賬。")
