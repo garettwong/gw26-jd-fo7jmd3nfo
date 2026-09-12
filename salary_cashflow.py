@@ -28,6 +28,8 @@ def reconcile_current(report, contexts):
             row["class_end"] = context["full_course_end"]
             row["invoice_submit_from"] = context["full_course_end"]
             delivery = by_group.get(row["group"])
+            if delivery:
+                row["label"] = delivery["course_code"] + " · " + delivery["class"] + (" · " + delivery["cohort"] if delivery.get("cohort") else "")
             submission = (delivery or {}).get("client_submission", {})
             row["submitted_on"] = submission.get("submitted_date") or submission.get("submitted_timestamp", "")[:10] or None
             row["submission_confirmed_on"] = submission.get("confirmed_by_user_date")
