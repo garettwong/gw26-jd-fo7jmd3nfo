@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20am-hk267hg-cw2-confirmed-times-20260915a"
+BUILD_ID = "v20an-hk244eg-fs5-exam-time-20260917a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-08-V20al"
-COMPARE_LABEL = "V20am"
-COMPARE_BASELINE_LABEL = "V20al"
-EXPECTED_COMPARISON_CHANGES = 8
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-15-V20am"
+COMPARE_LABEL = "V20an"
+COMPARE_BASELINE_LABEL = "V20am"
+EXPECTED_COMPARISON_CHANGES = 18
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -792,6 +792,9 @@ for match in re.finditer(r'data-group="([^"]+)" data-group-label="([^"]+)"', _ba
     _baseline_group_slugs.setdefault(label, slug)
 if "HK239HG · 循道灣仔晚班" in _baseline_group_slugs:
     _baseline_group_slugs["MC244EG · 1"] = _baseline_group_slugs["HK239HG · 循道灣仔晚班"]
+
+if "HK244EG · FS" in _baseline_group_slugs:
+    _baseline_group_slugs["HK244EG · FS-5"] = _baseline_group_slugs["HK244EG · FS"]
 
 _group_slugs = {}
 _used_group_slugs = set()
