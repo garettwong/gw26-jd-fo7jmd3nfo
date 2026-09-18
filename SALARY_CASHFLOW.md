@@ -18,52 +18,15 @@ the existing device key; no salary navigation/key is added to the public timetab
   publication step. It runs on its established course-completion dates, not as a
   live bank-account feed.
 
-## Cash-flow semantics
+## Payment ledger layout
 
-The top panel always uses confirmed work, independently of the historical salary
-mode buttons below. One selectable N-day total (presets or 1-365 custom days)
-is cumulative from today to the displayed end date and excludes paid
-items, estimates whose dates have passed, and prepared invoices with no confirmed
-client submission. No row becomes paid because its expected date passed.
+The 2026-09-18 user request supersedes earlier forecast and purchase-planner requirements. Remove the N-day forecast and spending calculator entirely. Show all records by default, with filters for received, submitted unpaid, and unfinished/unsubmitted work.
 
-Use submission date plus 21 calendar days as a conservative Calvin planning
-assumption, not a contractual guarantee. If only a user confirmation date exists,
-show that proxy explicitly. Future courses assume completion and immediate
-submission. After completion, a still-unissued row is removed from the top forecast
-until the invoice record is updated. SEN retains the existing month-end plus
-seven-day assumption. Other-job received records retain their prior evidence.
+Every payment card must use the same four-row table: (1) full-class end date (service end for non-course jobs), (2) actual invoice submission date, (3) estimated receipt date with its basis, (4) actual receipt date. Unknown dates stay explicitly unknown. Never substitute invoice-face dates for submission dates or estimates for actual receipts. Retain paid records in the all/paid views.
 
-The browser computes today's date in Hong Kong, warns when payment evidence is
-older than seven days, and refreshes the forecast after a date change. Reloading
-fetches encrypted records without using the browser cache.
+For Calvin invoices, use actual submission plus 21 calendar days when known, including paid records. Without submission evidence, any future-course estimate must explicitly assume completion and immediate submission. No date is a guaranteed deadline.
 
-Each payment card has separate actual client-submission date, actual receipt date,
-and expected receipt date fields. Never substitute invoice-face dates, self-email
-dates or confirmation dates for actual client submission. Unknown dates remain
-explicitly unknown, even for already-paid invoices. All records, received,
-unreceived and action-needed items are available through the ledger filter.
-
-Keep the all-record unreceived total permanently visible, separately from the
-N-day forecast; show total scheduled pay minus confirmed received pay and split
-unreceived amounts into submitted invoices and unfinished courses. Default the
-ledger to all unreceived records, not only the short-term forecast. Keep the course
-name and amount visible, with stage-specific rows: before submission show whole-class
-start, whole-class end, and submit-after-final-lesson date; after submission show
-actual client-submission date/time and expected receipt date; paid records show
-submission and actual receipt dates. Keep invoice-face dates and secondary estimates
-in expandable details. Do not repeat blank/not-issued/not-received rows on future
-course cards. Whole-class dates must come from the matching payment context, not
-Garett's personal service period. Existing total and spending calculations remain
-independent of card presentation.
-Historical salary HTML must carry a clear historical-snapshot warning and link to
-the current salary entry point. Do not rewrite historical encrypted data.
-
-The purchase calculator stores inputs only in browser localStorage. It shows both
-cash-only and forecast-inclusive margins above a user-defined safety cushion. It
-requires current balance, purchase price, N-day living expenses and a separate
-minimum savings cushion. Changing N clears the living-expense input so a shorter
-period's costs cannot silently be reused for a longer period. It is not a bank
-balance or promise of affordability. Local inputs do not sync between devices.
+Separate overview totals into received money, submitted invoices still unpaid, and unfinished/unsubmitted work. Show the total scheduled-pay arithmetic secondarily; do not describe future-course income as an overdue invoice or bank balance. Keep public timetable and private salary selectors synchronized; receipt-only changes refresh the latest salary snapshot without creating an unrelated timetable release.
 
 ## Release checks
 
@@ -71,7 +34,7 @@ balance or promise of affordability. Local inputs do not sync between devices.
 2. Verify received + unreceived equals total scheduled pay without double counting.
 3. Test invoice-ready, submitted-date-known, submitted-date-unknown, future course,
    received, overdue, stale-source and no-date states.
-4. Test a Hong Kong date rollover and purchase arithmetic, including blank inputs.
+4. Test a Hong Kong date rollover and all four date fields, including unknown dates.
 5. Inspect phone and desktop output. Keep the existing private URL/key and ensure
    salary/timetable selectors have matching latest IDs.
 6. Commit only intended source files to `main`, preserving unrelated changes.

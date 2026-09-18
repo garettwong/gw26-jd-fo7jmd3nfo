@@ -46,6 +46,9 @@ def reconcile_current(report, contexts):
             if delivery and row["amount"] != delivery["amount_hkd"]:
                 raise ValueError(f"Invoice/salary mismatch: {row['group']}")
             row["received"] = received is not None
+            if row["submitted_on"]:
+                row["expected_payment_date"] = (date.fromisoformat(row["submitted_on"]) + timedelta(days=21)).isoformat()
+                row["basis"] = "按實際交單日期加 21 日估計；非保證日期"
             if received:
                 if received.get("invoice_date"):
                     row["invoice_issued_on"] = received["invoice_date"]
