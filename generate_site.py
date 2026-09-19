@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20an-lesson-sync-20260919a"
+BUILD_ID = "v20an-course-panels-20260919b"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
@@ -1126,6 +1126,25 @@ CSS += r'''
 @media (orientation:landscape) and (max-height:700px) and (max-width:1400px){.next-new-courses{margin:4px 0;padding:7px 9px}.next-new-header{align-items:center;flex-direction:row;margin-bottom:5px}.next-new-kicker{font-size:9px}.next-new-header h2{font-size:16px}.next-course-controls{width:auto;padding:2px}.next-course-limit{min-height:30px;padding:3px 7px;font-size:10px}.next-course-list{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(var(--next-course-rows),auto);grid-auto-flow:column;gap:4px}.next-course-card{grid-template-columns:minmax(150px,1fr) 66px minmax(220px,1.35fr);gap:6px;padding:6px 7px}.next-course-card h3{font-size:13px}.next-course-card p{margin-top:2px;font-size:9.5px}.next-new-badge{padding:2px 4px;font-size:7px}.next-new-countdown{min-width:60px;padding:2px 5px}.next-new-countdown small{font-size:7px}.next-new-countdown strong{font-size:16px}.next-new-facts{grid-column:auto;grid-template-columns:minmax(80px,.8fr) minmax(120px,1.2fr);gap:4px 5px}.next-course-fact{padding-left:4px;border-left-width:2px}.next-course-fact dt{font-size:7px}.next-course-fact dd{font-size:8.5px}.next-course-fact.place{padding-top:3px}.next-course-fact.place dt{font-size:7.5px}.next-course-fact.place dd{font-size:9px}}
 @media (orientation:landscape) and (max-height:700px) and (max-width:999px){.next-course-list{grid-template-columns:1fr;grid-template-rows:none!important;grid-auto-flow:row}}
 @media print{.next-new-courses{box-shadow:none}.next-course-controls{display:none}}
+/* Personal lesson dates are the primary information in both course panels. */
+.next-course-list{grid-template-rows:none!important;grid-auto-flow:row}
+.next-course-card,.ongoing-course-card{display:grid;grid-template-columns:minmax(0,1fr) 90px;align-items:start;gap:12px;padding:16px;border:1px solid #9dc9c6;border-radius:8px;background:#fff;min-width:0}
+.ongoing-course-card[hidden]{display:none!important}
+.next-new-facts{grid-column:1/-1;grid-template-columns:1fr 1fr;margin:0;gap:10px}
+.next-course-fact.my-first{grid-column:1/-1;background:#fff0b8;border:2px solid #c18406;border-radius:7px;padding:12px 14px}
+.next-course-fact.my-first dt{color:#674000;font-size:12px;font-weight:950}
+.next-course-fact.my-first dd{color:#172a38;margin-top:6px}
+.personal-date{display:block;font-size:30px;font-weight:950;line-height:1.2}
+.personal-time{display:block;font-size:22px;font-weight:900;margin-top:5px;line-height:1.2}
+.next-course-fact.class-first{grid-column:1/-1}
+.next-course-card h3,.ongoing-course-card h3{font-size:21px;margin:0;line-height:1.2;color:#172a38}
+.ongoing-course-card p{font-size:13px;color:#506274;margin:5px 0 0;font-weight:800}
+.ongoing-courses{background:#edf2fb;border-color:#506aa4}
+.ongoing-courses .my-first{background:#e8efff;border-color:#6785c1}
+.ongoing-courses .my-first dt{color:#304e85}
+.course-section-note{font-size:13px;color:#506274;margin:5px 0 0}
+@media(max-width:620px){.next-course-list{grid-template-columns:1fr}.next-course-card,.ongoing-course-card{padding:12px;gap:10px;grid-template-columns:minmax(0,1fr) 75px}.personal-date{font-size:26px}.personal-time{font-size:21px}.next-course-fact.my-first{padding:10px}.next-course-card h3,.ongoing-course-card h3{font-size:19px}.next-new-facts{grid-template-columns:1fr}.next-course-fact.my-first dt{font-size:11px}}
+
 '''
 
 LESSON_LOG_HTML = r'''
@@ -2145,6 +2164,11 @@ def next_upcoming_course_panel():
             "family": family,
             "my_day": my_day,
             "class_day": class_day,
+            "class_end": max(event["date"] for event in all_group_events),
+            "sessions": sorted([
+                {"date": event["date"], "time": event_fields(event)["time"], "lesson": event_fields(event)["lesson"]}
+                for event in mine_group_events
+            ], key=lambda session: (session["date"], session["time"])),
             "time": my_fields["time"],
             "lesson": my_fields["lesson"],
             "centre": centre,
@@ -2168,19 +2192,27 @@ def next_upcoming_course_panel():
         cards.append(
             f'<article class="next-course-card" data-next-course-index="{index}" '
             f'data-first-date="{item["my_day"].isoformat()}" data-first-time="{ehtml(item["time"])}" '
-            f'data-first-lesson="{ehtml(item["lesson"])}" data-class-first-date="{item["class_day"].isoformat()}" '
+            f'data-class-end="{item["class_end"]}" data-sessions="{ehtml(json.dumps(item["sessions"], ensure_ascii=False))}" data-first-lesson="{ehtml(item["lesson"])}" data-class-first-date="{item["class_day"].isoformat()}" '
             f'data-centre="{ehtml(item["centre"])}" data-location="{ehtml(item["location"])}"{hidden}>'
             '<div class="next-course-main">'
             f'<div class="next-course-title-row"><h3>{ehtml(item["label"])}</h3>{new_badge}</div>'
             f'<p>{ehtml(item["family"])}</p></div>'
             '<div class="next-new-countdown"><small>距離你首堂</small><strong></strong></div>'
             '<dl class="next-new-facts">'
-            f'<div class="next-course-fact my-first"><dt>你首堂</dt><dd>{item["my_day"].isoformat()} · {ehtml(item["time"])}</dd></div>'
+            f'<div class="next-course-fact my-first"><dt>你的首堂課 · YOUR FIRST LESSON</dt><dd><time class="personal-date" datetime="{item["my_day"].isoformat()}">{item["my_day"].strftime("%d %b %Y")} · {item["my_day"].strftime("%a")}</time><span class="personal-time">{ehtml(item["time"])}</span></dd></div>'
             f'<div class="next-course-fact class-first"><dt>全班首堂</dt><dd>{item["class_day"].isoformat()}</dd></div>'
             f'<div class="next-course-fact place centre"><dt>中心</dt><dd>{ehtml(item["centre"])}</dd></div>'
             f'<div class="next-course-fact place location"><dt>地點／課室</dt><dd>{ehtml(item["location"])}</dd></div>'
             '</dl></article>'
         )
+    ongoing_cards = "".join(cards).replace('class="next-course-card"', 'class="ongoing-course-card"').replace('data-next-course-index=', 'data-ongoing-course-index=')
+    ongoing_cards = ongoing_cards.replace('距離你首堂', '下次上課').replace('你的首堂課 · YOUR FIRST LESSON', '你的下一堂 · YOUR NEXT LESSON')
+    ongoing_panel = ('<section class="next-new-courses ongoing-courses" aria-labelledby="ongoingCourseHeading">'
+        '<div class="next-new-header"><div><span class="next-new-kicker">正在任教的課程</span>'
+        '<h2 id="ongoingCourseHeading">Ongoing classes</h2>'
+        '<p class="course-section-note">已開始任教、全班課程尚未完結 · 顯示你的下一堂</p></div></div>'
+        '<div id="ongoingCourseList" class="next-course-list">' + ongoing_cards + '</div>'
+        '<p id="ongoingCourseEmpty" hidden>目前沒有正在任教的課程</p></section>')
     default_rows = max(1, (min(5, len(candidates)) + 1) // 2)
     return (
         '<section class="next-new-courses" aria-labelledby="nextNewCourseHeading">'
@@ -2192,7 +2224,7 @@ def next_upcoming_course_panel():
         '<button class="next-course-limit" type="button" data-next-course-limit="15" aria-pressed="false">Next 15</button>'
         '</div></div>'
         f'<div id="nextCourseList" class="next-course-list" style="--next-course-rows:{default_rows}">'
-        f'{"".join(cards)}</div><p id="nextCourseEmpty" hidden>目前沒有待開始的課程</p></section>'
+        f'{"".join(cards)}</div><p id="nextCourseEmpty" hidden>目前沒有待開始的課程</p></section>{ongoing_panel}'
     )
 
 

@@ -19,7 +19,8 @@
   }
   window.erbTodayDate = todayDate;
   const limits = Array.from(document.querySelectorAll('.next-course-limit'));
-  const upcoming = Array.from(document.querySelectorAll('.next-course-card'));
+  const upcoming = Array.from(document.querySelectorAll('#nextCourseList .next-course-card'));
+  const ongoing = Array.from(document.querySelectorAll('#ongoingCourseList .ongoing-course-card'));
   const list = document.getElementById('nextCourseList');
   const empty = document.getElementById('nextCourseEmpty');
   let limit = 5;
@@ -47,6 +48,42 @@
       button.classList.toggle('active', active);
       button.setAttribute('aria-pressed', String(active));
     });
+  }
+
+  function updateOngoing(today) {
+    const container = document.getElementById('ongoingCourseList');
+    const emptyOngoing = document.getElementById('ongoingCourseEmpty');
+    let visible = 0;
+    ongoing.forEach(card => {
+      card.hidden = !(card.dataset.firstDate < today && card.dataset.classEnd >= today);
+      if (card.hidden) return;
+      visible += 1;
+      const sessions = JSON.parse(card.dataset.sessions || '[]');
+      const next = sessions.find(session => session.date >= today);
+      const date = card.querySelector('.personal-date');
+      const time = card.querySelector('.personal-time');
+      const countdown = card.querySelector('.next-new-countdown strong');
+      card.dataset.nextDate = next ? next.date : '9999-12-31';
+      card.dataset.nextTime = next ? next.time : '';
+      if (next) {
+        date.dateTime = next.date;
+        date.textContent = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: '2-digit', month: 'short', year: 'numeric', weekday: 'short' }).format(new Date(`${next.date}T12:00:00Z`));
+        time.textContent = `${next.time}${next.lesson ? ' · ' + next.lesson : ''}`;
+        const days = dayNumber(next.date) - dayNumber(today);
+        countdown.textContent = days === 0 ? '今天' : `${days} 日`;
+      } else {
+        date.removeAttribute('datetime');
+        date.textContent = '你的課堂已完成';
+        time.textContent = `全班課程至 ${card.dataset.classEnd}`;
+        countdown.textContent = '—';
+      }
+    });
+    if (container) {
+      ongoing.sort((a, b) => (a.dataset.nextDate || '').localeCompare(b.dataset.nextDate || '') || (a.dataset.nextTime || '').localeCompare(b.dataset.nextTime || '')).forEach(card => container.appendChild(card));
+      container.dataset.visibleCount = String(visible);
+      container.dataset.asOf = today;
+    }
+    if (emptyOngoing) emptyOngoing.hidden = visible > 0;
   }
 
   // Use full-class dates for lifecycle labels; a last personal lesson is not the class end.
@@ -117,6 +154,7 @@
   function refresh() {
     const today = todayDate();
     updateUpcoming(today);
+    updateOngoing(today);
     if (today !== lastDate) {
       updateClassLifecycle(today);
       lastDate = today;

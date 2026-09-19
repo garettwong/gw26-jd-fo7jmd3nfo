@@ -1,4 +1,4 @@
-const BUILD_ID = 'v20an-lesson-sync-20260919a';
+const BUILD_ID = 'v20an-course-panels-20260919b';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
