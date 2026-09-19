@@ -18,6 +18,16 @@
     return `${parts.year}-${parts.month}-${parts.day}`;
   }
   window.erbTodayDate = todayDate;
+  // Lesson times are Hong Kong local times, independent of the device timezone.
+  function lessonStamp(date, time, end = false) {
+    const ranges = Array.from((time || '').matchAll(/(\d{1,2}):(\d{2})\s*[-–]\s*(\d{1,2}):(\d{2})/g));
+    const stamps = ranges.map(parts => Date.parse(`${date}T${parts[end ? 3 : 1].padStart(2, '0')}:${parts[end ? 4 : 2]}+08:00`));
+    return stamps.length ? (end ? Math.max(...stamps) : Math.min(...stamps)) : Date.parse(`${date}T${end ? '23:59:59' : '00:00:00'}+08:00`);
+  }
+  function nowStamp(today) {
+    const override = new URLSearchParams(location.search).get('today');
+    return Number.isFinite(dayNumber(override)) ? lessonStamp(today, '') : Date.now();
+  }
   const limits = Array.from(document.querySelectorAll('.next-course-limit'));
   const upcoming = Array.from(document.querySelectorAll('#nextCourseList .next-course-card'));
   const ongoing = Array.from(document.querySelectorAll('#ongoingCourseList .ongoing-course-card'));
@@ -26,11 +36,11 @@
   let limit = 5;
   let lastDate = '';
 
-  function updateUpcoming(today) {
+  function updateUpcoming(today, now) {
     let visible = 0;
     upcoming.forEach(card => {
       const days = dayNumber(card.dataset.firstDate) - dayNumber(today);
-      const eligible = Number.isFinite(days) && days >= 0;
+      const eligible = Number.isFinite(days) && now < lessonStamp(card.dataset.firstDate, card.dataset.firstTime);
       card.hidden = !eligible || visible >= limit;
       if (!card.hidden) visible += 1;
       const countdown = card.querySelector('.next-new-countdown strong');
@@ -50,16 +60,16 @@
     });
   }
 
-  function updateOngoing(today) {
+  function updateOngoing(today, now) {
     const container = document.getElementById('ongoingCourseList');
     const emptyOngoing = document.getElementById('ongoingCourseEmpty');
     let visible = 0;
     ongoing.forEach(card => {
-      card.hidden = !(card.dataset.firstDate < today && card.dataset.classEnd >= today);
+      card.hidden = !(now >= lessonStamp(card.dataset.firstDate, card.dataset.firstTime) && now < lessonStamp(card.dataset.classEnd, card.dataset.classEndTime, true));
       if (card.hidden) return;
       visible += 1;
       const sessions = JSON.parse(card.dataset.sessions || '[]');
-      const next = sessions.find(session => session.date >= today);
+      const next = sessions.find(session => lessonStamp(session.date, session.time, true) > now);
       const date = card.querySelector('.personal-date');
       const time = card.querySelector('.personal-time');
       const countdown = card.querySelector('.next-new-countdown strong');
@@ -67,10 +77,10 @@
       card.dataset.nextTime = next ? next.time : '';
       if (next) {
         date.dateTime = next.date;
-        date.textContent = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: '2-digit', month: 'short', year: 'numeric', weekday: 'short' }).format(new Date(`${next.date}T12:00:00Z`));
+        date.textContent = next.date;
         time.textContent = `${next.time}${next.lesson ? ' · ' + next.lesson : ''}`;
         const days = dayNumber(next.date) - dayNumber(today);
-        countdown.textContent = days === 0 ? '今天' : `${days} 日`;
+        countdown.textContent = now >= lessonStamp(next.date, next.time) ? '上課中' : days === 0 ? '今天' : `${days} 日`;
       } else {
         date.removeAttribute('datetime');
         date.textContent = '你的課堂已完成';
@@ -82,6 +92,7 @@
       ongoing.sort((a, b) => (a.dataset.nextDate || '').localeCompare(b.dataset.nextDate || '') || (a.dataset.nextTime || '').localeCompare(b.dataset.nextTime || '')).forEach(card => container.appendChild(card));
       container.dataset.visibleCount = String(visible);
       container.dataset.asOf = today;
+      container.style.setProperty('--next-course-rows', String(Math.max(1, Math.ceil(visible / 2))));
     }
     if (emptyOngoing) emptyOngoing.hidden = visible > 0;
   }
@@ -153,8 +164,9 @@
 
   function refresh() {
     const today = todayDate();
-    updateUpcoming(today);
-    updateOngoing(today);
+    const now = nowStamp(today);
+    updateUpcoming(today, now);
+    updateOngoing(today, now);
     if (today !== lastDate) {
       updateClassLifecycle(today);
       lastDate = today;
@@ -169,6 +181,7 @@
   refresh();
   window.addEventListener('focus', refresh);
   window.addEventListener('pageshow', refresh);
+  window.addEventListener('online', refresh);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
   setInterval(refresh, 60000);
 })();
