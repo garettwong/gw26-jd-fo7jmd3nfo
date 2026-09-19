@@ -1,4 +1,4 @@
-const BUILD_ID = 'v20an-hk244eg-fs5-exam-time-20260917a';
+const BUILD_ID = 'v20an-lesson-sync-20260919a';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
