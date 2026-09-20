@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-09-20-V20ap",
+    "label": "2026-09-20 - V20ap",
+    "summary": "待確認薪酬估算；梨木樹及ComfyUI暫用班名與全班篩選。",
+    "latest": true
+  },
+  {
     "id": "2026-09-20-V20ao",
     "label": "2026-09-20 - V20ao",
     "summary": "梨木樹人工智能知識及應用：新增5節待確認課堂。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-09-17-V20an",
