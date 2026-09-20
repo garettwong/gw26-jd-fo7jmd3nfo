@@ -2454,5 +2454,65 @@
     "room_source": "HK281DSHF8_R2.xlsx G2",
     "source": "HK281DSHF8_R2.xlsx lesson 63; 2026-09-05 availability reply; Calvin confirmation pending",
     "salary_excluded": true
+  },
+  {
+    "date": "2026-10-13",
+    "status": "unconfirmed",
+    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 14:00-17:30 - L1 / 暫定第1節；班別及正式課時待確認；前往四海大廈有90分鐘空檔，車程待核實",
+    "category": "other",
+    "category_label": "梨木樹 · 人工智能知識及應用",
+    "teacher": "Garett",
+    "layer": "mine",
+    "salary_excluded": true,
+    "salary_pending_reason": "校名、班別、收費及正式教學時數待確認；5節共17.5小時為日曆時段，未計入薪酬。",
+    "source": "Calvin WhatsApp enquiry supplied by Garett on 2026-09-20; proposed October 13, 15, 20, 22, 27, 14:00-17:30; unconfirmed."
+  },
+  {
+    "date": "2026-10-15",
+    "status": "unconfirmed",
+    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 14:00-17:30 - L2 / 暫定第2節；班別及正式課時待確認；前往四海大廈有90分鐘空檔，車程待核實",
+    "category": "other",
+    "category_label": "梨木樹 · 人工智能知識及應用",
+    "teacher": "Garett",
+    "layer": "mine",
+    "salary_excluded": true,
+    "salary_pending_reason": "校名、班別、收費及正式教學時數待確認；5節共17.5小時為日曆時段，未計入薪酬。",
+    "source": "Calvin WhatsApp enquiry supplied by Garett on 2026-09-20; proposed October 13, 15, 20, 22, 27, 14:00-17:30; unconfirmed."
+  },
+  {
+    "date": "2026-10-20",
+    "status": "unconfirmed",
+    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 14:00-17:30 - L3 / 暫定第3節；班別及正式課時待確認；前往四海大廈有90分鐘空檔，車程待核實；同日ComfyUI時間待定，須核實衝突",
+    "category": "other",
+    "category_label": "梨木樹 · 人工智能知識及應用",
+    "teacher": "Garett",
+    "layer": "mine",
+    "salary_excluded": true,
+    "salary_pending_reason": "校名、班別、收費及正式教學時數待確認；5節共17.5小時為日曆時段，未計入薪酬。",
+    "source": "Calvin WhatsApp enquiry supplied by Garett on 2026-09-20; proposed October 13, 15, 20, 22, 27, 14:00-17:30; unconfirmed."
+  },
+  {
+    "date": "2026-10-22",
+    "status": "unconfirmed",
+    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 14:00-17:30 - L4 / 暫定第4節；班別及正式課時待確認；前往四海大廈有90分鐘空檔，車程待核實；同日ComfyUI時間待定，須核實衝突",
+    "category": "other",
+    "category_label": "梨木樹 · 人工智能知識及應用",
+    "teacher": "Garett",
+    "layer": "mine",
+    "salary_excluded": true,
+    "salary_pending_reason": "校名、班別、收費及正式教學時數待確認；5節共17.5小時為日曆時段，未計入薪酬。",
+    "source": "Calvin WhatsApp enquiry supplied by Garett on 2026-09-20; proposed October 13, 15, 20, 22, 27, 14:00-17:30; unconfirmed."
+  },
+  {
+    "date": "2026-10-27",
+    "status": "unconfirmed",
+    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 14:00-17:30 - L5 / 暫定第5節；班別及正式課時待確認；前往四海大廈有90分鐘空檔，車程待核實；同日ComfyUI時間待定，須核實衝突",
+    "category": "other",
+    "category_label": "梨木樹 · 人工智能知識及應用",
+    "teacher": "Garett",
+    "layer": "mine",
+    "salary_excluded": true,
+    "salary_pending_reason": "校名、班別、收費及正式教學時數待確認；5節共17.5小時為日曆時段，未計入薪酬。",
+    "source": "Calvin WhatsApp enquiry supplied by Garett on 2026-09-20; proposed October 13, 15, 20, 22, 27, 14:00-17:30; unconfirmed."
   }
 ]

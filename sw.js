@@ -1,4 +1,4 @@
-const BUILD_ID = 'v20an-sync-batch-20260920a';
+const BUILD_ID = 'v20ao-provisional-salary-20260920';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

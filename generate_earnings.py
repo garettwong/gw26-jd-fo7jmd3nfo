@@ -342,6 +342,15 @@ def build_report(
         "confirmed_and_unconfirmed": calculate(events, {"confirmed", "unconfirmed"}, revised_rules),
         "notes": notes,
     }
+    unpriced = {}
+    for event in events:
+        if event.get("salary_pending_reason") and event.get("status") == "unconfirmed":
+            label = event.get("category_label", "待確認課程")
+            interval = event_interval(event["text"])
+            time_label = "–".join(f"{minute // 60:02d}:{minute % 60:02d}" for minute in interval) if interval else "時間待確認"
+            row = unpriced.setdefault(label, {"label": label, "dates": [], "time": time_label, "reason": event["salary_pending_reason"]})
+            row["dates"].append(event["date"])
+    report["unpriced_courses"] = list(unpriced.values())
     if payment_context:
         report["confirmed"]["expected_payments"] = calculate_expected_payments(
             events, {"confirmed"}, payment_context
@@ -558,7 +567,7 @@ def main() -> None:
             )
         report_page = destination / "index.html"
         if item.get("latest") or not report_page.exists():
-            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20260918-payments"></script>\n<script>\nconst STORAGE_KEY')
+            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20260920-status"></script>\n<script>\nconst STORAGE_KEY')
             page = page.replace("    render('confirmed');", "    render('confirmed');\n    if(data.cashflow) window.mountCashflow(data);")
             page = page.replace("+' · Updated '+data.generated", "+' · Records checked '+(data.records_as_of||data.generated)")
             page = page.replace("esc(r.expected_payment_date)", "esc(r.expected_payment_date||'待提交／核實')")
