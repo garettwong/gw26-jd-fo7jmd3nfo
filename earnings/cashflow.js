@@ -17,6 +17,11 @@ window.mountCashflow=function(data){
  if(combined)combined.textContent='Confirmed + unconfirmed · 包括待確認';
  const pending=document.createElement('p');pending.className='cf-muted';pending.id='salaryPendingTotal';
  pending.textContent='待確認收入（未計未定價課程）：'+cash(data.confirmed_and_unconfirmed.grand_total-data.confirmed.grand_total);work.append(pending);
+ const proposals=data.pending_courses||[];
+ if(proposals.length){
+  pending.textContent=proposals.length+' 個待確認課程 · 已可估算 '+cash(proposals.reduce((total,r)=>total+(r.amount||0),0))+(proposals.some(r=>r.amount===null)?'，另有 '+proposals.filter(r=>r.amount===null).length+' 個課程金額待定':'');
+  const list=document.createElement('section');list.id='pendingSalaryCourses';list.innerHTML='<h3>Unconfirmed · 待確認課程明細</h3><div class="cf-items">'+proposals.map(r=>'<article class="cf-item"><b>'+esc(r.label)+'</b><p>'+r.lesson_count+' 節 · '+r.hours+' 小時</p><strong class="cf-amount">'+(r.amount===null?'金額待定':cash(r.amount))+'</strong><p>'+ (r.rate===null?'時薪待確認':cash(r.rate)+'/小時（估算）')+'</p><small>'+esc(r.basis)+'</small></article>').join('')+'</div><p class="cf-muted">這是擬任教工作的估算；撞期須先解決，不能視為可同時收取的保證收入。</p>';work.append(list);
+ }
  const unpriced=data.unpriced_courses||[];
  if(unpriced.length){const box=document.createElement('div');box.id='salaryUnpriced';box.innerHTML='<h3>Unconfirmed · 金額待定</h3>'+unpriced.map(r=>'<p><b>'+esc(r.label)+'</b><br>'+esc(r.dates.join('、'))+' · '+esc(r.time)+'<br>'+esc(r.reason)+'</p>').join('');work.append(box);}
  main.prepend(work);

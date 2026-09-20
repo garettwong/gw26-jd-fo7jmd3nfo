@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ao-provisional-salary-20260920"
+BUILD_ID = "v20ap-pending-income-classes-20260920"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-17-V20an"
-COMPARE_LABEL = "V20ao"
-COMPARE_BASELINE_LABEL = "V20an"
-EXPECTED_COMPARISON_CHANGES = 5
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-20-V20ao"
+COMPARE_LABEL = "V20ap"
+COMPARE_BASELINE_LABEL = "V20ao"
+EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -94,7 +94,7 @@ UPCOMING_CLASS_META = {
     "MC244EG · 1": ("循道衞理中心", "灣仔軒尼詩道22號循道衞理中心3樓305室", "CHI"),
 }
 CLASS_UPDATE_META = {
-    "HK281DS · HF8": ("2026-09-05", "暫覆 33 節可教，待 Calvin 確認；其餘由其他導師待定。來源實列 63 節，原標題 47 節有誤；薪酬暫不更新。"),
+    "HK281DS · HF8": ("2026-09-05", "暫覆 33 節可教，待 Calvin 確認；其餘由其他導師待定。來源實列 63 節，原標題 47 節有誤；33節共132小時列作待確認薪酬估算。"),
     "HK267HG · CW2": ("2026-08-28", "Calvin 已確認全 8 節由 Garett 任教；11 月 11 至 20 日共 30 小時，課室 104。"),
     "HK244EG · FS-1": ("2026-06-29", "已完成；6 月 18 日黑雨取消，補課為 6 月 27 日。"),
     "HK244EG · HF2": ("2026-09-08", "已完成；日期及評核時間與原件相符。L7／L10原件仍寫Andy，現有任教紀錄為Garett，須補齊逐堂代課確認；未改動實際任教紀錄。"),
@@ -1563,7 +1563,11 @@ def assessment_attendance_reminder(ev, notes):
 
 def display_group_label(label):
     # Display the official alias without changing stable lesson-log identities.
-    return "HK265HG · FS-6 · SEP 2026" if label == "HK265HG · FS · SEP 2026" else label
+    return {
+        "HK265HG · FS · SEP 2026": "HK265HG · FS-6 · SEP 2026",
+        "梨木樹 · 人工智能知識及應用": "LMS-AI · 梨木樹（暫名）",
+        "ComfyUI": "COMFYUI-01 · AICU02（暫名）",
+    }.get(label, label)
 
 
 def audited_source_note(ev):
@@ -1704,6 +1708,11 @@ def event_slot(ev):
 
 
 def centre_code(ev):
+    # A destination mentioned in a travel note is not this lesson's venue.
+    if ev.get("group_label") == "梨木樹 · 人工智能知識及應用":
+        return "LMS-PENDING"
+    if ev.get("group_label") == "ComfyUI":
+        return "COMFY-PENDING"
     if "荃灣" in ev.get("text", ""):
         return "tsuen_wan"
     text = str(ev.get("text") or "")
@@ -1809,6 +1818,13 @@ def chip(ev):
         if first_lesson else ""
     )
     if ev["category"] not in {"erb", "methodist"}:
+        identity_html = ""
+        if ev["group_label"] in {"ComfyUI", "梨木樹 · 人工智能知識及應用"}:
+            label = display_group_label(ev["group_label"])
+            identity_html = (f'<span class="class-id card-course-filter" role="button" tabindex="0" '
+                             f'style="--class-hue:38" data-card-group="{ehtml(ev["group"])}" '
+                             f'aria-label="顯示 {ehtml(label)} 全部課堂；再按一次返回" '
+                             f'title="暫用班名；按此顯示此班全部課堂">{ehtml(label)}</span>')
         teacher_suffix = ""
         if layer == "class" and ev.get("teacher"):
             teacher_suffix = f' / <span class="context-teacher">Teacher: {ehtml(ev["teacher"])}</span>'
@@ -1818,7 +1834,7 @@ def chip(ev):
         )
         return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}" tabindex="0" role="button" '
                 f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}>'
-                f'{comparison_badge}{conflict_badge}<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
+                f'{comparison_badge}{conflict_badge}{identity_html}<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
                 f'<div class="ttl">{title_html}</div><div class="det">{detail_html}{teacher_suffix}</div>{location_html}{room_html}{log_html}<div class="fulltxt">{full_html}</div></div>')
 
     class_label = fields["class_label"]
@@ -2085,6 +2101,24 @@ def class_summary_section(section, heading, heading_id):
 
 upcoming_summary_html = class_summary_section("upcoming", "Upcoming ERB classes", "upcomingHeading")
 completed_summary_html = class_summary_section("completed", "Completed ERB classes", "completedHeading")
+
+def pending_course_panel():
+    cards = []
+    for label, slug, status, first in GROUPS:
+        mine = [e for e in display_events if e["group"] == slug and is_personal_assignment(e)
+                and e["status"] == "unconfirmed" and e["date"] >= UPCOMING_AS_OF.isoformat()]
+        if not mine:
+            continue
+        dates = sorted({e["date"] for e in mine})
+        cards.append(f'<button type="button" class="pending-course card-course-filter" '
+                     f'data-card-group="{ehtml(slug)}" data-filter="{ehtml(slug)}" data-first-date="{dates[0]}" data-jump-course="1">'
+                     f'<strong>{ehtml(display_group_label(label))}</strong><span>Unconfirmed · 待確認 · 你任教 {len(mine)} 節</span>'
+                     f'<span>{dates[0]} 至 {dates[-1]}</span><small>按此查看此班全部課堂</small></button>')
+    return ('<section class="pending-courses" aria-labelledby="pendingCoursesHeading"><h2 id="pendingCoursesHeading">Unconfirmed classes · 待確認課程</h2>'
+            '<p>暫用班名只供課表識別；按班名查看全班課堂，再按一次返回。</p><div class="pending-course-list">'+''.join(cards)+'</div></section>') if cards else ''
+
+pending_courses_html = pending_course_panel()
+CSS += '''.pending-courses{margin:18px 0;padding:18px;border:2px dashed #b65a00;border-radius:9px;background:#fff8e9}.pending-courses h2{font-size:21px;margin:0 0 5px}.pending-courses p{font-size:13px;color:#665747}.pending-course-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.pending-course{display:flex;flex-direction:column;gap:7px;padding:15px;background:#fff;border:2px dashed #b65a00;border-radius:7px;text-align:left;font:inherit;cursor:pointer}.pending-course strong{font-size:17px}.pending-course span,.pending-course small{font-size:13px}.pending-course:focus-visible{outline:3px solid #0f7074}.pending-course.card-filter-active{background:#e6f6f4}@media(max-width:820px){.pending-course-list{grid-template-columns:1fr}}'''
 
 COURSE_FAMILY_BY_CODE = {
     code: family["name"]
@@ -2446,6 +2480,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <div class="legend"><div class="legend-card"><span class="sample confirmed"></span> Confirmed / 已確認</div><div class="legend-card"><span class="sample unconfirmed"></span> Unconfirmed / 未確認</div><div class="legend-card"><span class="sample class-layer"></span> Full class context</div>{comparison_legend_html}<div class="legend-card"><span class="sample note"></span> Note / holiday</div></div>
 <div id="transitNotice" class="transit-notice" hidden>每段課堂之間會分開顯示交通時間及可用膳時間；用膳不足 30 分鐘會以紅色標示。</div>
 <div class="course-code-heading"><div class="section-h">ERB course families</div><span class="course-code-count">{len(COURSE_FAMILIES)} course families</span></div><div class="course-code-legend">{erb_code_legend}</div>
+{pending_courses_html}
 {upcoming_summary_html}
 {completed_summary_html}
 <div class="filter-heading"><div id="filterArea" class="section-h filter-jump-target">Filter by course / class</div><div class="filter-master"><button class="filter course-filter active" data-filter="all">All ({len(display_events)})</button>{comparison_filter_html}</div></div>{filter_status_summary_html}<div class="filter-groups">{filter_groups_html}</div>
@@ -2832,9 +2867,9 @@ function toggleCardCourseFilter(tag){{
   restoreModeAnchor(anchor);
 }}
 document.querySelectorAll('.card-course-filter').forEach(tag=>{{
-  tag.addEventListener('click',event=>{{event.stopPropagation();toggleCardCourseFilter(tag);}});
+  tag.addEventListener('click',event=>{{event.stopPropagation();toggleCardCourseFilter(tag);if(tag.dataset.jumpCourse&&window.__courseFilter===tag.dataset.cardGroup)jumpToFilter(tag);}});
   tag.addEventListener('keydown',event=>{{
-    if(event.key==='Enter'||event.key===' '){{event.preventDefault();event.stopPropagation();toggleCardCourseFilter(tag);}}
+    if(event.key==='Enter'||event.key===' '){{event.preventDefault();event.stopPropagation();toggleCardCourseFilter(tag);if(tag.dataset.jumpCourse&&window.__courseFilter===tag.dataset.cardGroup)jumpToFilter(tag);}}
   }});
 }});
 function captureModeAnchor(){{

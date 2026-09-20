@@ -1,4 +1,4 @@
-const BUILD_ID = 'v20ao-provisional-salary-20260920';
+const BUILD_ID = 'v20ap-pending-income-classes-20260920';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

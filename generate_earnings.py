@@ -382,6 +382,8 @@ def build_report(
     if item.get("latest"):
         from salary_cashflow import reconcile_current
         reconcile_current(report, payment_context or [])
+    from salary_pending import add_pending_estimates
+    add_pending_estimates(report, events, item["id"], event_interval)
     return report
 
 
@@ -474,7 +476,8 @@ async function start(){
       const d=remaining?data.confirmed:data[mode];
       const schedule=d.expected_payments||{rows:[],undated:[]};
       const paymentSummary=renderExpected(schedule,remaining);
-      document.getElementById('grandLabel').textContent=remaining?'尚未收取薪酬':'Total earnings';
+      const pendingUnknown=(data.pending_courses||[]).filter(r=>r.amount===null).length;
+      document.getElementById('grandLabel').textContent=remaining?'尚未收取薪酬':mode==='confirmed_and_unconfirmed'?(pendingUnknown?'已知金額合計（另有課程金額待定）':'Confirmed + unconfirmed · 收入估算'):'Confirmed earnings · 已確認';
       document.getElementById('eventsLabel').textContent=remaining?'尚未收款項目':'Counted source entries';
       document.getElementById('grand').textContent=money(remaining?paymentSummary.unpaidAmount:d.grand_total);
       document.getElementById('events').textContent=remaining?paymentSummary.unpaidCount:d.counted_events;
@@ -567,7 +570,8 @@ def main() -> None:
             )
         report_page = destination / "index.html"
         if item.get("latest") or not report_page.exists():
-            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20260920-status"></script>\n<script>\nconst STORAGE_KEY')
+            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20260920-pending"></script>\n<script>\nconst STORAGE_KEY')
+            page = page.replace('ERB/SEN hours', 'Teaching hours').replace('ERB/SEN pay', 'Teaching pay')
             page = page.replace("    render('confirmed');", "    render('confirmed');\n    if(data.cashflow) window.mountCashflow(data);")
             page = page.replace("+' · Updated '+data.generated", "+' · Records checked '+(data.records_as_of||data.generated)")
             page = page.replace("esc(r.expected_payment_date)", "esc(r.expected_payment_date||'待提交／核實')")

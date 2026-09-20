@@ -8,9 +8,9 @@
   "context_events": 230,
   "class_spans": 20,
   "first_lesson_markers": 19,
-  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-09-17-V20an",
-  "comparison_label": "V20ao",
-  "changed_in_version": 5,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-09-20-V20ao",
+  "comparison_label": "V20ap",
+  "changed_in_version": 0,
   "counts": {
     "confirmed": 269,
     "unconfirmed": 89,
