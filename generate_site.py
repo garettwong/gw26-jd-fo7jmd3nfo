@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20an-compact-start-20260919c"
+BUILD_ID = "v20an-sync-batch-20260920a"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
@@ -1410,13 +1410,10 @@ LESSON_LOG_JS = r'''
     }
     return migrated;
   };
-  // One read per lesson (calendar and class views share the same record).
+  // One read for the whole timetable; mobile must not queue hundreds of requests.
   const buttons=Array.from(document.querySelectorAll('.lesson-log-open'));
   const groups=new Map();
-  const checked=new Map();
-  const pending=new Set();
-  const queue=[];
-  let running=0;
+  let running=false, nextCheck=0, failures=0, refreshAgain=false;
   buttons.forEach(button=>{
     const key=button.dataset.logKey||'';
     if(!groups.has(key))groups.set(key,[]);
@@ -1431,66 +1428,53 @@ LESSON_LOG_JS = r'''
     button.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){open(event);}});
   });
   window.openLessonLogForButton=openEditor;
-  const visible=key=>groups.get(key).some(button=>{
-    const r=button.getBoundingClientRect();
-    return r.width>0&&r.height>0&&r.bottom>=-200&&r.top<=innerHeight+200;
-  });
-  const refreshBadge=async key=>{
+  const refresh=async(force=false)=>{
+    if(document.hidden)return;
+    if(running){if(force)refreshAgain=true;return;}
+    if(!force&&Date.now()<nextCheck)return;
+    running=true;
     const controller=new AbortController();
-    const timer=setTimeout(()=>controller.abort(),10000);
+    const timer=setTimeout(()=>controller.abort(),15000);
     try{
-      const response=await fetch(APP_BASE+'/api/notes/'+encodeURIComponent(lessonIdFor(key)),{
+      const response=await fetch(APP_BASE+'/api/note-status',{
         cache:'no-store',signal:controller.signal
       });
       if(!response.ok)throw new Error('HTTP '+response.status);
       const payload=await response.json();
-      if(typeof payload.content!=='string')throw new Error('Invalid record');
-      const exists=Boolean(payload.content.trim());
-      groups.get(key).forEach(button=>{
-        button.classList.toggle('logged',exists);
-        button.textContent=exists?'已記錄':'記錄';
-        button.setAttribute('aria-label',exists?'已同步教學記錄；按此查看或修改':'尚未有教學記錄；按此填寫');
-        button.title=exists?'已核對網上記錄':'已核對：尚未有記錄';
-      });
-      checked.set(key,Date.now());
+      if(payload.complete!==true||!Array.isArray(payload.recorded)||
+        payload.recorded.some(id=>typeof id!=='string'))throw new Error('Incomplete status');
+      const recorded=new Set(payload.recorded);
+      for(const [key,items] of groups){
+        const exists=recorded.has(lessonIdFor(key));
+        items.forEach(button=>{
+          button.classList.toggle('logged',exists);
+          button.textContent=exists?'已記錄':'記錄';
+          button.setAttribute('aria-label',exists?'已同步教學記錄；按此查看或修改':'尚未有教學記錄；按此填寫');
+          button.title=exists?'已核對網上記錄':'已核對：尚未有記錄';
+        });
+      }
+      failures=0;
+      nextCheck=Date.now()+5000;
     }catch(_error){
-      groups.get(key).forEach(button=>{
+      failures++;
+      nextCheck=Date.now()+Math.min(60000,5000*2**Math.min(failures-1,4));
+      buttons.forEach(button=>{
         button.textContent=button.classList.contains('logged')?'已記錄 ↻':'待同步';
-        button.title='未能核對最新記錄，會自動重試；按此直接開啟網上記錄';
+        button.title='連線暫時失敗，會自動重試；按此仍可直接開啟網上記錄及同班過往記錄';
         button.setAttribute('aria-label',button.title);
       });
-      checked.delete(key);
-    }finally{clearTimeout(timer);}
-  };
-  const pump=()=>{
-    while(running<3&&queue.length){
-      const key=queue.shift();running++;
-      refreshBadge(key).finally(()=>{running--;pending.delete(key);pump();});
+    }finally{
+      clearTimeout(timer);running=false;
+      if(refreshAgain){refreshAgain=false;void refresh(true);}
     }
   };
-  const refresh=()=>{
-    if(document.hidden)return;
-    const now=Date.now();
-    // Visible lessons refresh every five seconds, all others every five minutes.
-    for(const key of groups.keys()){
-      const age=now-(checked.get(key)||0);
-      if(!pending.has(key)&&age>=(visible(key)?4000:300000)){
-        pending.add(key);queue.push(key);
-      }
-    }
-    queue.sort((a,b)=>Number(visible(b))-Number(visible(a))||
-      Math.abs(Date.parse(a.split('|')[0])-now)-Math.abs(Date.parse(b.split('|')[0])-now));
-    pump();
-  };
-  refresh();
-  migrateLegacyNotes().finally(()=>{checked.clear();refresh();});
-  window.addEventListener('focus',refresh);
-  window.addEventListener('pageshow',()=>{checked.clear();refresh();});
-  window.addEventListener('online',()=>{checked.clear();refresh();});
-  document.addEventListener('visibilitychange',refresh);
-  let scrollTimer;
-  window.addEventListener('scroll',()=>{clearTimeout(scrollTimer);scrollTimer=setTimeout(refresh,150);},{passive:true});
-  setInterval(refresh,5000);
+  void refresh();
+  migrateLegacyNotes().then(count=>{if(count)void refresh(true);}).catch(()=>{});
+  window.addEventListener('focus',()=>void refresh(true));
+  window.addEventListener('pageshow',()=>void refresh(true));
+  window.addEventListener('online',()=>void refresh(true));
+  document.addEventListener('visibilitychange',()=>void refresh(true));
+  setInterval(()=>void refresh(),5000);
 })();
 '''
 

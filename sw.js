@@ -1,4 +1,4 @@
-const BUILD_ID = 'v20an-compact-start-20260919c';
+const BUILD_ID = 'v20an-sync-batch-20260920a';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
