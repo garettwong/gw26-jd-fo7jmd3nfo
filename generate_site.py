@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ap-pending-income-classes-20260920"
+BUILD_ID = "v20aq-hf8-confirmed-20260920"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-20-V20ao"
-COMPARE_LABEL = "V20ap"
-COMPARE_BASELINE_LABEL = "V20ao"
-EXPECTED_COMPARISON_CHANGES = 0
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-20-V20ap"
+COMPARE_LABEL = "V20aq"
+COMPARE_BASELINE_LABEL = "V20ap"
+EXPECTED_COMPARISON_CHANGES = 63
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -94,7 +94,7 @@ UPCOMING_CLASS_META = {
     "MC244EG · 1": ("循道衞理中心", "灣仔軒尼詩道22號循道衞理中心3樓305室", "CHI"),
 }
 CLASS_UPDATE_META = {
-    "HK281DS · HF8": ("2026-09-05", "暫覆 33 節可教，待 Calvin 確認；其餘由其他導師待定。來源實列 63 節，原標題 47 節有誤；33節共132小時列作待確認薪酬估算。"),
+    "HK281DS · HF8": ("2026-09-20", "已按確認版更新：Garett任教6節，共24小時；其餘按來源導師名單，空白導師列待定。來源表列63節，標題仍寫47節，保留原表待核對。"),
     "HK267HG · CW2": ("2026-08-28", "Calvin 已確認全 8 節由 Garett 任教；11 月 11 至 20 日共 30 小時，課室 104。"),
     "HK244EG · FS-1": ("2026-06-29", "已完成；6 月 18 日黑雨取消，補課為 6 月 27 日。"),
     "HK244EG · HF2": ("2026-09-08", "已完成；日期及評核時間與原件相符。L7／L10原件仍寫Andy，現有任教紀錄為Garett，須補齊逐堂代課確認；未改動實際任教紀錄。"),
@@ -931,9 +931,6 @@ for label in _group_labels:
 
 PAYMENT_CONTEXT = []
 for label, slug, _group_status, _first_date in GROUPS:
-    # Garett explicitly deferred HF8 salary records on 5 September.
-    if label == "HK281DS · HF8":
-        continue
     group_events = [
         event
         for event in display_events
@@ -2471,7 +2468,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <li>MC106DS 第2班：原件47節有日期課堂共188小時，但標題及課程大綱寫49節／196小時；不能將49項內容直接當作47節的逐堂教學內容。</li>
 <li>HK239HG 城市一條龍：12月16–18日來自已整理紀錄，尚欠原始確認；12月18日L6課堂13:00–16:00，考試註記15:30–16:30超出課堂。</li>
 <li>HK244EG FS：L2／L5按原件改期註記採用9月23／30日；期末表列11月3日，但標題仍印8月27日。HK239HG FS／FS11正式班別、部分舊班導師更改紀錄仍需補齊。</li>
-<li>HK281DS HF8仍是未確認查詢；ComfyUI四堂的時間及地點未提供。歷史Mike Sir時段原文1915–1015含糊，未擅自改寫。</li>
+<li>HK281DS HF8已按9月20日收到的確認版更新；來源列63節但標題寫47節，空白導師列TBC，不計入Garett薪酬。ComfyUI四堂的時間及地點未提供。歷史Mike Sir時段原文1915–1015含糊，未擅自改寫。</li>
 </ul>
 </details>
 <div id="viewTabs" class="view-tabs" role="tablist" aria-label="Timetable layout"><button id="calendarTab" class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="calendarView" data-view="calendar">Calendar</button><button id="spansTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="spansView" data-view="spans">Class spans</button></div>

@@ -8,17 +8,17 @@
   "context_events": 230,
   "class_spans": 20,
   "first_lesson_markers": 19,
-  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-09-20-V20ao",
-  "comparison_label": "V20ap",
-  "changed_in_version": 0,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-09-20-V20ap",
+  "comparison_label": "V20aq",
+  "changed_in_version": 63,
   "counts": {
-    "confirmed": 269,
-    "unconfirmed": 89,
+    "confirmed": 332,
+    "unconfirmed": 26,
     "note": 7
   },
   "layers": {
-    "mine": 208,
-    "class": 154,
+    "mine": 181,
+    "class": 181,
     "other": 3
   },
   "categories": {
