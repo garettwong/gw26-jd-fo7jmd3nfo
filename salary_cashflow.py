@@ -82,6 +82,14 @@ def reconcile_current(report, contexts):
                 row["invoice_status"] = "發票已備妥並寄給你；尚未確認交 Calvin"
                 row["expected_payment_date"] = None
                 row["basis"] = "提交 Calvin 後才開始估算；不計入未來 30／60／90 日到賬預測"
+        for row in schedule["undated"]:
+            receipt = reconciliation.get("other_received", {}).get(row["kind"])
+            if receipt:
+                if row["amount"] != receipt["amount_hkd"]:
+                    raise ValueError("Other received amount differs from salary")
+                row["received"] = True
+                row["received_on"] = receipt["received_date"]
+                row["received_date_precision"] = receipt["date_precision"]
         schedule["rows"].sort(key=lambda r: (r.get("expected_payment_date") or "9999", r["label"]))
         schedule["dated_total"] = sum(r["amount"] for r in schedule["rows"] if r.get("expected_payment_date"))
     rows = report["confirmed"]["expected_payments"]["rows"]

@@ -570,7 +570,7 @@ def main() -> None:
             )
         report_page = destination / "index.html"
         if item.get("latest") or not report_page.exists():
-            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20260920-pending"></script>\n<script>\nconst STORAGE_KEY')
+            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20260921-dgs-paid"></script>\n<script>\nconst STORAGE_KEY')
             page = page.replace('ERB/SEN hours', 'Teaching hours').replace('ERB/SEN pay', 'Teaching pay')
             page = page.replace("    render('confirmed');", "    render('confirmed');\n    if(data.cashflow) window.mountCashflow(data);")
             page = page.replace("+' · Updated '+data.generated", "+' · Records checked '+(data.records_as_of||data.generated)")

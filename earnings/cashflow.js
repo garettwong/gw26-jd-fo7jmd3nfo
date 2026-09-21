@@ -30,6 +30,10 @@ window.mountCashflow=function(data){
  `;document.head.append(style);
  section.innerHTML=`<div class="cf-panel" id="cfOverview"><h2>收款紀錄總覽</h2><p class="cf-muted">紀錄更新：${esc(data.records_as_of.slice(0,10))} · 只計已確認工作</p><div class="cf-totals"><div class="cf-total"><span>已實際收到</span><strong id="cfReceived">${cash(sum(paid))}</strong><small>所有已確認收款，包括 Calvin、SEN 及 DGS</small></div><div class="cf-total waiting"><span>已交 Calvin，尚未收到</span><strong id="cfWaiting">${cash(sum(waiting))}</strong><small>${waiting.length} 張已提交發票</small></div><div class="cf-total"><span>未完班／未交單的預計收入</span><strong id="cfFutureIncome">${cash(sum(future))}</strong><small>尚未成為已提交的待收款發票</small></div></div><p class="cf-muted">已登記工作總額 ${cash(sum(all))} ＝ 已收款 ${cash(sum(paid))} ＋ 已交單待收款 ${cash(sum(waiting))} ＋ 未完班／未交單 ${cash(sum(future))}。<br>這是工作收入紀錄，不是銀行現有結餘。</p></div><div class="cf-panel"><div class="cf-ledger-head"><h3>課程及收款進度</h3><select id="cfFilter" aria-label="收款記錄篩選"><option value="all">全部紀錄</option><option value="waiting">已交 Calvin，尚未收到</option><option value="paid">已收到</option><option value="future">未完班／未交單</option></select></div><div id="cfLedgerSummary" class="cf-muted"></div><div id="cfItems" class="cf-items"></div><p class="cf-muted">交單日期按實際提交紀錄填寫；預計日期只是估計。未有紀錄的日期會明示，不會用發票日期或預計日期代替。</p></div>`;
  function card(r){
+  if(r.kind==='DGS'&&r.received){
+   const when=r.received_on?(r.received_date_precision==='approximate'?'約 ':'')+r.received_on:'已收到；日期未記錄';
+   return '<article class="cf-item cf-paid" data-group="DGS"><header><b>DGS</b><strong class="cf-amount">'+cash(r.amount)+'</strong></header><p class="cf-course-name">DGS</p><span class="cf-badge">已收到 · 已完成</span><table class="cf-dates"><tbody><tr><th scope="row">收款日期</th><td>'+esc(when)+'</td></tr></tbody></table></article>';
+  }
   const submitted=r.submission_state==='submitted';
   const end=r.class_end||(r.service_period?.match(/(\d{4}-\d{2}-\d{2})$/)||[])[1]||'日期未記錄';
   const sent=r.submitted_on?r.submitted_on+(r.submitted_at?' '+r.submitted_at.slice(11,16):''):r.received?'交單日期未記錄':submitted?'已交單；日期未記錄':r.kind==='ERB'?'尚未提交':'提交日期未記錄';
