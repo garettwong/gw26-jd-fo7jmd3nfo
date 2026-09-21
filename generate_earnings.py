@@ -90,7 +90,7 @@ def calculate(events: list[dict], statuses: set[str], revised_rules: bool = Fals
     counted_events = 0
     for event in events:
         event_date = event["date"]
-        if not ("2026-06-01" <= event_date <= "2026-12-31"):
+        if not ("2026-06-01" <= event_date <= "2027-01-31"):
             continue
         if event["status"] not in statuses or event_date == "2026-06-03":
             continue
@@ -123,11 +123,14 @@ def calculate(events: list[dict], statuses: set[str], revised_rules: bool = Fals
     )
     rows = []
     grand_total = 0
-    for month_number, month_name in enumerate(MONTHS, 6):
+    periods = [(2026, m, name) for m, name in enumerate(MONTHS, 6)]
+    if any(e["date"].startswith("2027-01") for e in events):
+        periods.append((2027, 1, "January 2027"))
+    for year_number, month_number, month_name in periods:
         regular_minutes = sum(
             merge_minutes(intervals)
             for event_date, intervals in regular_by_date.items()
-            if int(event_date[5:7]) == month_number
+            if event_date[:7] == f"{year_number:04d}-{month_number:02d}"
         )
         pending_hours = (
             HK280HS_SS_PENDING_HOURS
@@ -229,7 +232,7 @@ def calculate_expected_payments(
 
     for event in events:
         event_date = str(event.get("date", ""))
-        if not ("2026-06-01" <= event_date <= "2026-12-31"):
+        if not ("2026-06-01" <= event_date <= "2027-01-31"):
             continue
         if event.get("status") not in statuses or event_date == "2026-06-03":
             continue
@@ -330,7 +333,7 @@ def build_report(
     )
     report = {
         "name": "Garett Wong",
-        "period": "June to December 2026",
+        "period": "June 2026 to January 2027" if any(e["date"].startswith("2027-01") for e in events) else "June to December 2026",
         "generated": item["id"][:10],
         "version": item["label"],
         "version_id": item["id"],

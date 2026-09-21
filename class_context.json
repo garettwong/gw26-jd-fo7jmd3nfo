@@ -2514,5 +2514,55 @@
     "salary_excluded": true,
     "salary_pending_reason": "校名、班別、收費及正式教學時數待確認；5節共17.5小時為日曆時段，未計入薪酬。",
     "source": "Calvin WhatsApp enquiry supplied by Garett on 2026-09-20; proposed October 13, 15, 20, 22, 27, 14:00-17:30; unconfirmed."
+  },
+  {
+    "date": "2027-01-05",
+    "status": "confirmed",
+    "text": "勵行-上水彩園 (Garett) - HK280HG, Class SS / 生成式人工智能商業應用證書（兼讀制） / 0900-1230 - L1",
+    "teacher": "Garett",
+    "layer": "mine",
+    "teaching_room": "129舖02室",
+    "official_teaching_hours": 3.5,
+    "source": "Christian Action admission notice received 2026-09-21; user confirmed teaching assignment; Jan 2027, five lessons / 18 hours"
+  },
+  {
+    "date": "2027-01-05",
+    "status": "confirmed",
+    "text": "勵行-上水彩園 (Garett) - HK280HG, Class SS / 生成式人工智能商業應用證書（兼讀制） / 1400-1730 - L2",
+    "teacher": "Garett",
+    "layer": "mine",
+    "teaching_room": "129舖02室",
+    "official_teaching_hours": 3.5,
+    "source": "Christian Action admission notice received 2026-09-21; user confirmed teaching assignment; Jan 2027, five lessons / 18 hours"
+  },
+  {
+    "date": "2027-01-07",
+    "status": "confirmed",
+    "text": "勵行-上水彩園 (Garett) - HK280HG, Class SS / 生成式人工智能商業應用證書（兼讀制） / 1330-1730 - L3 [持續評估-個人習作一]",
+    "teacher": "Garett",
+    "layer": "mine",
+    "teaching_room": "129舖02室",
+    "official_teaching_hours": 4,
+    "source": "Christian Action admission notice received 2026-09-21; user confirmed teaching assignment; Jan 2027, five lessons / 18 hours"
+  },
+  {
+    "date": "2027-01-12",
+    "status": "confirmed",
+    "text": "勵行-上水彩園 (Garett) - HK280HG, Class SS / 生成式人工智能商業應用證書（兼讀制） / 0900-1230 - L4 [持續評估-個人習作二]",
+    "teacher": "Garett",
+    "layer": "mine",
+    "teaching_room": "129舖02室",
+    "official_teaching_hours": 3.5,
+    "source": "Christian Action admission notice received 2026-09-21; user confirmed teaching assignment; Jan 2027, five lessons / 18 hours"
+  },
+  {
+    "date": "2027-01-12",
+    "status": "confirmed",
+    "text": "勵行-上水彩園 (Garett) - HK280HG, Class SS / 生成式人工智能商業應用證書（兼讀制） / 1400-1730 - L5 [期末筆試 16:00-17:00]",
+    "teacher": "Garett",
+    "layer": "mine",
+    "teaching_room": "129舖02室",
+    "official_teaching_hours": 3.5,
+    "source": "Christian Action admission notice received 2026-09-21; user confirmed teaching assignment; Jan 2027, five lessons / 18 hours"
   }
 ]

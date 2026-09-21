@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20aq-hf8-confirmed-20260920"
+BUILD_ID = "v20ar-ss-jan2027-confirmed-20260921"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-20-V20ap"
-COMPARE_LABEL = "V20aq"
-COMPARE_BASELINE_LABEL = "V20ap"
-EXPECTED_COMPARISON_CHANGES = 63
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-20-V20aq"
+COMPARE_LABEL = "V20ar"
+COMPARE_BASELINE_LABEL = "V20aq"
+EXPECTED_COMPARISON_CHANGES = 5
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -94,6 +94,7 @@ UPCOMING_CLASS_META = {
     "MC244EG · 1": ("循道衞理中心", "灣仔軒尼詩道22號循道衞理中心3樓305室", "CHI"),
 }
 CLASS_UPDATE_META = {
+    "HK280HG · SS": ("2026-09-21", "已確認2027年1月5、7、12日共5節、18小時；1月12日期末筆試16:00–17:00。"),
     "HK281DS · HF8": ("2026-09-20", "已按確認版更新：Garett任教6節，共24小時；其餘按來源導師名單，空白導師列待定。來源表列63節，標題仍寫47節，保留原表待核對。"),
     "HK267HG · CW2": ("2026-08-28", "Calvin 已確認全 8 節由 Garett 任教；11 月 11 至 20 日共 30 小時，課室 104。"),
     "HK244EG · FS-1": ("2026-06-29", "已完成；6 月 18 日黑雨取消，補課為 6 月 27 日。"),
@@ -1921,7 +1922,8 @@ for e in display_events:
 layer_counts = {"mine": 0, "class": 0, "other": 0}
 for e in display_events:
     layer_counts[event_layer(e)] += 1
-months_html = ''.join(month_html(YEAR, m) for m in range(5, 13))
+DISPLAY_MONTHS = [(2026, m) for m in range(5, 13)] + [(2027, 1)]
+months_html = ''.join(month_html(y, m) for y, m in DISPLAY_MONTHS)
 def calendar_filter_button(group):
     label, slug, group_status, first_date = group
     count = sum(1 for event in display_events if event["group"] == slug)
@@ -2245,7 +2247,7 @@ def next_upcoming_course_panel():
 next_new_course_html = next_upcoming_course_panel()
 
 TIMELINE_START = datetime.date(YEAR, 5, 1)
-TIMELINE_END = datetime.date(YEAR, 12, 31)
+TIMELINE_END = datetime.date(2027, 1, 31)
 TIMELINE_DAYS = (TIMELINE_END - TIMELINE_START).days + 1
 
 
@@ -2261,19 +2263,20 @@ def short_date(day):
 span_months = []
 span_track_months = []
 span_month_toggles = []
-for month in range(5, 13):
-    month_days = calendar.monthrange(YEAR, month)[1]
+for span_year, actual_month in DISPLAY_MONTHS:
+    month = (span_year - YEAR) * 12 + actual_month
+    month_days = calendar.monthrange(span_year, actual_month)[1]
     day_cells = ''.join(f'<span class="span-day">{day}</span>' for day in range(1, month_days + 1))
     span_months.append(
         f'<div class="span-month" data-span-month="{month}" style="--month-days:{month_days}">'
-        f'<strong>{calendar.month_abbr[month]}</strong><div class="span-days">{day_cells}</div></div>'
+        f'<strong>{calendar.month_abbr[actual_month]} {span_year}</strong><div class="span-days">{day_cells}</div></div>'
     )
     span_track_months.append(
         f'<span class="span-track-month" data-span-month="{month}" style="--month-days:{month_days}"></span>'
     )
     span_month_toggles.append(
         f'<label class="span-month-toggle"><input type="checkbox" data-span-month-toggle="{month}" checked '
-        f'aria-label="Show {calendar.month_name[month]}"><span>{calendar.month_abbr[month]}</span></label>'
+        f'aria-label="Show {calendar.month_name[actual_month]} {span_year}"><span>{calendar.month_abbr[actual_month]}</span></label>'
     )
 
 def span_identity(ev):
@@ -2304,7 +2307,7 @@ for base_slug, group in span_group_map.items():
         instance_slug = base_slug if len(instances) == 1 else f"{base_slug}-c{index}"
         instance_label = group["label"]
         if len(instances) > 1:
-            instance_label = f'{instance_label} · {calendar.month_abbr[first_instance_day.month].upper()} {YEAR}'
+            instance_label = f'{instance_label} · {calendar.month_abbr[first_instance_day.month].upper()} {first_instance_day.year}'
         span_instances.append({
             "slug": instance_slug,
             "base_slug": base_slug,
@@ -2376,7 +2379,7 @@ for group in sorted(
     )
 
 span_timeline_html = (
-    '<div class="span-scroll" tabindex="0" aria-label="Scrollable class timeline from May to December 2026">'
+    '<div class="span-scroll" tabindex="0" aria-label="Scrollable class timeline from May 2026 to January 2027">'
     '<div class="span-table"><div class="span-axis"><div class="span-axis-label">Course / class</div>'
     f'<div class="span-axis-track">{"".join(span_months)}</div></div>{"".join(span_rows)}</div></div>'
     if span_rows else '<div class="span-empty">No tracked classes.</div>'
@@ -2449,7 +2452,7 @@ version_selector_html = (
 HTML = f'''<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=6, user-scalable=yes">
 <title>Garett's ERB — Super Timetable</title>
-<meta name="description" content="ERB / YMCA / school teaching timetable, May to December 2026. Solid frame = confirmed; dotted frame = unconfirmed.">
+<meta name="description" content="ERB / YMCA / school teaching timetable, May 2026 to January 2027. Solid frame = confirmed; dotted frame = unconfirmed.">
 <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Garett's ERB"><meta name="application-name" content="Garett's ERB"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0f7074">
 <meta name="erb-build" content="{BUILD_ID}">
@@ -2458,7 +2461,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <meta http-equiv="Expires" content="0">
 <script>window.ERB_BUILD_ID='{BUILD_ID}';(function(){{if(!/^https?:$/.test(location.protocol))return;var p=new URLSearchParams(location.search);if(p.get('build')!==window.ERB_BUILD_ID){{p.set('build',window.ERB_BUILD_ID);location.replace(location.pathname+'?'+p.toString()+location.hash);}}}})();</script>
 <style>{CSS}</style></head><body><main class="wrap">
-<div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May–December 2026 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a></div></div>
+<div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May 2026–January 2027 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a><a class="btn" href="#m1">Jan 2027</a></div></div>
 {version_selector_html}
 {next_new_course_html}
 <details class="source-audit" style="margin:14px 0;padding:8px 12px;border-left:4px solid #a64b00;font-size:13px;background:#fffaf0">
@@ -2596,7 +2599,7 @@ function syncSpanLabels(){{
 const spanZoomLevels=[8,12,16,22,30,40];
 let spanZoomIndex=2;
 const spanMonthInputs=Array.from(document.querySelectorAll('[data-span-month-toggle]'));
-const spanMonthDays={{5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31}};
+const spanMonthDays={{5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31,13:31}};
 function visibleSpanMonths(){{return spanMonthInputs.filter(input=>input.checked).map(input=>Number(input.dataset.spanMonthToggle));}}
 function spanMonthOffset(month,visibleMonths){{let offset=0;visibleMonths.forEach(value=>{{if(value<month) offset+=spanMonthDays[value];}});return offset;}}
 function layoutSpanTimeline(){{
@@ -2609,6 +2612,7 @@ function layoutSpanTimeline(){{
   document.querySelectorAll('.span-row').forEach(row=>{{
     const firstParts=row.dataset.first.split('-').map(Number);
     const lastParts=row.dataset.last.split('-').map(Number);
+    firstParts[1]+=(firstParts[0]-2026)*12;lastParts[1]+=(lastParts[0]-2026)*12;
     let startIndex=Infinity;
     let endIndex=-Infinity;
     visibleMonths.forEach(month=>{{
@@ -2629,7 +2633,7 @@ function layoutSpanTimeline(){{
     bar.style.width=Math.max(dayWidth,(endIndex-startIndex)*dayWidth)+'px';
     row.querySelectorAll('.span-marker').forEach(marker=>{{
       const parts=marker.dataset.date.split('-').map(Number);
-      const month=parts[1];
+      const month=(parts[0]-2026)*12+parts[1];
       const monthVisible=visibleMonths.includes(month);
       marker.dataset.monthVisible=monthVisible?'1':'0';
       if(monthVisible){{

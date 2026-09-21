@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-09-21-V20ar",
+    "label": "2026-09-21 - V20ar",
+    "summary": "HK280HG SS 上水：確認2027年1月5至12日，5節共18小時。",
+    "latest": true
+  },
+  {
     "id": "2026-09-20-V20aq",
     "label": "2026-09-20 - V20aq",
     "summary": "HK281DS HF8 荃灣：確認導師安排，Garett任教6節。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-09-20-V20ap",
