@@ -1,4 +1,17 @@
 /* Private payment ledger. Records are supplied only after decryption. */
+function calvinPaymentTiming(r){
+ if(r.kind!=='ERB')return null;
+ if(!r.received)return {text:'收款後自動計算',note:'由實際交單日期至實際收款日期'};
+ if(!r.submitted_on||!r.received_on)return {text:!r.submitted_on&&!r.received_on?'交單及收款日期未記錄':!r.submitted_on?'交單日期未記錄':'收款日期未記錄',note:'資料不足，未能計算付款所需時間'};
+ const day=value=>{
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(value))return NaN;
+  const date=new Date(value+'T00:00:00Z');
+  return Number.isFinite(date.getTime())&&date.toISOString().slice(0,10)===value?date.getTime()/86400000:NaN;
+ };
+ const days=day(r.received_on)-day(r.submitted_on);
+ if(!Number.isFinite(days)||days<0)return {text:'日期需核對',note:'未能計算付款所需時間'};
+ return {text:(r.received_date_precision==='approximate'?'約 ':'')+days+' 日',note:'由交單至收款，按曆日計算'};
+}
 window.mountCashflow=function(data){
  const cash=n=>new Intl.NumberFormat('en-HK',{style:'currency',currency:'HKD',maximumFractionDigits:0}).format(n);
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -41,8 +54,9 @@ window.mountCashflow=function(data){
   if(r.expected_payment_date)estimate=submitted?'按交單日加 21 日估計':r.kind==='ERB'?(r.received?'當時按完班即交單估計':'假設完班即交單，再加 21 日'): '按月結週期估計';
   const actual=r.received?(r.received_on||'已收到；日期未記錄'):'尚未收到';
   const row=(a,b,n='')=>'<tr><th scope="row">'+esc(a)+'</th><td>'+esc(b)+(n?'<small>'+esc(n)+'</small>':'')+'</td></tr>';
+  const timing=calvinPaymentTiming(r);
   const badge=r.received?'已收到':submitted?'已交單，等收款':'未完班／未交單';
-  return '<article class="cf-item '+(r.received?'cf-paid':'')+'" data-group="'+esc(r.group||r.label)+'"><header><b>'+esc(r.label)+'</b><strong class="cf-amount">'+cash(r.amount)+'</strong></header><p class="cf-course-name">'+esc(r.course_name||r.label)+'</p><span class="cf-badge">'+badge+'</span><table class="cf-dates"><tbody>'+row('1. 課程完結日期',end)+row('2. 發票提交日期',sent)+row('3. 預計收款日期',expected,estimate)+row('4. 實際收款日期',actual)+'</tbody></table></article>';
+  return '<article class="cf-item '+(r.received?'cf-paid':'')+'" data-group="'+esc(r.group||r.label)+'"><header><b>'+esc(r.label)+'</b><strong class="cf-amount">'+cash(r.amount)+'</strong></header><p class="cf-course-name">'+esc(r.course_name||r.label)+'</p><span class="cf-badge">'+badge+'</span><table class="cf-dates"><tbody>'+row('1. 課程完結日期',end)+row('2. 發票提交日期',sent)+row('3. 預計收款日期',expected,estimate)+row('4. 實際收款日期',actual)+(timing?row('5. Calvin 付款所需時間',timing.text,timing.note):'')+'</tbody></table></article>';
  }
  function render(){const filter=document.getElementById('cfFilter').value,rows=filter==='paid'?paid:filter==='waiting'?waiting:filter==='future'?future:all;document.getElementById('cfLedgerSummary').textContent=rows.length+' 筆 · 合共 '+cash(sum(rows));document.getElementById('cfItems').innerHTML=rows.map(card).join('')||'<p>這個分類沒有款項。</p>';}
  document.getElementById('cfFilter').onchange=render;render();
