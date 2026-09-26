@@ -23,7 +23,8 @@
     "previous_text": "YMCA SEN / (PFSA2) (09:30 - 12:30)",
     "previous_status": "confirmed",
     "group_label": "PFSA2",
-    "group": "g16"
+    "group": "g16",
+    "is_first_personal_lesson": true
   },
   {
     "date": "2026-06-05",
@@ -310,7 +311,8 @@
     "previous_status": "confirmed",
     "group_label": "HK244EG · HF2",
     "group": "g11",
-    "is_first_lesson": true
+    "is_first_lesson": true,
+    "is_first_personal_lesson": true
   },
   {
     "date": "2026-06-16",
@@ -524,7 +526,8 @@
     "previous_text": "勵行-四海 (Garett) [substitute] / 人工智能創作營銷社交媒體內容技巧證書 / HK244EG, Class FS-1, (1500 - 1730) - L17",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-1",
-    "group": "g10"
+    "group": "g10",
+    "is_first_personal_lesson": true
   },
   {
     "date": "2026-06-22",
@@ -862,7 +865,8 @@
     "previous_text": "DGS Unreal / 8:00am - 9:50am / 11:00am - 13:00pm",
     "previous_status": "confirmed",
     "group_label": "DGS",
-    "group": "g01"
+    "group": "g01",
+    "is_first_personal_lesson": true
   },
   {
     "date": "2026-07-06",
@@ -1149,7 +1153,8 @@
     "previous_status": "confirmed",
     "group_label": "HK265HG · FS · JUL 2026",
     "group": "g23",
-    "is_first_lesson": true
+    "is_first_lesson": true,
+    "is_first_personal_lesson": true
   },
   {
     "date": "2026-07-24",
@@ -1387,7 +1392,8 @@
     "previous_status": "confirmed",
     "group_label": "HK244HG · CW8",
     "group": "g12",
-    "is_first_lesson": true
+    "is_first_lesson": true,
+    "is_first_personal_lesson": true
   },
   {
     "date": "2026-08-07",
@@ -1556,7 +1562,8 @@
     "previous_status": "confirmed",
     "group_label": "HK239HG · CW10",
     "group": "g02",
-    "is_first_lesson": true
+    "is_first_lesson": true,
+    "is_first_personal_lesson": true
   },
   {
     "date": "2026-08-29",
@@ -1876,7 +1883,8 @@
     "previous_text": "勵行-彩雲二邨 HK244EG, Class CW / 人工智能創作營銷社交媒體內容技巧證書 / 九龍彩雲二邨清水灣道55號1樓103室 / 1900 - 2130 - Garett - L5",
     "previous_status": "confirmed",
     "group_label": "HK244EG · CW",
-    "group": "g08"
+    "group": "g08",
+    "is_first_personal_lesson": true
   },
   {
     "date": "2026-09-02",
@@ -2251,7 +2259,8 @@
     "previous_status": "confirmed",
     "group_label": "HK265HG · FS · SEP 2026",
     "group": "g24",
-    "is_first_lesson": true
+    "is_first_lesson": true,
+    "is_first_personal_lesson": true
   },
   {
     "date": "2026-09-17",
@@ -2492,13 +2501,14 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L1",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L1",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09",
-    "is_first_lesson": true
+    "is_first_lesson": true,
+    "is_first_personal_lesson": true
   },
   {
     "date": "2026-09-22",
@@ -2551,9 +2561,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L2",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L2",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -2580,9 +2590,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L3",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L3",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -2661,9 +2671,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L4",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L4",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -2719,9 +2729,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L5",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L5",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -2780,7 +2790,8 @@
     "previous_status": "confirmed",
     "group_label": "HK239HG · ST",
     "group": "g06",
-    "is_first_lesson": true
+    "is_first_lesson": true,
+    "is_first_personal_lesson": true
   },
   {
     "date": "2026-10-10",
@@ -2914,9 +2925,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L6",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L6",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -2943,9 +2954,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L7",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L7",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -3001,9 +3012,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L8",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L8",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -3114,9 +3125,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L9",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L9",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -3143,9 +3154,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L10",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L10",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -3172,9 +3183,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L11",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L11",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -3256,9 +3267,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L12",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L12",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -3285,9 +3296,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L13",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L13",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -3343,9 +3354,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L14",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L14",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -3372,9 +3383,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L15",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L15",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -3401,9 +3412,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L16 (小組匯報)",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2130 - L16 (小組匯報)",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -3459,9 +3470,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2100 - L17 (持續筆試)",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1900 - 2100 - L17 (持續筆試)",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -3488,9 +3499,9 @@
     "excluded": false,
     "teaching_room": "205",
     "room_source": "HK244EG FS confirmed timetable: classroom 205",
-    "changed_in_version": true,
-    "change_kind": "changed",
-    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1845 - 2145 - L18 (期末實務試)",
+    "changed_in_version": false,
+    "change_kind": "",
+    "previous_text": "勵行-四海 (Garett) - HK244EG, Class FS-5 / 人工智能創作營銷社交媒體內容技巧證書 (兼讀制) / 1830 - 2130 - L18 (期末實務試)",
     "previous_status": "confirmed",
     "group_label": "HK244EG · FS-5",
     "group": "g09"
@@ -3523,7 +3534,8 @@
     "previous_status": "confirmed",
     "group_label": "HK239HG · LT",
     "group": "g04",
-    "is_first_lesson": true
+    "is_first_lesson": true,
+    "is_first_personal_lesson": true
   },
   {
     "date": "2026-11-24",

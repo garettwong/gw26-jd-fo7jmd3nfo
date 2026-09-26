@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ar-ss-jan2027-confirmed-20260921"
+BUILD_ID = "v20ar-personal-first-lessons-20260926"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
@@ -820,30 +820,6 @@ for label in _group_labels:
 for ev in display_events:
     ev["group"] = _group_slugs[ev["group_label"]]
 
-first_lesson_groups = set()
-for group in sorted({event["group"] for event in display_events}):
-    candidates = [
-        event
-        for event in display_events
-        if event["group"] == group
-        and event["category"] in {"erb", "methodist"}
-        and not re.search(
-            r"PROPOSED availability only|\b(?:cancelled|canceled)\b|取消",
-            str(event.get("text") or ""),
-            re.I,
-        )
-    ]
-    if not candidates:
-        continue
-    lesson_one = [
-        event
-        for event in candidates
-        if (match := LESSON_RE.search(str(event.get("text") or "")))
-        and int(match.group(1)) == 1
-    ]
-    first_event = min(lesson_one or candidates, key=event_sort_key)
-    first_event["is_first_lesson"] = True
-    first_lesson_groups.add(group)
 
 
 def ehtml(s):
@@ -1650,6 +1626,30 @@ def event_layer(ev):
     return "class" if event_fields(ev)["teacher"] not in {"Garett", "-"} else "mine"
 
 
+# Course starts and Garett's first assignment are distinct for shared courses.
+first_lesson_groups = set()
+first_personal_lesson_groups = set()
+for group in sorted({event['group'] for event in display_events}):
+    candidates = [event for event in display_events
+        if event['group'] == group
+        and (event['category'] in {'erb', 'methodist', 'ymca', 'dgs'}
+             or event['group_label'] in {'ComfyUI', '梨木樹 · 人工智能知識及應用'})
+        and not re.search(r'PROPOSED availability only|GARETT NOT REQUIRED|\b(?:cancelled|canceled)\b|取消',
+                          str(event.get('text') or ''), re.I)]
+    # Always compare dates before within-day start times.
+    chronological = lambda event: (event['date'], event_sort_key(event))
+    lesson_one = [event for event in candidates
+        if (match := re.search(r'\b(?:L|Lesson\s*)\s*(\d+)\b', str(event.get('text') or ''), re.I))
+        and int(match.group(1)) == 1]
+    if lesson_one:
+        min(lesson_one, key=chronological)['is_first_lesson'] = True
+        first_lesson_groups.add(group)
+    personal = [event for event in candidates if event_layer(event) == 'mine']
+    if personal:
+        min(personal, key=chronological)['is_first_personal_lesson'] = True
+        first_personal_lesson_groups.add(group)
+
+
 def time_range_intervals(text):
     def minutes(hour, minute, marker):
         hour = int(hour)
@@ -1808,11 +1808,16 @@ def chip(ev):
         if conflict else ""
     )
     log_cls, log_html = lesson_log_trigger(ev)
-    first_lesson = bool(ev.get("is_first_lesson"))
+    first_class_lesson = bool(ev.get("is_first_lesson"))
+    first_personal_lesson = bool(ev.get("is_first_personal_lesson"))
+    first_lesson = first_class_lesson or first_personal_lesson
     first_lesson_cls = " first-lesson" if first_lesson else ""
-    first_lesson_attr = ' data-first-lesson="1"' if first_lesson else ""
+    first_lesson_attr = (' data-first-lesson="1"' if first_lesson else '') + (
+        ' data-first-personal-lesson="1"' if first_personal_lesson else '') + (
+        ' data-first-class-lesson="1"' if first_class_lesson else '')
+    first_label = "此班第一堂" if first_class_lesson else "你本班首堂"
     first_lesson_html = (
-        '<div class="first-lesson-banner" role="note" aria-label="此班第一堂">此班第一堂</div>'
+        f'<div class="first-lesson-banner" role="note" aria-label="{first_label}">{first_label}</div>'
         if first_lesson else ""
     )
     if ev["category"] not in {"erb", "methodist"}:
@@ -1830,9 +1835,9 @@ def chip(ev):
             f'<div class="card-location">{ehtml(fields["location"])}</div>'
             if ev["category"] == "ymca" else ""
         )
-        return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}" tabindex="0" role="button" '
-                f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}>'
-                f'{comparison_badge}{conflict_badge}{identity_html}<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
+        return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}{first_lesson_cls}" tabindex="0" role="button" '
+                f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}{first_lesson_attr}>'
+                f'{comparison_badge}{conflict_badge}{identity_html}{first_lesson_html}<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
                 f'<div class="ttl">{title_html}</div><div class="det">{detail_html}{teacher_suffix}</div>{location_html}{room_html}{log_html}<div class="fulltxt">{full_html}</div></div>')
 
     class_label = fields["class_label"]
@@ -3027,7 +3032,7 @@ self.addEventListener('fetch', event => {{
 (OUTDIR / 'sw.js').write_text(SW, encoding='utf-8')
 (OUTDIR / 'events.json').write_text(json.dumps(events, ensure_ascii=False, indent=2), encoding='utf-8')
 (OUTDIR / 'payment_context.json').write_text(json.dumps(PAYMENT_CONTEXT, ensure_ascii=False, indent=2), encoding='utf-8')
-(OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "override_source": str(OVERRIDES_SRC), "override_revision": override_revision, "override_confirmation": override_confirmation, "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "class_spans": len(span_rows), "first_lesson_markers": len(first_lesson_groups), "comparison_baseline": str(COMPARE_BASELINE), "comparison_label": COMPARE_LABEL, "changed_in_version": len(changed_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
+(OUTDIR / 'summary.json').write_text(json.dumps({"source": str(SRC), "override_source": str(OVERRIDES_SRC), "override_revision": override_revision, "override_confirmation": override_confirmation, "events": len(events), "display_events": len(display_events), "context_events": len(context_events), "class_spans": len(span_rows), "first_lesson_markers": len(first_lesson_groups), "first_personal_lesson_markers": len(first_personal_lesson_groups), "comparison_baseline": str(COMPARE_BASELINE), "comparison_label": COMPARE_LABEL, "changed_in_version": len(changed_events), "counts": counts, "layers": layer_counts, "categories": cat_counts, "months": MONTH_SHEETS}, ensure_ascii=False, indent=2), encoding='utf-8')
 (OUTDIR / 'manifest.webmanifest').write_text(json.dumps({"id":"./","name":"Garett's ERB","short_name":"Garett's ERB","description":"Garett's ERB teaching timetable","start_url":"./?v=redtext1&build=" + BUILD_ID,"scope":"./","display":"standalone","background_color":"#eef1f6","theme_color":"#0f7074","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}, ensure_ascii=False, indent=2), encoding='utf-8')
 try:
     from PIL import Image, ImageDraw, ImageFont
