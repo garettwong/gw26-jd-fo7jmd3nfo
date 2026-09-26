@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ar-personal-first-lessons-20260926"
+BUILD_ID = "v20ar-combined-first-lessons-20260926"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
@@ -1815,7 +1815,8 @@ def chip(ev):
     first_lesson_attr = (' data-first-lesson="1"' if first_lesson else '') + (
         ' data-first-personal-lesson="1"' if first_personal_lesson else '') + (
         ' data-first-class-lesson="1"' if first_class_lesson else '')
-    first_label = "此班第一堂" if first_class_lesson else "你本班首堂"
+    first_label = ("你本班首堂 · 課程第一堂" if first_class_lesson and first_personal_lesson
+                   else "此班第一堂" if first_class_lesson else "你本班首堂")
     first_lesson_html = (
         f'<div class="first-lesson-banner" role="note" aria-label="{first_label}">{first_label}</div>'
         if first_lesson else ""
