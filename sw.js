@@ -1,4 +1,4 @@
-const BUILD_ID = 'v20ar-ss-jan2027-confirmed-20260921';
+const BUILD_ID = 'v20ar-personal-first-lessons-20260926';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
