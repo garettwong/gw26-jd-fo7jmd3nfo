@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ar-combined-first-lessons-20260926"
+BUILD_ID = "v20ar-lesson-planning-20260927"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
@@ -1088,7 +1088,12 @@ CSS += r'''
 .lesson-log-activation{display:grid;gap:8px;padding:11px;border:1px solid #e4b85b;border-radius:7px;background:#fff7df;color:#5f4a16}.lesson-log-activation[hidden]{display:none}.lesson-log-activation strong{font-size:13px;font-weight:950}.lesson-log-activation p{margin:0;font-size:11px;line-height:1.4}.lesson-log-activation-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px}.lesson-log-activation input{min-width:0;min-height:42px;border:1px solid #b8c4d0;border-radius:6px;padding:8px 10px;background:#fff;color:#1d2734;font:inherit;font-size:13px}.lesson-log-enabled .chip.erb-compact.has-lesson-log{padding-bottom:29px}
 @media(max-width:820px){.lesson-log-card{padding:16px}.lesson-log-field textarea{min-height:56vh;font-size:16px}.lesson-log-action.primary,.lesson-log-activation .lesson-log-action{width:100%}.lesson-log-activation-row{grid-template-columns:1fr}}
 @media (orientation:landscape) and (max-height:540px){.lesson-log-enabled .chip.erb-compact.has-lesson-log{padding-bottom:17px}.lesson-log-enabled .chip.erb-compact .lesson-log-open{right:2px;bottom:2px;min-width:22px;min-height:12px;padding:1px 3px;font-size:5px}}
-@media print{.lesson-log-control,.lesson-log-open{display:none!important}}
+
+.lesson-plan-open{display:none}
+.lesson-log-enabled .lesson-plan-open{display:inline-flex;position:absolute;left:5px;bottom:5px;align-items:center;justify-content:center;border:1px solid #0f7074;border-radius:4px;background:#fff;color:#0f7074;padding:3px 6px;min-height:22px;font-size:10px;font-weight:900;cursor:pointer;z-index:2}
+.lesson-plan-open:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
+@media (orientation:landscape) and (max-height:540px){.lesson-log-enabled .chip.erb-compact .lesson-plan-open{left:2px;bottom:2px;min-width:22px;min-height:12px;padding:1px 3px;font-size:5px}}
+@media print{.lesson-log-control,.lesson-log-open,.lesson-plan-open{display:none!important}}
 '''
 
 CSS += r'''
@@ -1344,6 +1349,7 @@ LESSON_LOG_JS = r'''
       lesson:button.dataset.logLesson||'',
       time:button.dataset.logTime||''
     });
+    if(button.dataset.logView==='plan')params.set('view','plan');
     return APP_BASE+'/lesson/'+encodeURIComponent(lessonIdFor(button.dataset.logKey||''))+'?'+params.toString();
   };
   const openEditor=button=>{if(button)location.href=editorUrl(button);};
@@ -1397,6 +1403,12 @@ LESSON_LOG_JS = r'''
     button.setAttribute('aria-hidden','false');
     button.setAttribute('role','button');
     button.tabIndex=0;
+    const open=event=>{event.preventDefault();event.stopPropagation();openEditor(button);};
+    button.addEventListener('click',open);
+    button.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){open(event);}});
+  });
+  document.querySelectorAll('.lesson-plan-open').forEach(button=>{
+    button.setAttribute('aria-hidden','false');button.setAttribute('role','button');button.tabIndex=0;
     const open=event=>{event.preventDefault();event.stopPropagation();openEditor(button);};
     button.addEventListener('click',open);
     button.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){open(event);}});
@@ -1753,7 +1765,8 @@ def lesson_log_trigger(ev):
         f'data-log-time="{ehtml(fields.get("time", ""))}" '
         f'aria-label="Record what was taught for this lesson">記錄</span>'
     )
-    return " has-lesson-log", button
+    plan_button = button.replace('class="lesson-log-open"', 'class="lesson-plan-open" data-log-view="plan"').replace('Record what was taught for this lesson', '輸入本堂教學計劃').replace('>記錄</span>', '>計劃</span>')
+    return " has-lesson-log", plan_button + button
 
 
 def chip(ev):
