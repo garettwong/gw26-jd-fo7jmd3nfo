@@ -13,7 +13,7 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20as-hk280hg-cw2-pending-20260928"
+BUILD_ID = "v20as-green-cw2-20260928"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
@@ -830,7 +830,10 @@ def ehtml(s):
 
 
 def cohort_palette(label):
-    """Return a stable warm-family palette for one exact ERB cohort."""
+    """Return a stable palette for one exact ERB cohort."""
+    if label == "HK280HG · CW2":
+        # Keep the five proposed CW2 lessons visually distinct from other cohorts.
+        return 145, 63, 82
     slug = _group_slugs.get(label, "")
     match = re.fullmatch(r"g(\d+)", slug)
     if match:
