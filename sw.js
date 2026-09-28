@@ -1,4 +1,4 @@
-const BUILD_ID = 'v20as-hk280hg-cw2-pending-20260928';
+const BUILD_ID = 'v20as-green-cw2-20260928';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
