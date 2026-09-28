@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20ar-lesson-planning-20260927"
+BUILD_ID = "v20as-hk280hg-cw2-pending-20260928"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-20-V20aq"
-COMPARE_LABEL = "V20ar"
-COMPARE_BASELINE_LABEL = "V20aq"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-21-V20ar"
+COMPARE_LABEL = "V20as"
+COMPARE_BASELINE_LABEL = "V20ar"
 EXPECTED_COMPARISON_CHANGES = 5
 
 COURSE_CHINESE_NAMES = {
@@ -76,6 +76,7 @@ UPCOMING_CLASS_META = {
     "HK281DS · HF8": ("基督教勵行會", "荃灣 · 課室 1（確實地址待確認）", "CHI"),
     "HK267HG · CW2": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓104室", "ENG"),
     "HK280HG · CW1": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓", "CHI"),
+    "HK280HG · CW2": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓；首堂102室，其餘待確認", "CHI"),
     "HK280HG · SS": ("基督教勵行會", "上水彩園邨彩湖樓2座地下129舖02室", "CHI"),
     "HK265HG · FS": ("基督教勵行會", "四海大廈", "ENG"),
     "HK265HG · FS · JUL 2026": ("基督教勵行會", "四海大廈", "ENG"),
@@ -94,6 +95,7 @@ UPCOMING_CLASS_META = {
     "MC244EG · 1": ("循道衞理中心", "灣仔軒尼詩道22號循道衞理中心3樓305室", "CHI"),
 }
 CLASS_UPDATE_META = {
+    "HK280HG · CW2": ("2026-09-28", "Calvin 提議10月14、15、21、22、23日共5節、18小時，尚未確認；14日轉往四海只相隔1小時，22日與待定ComfyUI時段須核實。"),
     "HK280HG · SS": ("2026-09-21", "已確認2027年1月5、7、12日共5節、18小時；1月12日期末筆試16:00–17:00。"),
     "HK281DS · HF8": ("2026-09-20", "已按確認版更新：Garett任教6節，共24小時；其餘按來源導師名單，空白導師列待定。來源表列63節，標題仍寫47節，保留原表待核對。"),
     "HK267HG · CW2": ("2026-08-28", "Calvin 已確認全 8 節由 Garett 任教；11 月 11 至 20 日共 30 小時，課室 104。"),
@@ -656,6 +658,7 @@ if CONTEXT_SRC.exists():
             "category_label": cat_label, "html": html.escape(text, quote=True),
             "title_html": html.escape(title, quote=True), "detail_html": html.escape(detail, quote=True),
             "red": bool(item.get("red", False)), "conflict": bool(item.get("conflict", False)),
+            "warning_label": str(item.get("warning_label", "")).strip(),
             "layer": layer,
             "teacher": teacher, "helper": str(item.get("helper", "")).strip(),
             "teaching_room": str(item.get("teaching_room", "")).strip(),
@@ -1719,6 +1722,8 @@ def event_slot(ev):
 
 def centre_code(ev):
     # A destination mentioned in a travel note is not this lesson's venue.
+    if ev.get("group_label") == "HK280HG · CW2":
+        return "choi_wan"
     if ev.get("group_label") == "梨木樹 · 人工智能知識及應用":
         return "LMS-PENDING"
     if ev.get("group_label") == "ComfyUI":
@@ -1816,8 +1821,9 @@ def chip(ev):
     comparison_badge = f'<span class="change-badge" title="Changed in {COMPARE_LABEL}">Δ {COMPARE_LABEL}</span>' if changed else ""
     conflict = bool(ev.get("conflict"))
     conflict_cls = " conflict-risk" if conflict else ""
+    warning_label = ev.get("warning_label") or "撞堂"
     conflict_badge = (
-        '<span class="conflict-badge" title="Conflicts with an existing confirmed commitment">撞堂</span>'
+        f'<span class="conflict-badge" title="{ehtml(warning_label)}">{ehtml(warning_label)}</span>'
         if conflict else ""
     )
     log_cls, log_html = lesson_log_trigger(ev)

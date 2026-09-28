@@ -150,6 +150,16 @@
     "full_lesson_entries": 5
   },
   {
+    "group": "g32",
+    "label": "HK280HG · CW2",
+    "course_code": "HK280HG",
+    "course_name": "生成式人工智能商業應用證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-10-14",
+    "full_course_end": "2026-10-23",
+    "full_lesson_entries": 5
+  },
+  {
     "group": "g31",
     "label": "HK280HG · SS",
     "course_code": "HK280HG",
