@@ -13,14 +13,14 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20at-hk280hg-cw2-confirmed-20260929"
+BUILD_ID = "v20au-pastel-classes-salary-tabs-20260929"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-28-V20as"
-COMPARE_LABEL = "V20at"
-COMPARE_BASELINE_LABEL = "V20as"
-EXPECTED_COMPARISON_CHANGES = 5
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-29-V20at"
+COMPARE_LABEL = "V20au"
+COMPARE_BASELINE_LABEL = "V20at"
+EXPECTED_COMPARISON_CHANGES = 0
 
 COURSE_CHINESE_NAMES = {
     "HK239HG": "人工智能知識及應用證書（兼讀制）",
@@ -832,28 +832,23 @@ def ehtml(s):
 
 
 def cohort_palette(label):
-    """Return a stable palette for one exact ERB cohort."""
+    """Give each exact class a stable, light pastel colour."""
     if label == "HK280HG · CW2":
-        # Keep the five proposed CW2 lessons visually distinct from other cohorts.
-        return 145, 63, 82
+        # Retain the requested green identity for the confirmed CW2 class.
+        return 145, 42, 85
     slug = _group_slugs.get(label, "")
     match = re.fullmatch(r"g(\d+)", slug)
     if match:
-        # The registry slug is stable and unique, so the same cohort keeps its
-        # shade across releases without making nearby cohorts look identical.
+        # The registry slug persists across versions, including added classes.
         palette_index = int(match.group(1)) - 1
-        hue_order = (8, 28, 13, 33, 18, 38, 23, 43)
-        lightness_order = (84, 90, 95, 87)
-        saturation_order = (68, 74, 62, 70)
-        hue = hue_order[palette_index % len(hue_order)]
-        block = (palette_index // len(hue_order)) % len(lightness_order)
-        saturation = saturation_order[block]
-        lightness = lightness_order[block]
+        hue = (24 + palette_index * 137) % 360
+        saturation = (42, 49, 45)[palette_index % 3]
+        lightness = (86, 89, 83, 87)[(palette_index // 3) % 4]
         return hue, saturation, lightness
     digest = zlib.crc32(str(label).encode("utf-8"))
-    hue = 8 + digest % 36
-    saturation = 64 + (digest >> 8) % 11
-    lightness = 84 + (digest >> 16) % 11
+    hue = digest % 360
+    saturation = 45
+    lightness = 86
     return hue, saturation, lightness
 
 GROUPS = []
@@ -1105,7 +1100,7 @@ CSS += r'''
 '''
 
 CSS += r'''
-.chip.cohort-shade.cat-erb,.chip.cohort-shade.cat-methodist{background:hsl(var(--cohort-hue),var(--cohort-sat),var(--cohort-light))}.chip.cohort-shade.layer-class::before{background:var(--context-color)}.span-bar{border-color:hsl(var(--span-hue),var(--span-sat),38%);background:hsl(var(--span-hue),var(--span-sat),var(--span-light))}.span-bar-label{border-color:hsla(var(--span-hue),var(--span-sat),38%,.45);color:hsl(var(--span-hue),var(--span-sat),28%)}
+.chip.cohort-shade{background:hsl(var(--cohort-hue),var(--cohort-sat),var(--cohort-light))}.chip.cohort-shade.layer-class::before{background:var(--context-color)}.span-bar{border-color:hsl(var(--span-hue),var(--span-sat),38%);background:hsl(var(--span-hue),var(--span-sat),var(--span-light))}.span-bar-label{border-color:hsla(var(--span-hue),var(--span-sat),38%,.45);color:hsl(var(--span-hue),var(--span-sat),28%)}
 .next-new-courses{margin:16px 0 4px;padding:14px 16px;border:2px solid #0f7074;border-radius:8px;background:#e8f7f5;box-shadow:0 2px 7px rgba(20,30,50,.08)}.next-new-header{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:11px}.next-new-kicker{display:block;color:#0f7074;font-size:12px;font-weight:950;text-transform:uppercase}.next-new-header h2{margin:2px 0 0;color:#172a38;font-size:23px;font-weight:950}.next-course-controls{display:inline-grid;grid-template-columns:repeat(3,minmax(76px,1fr));gap:4px;padding:4px;border:1px solid #a9d4d0;border-radius:7px;background:#d8efec}.next-course-limit{min-height:38px;border:0;border-radius:5px;padding:6px 10px;background:transparent;color:#38585c;font:inherit;font-size:13px;font-weight:950;cursor:pointer}.next-course-limit:hover{background:#f4fbfa}.next-course-limit:focus-visible{outline:3px solid #ffc857;outline-offset:1px}.next-course-limit.active{background:#0f7074;color:#fff;box-shadow:0 1px 3px rgba(20,30,50,.18)}.next-course-list{--next-course-rows:3;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(var(--next-course-rows),auto);grid-auto-flow:column;gap:8px}.next-course-card{display:grid;grid-template-columns:minmax(165px,.9fr) 96px minmax(270px,1.55fr);align-items:center;gap:10px;min-width:0;padding:12px 14px;border:1px solid #9dc9c6;border-radius:6px;background:#f7fcfb}.next-course-card[hidden]{display:none!important}.next-course-main{min-width:0}.next-course-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.next-course-card h3{margin:0;color:#172a38;font-size:19px;font-weight:950;line-height:1.12}.next-course-card p{margin:4px 0 0;color:#506274;font-size:13px;font-weight:800;line-height:1.25}.next-new-badge{border-radius:4px;padding:3px 6px;background:#8b4fa3;color:#fff;font-size:9px;font-weight:950;white-space:nowrap}.next-new-countdown{min-width:90px;border-left:1px solid #a9d4d0;border-right:1px solid #a9d4d0;padding:4px 6px;text-align:center}.next-new-countdown small{display:block;color:#69798a;font-size:10px;font-weight:900}.next-new-countdown strong{display:block;color:#0f7074;font-size:25px;font-weight:950;white-space:nowrap}.next-new-facts{display:grid;grid-template-columns:minmax(118px,.8fr) minmax(165px,1.2fr);gap:7px 9px;min-width:0;align-self:stretch}.next-course-fact{min-width:0;padding-left:8px;border-left:3px solid #cbd6e0}.next-course-fact dt{color:#69798a;font-size:10.5px;font-weight:900;line-height:1.15}.next-course-fact dd{margin:2px 0 0;color:#233345;font-size:12.5px;font-weight:900;line-height:1.25;overflow-wrap:anywhere}.next-course-fact.place{padding-top:6px;border-top:1px solid #d7e0e8}.next-course-fact.centre{border-left-color:#0f7074}.next-course-fact.location{border-left-color:#b36a16}.next-course-fact.place dt{color:#405766;font-size:11.5px}.next-course-fact.centre dt{color:#0c6669}.next-course-fact.location dt{color:#8b4b08}.next-course-fact.place dd{font-size:14px;line-height:1.28}
 @media(max-width:1260px){.next-course-list{grid-template-columns:1fr;grid-template-rows:none!important;grid-auto-flow:row}.next-course-card{grid-template-columns:minmax(240px,1fr) 96px minmax(360px,1.5fr)}}
 @media(max-width:900px){.next-new-header{align-items:stretch;flex-direction:column}.next-course-controls{width:100%}.next-course-card{grid-template-columns:minmax(0,1fr) 88px}.next-new-facts{grid-column:1/-1}.next-new-countdown{border-right:0}}
@@ -2479,6 +2474,10 @@ version_selector_html = (
     f'</summary><div class="version-menu-list" role="list">{version_rows}</div></details>'
 )
 
+CSS += r'''
+.area-switch{display:flex;gap:6px;width:max-content;max-width:100%;margin:0 0 14px;padding:5px;border:1px solid #b8ced0;border-radius:10px;background:#e6efef}.area-switch a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:140px;padding:9px 16px;border-radius:7px;color:#285257;font-size:14px;font-weight:850;text-decoration:none}.area-switch a:hover,.area-switch a:focus-visible{background:#f6fbfa;outline:2px solid #b77c1a;outline-offset:1px}.area-switch a.active{background:#0f7074;color:#fff;box-shadow:0 1px 3px #8facac}.area-switch .private-label{margin-left:5px;font-size:11px;font-weight:750}@media(max-width:620px){.area-switch{width:100%}.area-switch a{flex:1;min-width:0}}@media print{.area-switch{display:none}}
+'''
+
 HTML = f'''<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=6, user-scalable=yes">
 <title>Garett's ERB — Super Timetable</title>
@@ -2491,6 +2490,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <meta http-equiv="Expires" content="0">
 <script>window.ERB_BUILD_ID='{BUILD_ID}';(function(){{if(!/^https?:$/.test(location.protocol))return;var p=new URLSearchParams(location.search);if(p.get('build')!==window.ERB_BUILD_ID){{p.set('build',window.ERB_BUILD_ID);location.replace(location.pathname+'?'+p.toString()+location.hash);}}}})();</script>
 <style>{CSS}</style></head><body><main class="wrap">
+<nav class="area-switch" aria-label="Timetable and salary"><a class="active" aria-current="page" href="#calendarView">Timetable</a><a id="salaryAreaLink" href="#">Salary <span class="private-label">🔒 Private</span></a></nav>
 <div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May 2026–January 2027 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a><a class="btn" href="#m1">Jan 2027</a></div></div>
 {version_selector_html}
 {next_new_course_html}
@@ -2521,6 +2521,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 </section>
 </main><div id="modeSwitch" class="floating-mode-switch" role="group" aria-label="Timetable view and navigation"><button id="floatingToday" class="today-option" type="button" aria-label="Go to today" title="Go to today"><span class="mode-main">TODAY</span></button><button id="floatingTop" class="top-option" type="button" aria-label="Back to course filters" title="Back to course filters"><span class="mode-main" aria-hidden="true">&uarr;</span><span class="mode-sub">FILTER</span></button><button id="floatingVersions" class="version-option" type="button" aria-label="Back to version selector" title="Back to version selector"><span class="mode-main">VER</span></button><button class="mode-option" type="button" data-mode="mine-confirmed" aria-label="Me: confirmed lessons" title="Me: confirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">CONF</span></button><button class="mode-option" type="button" data-mode="mine-all" aria-label="Me: confirmed and unconfirmed lessons" title="Me: confirmed and unconfirmed lessons"><span class="mode-main">ME</span><span class="mode-sub">ALL</span></button><button class="mode-option active" type="button" data-mode="both" aria-label="All full timetable and clear course filter" title="All full timetable and clear course filter"><span class="mode-main">ALL</span><span class="mode-sub">FULL</span></button></div>{LESSON_LOG_HTML}<div id="modal" class="modal" hidden><div class="modal-card"><button class="modal-x" aria-label="Close">×</button><div class="modal-h"></div><div class="modal-date"></div><div class="modal-body"></div><div class="modal-actions"><button id="modalLessonLogBtn" class="modal-lesson-log" type="button" hidden>填寫課後記錄</button></div></div></div>
 <script>
+{{const root=location.href.includes('/versions/')?location.href.split('/versions/')[0]+'/':new URL('./',location.href).href;document.getElementById('salaryAreaLink').href=new URL('earnings/versions/{current_version["id"]}/',root).href;}}
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){{window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?build='+window.ERB_BUILD_ID).then(r=>r.update()).catch(()=>{{}}));}}
 const primaryTabs=Array.from(document.querySelectorAll('.view-tab'));
 const primaryPanels=Array.from(document.querySelectorAll('.view-panel'));

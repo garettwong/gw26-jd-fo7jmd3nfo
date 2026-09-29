@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-09-29-V20au",
+    "label": "2026-09-29 - V20au",
+    "summary": "各班改用獨立柔和色彩；頂部可切換私人薪酬表。",
+    "latest": true
+  },
+  {
     "id": "2026-09-29-V20at",
     "label": "2026-09-29 - V20at",
     "summary": "HK280HG CW2 彩雲：5節課堂已確認，14日交通緊迫。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-09-28-V20as",

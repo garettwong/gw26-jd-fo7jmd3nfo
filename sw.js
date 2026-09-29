@@ -1,4 +1,4 @@
-const BUILD_ID = 'v20at-hk280hg-cw2-confirmed-20260929';
+const BUILD_ID = 'v20au-pastel-classes-salary-tabs-20260929';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

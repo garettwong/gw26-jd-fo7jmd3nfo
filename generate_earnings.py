@@ -574,6 +574,36 @@ def main() -> None:
         report_page = destination / "index.html"
         if item.get("latest") or not report_page.exists():
             page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20260926-payment-days"></script>\n<script>\nconst STORAGE_KEY')
+            area_tabs = (
+                '<nav class="area-switch" aria-label="Timetable and salary">'
+                '<a href="../../../versions/' + item["id"] + '/">Timetable</a>'
+                '<a class="active" aria-current="page" href="#app">Salary <small>Private</small></a>'
+                '</nav>'
+            )
+            area_css = (
+                '<style>.area-switch{display:flex;gap:6px;width:max-content;max-width:100%;'
+                'margin:12px auto;padding:5px;border:1px solid #b8ced0;border-radius:10px;'
+                'background:#e6efef}.area-switch a{display:inline-flex;align-items:center;'
+                'justify-content:center;min-height:44px;min-width:140px;padding:9px 16px;'
+                'border-radius:7px;color:#285257;font-size:14px;font-weight:850;'
+                'text-decoration:none}.area-switch a.active{background:#0f7074;color:#fff}'
+                '.area-switch small{margin-left:5px;font-size:11px}'
+                '.area-switch a:focus-visible{outline:2px solid #b77c1a;outline-offset:1px}'
+                '.locked-message{max-width:560px;margin:30px auto;padding:24px;'
+                'border:1px solid #b8ced0;border-radius:10px;background:#fff}'
+                '.locked-message h1{font-size:22px}.locked-message p{line-height:1.5}'
+                '@media(max-width:620px){.area-switch{width:calc(100% - 24px)}'
+                '.area-switch a{flex:1;min-width:0}.locked-message{margin:16px 12px}}'
+                '@media print{.area-switch{display:none}}</style>'
+            )
+            page = page.replace('</style></head><body><div id="app"', '</style>' + area_css + '</head><body>'
+                '<div id="locked" hidden>' + area_tabs + '<div class="locked-message">'
+                '<h1>Private salary is locked</h1><p>Open your private salary link on this device once to unlock the Salary tab. The timetable remains available below.</p>'
+                '<a href="../../../versions/' + item["id"] + '/">Back to timetable</a>'
+                '</div></div><div id="app"')
+            page = page.replace('<div id="app" class="hidden"><header>', '<div id="app" class="hidden">' + area_tabs + '<header>')
+            page = page.replace("if(!raw){location.replace('../../');return}", "if(!raw){document.getElementById('locked').hidden=false;return}")
+            page = page.replace("}catch(error){location.replace('../../')}", "}catch(error){document.getElementById('locked').hidden=false}")
             page = page.replace('ERB/SEN hours', 'Teaching hours').replace('ERB/SEN pay', 'Teaching pay')
             page = page.replace("    render('confirmed');", "    render('confirmed');\n    if(data.cashflow) window.mountCashflow(data);")
             page = page.replace("+' · Updated '+data.generated", "+' · Records checked '+(data.records_as_of||data.generated)")
