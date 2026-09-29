@@ -1841,11 +1841,18 @@ def chip(ev):
         if first_lesson else ""
     )
     if ev["category"] not in {"erb", "methodist"}:
+        cohort_hue, cohort_sat, cohort_light = cohort_palette(ev["group_label"])
+        cohort_style = (
+            f"--class-hue:{cohort_hue};--cohort-hue:{cohort_hue};"
+            f"--cohort-sat:{cohort_sat}%;--cohort-light:{cohort_light}%;"
+            f"--context-color:hsl({cohort_hue},{max(46, cohort_sat - 8)}%,38%)"
+        )
+        shade_cls = " cohort-shade" if ev["category"] != "holiday" else ""
         identity_html = ""
         if ev["group_label"] in {"ComfyUI", "梨木樹 · 人工智能知識及應用"}:
             label = display_group_label(ev["group_label"])
             identity_html = (f'<span class="class-id card-course-filter" role="button" tabindex="0" '
-                             f'style="--class-hue:38" data-card-group="{ehtml(ev["group"])}" '
+                             f'data-card-group="{ehtml(ev["group"])}" '
                              f'aria-label="顯示 {ehtml(label)} 全部課堂；再按一次返回" '
                              f'title="暫用班名；按此顯示此班全部課堂">{ehtml(label)}</span>')
         teacher_suffix = ""
@@ -1855,7 +1862,7 @@ def chip(ev):
             f'<div class="card-location">{ehtml(fields["location"])}</div>'
             if ev["category"] == "ymca" else ""
         )
-        return (f'<div class="chip {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}{first_lesson_cls}" tabindex="0" role="button" '
+        return (f'<div class="chip{shade_cls} {st} cat-{ev["category"]} grp-{ev["group"]}{red_cls}{layer_cls}{comparison_cls}{conflict_cls}{log_cls}{first_lesson_cls}" style="{cohort_style}" tabindex="0" role="button" '
                 f'data-date="{ehtml(ev["date"])}" data-status="{ehtml(st)}" data-cat="{ehtml(ev["category_label"])}" data-group="{ehtml(ev["group"])}" data-group-label="{ehtml(ev["group_label"])}" data-text="{ehtml(ev["text"])}" data-html="{ehtml(full_html)}"{layer_attrs}{comparison_attrs}{first_lesson_attr}>'
                 f'{comparison_badge}{conflict_badge}{identity_html}{first_lesson_html}<div class="top"><span class="cat">{ehtml(ev["category_label"])}</span><span class="status">{mark}</span></div>'
                 f'<div class="ttl">{title_html}</div><div class="det">{detail_html}{teacher_suffix}</div>{location_html}{room_html}{log_html}<div class="fulltxt">{full_html}</div></div>')
