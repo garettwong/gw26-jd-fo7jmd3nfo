@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-09-29-V20at",
+    "label": "2026-09-29 - V20at",
+    "summary": "HK280HG CW2 彩雲：5節課堂已確認，14日交通緊迫。",
+    "latest": true
+  },
+  {
     "id": "2026-09-28-V20as",
     "label": "2026-09-28 - V20as",
     "summary": "HK280HG CW2 彩雲：新增10月14至23日5節待確認課堂；14日交通緊迫。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-09-21-V20ar",
