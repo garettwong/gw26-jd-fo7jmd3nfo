@@ -13,13 +13,13 @@ OUTDIR = Path(r"D:/Claude Code/ERB Super Timetable/erb-super-timetable")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 MONTH_SHEETS = ["June", "July New", "August New", "September New", "October New", "November New", "December New"]
 YEAR = 2026
-BUILD_ID = "v20as-green-cw2-20260928"
+BUILD_ID = "v20at-hk280hg-cw2-confirmed-20260929"
 CONTEXT_SRC = OUTDIR / "class_context.json"
 OVERRIDES_SRC = OUTDIR / "schedule_overrides.json"
 VERSIONS_SRC = OUTDIR / "versions.json"
-COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-21-V20ar"
-COMPARE_LABEL = "V20as"
-COMPARE_BASELINE_LABEL = "V20ar"
+COMPARE_BASELINE = OUTDIR / "versions" / "2026-09-28-V20as"
+COMPARE_LABEL = "V20at"
+COMPARE_BASELINE_LABEL = "V20as"
 EXPECTED_COMPARISON_CHANGES = 5
 
 COURSE_CHINESE_NAMES = {
@@ -95,7 +95,7 @@ UPCOMING_CLASS_META = {
     "MC244EG · 1": ("循道衞理中心", "灣仔軒尼詩道22號循道衞理中心3樓305室", "CHI"),
 }
 CLASS_UPDATE_META = {
-    "HK280HG · CW2": ("2026-09-28", "Calvin 提議10月14、15、21、22、23日共5節、18小時，尚未確認；14日轉往四海只相隔1小時，22日與待定ComfyUI時段須核實。"),
+    "HK280HG · CW2": ("2026-09-29", "Garett 確認任教10月14、15、21、22、23日共5節、18小時；14日轉往四海交通緊迫，22日ComfyUI時段仍待核實。"),
     "HK280HG · SS": ("2026-09-21", "已確認2027年1月5、7、12日共5節、18小時；1月12日期末筆試16:00–17:00。"),
     "HK281DS · HF8": ("2026-09-20", "已按確認版更新：Garett任教6節，共24小時；其餘按來源導師名單，空白導師列待定。來源表列63節，標題仍寫47節，保留原表待核對。"),
     "HK267HG · CW2": ("2026-08-28", "Calvin 已確認全 8 節由 Garett 任教；11 月 11 至 20 日共 30 小時，課室 104。"),
@@ -683,6 +683,8 @@ def workbook_identity(item):
 
 def context_identity(item):
     identity_text = item.get("text") or f'{item.get("title", "")} / {item.get("detail", "")}'
+    # A confirmation can remove a pending qualifier without creating a new lesson.
+    identity_text = identity_text.replace("(Garett，待確認)", "(Garett)")
     return item.get("date"), identity_text
 
 baseline_event_map = {workbook_identity(item): item for item in baseline_events}
