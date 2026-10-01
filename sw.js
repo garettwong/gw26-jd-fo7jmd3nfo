@@ -1,4 +1,4 @@
-const BUILD_ID = 'v20au-colour-separation-20261001';
+const BUILD_ID = 'v20au-colour-separation-wrap-20261001';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
