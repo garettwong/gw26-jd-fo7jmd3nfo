@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-10-04-V20ay",
+    "label": "2026-10-04 - V20ay",
+    "summary": "Atico晚餐及兒子家長日已記下；日期待確認。",
+    "latest": true
+  },
+  {
     "id": "2026-10-04-V20ax",
     "label": "2026-10-04 - V20ax",
     "summary": "新增2月兒子家長日備註；日期及時間待確認。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-10-02-V20aw",
