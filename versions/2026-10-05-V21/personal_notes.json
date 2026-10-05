@@ -1,0 +1,31 @@
+[
+  {
+    "id": "atico-dinner",
+    "month": "2026-11",
+    "date": "2026-11-21",
+    "time": "19:30–22:30",
+    "title": "ATICO校友晚餐2026",
+    "detail": "彩福皇宴｜iSQUARE 26樓，尖沙咀彌敦道63號。麻雀16:30開始；服裝：Casual。",
+    "status": "confirmed",
+    "source": "Garett於2026年10月4日提供的ATICO alumni dinner 2026邀請截圖：Nov 21, 2026 (Saturday), 7:30pm to 10:30pm; Mahjong starts at 4:30pm; Choi Fook Royal Banquet (iSQUARE), 26/F iSquare, 63 Nathan Road, Tsim Sha Tsui, Kowloon."
+  },
+  {
+    "id": "son-cdgfss-parents-day-2027-02",
+    "month": "2027-02",
+    "date": "2027-02-20",
+    "time": null,
+    "title": "兒子家長日｜迦密主恩中學",
+    "detail": "2027年2月20日（星期六）｜迦密主恩中學。",
+    "status": "date_confirmed_time_pending",
+    "month_source": "Garett於2026年10月4日提供：明年2月，確實日期未知。",
+    "research_checked_on": "2026-10-04",
+    "sources": [
+      "https://cdgfss.edu.hk/tc/index.php",
+      "https://sites.google.com/view/cdgfss-pta",
+      "https://drive.google.com/file/d/15wI_ZNh6vC-VtaACcQb_BrSsVXXot9bD/view"
+    ],
+    "source": "Garett提供的學校2026/27年度校曆照片，第31頁：2027年2月 Events 第20日 Parents Day。校曆未列會面時間。",
+    "confirmed_on": "2026-10-04",
+    "prior_research_result": "再次查學校官網、家教會2025/26年度會議紀錄及會訊、英文和中文家長日及學行評估日檢索；2025/26會議附件明確列家長日7/2/2026，但屬舊學年，不能套用2027。學校eClass入口需登入，未能核實2026/27年度家長日日期。"
+  }
+]
