@@ -1,4 +1,4 @@
-const BUILD_ID = 'v21-consistent-cards-gaps-colours-20261006';
+const BUILD_ID = 'v21-readable-type-balance-20261007';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
