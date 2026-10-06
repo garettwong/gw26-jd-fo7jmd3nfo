@@ -1,4 +1,4 @@
-const BUILD_ID = 'v21-card-layout-20261006';
+const BUILD_ID = 'v21-lms-r10-unconfirmed-20261006';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

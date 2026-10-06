@@ -2458,62 +2458,68 @@
   {
     "date": "2026-10-13",
     "status": "unconfirmed",
-    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 14:00-17:30 - L1 / 未確認第1節；13日改期待Calvin同意；17:30至19:00前往四海有90分鐘空檔；實際車程待校址核實",
+    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 13:30-17:00 - L1 / 未確認第1節；14日改13日，待Calvin確認；17:00至19:00前往四海有120分鐘空檔；實際車程待校址核實",
     "category": "other",
     "category_label": "梨木樹 · 人工智能知識及應用",
     "teacher": "Garett",
     "layer": "mine",
     "salary_excluded": true,
     "salary_pending_reason": "5節時段合共18小時；正式教學時數及時薪待確認。薪酬表僅按既有HK$300/小時暫估HK$5,400，不屬已確認收入。",
-    "source": "Calvin WhatsApp enquiry 梨木樹.png supplied 2026-10-05:14/16/21/23 Oct14:00-17:30;28Oct14:00-18:00. Garett handwritten reply 梨木樹_reply.jpeg and explicit instruction:move14Oct to13Oct,14:00-17:30. All5lessons remain unconfirmed; supersedes Sep20enquiry."
+    "source": "Garett supplied IMG_1008.jpeg on 2026-10-06 and explicitly requested the RIGHT suggested-time column on his timetable as unconfirmed. Matches LMS_AI_PROPOSED_WEEKDAY_TRANSIT_R10_20261006.pdf: Oct13/16/26 13:30-17:00; Oct21 14:30-18:00; Oct28 13:30-17:30, HKT. All five lessons pending Calvin confirmation. Image does not prove reply was sent. Supersedes V21 original enquiry times.",
+    "conflict": false
   },
   {
     "date": "2026-10-16",
     "status": "unconfirmed",
-    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 14:00-17:30 - L2 / 未確認第2節；17:30至18:45前往灣仔有75分鐘空檔；實際車程待校址核實",
+    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 13:30-17:00 - L2 / 未確認第2節；17:00至18:45前往灣仔有105分鐘空檔，未達2小時目標；實際車程及用餐時間待核實",
     "category": "other",
     "category_label": "梨木樹 · 人工智能知識及應用",
     "teacher": "Garett",
     "layer": "mine",
     "salary_excluded": true,
     "salary_pending_reason": "5節時段合共18小時；正式教學時數及時薪待確認。薪酬表僅按既有HK$300/小時暫估HK$5,400，不屬已確認收入。",
-    "source": "Calvin WhatsApp enquiry 梨木樹.png supplied 2026-10-05:14/16/21/23 Oct14:00-17:30;28Oct14:00-18:00. Garett handwritten reply 梨木樹_reply.jpeg and explicit instruction:move14Oct to13Oct,14:00-17:30. All5lessons remain unconfirmed; supersedes Sep20enquiry."
+    "source": "Garett supplied IMG_1008.jpeg on 2026-10-06 and explicitly requested the RIGHT suggested-time column on his timetable as unconfirmed. Matches LMS_AI_PROPOSED_WEEKDAY_TRANSIT_R10_20261006.pdf: Oct13/16/26 13:30-17:00; Oct21 14:30-18:00; Oct28 13:30-17:30, HKT. All five lessons pending Calvin confirmation. Image does not prove reply was sent. Supersedes V21 original enquiry times.",
+    "conflict": false,
+    "warning_label": "交通空檔105分鐘，待核實"
   },
   {
     "date": "2026-10-21",
     "status": "unconfirmed",
-    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 14:00-17:30 - L3 / 未確認第3節；12:30至14:00由彩雲前往梨木樹有90分鐘空檔；同日沒有後續已確認課堂；實際車程待校址核實",
+    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 14:30-18:00 - L3 / 未確認第3節；12:30至14:30由彩雲前往梨木樹有120分鐘空檔；同日沒有後續已確認課堂；實際車程待校址核實",
     "category": "other",
     "category_label": "梨木樹 · 人工智能知識及應用",
     "teacher": "Garett",
     "layer": "mine",
     "salary_excluded": true,
     "salary_pending_reason": "5節時段合共18小時；正式教學時數及時薪待確認。薪酬表僅按既有HK$300/小時暫估HK$5,400，不屬已確認收入。",
-    "source": "Calvin WhatsApp enquiry 梨木樹.png supplied 2026-10-05:14/16/21/23 Oct14:00-17:30;28Oct14:00-18:00. Garett handwritten reply 梨木樹_reply.jpeg and explicit instruction:move14Oct to13Oct,14:00-17:30. All5lessons remain unconfirmed; supersedes Sep20enquiry."
+    "source": "Garett supplied IMG_1008.jpeg on 2026-10-06 and explicitly requested the RIGHT suggested-time column on his timetable as unconfirmed. Matches LMS_AI_PROPOSED_WEEKDAY_TRANSIT_R10_20261006.pdf: Oct13/16/26 13:30-17:00; Oct21 14:30-18:00; Oct28 13:30-17:30, HKT. All five lessons pending Calvin confirmation. Image does not prove reply was sent. Supersedes V21 original enquiry times.",
+    "conflict": false
   },
   {
-    "date": "2026-10-23",
+    "date": "2026-10-26",
     "status": "unconfirmed",
-    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 14:00-17:30 - L4 / 未確認第4節；12:30至14:00彩雲至梨木樹有90分鐘空檔；17:30至18:45梨木樹至灣仔有75分鐘空檔；實際車程待校址核實",
+    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 13:30-17:00 - L4 / 未確認第4節；23日改26日，待Calvin確認；17:00至19:00前往四海有120分鐘空檔；實際車程待校址核實",
     "category": "other",
     "category_label": "梨木樹 · 人工智能知識及應用",
     "teacher": "Garett",
     "layer": "mine",
     "salary_excluded": true,
     "salary_pending_reason": "5節時段合共18小時；正式教學時數及時薪待確認。薪酬表僅按既有HK$300/小時暫估HK$5,400，不屬已確認收入。",
-    "source": "Calvin WhatsApp enquiry 梨木樹.png supplied 2026-10-05:14/16/21/23 Oct14:00-17:30;28Oct14:00-18:00. Garett handwritten reply 梨木樹_reply.jpeg and explicit instruction:move14Oct to13Oct,14:00-17:30. All5lessons remain unconfirmed; supersedes Sep20enquiry."
+    "source": "Garett supplied IMG_1008.jpeg on 2026-10-06 and explicitly requested the RIGHT suggested-time column on his timetable as unconfirmed. Matches LMS_AI_PROPOSED_WEEKDAY_TRANSIT_R10_20261006.pdf: Oct13/16/26 13:30-17:00; Oct21 14:30-18:00; Oct28 13:30-17:30, HKT. All five lessons pending Calvin confirmation. Image does not prove reply was sent. Supersedes V21 original enquiry times.",
+    "conflict": false
   },
   {
     "date": "2026-10-28",
     "status": "unconfirmed",
-    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 14:00-18:00 - L5 / 未確認第5節；同日沒有其他已確認課堂；實際車程待校址核實",
+    "text": "梨木樹學校（校名及地址待確認） (Garett) / 人工智能知識及應用 / 13:30-17:30 - L5 / 未確認第5節；同日沒有其他已記錄課堂；實際校址待確認",
     "category": "other",
     "category_label": "梨木樹 · 人工智能知識及應用",
     "teacher": "Garett",
     "layer": "mine",
     "salary_excluded": true,
     "salary_pending_reason": "5節時段合共18小時；正式教學時數及時薪待確認。薪酬表僅按既有HK$300/小時暫估HK$5,400，不屬已確認收入。",
-    "source": "Calvin WhatsApp enquiry 梨木樹.png supplied 2026-10-05:14/16/21/23 Oct14:00-17:30;28Oct14:00-18:00. Garett handwritten reply 梨木樹_reply.jpeg and explicit instruction:move14Oct to13Oct,14:00-17:30. All5lessons remain unconfirmed; supersedes Sep20enquiry."
+    "source": "Garett supplied IMG_1008.jpeg on 2026-10-06 and explicitly requested the RIGHT suggested-time column on his timetable as unconfirmed. Matches LMS_AI_PROPOSED_WEEKDAY_TRANSIT_R10_20261006.pdf: Oct13/16/26 13:30-17:00; Oct21 14:30-18:00; Oct28 13:30-17:30, HKT. All five lessons pending Calvin confirmation. Image does not prove reply was sent. Supersedes V21 original enquiry times.",
+    "conflict": false
   },
   {
     "date": "2027-01-05",
@@ -2597,7 +2603,7 @@
   {
     "date": "2026-10-21",
     "status": "confirmed",
-    "text": "勵行-彩雲二邨 (Garett) - HK280HG, Class CW2 / 生成式人工智能商業應用證書（兼讀制） / 九龍彩雲二邨清水灣道55號1樓（課室待確認） / 09:00-12:30 - L3 [持續評估－個人習作一] / 同日14:00梨木樹未確認班；彩雲至梨木樹有90分鐘空檔，實際車程待校址核實",
+    "text": "勵行-彩雲二邨 (Garett) - HK280HG, Class CW2 / 生成式人工智能商業應用證書（兼讀制） / 九龍彩雲二邨清水灣道55號1樓（課室待確認） / 09:00-12:30 - L3 [持續評估－個人習作一] / 同日14:30梨木樹未確認班；彩雲至梨木樹有120分鐘空檔，實際車程待校址核實",
     "category": "erb",
     "category_label": "勵行 / ERB",
     "teacher": "Garett",
@@ -2626,7 +2632,7 @@
   {
     "date": "2026-10-23",
     "status": "confirmed",
-    "text": "勵行-彩雲二邨 (Garett) - HK280HG, Class CW2 / 生成式人工智能商業應用證書（兼讀制） / 九龍彩雲二邨清水灣道55號1樓（課室待確認） / 09:00-12:30 - L5 [期末筆試 11:00-12:00] / 同日梨木樹未確認班（14:00開堂，17:30收堂）；課前彩雲至梨木樹90分鐘，課後梨木樹至灣仔75分鐘；實際車程待校址核實",
+    "text": "勵行-彩雲二邨 (Garett) - HK280HG, Class CW2 / 生成式人工智能商業應用證書（兼讀制） / 九龍彩雲二邨清水灣道55號1樓（課室待確認） / 09:00-12:30 - L5 [期末筆試 11:00-12:00]",
     "category": "erb",
     "category_label": "勵行 / ERB",
     "teacher": "Garett",
