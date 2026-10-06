@@ -1,0 +1,45 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\schedule_overrides.json",
+  "override_revision": "V20af",
+  "override_confirmation": "Recovered the 2026-08-31 HK239HG CW10 Lesson 3 note from Garett's preserved Chrome timetable and restored it to the central service. No lesson date, time, teacher, ownership, room, duration, or salary row changed.",
+  "events": 135,
+  "display_events": 381,
+  "context_events": 246,
+  "class_spans": 23,
+  "first_lesson_markers": 24,
+  "first_personal_lesson_markers": 25,
+  "comparison_baseline": "D:\\Claude Code\\ERB Super Timetable\\erb-super-timetable\\versions\\2026-10-04-V20ba",
+  "comparison_label": "V21",
+  "changed_in_version": 9,
+  "counts": {
+    "confirmed": 342,
+    "unconfirmed": 32,
+    "note": 7
+  },
+  "layers": {
+    "mine": 191,
+    "class": 187,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 17,
+    "School": 1,
+    "勵行 / ERB": 287,
+    "Holiday": 6,
+    "Mike Sir": 6,
+    "DGS / UE": 2,
+    "循道": 53,
+    "ComfyUI": 4,
+    "梨木樹 · 人工智能知識及應用": 5
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}
