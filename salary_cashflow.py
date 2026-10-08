@@ -93,7 +93,15 @@ def reconcile_current(report, contexts):
         schedule["rows"].sort(key=lambda r: (r.get("expected_payment_date") or "9999", r["label"]))
         schedule["dated_total"] = sum(r["amount"] for r in schedule["rows"] if r.get("expected_payment_date"))
     rows = report["confirmed"]["expected_payments"]["rows"]
-    completed_unpaid = sum(r["amount"] for r in rows if r["kind"] == "ERB" and not r["received"] and r["invoice_date"] <= as_of[:10])
+    # Reconcile issued receivables only. A scheduled completion date alone does
+    # not prove the final lesson has ended or that an invoice passed its gates.
+    # Unissued/blocked cohorts remain visible as unfinished/unsubmitted work.
+    completed_unpaid = sum(
+        r["amount"] for r in rows
+        if r["kind"] == "ERB" and not r["received"]
+        and r.get("group") in by_group
+        and by_group[r["group"]]["completion_date"] <= as_of[:10]
+    )
     if completed_unpaid != reconciliation["not_confirmed_received_hkd"]:
         raise ValueError("Completed unpaid salary differs from reconciliation")
     report["records_as_of"] = as_of
