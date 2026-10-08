@@ -48,14 +48,15 @@ window.mountCashflow=function(data){
    return '<article class="cf-item cf-paid" data-group="DGS"><header><b>DGS</b><strong class="cf-amount">'+cash(r.amount)+'</strong></header><p class="cf-course-name">DGS</p><span class="cf-badge">已收到 · 已完成</span><table class="cf-dates"><tbody><tr><th scope="row">收款日期</th><td>'+esc(when)+'</td></tr></tbody></table></article>';
   }
   const submitted=r.submission_state==='submitted';
+  const prepared=!r.received&&!submitted&&!!r.invoice_prepared_on;
   const end=r.class_end||(r.service_period?.match(/(\d{4}-\d{2}-\d{2})$/)||[])[1]||'日期未記錄';
-  const sent=r.submitted_on?r.submitted_on+(r.submitted_at?' '+r.submitted_at.slice(11,16):''):r.received?'交單日期未記錄':submitted?'已交單；日期未記錄':r.kind==='ERB'?'尚未提交':'提交日期未記錄';
+  const sent=r.submitted_on?r.submitted_on+(r.submitted_at?' '+r.submitted_at.slice(11,16):''):r.received?'交單日期未記錄':submitted?'已交單；日期未記錄':prepared?'尚未確認提交':r.kind==='ERB'?'尚未提交':'提交日期未記錄';
   let expected=r.expected_payment_date||'未有足夠資料估計',estimate='';
   if(r.expected_payment_date)estimate=submitted?'按交單日加 21 日估計':r.kind==='ERB'?(r.received?'當時按完班即交單估計':'假設完班即交單，再加 21 日'): '按月結週期估計';
   const actual=r.received?(r.received_on||'已收到；日期未記錄'):'尚未收到';
   const row=(a,b,n='')=>'<tr><th scope="row">'+esc(a)+'</th><td>'+esc(b)+(n?'<small>'+esc(n)+'</small>':'')+'</td></tr>';
   const timing=calvinPaymentTiming(r);
-  const badge=r.received?'已收到':submitted?'已交單，等收款':'未完班／未交單';
+  const badge=r.received?'已收到':submitted?'已交單，等收款':prepared?'發票已寄給你，待提交 Calvin':'未完班／未交單';
   return '<article class="cf-item '+(r.received?'cf-paid':'')+'" data-group="'+esc(r.group||r.label)+'"><header><b>'+esc(r.label)+'</b><strong class="cf-amount">'+cash(r.amount)+'</strong></header><p class="cf-course-name">'+esc(r.course_name||r.label)+'</p><span class="cf-badge">'+badge+'</span><table class="cf-dates"><tbody>'+row('1. 課程完結日期',end)+row('2. 發票提交日期',sent)+row('3. 預計收款日期',expected,estimate)+row('4. 實際收款日期',actual)+(timing?row('5. Calvin 付款所需時間',timing.text,timing.note):'')+'</tbody></table></article>';
  }
  function render(){const filter=document.getElementById('cfFilter').value,rows=filter==='paid'?paid:filter==='waiting'?waiting:filter==='future'?future:all;document.getElementById('cfLedgerSummary').textContent=rows.length+' 筆 · 合共 '+cash(sum(rows));document.getElementById('cfItems').innerHTML=rows.map(card).join('')||'<p>這個分類沒有款項。</p>';}
