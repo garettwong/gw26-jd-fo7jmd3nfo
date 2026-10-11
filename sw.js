@@ -1,4 +1,4 @@
-const BUILD_ID = 'v21-readable-type-balance-20261007';
+const BUILD_ID = 'v22-dgs-blender-comfy-deferred-20261011';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

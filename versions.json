@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-10-11-V22",
+    "label": "2026-10-11 - V22",
+    "summary": "ComfyUI 暫緩；新增10月20日15:30–17:00 DGS Blender。",
+    "latest": true
+  },
+  {
     "id": "2026-10-05-V21",
     "label": "2026-10-05 - V21",
     "summary": "已移除梨木樹5節未確認課堂；薪酬預算同步更新，ComfyUI及已確認紀錄保留。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-10-05-V21-before-LMS-R10",
