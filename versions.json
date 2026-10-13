@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-10-13-V23",
+    "label": "2026-10-13 - V23",
+    "summary": "HK244HG CW11：3/12上午及8/12下午已確認。",
+    "latest": true
+  },
+  {
     "id": "2026-10-11-V22",
     "label": "2026-10-11 - V22",
     "summary": "ComfyUI 暫緩；新增10月20日15:30–17:00 DGS Blender。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-10-05-V21",

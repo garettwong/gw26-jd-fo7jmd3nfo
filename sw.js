@@ -1,4 +1,4 @@
-const BUILD_ID = 'v22-dgs-blender-comfy-deferred-20261011';
+const BUILD_ID = 'v23-hk244hg-cw11-confirmed-20261013';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
