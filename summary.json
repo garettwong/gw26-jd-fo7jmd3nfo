@@ -1,25 +1,25 @@
 {
   "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
-  "override_source": "D:\\Codex 2\\projects\\erb-cw11-publish-20261013\\schedule_overrides.json",
-  "override_revision": "V23",
-  "override_confirmation": "HK244HG CW11 L9 and L11 confirmed; full 12-lesson class context added.",
+  "override_source": "D:\\Codex 2\\projects\\erb-cw11-morning-publish-20261014\\schedule_overrides.json",
+  "override_revision": "V24",
+  "override_confirmation": "HK244HG CW11 L10 Dec8 morning confirmed; latest screenshot reconciled.",
   "events": 135,
   "display_events": 385,
   "context_events": 250,
   "class_spans": 24,
   "first_lesson_markers": 24,
   "first_personal_lesson_markers": 25,
-  "comparison_baseline": "D:\\Codex 2\\projects\\erb-cw11-publish-20261013\\versions\\2026-10-11-V22",
-  "comparison_label": "V23",
-  "changed_in_version": 12,
+  "comparison_baseline": "D:\\Codex 2\\projects\\erb-cw11-morning-publish-20261014\\versions\\2026-10-13-V23",
+  "comparison_label": "V24",
+  "changed_in_version": 11,
   "counts": {
     "confirmed": 355,
     "unconfirmed": 23,
     "note": 7
   },
   "layers": {
-    "mine": 185,
-    "class": 197,
+    "mine": 186,
+    "class": 196,
     "other": 3
   },
   "categories": {
