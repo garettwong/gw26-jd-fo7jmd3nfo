@@ -56,7 +56,7 @@ window.mountCashflow=function(data){
   const actual=r.received?(r.received_on||'已收到；日期未記錄'):'尚未收到';
   const row=(a,b,n='')=>'<tr><th scope="row">'+esc(a)+'</th><td>'+esc(b)+(n?'<small>'+esc(n)+'</small>':'')+'</td></tr>';
   const timing=calvinPaymentTiming(r);
-  const badge=r.received?'已收到':submitted?'已交單，等收款':prepared?'發票已寄給你，待提交 Calvin':'未完班／未交單';
+  const badge=r.received?'已收到':submitted?'已交單，等收款':prepared?'發票已備妥，待提交 Calvin':'未完班／未交單';
   return '<article class="cf-item '+(r.received?'cf-paid':'')+'" data-group="'+esc(r.group||r.label)+'"><header><b>'+esc(r.label)+'</b><strong class="cf-amount">'+cash(r.amount)+'</strong></header><p class="cf-course-name">'+esc(r.course_name||r.label)+'</p><span class="cf-badge">'+badge+'</span><table class="cf-dates"><tbody>'+row('1. 課程完結日期',end)+row('2. 發票提交日期',sent)+row('3. 預計收款日期',expected,estimate)+row('4. 實際收款日期',actual)+(timing?row('5. Calvin 付款所需時間',timing.text,timing.note):'')+'</tbody></table></article>';
  }
  function render(){const filter=document.getElementById('cfFilter').value,rows=filter==='paid'?paid:filter==='waiting'?waiting:filter==='future'?future:all;document.getElementById('cfLedgerSummary').textContent=rows.length+' 筆 · 合共 '+cash(sum(rows));document.getElementById('cfItems').innerHTML=rows.map(card).join('')||'<p>這個分類沒有款項。</p>';}
