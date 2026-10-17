@@ -1,4 +1,4 @@
-const BUILD_ID = 'v24-cw11-dec8-morning-20261014';
+const BUILD_ID = 'v25-hk267-not-assigned-20261017';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

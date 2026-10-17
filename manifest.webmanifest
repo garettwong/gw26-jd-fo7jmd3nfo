@@ -3,7 +3,7 @@
   "name": "Garett's ERB",
   "short_name": "Garett's ERB",
   "description": "Garett's ERB teaching timetable",
-  "start_url": "./?v=redtext1&build=v24-cw11-dec8-morning-20261014",
+  "start_url": "./?v=redtext1&build=v25-hk267-not-assigned-20261017",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef1f6",

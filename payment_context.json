@@ -157,7 +157,10 @@
     "provider": "基督教勵行會",
     "full_course_start": "2026-11-11",
     "full_course_end": "2026-11-20",
-    "full_lesson_entries": 8
+    "full_lesson_entries": 8,
+    "garett_assignment": "not_assigned",
+    "salary_excluded": true,
+    "assignment_updated_on": "2026-10-17"
   },
   {
     "group": "g25",

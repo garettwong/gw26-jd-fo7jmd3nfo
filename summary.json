@@ -1,25 +1,25 @@
 {
   "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
-  "override_source": "D:\\Codex 2\\projects\\erb-cw11-morning-publish-20261014\\schedule_overrides.json",
-  "override_revision": "V24",
-  "override_confirmation": "HK244HG CW11 L10 Dec8 morning confirmed; latest screenshot reconciled.",
+  "override_source": "D:\\Codex 2\\projects\\erb-remove-hk267-publish-20261017\\schedule_overrides.json",
+  "override_revision": "V25",
+  "override_confirmation": "HK267HG CW2: Garett not assigned, confirmed by user 2026-10-17.",
   "events": 135,
   "display_events": 385,
   "context_events": 250,
   "class_spans": 24,
   "first_lesson_markers": 24,
-  "first_personal_lesson_markers": 25,
-  "comparison_baseline": "D:\\Codex 2\\projects\\erb-cw11-morning-publish-20261014\\versions\\2026-10-13-V23",
-  "comparison_label": "V24",
-  "changed_in_version": 11,
+  "first_personal_lesson_markers": 24,
+  "comparison_baseline": "D:\\Codex 2\\projects\\erb-remove-hk267-publish-20261017\\versions\\2026-10-14-V24",
+  "comparison_label": "V25",
+  "changed_in_version": 8,
   "counts": {
     "confirmed": 355,
     "unconfirmed": 23,
     "note": 7
   },
   "layers": {
-    "mine": 186,
-    "class": 196,
+    "mine": 178,
+    "class": 204,
     "other": 3
   },
   "categories": {
