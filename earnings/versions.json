@@ -1,9 +1,15 @@
 [
   {
+    "id": "2026-10-22-V26",
+    "label": "2026-10-22 - V26",
+    "summary": "新增13/11 14:30–17:30 HK244HG CW8補考監考及改卷；彩雲103室。",
+    "latest": true
+  },
+  {
     "id": "2026-10-17-V25",
     "label": "2026-10-17 - V25",
     "summary": "HK267HG CW2：Garett 不獲委任，移除個人課堂及相應薪酬。",
-    "latest": true
+    "latest": false
   },
   {
     "id": "2026-10-14-V24",
@@ -147,12 +153,6 @@
     "id": "2026-09-05-V20ai",
     "label": "2026-09-05 - V20ai",
     "summary": "HK281DS CW7 按 8 月 28 日 R5 圖片修正為50節；Garett 10月3日下午改為L40，日期、時間及4小時任教不變。",
-    "latest": false
-  },
-  {
-    "id": "2026-09-05-V20ah",
-    "label": "2026-09-05 - V20ah",
-    "summary": "HK281DS HF8 荃灣班：33 節暫覆可教，待 Calvin 確認；薪酬暫不更新。",
     "latest": false
   },
   {

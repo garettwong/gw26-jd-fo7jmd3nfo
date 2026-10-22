@@ -2843,5 +2843,23 @@
     "official_teaching_hours": 4.0,
     "source": "Calvin confirmed timetable screenshot dated 2026-10-14 09:50; SHA-256 f8121ec8f6b1f3f0bdd17ddb5ff5f1283170ad60e7f41a9ecb709b4d34bf0ae6; lesson 12. Latest screenshot supersedes earlier blank tutor table.",
     "assignment_confirmation_date": null
+  },
+  {
+    "date": "2026-11-13",
+    "status": "confirmed",
+    "text": "勵行-彩雲 (Garett) / 人工智能創作營銷社交媒體內容技巧證書（兼讀制） / HK244HG, Class CW8-REEXAM / 14:30-17:30 [補考監考及改卷]",
+    "teacher": "Garett",
+    "layer": "mine",
+    "category": "erb",
+    "category_label": "勵行 / ERB",
+    "teaching_room": "103",
+    "room_source": "Calvin confirmed re-exam WhatsApp screenshot: Location Rm103; original HK244HG CW8 confirmed timetable locates the class at 彩雲 Room103.",
+    "official_teaching_hours": 3.0,
+    "assignment_confirmation_date": "2026-10-22",
+    "assessment_type": "reexam",
+    "original_class": "CW8",
+    "source": "Calvin WhatsApp confirmation supplied by Garett 2026-10-22; Date13/11 Fri; Time1430-1730; LocationRm103; Re HK244HGCW8; invigilation and marking for one re-exam student; three paid hours confirmed. Screenshot SHA256 23bf57fbb7c56d628f6636fb7263c3a284b67faaaeb787e195d56b2fc8272928. Separate re-exam duty, not an extra numbered course lesson.",
+    "group": "g36",
+    "group_label": "HK244HG · CW8-REEXAM"
   }
 ]
