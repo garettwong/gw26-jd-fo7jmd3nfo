@@ -1,24 +1,24 @@
 {
   "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
-  "override_source": "D:\\Codex 2\\projects\\erb-cw8-reexam-20261113\\schedule_overrides.json",
-  "override_revision": "V26",
-  "override_confirmation": "HK244HG CW8 re-exam duty confirmed by Calvin; 13 November14:30-17:30, Room103; three paid hours.",
+  "override_source": "D:\\Codex 2\\projects\\erb-ymca-ai-20261022\\schedule_overrides.json",
+  "override_revision": "V27",
+  "override_confirmation": "YMCA AI class enquiry: nine provisional sessions,30October to19November10:00-13:00; assignment and venue pending.",
   "events": 135,
-  "display_events": 386,
-  "context_events": 251,
-  "class_spans": 25,
-  "first_lesson_markers": 24,
-  "first_personal_lesson_markers": 24,
-  "comparison_baseline": "D:\\Codex 2\\projects\\erb-cw8-reexam-20261113\\versions\\2026-10-17-V25",
-  "comparison_label": "V26",
-  "changed_in_version": 1,
+  "display_events": 395,
+  "context_events": 260,
+  "class_spans": 26,
+  "first_lesson_markers": 25,
+  "first_personal_lesson_markers": 25,
+  "comparison_baseline": "D:\\Codex 2\\projects\\erb-ymca-ai-20261022\\versions\\2026-10-22-V26",
+  "comparison_label": "V27",
+  "changed_in_version": 9,
   "counts": {
     "confirmed": 356,
-    "unconfirmed": 23,
+    "unconfirmed": 32,
     "note": 7
   },
   "layers": {
-    "mine": 179,
+    "mine": 188,
     "class": 204,
     "other": 3
   },
@@ -30,7 +30,8 @@
     "Mike Sir": 6,
     "DGS / UE": 2,
     "循道": 53,
-    "DGS Blender": 1
+    "DGS Blender": 1,
+    "YMCA / ERB": 9
   },
   "months": [
     "June",

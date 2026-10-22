@@ -243,5 +243,17 @@
     "full_lesson_entries": 1,
     "assessment_type": "reexam",
     "original_class": "CW8"
+  },
+  {
+    "group": "g37",
+    "label": "YMCA · AI · OCT 2026（暫名）",
+    "course_code": "",
+    "course_name": "人工智能的設計、實施及應用證書（兼讀制）",
+    "provider": "YMCA",
+    "full_course_start": "2026-10-30",
+    "full_course_end": "2026-11-19",
+    "full_lesson_entries": 9,
+    "assignment_status": "provisional",
+    "official_code_pending": true
   }
 ]

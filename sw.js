@@ -1,4 +1,4 @@
-const BUILD_ID = 'v26-cw8-reexam-20261022';
+const BUILD_ID = 'v27-ymca-ai-pending-20261022';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
