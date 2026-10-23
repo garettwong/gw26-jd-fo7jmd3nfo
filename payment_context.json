@@ -253,8 +253,9 @@
     "full_course_start": "2026-10-30",
     "full_course_end": "2026-11-19",
     "full_lesson_entries": 9,
-    "assignment_status": "provisional",
-    "official_code_pending": true
+    "assignment_status": "confirmed",
+    "official_code_pending": true,
+    "assignment_confirmation_date": "2026-10-23"
   },
   {
     "group": "g38",

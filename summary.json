@@ -1,20 +1,20 @@
 {
   "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
   "override_source": "D:\\Codex 2\\projects\\erb-ymca-ai-20261022\\schedule_overrides.json",
-  "override_revision": "V30",
-  "override_confirmation": "Calvin confirmed WanChai Methodist Class3; six Friday evenings now confirmed; dates, times and existing assignments unchanged.",
+  "override_revision": "V31",
+  "override_confirmation": "Garett confirmed all nine YMCA YauMaTei AI sessions,27hours; dates,times,venue and other assignments unchanged.",
   "events": 135,
   "display_events": 401,
   "context_events": 266,
   "class_spans": 27,
   "first_lesson_markers": 26,
   "first_personal_lesson_markers": 26,
-  "comparison_baseline": "D:\\Codex 2\\projects\\erb-ymca-ai-20261022\\versions\\2026-10-23-V29",
-  "comparison_label": "V30",
-  "changed_in_version": 6,
+  "comparison_baseline": "D:\\Codex 2\\projects\\erb-ymca-ai-20261022\\versions\\2026-10-23-V30",
+  "comparison_label": "V31",
+  "changed_in_version": 9,
   "counts": {
-    "confirmed": 362,
-    "unconfirmed": 32,
+    "confirmed": 371,
+    "unconfirmed": 23,
     "note": 7
   },
   "layers": {
