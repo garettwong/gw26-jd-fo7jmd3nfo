@@ -1,4 +1,4 @@
-const BUILD_ID = 'v28-ymca-yau-ma-tei-20261022';
+const BUILD_ID = 'v29-wan-chai-class3-pending-20261023';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

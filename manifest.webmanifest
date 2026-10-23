@@ -3,7 +3,7 @@
   "name": "Garett's ERB",
   "short_name": "Garett's ERB",
   "description": "Garett's ERB teaching timetable",
-  "start_url": "./?v=redtext1&build=v28-ymca-yau-ma-tei-20261022",
+  "start_url": "./?v=redtext1&build=v29-wan-chai-class3-pending-20261023",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef1f6",

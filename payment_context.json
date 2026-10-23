@@ -255,5 +255,17 @@
     "full_lesson_entries": 9,
     "assignment_status": "provisional",
     "official_code_pending": true
+  },
+  {
+    "group": "g38",
+    "label": "循道灣仔 · 第3班 · NOV 2026",
+    "course_code": "",
+    "course_name": "人工智能知識及應用證書（兼讀制）",
+    "provider": "循道衞理中心",
+    "full_course_start": "2026-11-06",
+    "full_course_end": "2026-12-11",
+    "full_lesson_entries": 6,
+    "assignment_status": "provisional",
+    "official_code_pending": true
   }
 ]

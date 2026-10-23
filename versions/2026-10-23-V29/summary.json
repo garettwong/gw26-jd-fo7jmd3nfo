@@ -1,0 +1,45 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Codex 2\\projects\\erb-ymca-ai-20261022\\schedule_overrides.json",
+  "override_revision": "V29",
+  "override_confirmation": "Garett reserved six WanChai Methodist Class3 Friday evenings as unconfirmed; no existing assignments displaced.",
+  "events": 135,
+  "display_events": 401,
+  "context_events": 266,
+  "class_spans": 27,
+  "first_lesson_markers": 26,
+  "first_personal_lesson_markers": 26,
+  "comparison_baseline": "D:\\Codex 2\\projects\\erb-ymca-ai-20261022\\versions\\2026-10-22-V28",
+  "comparison_label": "V29",
+  "changed_in_version": 6,
+  "counts": {
+    "confirmed": 356,
+    "unconfirmed": 38,
+    "note": 7
+  },
+  "layers": {
+    "mine": 194,
+    "class": 204,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 17,
+    "School": 1,
+    "勵行 / ERB": 300,
+    "Holiday": 6,
+    "Mike Sir": 6,
+    "DGS / UE": 2,
+    "循道": 59,
+    "DGS Blender": 1,
+    "YMCA / ERB": 9
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}
