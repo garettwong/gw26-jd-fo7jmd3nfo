@@ -1,0 +1,45 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Codex 2\\projects\\erb-ymca-ai-20261022\\schedule_overrides.json",
+  "override_revision": "V32",
+  "override_confirmation": "DGS November3 15:30-17:00 accepted by Garett; teaching topic and room pending.",
+  "events": 135,
+  "display_events": 402,
+  "context_events": 267,
+  "class_spans": 27,
+  "first_lesson_markers": 26,
+  "first_personal_lesson_markers": 26,
+  "comparison_baseline": "D:\\Codex 2\\projects\\erb-ymca-ai-20261022\\versions\\2026-10-23-V31",
+  "comparison_label": "V32",
+  "changed_in_version": 1,
+  "counts": {
+    "confirmed": 372,
+    "unconfirmed": 23,
+    "note": 7
+  },
+  "layers": {
+    "mine": 195,
+    "class": 204,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 17,
+    "School": 1,
+    "勵行 / ERB": 300,
+    "Holiday": 6,
+    "Mike Sir": 6,
+    "DGS / UE": 2,
+    "循道": 59,
+    "DGS Blender": 2,
+    "YMCA / ERB": 9
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}

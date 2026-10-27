@@ -1,4 +1,4 @@
-const BUILD_ID = 'v31-ymca-ai-confirmed-20261023';
+const BUILD_ID = 'v32-dgs-nov3-20261027';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
