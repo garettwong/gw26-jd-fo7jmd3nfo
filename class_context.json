@@ -3158,22 +3158,5 @@
     "group_label": "循道灣仔 · 第3班 · NOV 2026",
     "assignment_confirmation_date": "2026-10-23",
     "assignment_source": "Calvin WhatsApp confirmation supplied by Garett2026-10-23: 好啊，請mark低啲時間; in reply to the WanChai Methodist Class3 enquiry. User requested mark this class confirmed. Screenshot SHA256 390bf131007c9981017a3865cb9a59bd612726c901067385b51bd2ca5698613f"
-  },
-  {
-    "date": "2026-11-03",
-    "status": "confirmed",
-    "text": "DGS, Class Blender (Garett) / DGS課堂（教學內容待確認） / 15:30-17:00 / 課室待確認",
-    "teacher": "Garett",
-    "layer": "mine",
-    "category": "dgs",
-    "category_label": "DGS Blender",
-    "teaching_room": "課室待確認",
-    "source": "Schedule confirmation supplied by Garett on 2026-10-27: DGS Tuesday2026-11-03 15:30-17:00 accepted; teaching topic and room pending.",
-    "official_teaching_hours": 1.5,
-    "salary_hourly_rate": 900,
-    "salary_amount": 1350,
-    "salary_engagement": "DGS-BLENDER-20261020",
-    "salary_basis": "Same continuing DGS engagement: prior Garett-confirmed rate HKD900/hour retained; this screenshot does not state a new fee. 1.5h x900=1350.",
-    "assignment_confirmation_date": "2026-10-27"
   }
 ]
