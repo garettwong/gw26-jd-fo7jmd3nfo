@@ -45,7 +45,8 @@ window.mountCashflow=function(data){
  function card(r){
   if(r.kind==='DGS'&&r.received){
    const when=r.received_on?(r.received_date_precision==='approximate'?'約 ':'')+r.received_on:'已收到；日期未記錄';
-   return '<article class="cf-item cf-paid" data-group="DGS"><header><b>DGS</b><strong class="cf-amount">'+cash(r.amount)+'</strong></header><p class="cf-course-name">DGS</p><span class="cf-badge">已收到 · 已完成</span><table class="cf-dates"><tbody><tr><th scope="row">收款日期</th><td>'+esc(when)+'</td></tr></tbody></table></article>';
+   const lesson=r.class_end?'<tr><th scope="row">課堂日期</th><td>'+esc(r.class_end)+'</td></tr>':'';
+   return '<article class="cf-item cf-paid" data-group="'+esc(r.salary_engagement||r.label||'DGS')+'"><header><b>'+esc(r.label||'DGS')+'</b><strong class="cf-amount">'+cash(r.amount)+'</strong></header><p class="cf-course-name">'+esc(r.course_name||r.label||'DGS')+'</p><span class="cf-badge">已收到 · 已完成</span><table class="cf-dates"><tbody>'+lesson+'<tr><th scope="row">收款日期</th><td>'+esc(when)+'</td></tr></tbody></table></article>';
   }
   const submitted=r.submission_state==='submitted';
   const prepared=!r.received&&!submitted&&!!r.invoice_prepared_on;
