@@ -246,16 +246,18 @@
   },
   {
     "group": "g37",
-    "label": "YMCA · AI · OCT 2026（暫名）",
-    "course_code": "",
+    "label": "YMCA · YC145HS-1",
+    "course_code": "YC145HS",
     "course_name": "人工智能的設計、實施及應用證書（兼讀制）",
     "provider": "YMCA",
     "full_course_start": "2026-10-30",
     "full_course_end": "2026-11-19",
     "full_lesson_entries": 9,
     "assignment_status": "confirmed",
-    "official_code_pending": true,
-    "assignment_confirmation_date": "2026-10-23"
+    "official_code_pending": false,
+    "assignment_confirmation_date": "2026-10-23",
+    "class": "1",
+    "official_course_identifier": "YC145HS-1"
   },
   {
     "group": "g38",

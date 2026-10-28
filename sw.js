@@ -1,4 +1,4 @@
-const BUILD_ID = 'v33-dgs-slot-withdrawn-20261027';
+const BUILD_ID = 'v34-ymca-yc145hs-1-20261028';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

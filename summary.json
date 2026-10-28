@@ -1,7 +1,7 @@
 {
   "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
   "override_source": "D:\\Codex 2\\projects\\erb-ymca-ai-20261022\\schedule_overrides.json",
-  "override_revision": "V33",
+  "override_revision": "V34",
   "override_confirmation": "Withdraw November3 DGS15:30-17:00; replacement time pending.",
   "events": 135,
   "display_events": 401,
@@ -9,9 +9,9 @@
   "class_spans": 27,
   "first_lesson_markers": 26,
   "first_personal_lesson_markers": 26,
-  "comparison_baseline": "D:\\Codex 2\\projects\\erb-ymca-ai-20261022\\versions\\2026-10-27-V32",
-  "comparison_label": "V33",
-  "changed_in_version": 0,
+  "comparison_baseline": "D:\\Codex 2\\projects\\erb-ymca-ai-20261022\\versions\\2026-10-27-V33",
+  "comparison_label": "V34",
+  "changed_in_version": 9,
   "counts": {
     "confirmed": 371,
     "unconfirmed": 23,
