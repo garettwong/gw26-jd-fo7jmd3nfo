@@ -97,7 +97,7 @@ UPCOMING_CLASS_META = {
 CLASS_UPDATE_META = {
     "HK280HG · CW2": ("2026-09-29", "Garett 確認任教10月14、15、21、22、23日共5節、18小時；14日轉往四海交通緊迫，22日ComfyUI時段仍待核實。"),
     "HK280HG · SS": ("2026-09-21", "已確認2027年1月5、7、12日共5節、18小時；1月12日期末筆試16:00–17:00。"),
-    "HK281DS · HF8": ("2026-09-20", "已按確認版更新：Garett任教6節，共24小時；其餘按來源導師名單，空白導師列待定。來源表列63節，標題仍寫47節，保留原表待核對。"),
+    "HK281DS · HF8": ("2026-10-28", "已按2026年10月28日最終版更新全班49節，共196小時；Garett任教L9、10、21、31、41、43，共24小時。11月5日及12月1、2日提早30分鐘；個人最後一堂12月2日，全班12月7日完成。"),
     "HK267HG · CW2": ("2026-08-28", "Calvin 已確認全 8 節由 Garett 任教；11 月 11 至 20 日共 30 小時，課室 104。"),
     "HK244EG · FS-1": ("2026-06-29", "已完成；6 月 18 日黑雨取消，補課為 6 月 27 日。"),
     "HK244EG · HF2": ("2026-09-08", "已完成；日期及評核時間與原件相符。L7／L10原件仍寫Andy，現有任教紀錄為Garett，須補齊逐堂代課確認；未改動實際任教紀錄。"),
@@ -2508,7 +2508,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <li>MC106DS 第2班：原件47節有日期課堂共188小時，但標題及課程大綱寫49節／196小時；不能將49項內容直接當作47節的逐堂教學內容。</li>
 <li>HK239HG 城市一條龍：12月16–18日來自已整理紀錄，尚欠原始確認；12月18日L6課堂13:00–16:00，考試註記15:30–16:30超出課堂。</li>
 <li>HK244EG FS：L2／L5按原件改期註記採用9月23／30日；期末表列11月3日，但標題仍印8月27日。HK239HG FS／FS11正式班別、部分舊班導師更改紀錄仍需補齊。</li>
-<li>HK281DS HF8已按9月20日收到的確認版更新；來源列63節但標題寫47節，空白導師列TBC，不計入Garett薪酬。ComfyUI四堂的時間及地點未提供。歷史Mike Sir時段原文1915–1015含糊，未擅自改寫。</li>
+<li>HK281DS HF8已按2026年10月28日最終版更新：全班49節196小時，12月7日完成；Garett任教六節24小時，個人最後一堂為12月2日。ComfyUI四堂的時間及地點未提供。歷史Mike Sir時段原文1915–1015含糊，未擅自改寫。</li>
 </ul>
 </details>
 <div id="viewTabs" class="view-tabs" role="tablist" aria-label="Timetable layout"><button id="calendarTab" class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="calendarView" data-view="calendar">Calendar</button><button id="spansTab" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="spansView" data-view="spans">Class spans</button></div>
