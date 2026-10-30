@@ -1,4 +1,4 @@
-const BUILD_ID = 'v35-hf8-final-20261028';
+const BUILD_ID = 'v36-calendar-audit-20261030';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
