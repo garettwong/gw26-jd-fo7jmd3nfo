@@ -25,6 +25,16 @@ def add_priced_dgs(report, events, event_interval):
         amount = hours * event['salary_hourly_rate']
         if amount != event['salary_amount']:
             raise ValueError('Priced DGS amount does not match hours and rate')
+        quoted_amount = amount
+        receipt = receipts.get(event['salary_engagement'])
+        if receipt and receipt.get('settlement_amount_verified'):
+            if (receipt.get('quoted_amount_hkd') != quoted_amount
+                    or receipt.get('service_date') != event['date']
+                    or receipt.get('status') != 'received'
+                    or not receipt.get('receipt_evidence_message_id')
+                    or receipt.get('amount_hkd', 0) <= 0):
+                raise ValueError('Verified DGS settlement has incomplete evidence')
+            amount = receipt['amount_hkd']
         for mode, statuses in [('confirmed', {'confirmed'}), ('confirmed_and_unconfirmed', {'confirmed', 'unconfirmed'})]:
             if event['status'] not in statuses:
                 continue
@@ -57,6 +67,10 @@ def add_priced_dgs(report, events, event_interval):
                     basis=f"{hours}小時 × HK${event['salary_hourly_rate']}/小時；用戶已確認收款。")
                 if receipt.get('received_date'):
                     payment['received_on'] = receipt['received_date']
+                if amount != quoted_amount:
+                    payment.update(quoted_amount=quoted_amount,
+                        settlement_adjustment=amount-quoted_amount,
+                        basis=f"原估算{hours}小時 × HK${event['salary_hourly_rate']}/小時 = HK${quoted_amount:,.0f}；PayMe收款憑證確認實收HK${amount:,.0f}，差額HK${amount-quoted_amount:,.0f}；沒有更改課堂時數或推算新時薪。")
             target['expected_payments']['undated'].append(payment)
     report['rates']['DGS'] = '7月 Unreal：HK$7,000 最終總額；另外議定的 DGS 單堂按各堂獨立時薪計算。'
     report['notes'].append('DGS Blender 與7月 Unreal 是不同工作；沒有把之前 HK$7,000 總額或收款狀態套用到新課堂。')
