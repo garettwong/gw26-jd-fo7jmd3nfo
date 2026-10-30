@@ -1499,14 +1499,17 @@
   {
     "date": "2026-10-30",
     "status": "confirmed",
-    "text": "循道-灣仔 MC244EG, Class 1 / 人工智能知識及應用證書（兼讀制） / 灣仔軒尼詩道22號循道衞理中心3樓305室 / 1845-2145 - L6",
+    "text": "循道-灣仔 MC244EG, Class 1 / 人工智能知識及應用證書（兼讀制） / 灣仔軒尼詩道22號循道衞理中心3樓305室 / 1845-2145 - L6 [期末筆試20:30–21:30]",
     "teacher": "Garett",
     "helper": "",
     "layer": "mine",
     "red": false,
     "source": "2026 09 11 (2026 09 11) - MC244EG_1_FINAL FINAL (CHI) - MC - 灣仔.pdf, lesson 6 - FINAL FINAL; SHA-256 5C81BE37038B687AC58CE59EFC89A0E907B3EBF8CC962351115FC0C892CE8BBC",
     "teaching_room": "305",
-    "room_source": "2026 09 11 (2026 09 11) - MC244EG_1_FINAL FINAL (CHI) - MC - 灣仔.pdf, official 上課地點 and 課室"
+    "room_source": "2026 09 11 (2026 09 11) - MC244EG_1_FINAL FINAL (CHI) - MC - 灣仔.pdf, official 上課地點 and 課室",
+    "exam_start": "20:30",
+    "exam_end": "21:30",
+    "exam_source": "Garett explicit confirmation2026-09-08; preserved V20al authority; original PDF timetable row agrees. Supersedes conflicting footer."
   },
   {
     "date": "2026-08-07",
