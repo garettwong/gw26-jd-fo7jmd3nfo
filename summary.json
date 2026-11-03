@@ -1,24 +1,24 @@
 {
   "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
-  "override_source": "D:\\Codex 2\\projects\\erb-lt-st-confirmed-20261103\\schedule_overrides.json",
-  "override_revision": "V37",
-  "override_confirmation": "Calvin WhatsApp2026-11-03 confirms HK239HG LT January2027 and ST February2027: twelve Garett lessons36hours; LT ends January15, ST ends April3. Prior HF8 October28 final arrangement retained.",
+  "override_source": "D:\\Codex 2\\projects\\erb-private-ai-agent-20261103\\schedule_overrides.json",
+  "override_revision": "V38",
+  "override_confirmation": "Calvin WhatsApp 2026-11-03 20:20: tentative 14/12,16/12,21/12,23/12 6:30-9:30pm; Garett 20:28 All ok. Screenshot SHA256 59d88db716eca3d82872cd665f11b1f6e887cb2383aa7237e4403ed4d43a6262.",
   "events": 135,
-  "display_events": 399,
-  "context_events": 264,
-  "class_spans": 29,
-  "first_lesson_markers": 28,
-  "first_personal_lesson_markers": 28,
-  "comparison_baseline": "D:\\Codex 2\\projects\\erb-lt-st-confirmed-20261103\\versions\\2026-10-30-V36",
-  "comparison_label": "V37",
-  "changed_in_version": 12,
+  "display_events": 403,
+  "context_events": 268,
+  "class_spans": 30,
+  "first_lesson_markers": 29,
+  "first_personal_lesson_markers": 29,
+  "comparison_baseline": "D:\\Codex 2\\projects\\erb-private-ai-agent-20261103\\versions\\2026-11-03-V37",
+  "comparison_label": "V38",
+  "changed_in_version": 4,
   "counts": {
     "confirmed": 369,
-    "unconfirmed": 23,
+    "unconfirmed": 27,
     "note": 7
   },
   "layers": {
-    "mine": 206,
+    "mine": 210,
     "class": 190,
     "other": 3
   },
@@ -32,7 +32,8 @@
     "循道": 59,
     "DGS Blender": 1,
     "YMCA / ERB": 9,
-    "ERB": 12
+    "ERB": 12,
+    "Private course": 4
   },
   "months": [
     "June",
