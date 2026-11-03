@@ -1,0 +1,57 @@
+{
+  "courses": [
+    {
+      "id": "hf8",
+      "match": "Class HF8",
+      "label": "HK281DS · HF8",
+      "hourly_rate": 300,
+      "basis": "33節暫覆可教課堂，按現有ERB時薪HK$300估算；待Calvin確認。"
+    },
+    {
+      "id": "lms",
+      "match": "梨木樹學校",
+      "label": "LMS-AI · 梨木樹（暫名）",
+      "hourly_rate": 300,
+      "basis": "5節：13、16、26/10為13:30-17:00；21/10為14:30-18:00；28/10為13:30-17:30，共18日曆小時。任教安排、正式教學時數及時薪待確認；僅按既有HK$300/小時暫估HK$5,400，不屬已確認收入。"
+    },
+    {
+      "id": "comfyui",
+      "match": "ComfyUI AICU02/2627",
+      "label": "COMFYUI-01 · AICU02（暫名）",
+      "hourly_rate": 300,
+      "hours_per_lesson": 3,
+      "basis": "按2026-09-13已確認教材要求：4課共12小時；上課時間、地點及時薪待確認；僅暫按現有HK$300/小時作預算，並非已確認報價。"
+    },
+    {
+      "id": "hk280hg-cw2-oct",
+      "match": "HK280HG, Class CW2",
+      "label": "HK280HG · CW2 · OCT 2026",
+      "hourly_rate": 300,
+      "basis": "5節共18小時；Calvin仍未確認任教及時薪。暫按現有ERB HK$300/小時估算HK$5,400；10月14日交通緊迫，10月22日另有時段待核實，不屬已確認收入。"
+    },
+    {
+      "id": "YMCA-AI-20261030",
+      "match": "Class YMCA-AI-20261030",
+      "label": "YMCA · AI · OCT 2026（暫名）",
+      "hourly_rate": 300,
+      "hours_per_lesson": 3,
+      "basis": "暫定9節×3小時；按現行ERB每小時HK$300估算，任教安排待確認。"
+    },
+    {
+      "id": "METHODIST-AI-20261106",
+      "match": "Class METHODIST-AI-20261106",
+      "label": "循道灣仔 · 第3班 · NOV 2026",
+      "hourly_rate": 300,
+      "hours_per_lesson": 3,
+      "basis": "六堂18:30–21:30，共18日曆小時；按現行ERB每小時HK$300暫估HK$5,400，任教及實際教學時數待確認。"
+    },
+    {
+      "id": "PRIVATE-AI-AGENT-20261214",
+      "match": "Class PRIVATE-AI-AGENT-20261214",
+      "label": "AI Agent · 私人課程 · DEC 2026",
+      "hourly_rate": 300,
+      "hours_per_lesson": 3,
+      "basis": "私人課程，並非ERB。四堂日期仍屬暫定，Garett已回覆可任教。實際時薪尚未議定；依Garett指示暫按HK$300/小時計算12小時，估算HK$3,600，並非已確認報價、已交單或已收款。"
+    }
+  ]
+}

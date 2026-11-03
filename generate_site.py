@@ -98,6 +98,7 @@ UPCOMING_CLASS_META = {
     "MC244EG · 1": ("循道衞理中心", "灣仔軒尼詩道22號循道衞理中心3樓305室", "CHI"),
 }
 CLASS_UPDATE_META = {
+    'AI Agent · 私人課程 · DEC 2026': ('2026-11-03', '四堂暫定18:30–21:30；Garett已回覆可任教，地點及課室待確認。'),
     'HK239HG · ST · FEB 2027': ('2026-11-03', 'Calvin於2026年11月3日確認Garett任教全部六堂，09:00–12:00，共18小時；最後一堂2027-04-03，期末筆試10:30–11:30。'),
     'HK239HG · LT · JAN 2027': ('2026-11-03', 'Calvin於2026年11月3日確認Garett任教全部六堂，09:00–12:00，共18小時；最後一堂2027-01-15，期末筆試10:30–11:30。'),
     'YMCA · YC145HS-1': ("2026-10-30", "Garett已確認全部9堂、27小時；YC145HS-1，油麻地YMCA課室308（10月30日用戶確認）；11月19日期末筆試11:30–12:30，全堂10:00–13:00。"),
@@ -301,6 +302,8 @@ def date_for(ws, row, col, month):
         return None
 
 def category(text):
+    if "Class PRIVATE-AI-AGENT-20261214" in text:
+        return "private", "Private course"
     if "Public Holiday" in text or "假期" in text:
         return "holiday", "Holiday"
     if "YMCA" in text:
@@ -409,6 +412,8 @@ def course_sort_parts(text):
 
 
 def course_group_label(text, category_label):
+    if "Class PRIVATE-AI-AGENT-20261214" in str(text or ""):
+        return 'AI Agent · 私人課程 · DEC 2026'
     text = str(text or "")
     code, cls, _lesson, _start = course_sort_parts(text)
     if code and not cls:
@@ -512,7 +517,7 @@ def resolve_teaching_room(event):
     for pattern, room, source in ROOM_RULES:
         if pattern.search(text):
             return room, source
-    if event.get("category") in {"erb", "methodist", "ymca", "other"}:
+    if event.get("category") in {"erb", "methodist", "ymca", "other", "private"}:
         return ROOM_PENDING, "No confirmed classroom found in the reconciled source set"
     return "", ""
 
@@ -640,7 +645,7 @@ if CONTEXT_SRC.exists():
         inferred_cat, inferred_cat_label = category(text)
         cat = str(item.get("category", inferred_cat)).strip()
         cat_label = str(item.get("category_label", inferred_cat_label)).strip()
-        if cat not in {"erb", "methodist", "mike", "other"}:
+        if cat not in {"erb", "methodist", "mike", "other", "private"}:
             raise ValueError(
                 f"Context entry {index} must be an ERB, Methodist, Mike Sir, or other lesson"
             )
@@ -809,6 +814,7 @@ if "HK239HG · 循道灣仔晚班" in _baseline_group_slugs:
 
 if "HK244EG · FS" in _baseline_group_slugs:
     _baseline_group_slugs["HK244EG · FS-5"] = _baseline_group_slugs["HK244EG · FS"]
+_baseline_group_slugs['AI Agent · 私人課程 · DEC 2026'] = 'g41'
 _baseline_group_slugs['HK239HG · ST · FEB 2027'] = 'g40'
 _baseline_group_slugs['HK239HG · LT · JAN 2027'] = 'g39'
 
@@ -1657,7 +1663,7 @@ first_personal_lesson_groups = set()
 for group in sorted({event['group'] for event in display_events}):
     candidates = [event for event in display_events
         if event['group'] == group
-        and (event['category'] in {'erb', 'methodist', 'ymca', 'dgs'}
+        and (event['category'] in {'erb', 'methodist', 'ymca', 'dgs', 'private'}
              or event['group_label'] in {'ComfyUI', '梨木樹 · 人工智能知識及應用'})
         and not re.search(r'PROPOSED availability only|GARETT NOT REQUIRED|\b(?:cancelled|canceled)\b|取消',
                           str(event.get('text') or ''), re.I)]
@@ -1814,7 +1820,7 @@ def chip(ev):
         if interval else ' data-start="" data-end=""'
     )
     layer_attrs = (f' data-layer="{layer}" data-erb="{1 if ev["category"] == "erb" else 0}"'
-                   f' data-course="{1 if ev["category"] in {"erb", "methodist"} else 0}"'
+                   f' data-course="{1 if ev["category"] in {"erb", "methodist", "private"} else 0}"'
                    f' data-centre="{ehtml(centre_code(ev))}"{interval_attrs}'
                    f' data-teaching-intervals="{lesson_intervals_attr}"'
                    f' data-source="{ehtml(ev.get("source", ""))}"'
@@ -1850,7 +1856,7 @@ def chip(ev):
         f'<div class="first-lesson-banner" role="note" aria-label="{first_label}">{first_label}</div>'
         if first_lesson else ""
     )
-    if ev["category"] not in {"erb", "methodist"}:
+    if ev["category"] not in {"erb", "methodist", "private"}:
         cohort_hue, cohort_sat, cohort_light = cohort_palette(ev["group_label"])
         cohort_style = (
             f"--class-hue:{cohort_hue};--cohort-hue:{cohort_hue};"
@@ -2322,6 +2328,8 @@ for span_year, actual_month in DISPLAY_MONTHS:
     )
 
 def span_identity(ev):
+    if ev["category"] == "private":
+        return ev["group"], display_group_label(ev["group_label"]), "AI Agent 私人課程"
     if ev["category"] == "ymca":
         match = SEN_CODE_RE.search(ev["text"])
         code = match.group(1).upper() if match else "SEN"
@@ -2333,7 +2341,7 @@ def span_identity(ev):
 
 span_group_map = {}
 for ev in display_events:
-    if ev["category"] not in {"erb", "methodist", "ymca"}:
+    if ev["category"] not in {"erb", "methodist", "ymca", "private"}:
         continue
     slug, label, chinese_name = span_identity(ev)
     span_group_map.setdefault(
@@ -2371,8 +2379,8 @@ for group in sorted(
     span_days = (last_day - first_day).days + 1
     bar_left = timeline_percent(first_day)
     bar_width = span_days / TIMELINE_DAYS * 100
-    class_type = "sen" if all(ev["category"] == "ymca" for ev in group_events) else "erb"
-    if class_type == "erb":
+    class_type = "private" if all(ev["category"] == "private" for ev in group_events) else "sen" if all(ev["category"] == "ymca" for ev in group_events) else "erb"
+    if class_type in {"erb", "private"}:
         class_hue, span_sat, span_light = cohort_palette(group["label"])
     else:
         class_hue, span_sat, span_light = 188, 55, 91
@@ -2429,15 +2437,16 @@ span_timeline_html = (
 span_course_toggles = ''.join(
     f'<label class="span-course-toggle status-{lifecycle} type-{class_type}"><input type="checkbox" data-span-course="{ehtml(slug)}" checked>'
     f'<span><strong>{ehtml(label)}</strong><small>{ehtml(range_label)}</small>'
-    f'<span class="span-status-tag">{ehtml("SEN" if class_type == "sen" else lifecycle)}</span></span></label>'
+    f'<span class="span-status-tag">{ehtml("Private · " + lifecycle if class_type == "private" else "SEN" if class_type == "sen" else lifecycle)}</span></span></label>'
     for slug, label, range_label, lifecycle, class_type in span_controls
 )
 span_erb_count = sum(class_type == "erb" for _slug, _label, _range, _status, class_type in span_controls)
 span_sen_count = sum(class_type == "sen" for _slug, _label, _range, _status, class_type in span_controls)
+span_private_count = sum(class_type == "private" for _slug, _label, _range, _status, class_type in span_controls)
 span_course_picker = (
     f'<section id="spanCoursePicker" class="span-course-picker" aria-label="Class visibility">'
     f'<div class="span-course-picker-head"><strong>Class visibility</strong><span id="spanCourseCount">{len(span_controls)}/{len(span_controls)} ON</span>'
-    f'<span class="span-course-breakdown">{len(span_controls)} total = {span_erb_count} ERB + {span_sen_count} SEN</span>'
+    f'<span class="span-course-breakdown">{len(span_controls)} total = {span_erb_count} ERB + {span_sen_count} SEN + {span_private_count} Private</span>'
     f'<div class="span-course-actions"><button type="button" data-span-course-action="all">All on</button>'
     f'<button type="button" data-span-course-action="none">All off</button></div></div>'
     f'<div class="span-course-picker-body"><div class="span-course-options">{span_course_toggles}</div></div></section>'
