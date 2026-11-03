@@ -73,6 +73,8 @@ TIMETABLE_AS_OF = datetime.date(2026, 9, 8)
 UPCOMING_AS_OF = TIMETABLE_AS_OF
 RELEASE_AS_OF = TIMETABLE_AS_OF
 UPCOMING_CLASS_META = {
+    'HK239HG · ST · FEB 2027': ('基督教勵行會', '觀塘順安道9號順天邨天璣樓2樓204-205號舖3室', 'CHI'),
+    'HK239HG · LT · JAN 2027': ('基督教勵行會', '藍田啟田道71號藍田（西）社區中心4樓301室', 'CHI'),
     'YMCA · YC145HS-1': ("YMCA", "油麻地 YMCA · 308室", "CHI"),
     "HK281DS · HF8": ("基督教勵行會", "荃灣 · 課室 1（確實地址待確認）", "CHI"),
     "HK267HG · CW2": ("基督教勵行會", "九龍彩雲二邨清水灣道55號1樓104室", "ENG"),
@@ -96,6 +98,8 @@ UPCOMING_CLASS_META = {
     "MC244EG · 1": ("循道衞理中心", "灣仔軒尼詩道22號循道衞理中心3樓305室", "CHI"),
 }
 CLASS_UPDATE_META = {
+    'HK239HG · ST · FEB 2027': ('2026-11-03', 'Calvin於2026年11月3日確認Garett任教全部六堂，09:00–12:00，共18小時；最後一堂2027-04-03，期末筆試10:30–11:30。'),
+    'HK239HG · LT · JAN 2027': ('2026-11-03', 'Calvin於2026年11月3日確認Garett任教全部六堂，09:00–12:00，共18小時；最後一堂2027-01-15，期末筆試10:30–11:30。'),
     'YMCA · YC145HS-1': ("2026-10-30", "Garett已確認全部9堂、27小時；YC145HS-1，油麻地YMCA課室308（10月30日用戶確認）；11月19日期末筆試11:30–12:30，全堂10:00–13:00。"),
     "HK280HG · CW2": ("2026-09-29", "Garett 確認任教10月14、15、21、22、23日共5節、18小時；14日轉往四海交通緊迫，22日ComfyUI時段仍待核實。"),
     "HK280HG · SS": ("2026-09-21", "已確認2027年1月5、7、12日共5節、18小時；1月12日期末筆試16:00–17:00。"),
@@ -765,6 +769,8 @@ for base_label, group_events in _events_by_base_group.items():
     for instance in instances:
         first_day = datetime.date.fromisoformat(min(event["date"] for event in instance))
         cohort_label = f"{base_label} · {calendar.month_abbr[first_day.month].upper()} {first_day.year}"
+        if base_label in {"HK239HG · LT", "HK239HG · ST"} and first_day.year == 2026:
+            cohort_label = base_label
         for event in instance:
             event["group_label"] = cohort_label
 
@@ -803,6 +809,8 @@ if "HK239HG · 循道灣仔晚班" in _baseline_group_slugs:
 
 if "HK244EG · FS" in _baseline_group_slugs:
     _baseline_group_slugs["HK244EG · FS-5"] = _baseline_group_slugs["HK244EG · FS"]
+_baseline_group_slugs['HK239HG · ST · FEB 2027'] = 'g40'
+_baseline_group_slugs['HK239HG · LT · JAN 2027'] = 'g39'
 
 _group_slugs = {}
 _used_group_slugs = set()
@@ -1956,7 +1964,7 @@ for e in display_events:
 layer_counts = {"mine": 0, "class": 0, "other": 0}
 for e in display_events:
     layer_counts[event_layer(e)] += 1
-DISPLAY_MONTHS = [(2026, m) for m in range(5, 13)] + [(2027, 1)]
+DISPLAY_MONTHS = [(2026, m) for m in range(5, 13)] + [(2027, m) for m in range(1, 5)]
 months_html = ''.join(month_html(y, m) for y, m in DISPLAY_MONTHS)
 def calendar_filter_button(group):
     label, slug, group_status, first_date = group
@@ -2281,7 +2289,7 @@ def next_upcoming_course_panel():
 next_new_course_html = next_upcoming_course_panel()
 
 TIMELINE_START = datetime.date(YEAR, 5, 1)
-TIMELINE_END = datetime.date(2027, 1, 31)
+TIMELINE_END = datetime.date(2027, 4, 30)
 TIMELINE_DAYS = (TIMELINE_END - TIMELINE_START).days + 1
 
 
@@ -2413,7 +2421,7 @@ for group in sorted(
     )
 
 span_timeline_html = (
-    '<div class="span-scroll" tabindex="0" aria-label="Scrollable class timeline from May 2026 to January 2027">'
+    '<div class="span-scroll" tabindex="0" aria-label="Scrollable class timeline from May 2026 to April 2027">'
     '<div class="span-table"><div class="span-axis"><div class="span-axis-label">Course / class</div>'
     f'<div class="span-axis-track">{"".join(span_months)}</div></div>{"".join(span_rows)}</div></div>'
     if span_rows else '<div class="span-empty">No tracked classes.</div>'
@@ -2490,7 +2498,7 @@ CSS += r'''
 HTML = f'''<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=6, user-scalable=yes">
 <title>Garett's ERB — Super Timetable</title>
-<meta name="description" content="ERB / YMCA / school teaching timetable, May 2026 to January 2027. Solid frame = confirmed; dotted frame = unconfirmed.">
+<meta name="description" content="ERB / YMCA / school teaching timetable, May 2026 to April 2027. Solid frame = confirmed; dotted frame = unconfirmed.">
 <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Garett's ERB"><meta name="application-name" content="Garett's ERB"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0f7074">
 <meta name="erb-build" content="{BUILD_ID}">
@@ -2500,7 +2508,7 @@ HTML = f'''<!doctype html><html lang="en"><head>
 <script>window.ERB_BUILD_ID='{BUILD_ID}';(function(){{if(!/^https?:$/.test(location.protocol))return;var p=new URLSearchParams(location.search);if(p.get('build')!==window.ERB_BUILD_ID){{p.set('build',window.ERB_BUILD_ID);location.replace(location.pathname+'?'+p.toString()+location.hash);}}}})();</script>
 <style>{CSS}</style></head><body><main class="wrap">
 <nav class="area-switch" aria-label="Timetable and salary"><a class="active" aria-current="page" href="#calendarView">Timetable</a><a id="salaryAreaLink" href="#">Salary <span class="private-label">🔒 Private</span></a></nav>
-<div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May 2026–January 2027 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a><a class="btn" href="#m1">Jan 2027</a></div></div>
+<div class="hero"><div><h1 class="title"><span class="y">ERB</span> Super Timetable</h1><p class="sub">May 2026–April 2027 · personal timetable plus complete ERB class context · solid frame = confirmed, dotted frame = unconfirmed</p></div><div class="actions"><a class="btn" href="#today" id="todayBtn">Today</a><a class="btn" href="#m5">May</a><a class="btn" href="#m6">Jun</a><a class="btn" href="#m7">Jul</a><a class="btn" href="#m8">Aug</a><a class="btn" href="#m9">Sep</a><a class="btn" href="#m10">Oct</a><a class="btn" href="#m11">Nov</a><a class="btn" href="#m12">Dec</a><a class="btn" href="#m1">Jan 2027</a><a class="btn" href="#m2">Feb 2027</a><a class="btn" href="#m3">Mar 2027</a><a class="btn" href="#m4">Apr 2027</a></div></div>
 {version_selector_html}
 {next_new_course_html}
 <details class="source-audit" style="margin:14px 0;padding:8px 12px;border-left:4px solid #a64b00;font-size:13px;background:#fffaf0">
@@ -2639,7 +2647,7 @@ function syncSpanLabels(){{
 const spanZoomLevels=[8,12,16,22,30,40];
 let spanZoomIndex=2;
 const spanMonthInputs=Array.from(document.querySelectorAll('[data-span-month-toggle]'));
-const spanMonthDays={{5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31,13:31}};
+const spanMonthDays={json.dumps({(y - YEAR) * 12 + m: calendar.monthrange(y, m)[1] for y, m in DISPLAY_MONTHS})};
 function visibleSpanMonths(){{return spanMonthInputs.filter(input=>input.checked).map(input=>Number(input.dataset.spanMonthToggle));}}
 function spanMonthOffset(month,visibleMonths){{let offset=0;visibleMonths.forEach(value=>{{if(value<month) offset+=spanMonthDays[value];}});return offset;}}
 function layoutSpanTimeline(){{

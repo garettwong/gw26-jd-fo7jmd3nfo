@@ -1,4 +1,5 @@
 from __future__ import annotations
+import datetime
 
 import base64
 import calendar
@@ -90,7 +91,7 @@ def calculate(events: list[dict], statuses: set[str], revised_rules: bool = Fals
     counted_events = 0
     for event in events:
         event_date = event["date"]
-        if not ("2026-06-01" <= event_date <= "2027-01-31"):
+        if event_date < "2026-06-01":
             continue
         if event["status"] not in statuses or event_date == "2026-06-03":
             continue
@@ -124,8 +125,12 @@ def calculate(events: list[dict], statuses: set[str], revised_rules: bool = Fals
     rows = []
     grand_total = 0
     periods = [(2026, m, name) for m, name in enumerate(MONTHS, 6)]
-    if any(e["date"].startswith("2027-01") for e in events):
-        periods.append((2027, 1, "January 2027"))
+    # Extend every monthly row through the latest recorded lesson.
+    last_period = max((e["date"][:7] for e in events), default="2026-12")
+    year_number, month_number = 2027, 1
+    while f"{year_number:04d}-{month_number:02d}" <= last_period:
+        periods.append((year_number, month_number, datetime.date(year_number, month_number, 1).strftime("%B %Y")))
+        year_number, month_number = (year_number + 1, 1) if month_number == 12 else (year_number, month_number + 1)
     for year_number, month_number, month_name in periods:
         regular_minutes = sum(
             merge_minutes(intervals)
@@ -134,15 +139,15 @@ def calculate(events: list[dict], statuses: set[str], revised_rules: bool = Fals
         )
         pending_hours = (
             HK280HS_SS_PENDING_HOURS
-            if hk280hs_pending_active and month_number == 9
+            if hk280hs_pending_active and year_number == 2026 and month_number == 9
             else 0
         )
         regular_hours = regular_minutes / 60 + pending_hours
-        dgs_days = sum(int(event_date[5:7]) == month_number for event_date in dgs_dates)
+        dgs_days = sum(event_date[:7] == f"{year_number:04d}-{month_number:02d}" for event_date in dgs_dates)
         dgs_hours = dgs_days * 4
         regular_pay = regular_hours * 300
         dgs_pay = (
-            DGS_FINAL_TOTAL if month_number == dgs_payment_month else 0
+            DGS_FINAL_TOTAL if year_number == 2026 and month_number == dgs_payment_month else 0
         ) if revised_rules else dgs_hours * 900
         total = regular_pay + dgs_pay
         grand_total += total
@@ -232,7 +237,7 @@ def calculate_expected_payments(
 
     for event in events:
         event_date = str(event.get("date", ""))
-        if not ("2026-06-01" <= event_date <= "2027-01-31"):
+        if event_date < "2026-06-01":
             continue
         if event.get("status") not in statuses or event_date == "2026-06-03":
             continue
@@ -333,7 +338,7 @@ def build_report(
     )
     report = {
         "name": "Garett Wong",
-        "period": "June 2026 to January 2027" if any(e["date"].startswith("2027-01") for e in events) else "June to December 2026",
+        "period": "June 2026 to " + datetime.date.fromisoformat(max(e["date"] for e in events)).strftime("%B %Y"),
         "generated": item["id"][:10],
         "version": item["label"],
         "version_id": item["id"],
