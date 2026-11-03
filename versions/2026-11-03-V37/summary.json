@@ -1,0 +1,46 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Codex 2\\projects\\erb-lt-st-confirmed-20261103\\schedule_overrides.json",
+  "override_revision": "V37",
+  "override_confirmation": "Calvin WhatsApp2026-11-03 confirms HK239HG LT January2027 and ST February2027: twelve Garett lessons36hours; LT ends January15, ST ends April3. Prior HF8 October28 final arrangement retained.",
+  "events": 135,
+  "display_events": 399,
+  "context_events": 264,
+  "class_spans": 29,
+  "first_lesson_markers": 28,
+  "first_personal_lesson_markers": 28,
+  "comparison_baseline": "D:\\Codex 2\\projects\\erb-lt-st-confirmed-20261103\\versions\\2026-10-30-V36",
+  "comparison_label": "V37",
+  "changed_in_version": 12,
+  "counts": {
+    "confirmed": 369,
+    "unconfirmed": 23,
+    "note": 7
+  },
+  "layers": {
+    "mine": 206,
+    "class": 190,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 17,
+    "School": 1,
+    "勵行 / ERB": 286,
+    "Holiday": 6,
+    "Mike Sir": 6,
+    "DGS / UE": 2,
+    "循道": 59,
+    "DGS Blender": 1,
+    "YMCA / ERB": 9,
+    "ERB": 12
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ]
+}
