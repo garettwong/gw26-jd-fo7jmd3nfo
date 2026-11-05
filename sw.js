@@ -1,4 +1,4 @@
-const BUILD_ID = 'v39-qat7-2027-date-holds-20261105';
+const BUILD_ID = 'v40-qat7-class-times-20261105';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
