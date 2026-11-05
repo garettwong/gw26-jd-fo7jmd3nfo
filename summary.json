@@ -1,6 +1,6 @@
 {
   "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
-  "override_source": "D:\\Codex 2\\projects\\erb-qat7-2027-time-20261105\\schedule_overrides.json",
+  "override_source": "D:\\Codex 2\\projects\\erb-qat7-sen-salary-20261105\\schedule_overrides.json",
   "override_revision": "V38",
   "override_confirmation": "Calvin WhatsApp 2026-11-03 20:20: tentative 14/12,16/12,21/12,23/12 6:30-9:30pm; Garett 20:28 All ok. Screenshot SHA256 59d88db716eca3d82872cd665f11b1f6e887cb2383aa7237e4403ed4d43a6262.",
   "events": 135,
@@ -9,9 +9,9 @@
   "class_spans": 31,
   "first_lesson_markers": 29,
   "first_personal_lesson_markers": 29,
-  "comparison_baseline": "D:\\Codex 2\\projects\\erb-qat7-2027-time-20261105\\versions\\2026-11-05-V39",
-  "comparison_label": "V40",
-  "changed_in_version": 22,
+  "comparison_baseline": "D:\\Codex 2\\projects\\erb-qat7-sen-salary-20261105\\versions\\2026-11-05-V40",
+  "comparison_label": "V41",
+  "changed_in_version": 0,
   "counts": {
     "confirmed": 369,
     "unconfirmed": 49,
