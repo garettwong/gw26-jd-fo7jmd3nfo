@@ -1,4 +1,4 @@
-const BUILD_ID = 'v38-private-ai-agent-20261103';
+const BUILD_ID = 'v39-qat7-2027-date-holds-20261105';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
