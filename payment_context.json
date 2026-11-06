@@ -262,16 +262,20 @@
   },
   {
     "group": "g38",
-    "label": "循道灣仔 · 第3班 · NOV 2026",
-    "course_code": "",
+    "label": "MC244EG · 3",
+    "course_code": "MC244EG",
     "course_name": "人工智能知識及應用證書（兼讀制）",
     "provider": "循道衞理中心",
     "full_course_start": "2026-11-06",
     "full_course_end": "2026-12-11",
     "full_lesson_entries": 6,
     "assignment_status": "confirmed",
-    "official_code_pending": true,
-    "assignment_confirmation_date": "2026-10-23"
+    "official_code_pending": false,
+    "assignment_confirmation_date": "2026-10-23",
+    "class_code": "3",
+    "full_course_end_time": "21:45",
+    "official_course_hours": 18,
+    "official_source": "Methodist Centre official MC244EG Class 3 timetable photo supplied by Garett on 2026-11-06; names 黃偉漢. SHA256 999ef9feec1bd6b589fa9f9cb4f10bbbf9624f14306f5830bb90134dc21ff381. Six Fridays 18:45-21:45; explicitly18hours; final written exam2026-12-11 20:30-21:30. Address22 HennessyRoad,WanChai,3F; room cropped. Supersedes October23 enquiry time18:30-21:30. Original photo preserved in FINAL FINAL."
   },
   {
     "group": "g39",

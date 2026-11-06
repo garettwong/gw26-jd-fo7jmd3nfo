@@ -1,4 +1,4 @@
-const BUILD_ID = 'v41-qat7-sen-planning-20261105';
+const BUILD_ID = 'v42-mc244eg3-official-20261106';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
