@@ -392,6 +392,8 @@ def build_report(
         reconcile_current(report, payment_context or [])
     from salary_pending import add_pending_estimates
     add_pending_estimates(report, events, item["id"], event_interval)
+    from salary_future import add_future_income_estimates
+    add_future_income_estimates(report)
     return report
 
 
@@ -578,7 +580,7 @@ def main() -> None:
             )
         report_page = destination / "index.html"
         if item.get("latest") or not report_page.exists():
-            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20260926-payment-days"></script>\n<script>\nconst STORAGE_KEY')
+            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20261108-qat7-future"></script>\n<script>\nconst STORAGE_KEY')
             area_tabs = (
                 '<nav class="area-switch" aria-label="Timetable and salary">'
                 '<a href="../../../versions/' + item["id"] + '/">Timetable</a>'
