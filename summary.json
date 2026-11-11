@@ -9,9 +9,9 @@
   "class_spans": 31,
   "first_lesson_markers": 29,
   "first_personal_lesson_markers": 29,
-  "comparison_baseline": "D:\\Codex 2\\projects\\erb-mc244eg3-20261106\\versions\\2026-11-05-V41",
-  "comparison_label": "V42",
-  "changed_in_version": 6,
+  "comparison_baseline": "versions/2026-11-06-V42",
+  "comparison_label": "V43",
+  "changed_in_version": 0,
   "counts": {
     "confirmed": 369,
     "unconfirmed": 49,
@@ -44,5 +44,11 @@
     "November New",
     "December New"
   ],
-  "qat7_source": "2027 Jan-Jun_Booster Calendar_20261105.pdf: YMCA dates; Garett 2026-11-05: 09:30-12:30 and 13:30-17:30."
+  "qat7_source": "2027 Jan-Jun_Booster Calendar_20261105.pdf: YMCA dates; Garett 2026-11-05: 09:30-12:30 and 13:30-17:30.",
+  "personal_note_update": {
+    "id": "ywca-wong-tai-sin-20261120",
+    "date": "2026-11-20",
+    "period": "morning",
+    "exact_time_pending": true
+  }
 }
