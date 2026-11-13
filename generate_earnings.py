@@ -580,7 +580,7 @@ def main() -> None:
             )
         report_page = destination / "index.html"
         if item.get("latest") or not report_page.exists():
-            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20261108-qat7-future"></script>\n<script>\nconst STORAGE_KEY')
+            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20261114-submitted-details"></script>\n<script>\nconst STORAGE_KEY')
             area_tabs = (
                 '<nav class="area-switch" aria-label="Timetable and salary">'
                 '<a href="../../../versions/' + item["id"] + '/">Timetable</a>'
