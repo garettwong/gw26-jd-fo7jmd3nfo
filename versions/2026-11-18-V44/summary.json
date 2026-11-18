@@ -1,0 +1,61 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Codex 2\\projects\\erb-mc244eg3-20261106\\schedule_overrides.json",
+  "override_revision": "V20af",
+  "override_confirmation": "Recovered the 2026-08-31 HK239HG CW10 Lesson 3 note from Garett's preserved Chrome timetable and restored it to the central service. No lesson date, time, teacher, ownership, room, duration, or salary row changed.",
+  "events": 135,
+  "display_events": 437,
+  "context_events": 302,
+  "class_spans": 32,
+  "first_lesson_markers": 30,
+  "first_personal_lesson_markers": 30,
+  "comparison_baseline": "versions/2026-11-11-V43",
+  "comparison_label": "V44",
+  "changed_in_version": 12,
+  "counts": {
+    "confirmed": 369,
+    "unconfirmed": 61,
+    "note": 7
+  },
+  "layers": {
+    "mine": 241,
+    "class": 193,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 39,
+    "School": 1,
+    "勵行 / ERB": 298,
+    "Holiday": 6,
+    "Mike Sir": 6,
+    "DGS / UE": 2,
+    "循道": 59,
+    "DGS Blender": 1,
+    "YMCA / ERB": 9,
+    "ERB": 12,
+    "Private course": 4
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ],
+  "qat7_source": "2027 Jan-Jun_Booster Calendar_20261105.pdf: YMCA dates; Garett 2026-11-05: 09:30-12:30 and 13:30-17:30.",
+  "personal_note_update": {
+    "id": "ywca-wong-tai-sin-20261120",
+    "date": "2026-11-20",
+    "period": "morning",
+    "exact_time_pending": true
+  },
+  "hk244hg_cw_proposal": {
+    "class_sessions": 12,
+    "pending_garett_sessions": 9,
+    "pending_garett_hours": 33.5,
+    "listed_class_hours": 44.5,
+    "stated_class_hours": 45
+  }
+}

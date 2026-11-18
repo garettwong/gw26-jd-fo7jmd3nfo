@@ -1,4 +1,4 @@
-const BUILD_ID = 'v43-ywca-meeting-20261111';
+const BUILD_ID = 'v44-hk244hg-cw-20261118';
 
 self.addEventListener('install', event => {
   self.skipWaiting();

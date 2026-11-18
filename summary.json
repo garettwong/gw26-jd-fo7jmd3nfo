@@ -4,28 +4,28 @@
   "override_revision": "V20af",
   "override_confirmation": "Recovered the 2026-08-31 HK239HG CW10 Lesson 3 note from Garett's preserved Chrome timetable and restored it to the central service. No lesson date, time, teacher, ownership, room, duration, or salary row changed.",
   "events": 135,
-  "display_events": 425,
-  "context_events": 290,
-  "class_spans": 31,
-  "first_lesson_markers": 29,
-  "first_personal_lesson_markers": 29,
-  "comparison_baseline": "versions/2026-11-06-V42",
-  "comparison_label": "V43",
-  "changed_in_version": 0,
+  "display_events": 437,
+  "context_events": 302,
+  "class_spans": 32,
+  "first_lesson_markers": 30,
+  "first_personal_lesson_markers": 30,
+  "comparison_baseline": "versions/2026-11-11-V43",
+  "comparison_label": "V44",
+  "changed_in_version": 12,
   "counts": {
     "confirmed": 369,
-    "unconfirmed": 49,
+    "unconfirmed": 61,
     "note": 7
   },
   "layers": {
-    "mine": 232,
-    "class": 190,
+    "mine": 241,
+    "class": 193,
     "other": 3
   },
   "categories": {
     "YMCA SEN": 39,
     "School": 1,
-    "勵行 / ERB": 286,
+    "勵行 / ERB": 298,
     "Holiday": 6,
     "Mike Sir": 6,
     "DGS / UE": 2,
@@ -50,5 +50,12 @@
     "date": "2026-11-20",
     "period": "morning",
     "exact_time_pending": true
+  },
+  "hk244hg_cw_proposal": {
+    "class_sessions": 12,
+    "pending_garett_sessions": 9,
+    "pending_garett_hours": 33.5,
+    "listed_class_hours": 44.5,
+    "stated_class_hours": 45
   }
 }
