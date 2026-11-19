@@ -43,6 +43,9 @@ def reconcile_current(report, contexts):
             received = paid.get(delivery["course_instance"]) if delivery else (legacy[0] if legacy else None)
             if delivery and delivery.get("payment_status", {}).get("status") == "received":
                 received = delivery["payment_status"]
+            if delivery:
+                from salary_extra_work import apply_extra_work
+                apply_extra_work(report[mode], row, delivery)
             if delivery and row["amount"] != delivery["amount_hkd"]:
                 raise ValueError(f"Invoice/salary mismatch: {row['group']}")
             row["received"] = received is not None

@@ -491,7 +491,7 @@ async function start(){
       document.getElementById('eventsLabel').textContent=remaining?'尚未收款項目':'Counted source entries';
       document.getElementById('grand').textContent=money(remaining?paymentSummary.unpaidAmount:d.grand_total);
       document.getElementById('events').textContent=remaining?paymentSummary.unpaidCount:d.counted_events;
-      document.getElementById('rows').innerHTML=d.months.map(r=>'<tr><td>'+r.month+'</td><td>'+hours(r.regular_hours)+'</td><td>'+money(r.regular_pay)+'</td><td>'+hours(r.dgs_hours)+'</td><td>'+money(r.dgs_pay)+'</td><td class="total">'+money(r.total)+'</td></tr>').join('');
+      document.getElementById('rows').innerHTML=d.months.map(r=>'<tr><td>'+r.month+'</td><td>'+hours(r.regular_hours)+'</td><td>'+money(r.regular_pay)+(r.additional_work_pay?'<small style="display:block;font-weight:400">另計工作 '+hours(r.additional_work_hours)+' h · '+money(r.additional_work_pay)+'</small>':'')+'</td><td>'+hours(r.dgs_hours)+'</td><td>'+money(r.dgs_pay)+'</td><td class="total">'+money(r.total)+'</td></tr>').join('');
       document.getElementById('monthlyTable').hidden=remaining;
       document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
     }
@@ -580,7 +580,7 @@ def main() -> None:
             )
         report_page = destination / "index.html"
         if item.get("latest") or not report_page.exists():
-            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20261114-submitted-details"></script>\n<script>\nconst STORAGE_KEY')
+            page = REPORT_PAGE.replace('<script>\nconst STORAGE_KEY', '<script src="../../cashflow.js?v=20261119-marking"></script>\n<script>\nconst STORAGE_KEY')
             area_tabs = (
                 '<nav class="area-switch" aria-label="Timetable and salary">'
                 '<a href="../../../versions/' + item["id"] + '/">Timetable</a>'
