@@ -75,7 +75,12 @@ window.mountCashflow=function(data){
   const badge=r.received?'已收到':submitted?'已交單，等收款':prepared?'發票已備妥，待提交 Calvin':'未完班／未交單';
   return '<article class="cf-item '+(r.received?'cf-paid':'')+'" data-group="'+esc(r.group||r.label)+'"><header><b>'+esc(r.label)+'</b><strong class="cf-amount">'+cash(r.amount)+'</strong></header><p class="cf-course-name">'+esc(r.course_name||r.label)+'</p><span class="cf-badge">'+badge+'</span><table class="cf-dates"><tbody>'+row('1. 課程完結日期',end)+row('2. 發票提交日期',sent)+row('3. 預計收款日期',expected,estimate)+row('4. 實際收款日期',actual)+(timing?row('5. Calvin 付款所需時間',timing.text,timing.note):'')+'</tbody></table></article>';
  }
- function render(){const filter=document.getElementById('cfFilter').value,rows=filter==='paid'?paid:filter==='waiting'?waiting:filter==='future'?future:all;document.getElementById('cfLedgerSummary').textContent=rows.length+' 筆 · 合共 '+cash(sum(rows));document.getElementById('cfItems').innerHTML=rows.map(card).join('')||'<p>這個分類沒有款項。</p>';}
+ function cardWithExtras(r){
+  const html=card(r);if(!r.additional_work?.length)return html;
+  const detail='<div class="cf-extra-work"><p>教學 '+esc(r.teaching_hours)+' 小時 · '+cash(r.teaching_amount)+'</p>'+r.additional_work.map(x=>'<p>'+esc(x.description)+' · '+esc(x.date)+'<br>'+esc(x.hours)+' 小時 × '+cash(x.rate)+' = '+cash(x.amount)+'</p>').join('')+'<p><b>發票合共 '+esc(r.hours)+' 小時 · '+cash(r.amount)+'</b></p></div>';
+  return html.replace('</article>',detail+'</article>');
+ }
+ function render(){const filter=document.getElementById('cfFilter').value,rows=filter==='paid'?paid:filter==='waiting'?waiting:filter==='future'?future:all;document.getElementById('cfLedgerSummary').textContent=rows.length+' 筆 · 合共 '+cash(sum(rows));document.getElementById('cfItems').innerHTML=rows.map(cardWithExtras).join('')||'<p>這個分類沒有款項。</p>';}
 
  const submittedOpen=document.getElementById('cfSubmittedOpen');
  const submittedView=document.createElement('div');submittedView.id='cfSubmittedView';submittedView.className='cf-panel';submittedView.hidden=true;
@@ -86,7 +91,7 @@ window.mountCashflow=function(data){
  submittedOpen.addEventListener('click',()=>{
   returnY=window.scrollY;hiddenBefore=[work,overview,ledger,archive].map(element=>[element,element.hidden]);
   document.getElementById('cfSubmittedSummary').textContent=waiting.length+' 張已提交發票 · 合共 '+cash(sum(waiting));
-  document.getElementById('cfSubmittedItems').innerHTML=waiting.map(card).join('')||'<p>目前沒有已提交但尚未收款的發票。</p>';
+  document.getElementById('cfSubmittedItems').innerHTML=waiting.map(cardWithExtras).join('')||'<p>目前沒有已提交但尚未收款的發票。</p>';
   hiddenBefore.forEach(([element])=>{element.hidden=true;});submittedView.hidden=false;submittedOpen.setAttribute('aria-expanded','true');
   submittedView.scrollIntoView({block:'start',behavior:'instant'});submittedBack.focus({preventScroll:true});
  });
