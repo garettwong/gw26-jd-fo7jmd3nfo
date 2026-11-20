@@ -9,17 +9,17 @@
   "class_spans": 32,
   "first_lesson_markers": 30,
   "first_personal_lesson_markers": 30,
-  "comparison_baseline": "versions/2026-11-11-V43",
-  "comparison_label": "V44",
+  "comparison_baseline": "versions/2026-11-18-V44",
+  "comparison_label": "V45",
   "changed_in_version": 12,
   "counts": {
-    "confirmed": 369,
-    "unconfirmed": 61,
+    "confirmed": 381,
+    "unconfirmed": 49,
     "note": 7
   },
   "layers": {
-    "mine": 241,
-    "class": 193,
+    "mine": 237,
+    "class": 197,
     "other": 3
   },
   "categories": {
@@ -51,11 +51,17 @@
     "period": "morning",
     "exact_time_pending": true
   },
-  "hk244hg_cw_proposal": {
+  "hk244hg_cw_confirmed": {
     "class_sessions": 12,
-    "pending_garett_sessions": 9,
-    "pending_garett_hours": 33.5,
+    "garett_sessions": 5,
+    "garett_hours": 19,
+    "other_tutor": "Shuki",
+    "other_tutor_sessions": 7,
     "listed_class_hours": 44.5,
-    "stated_class_hours": 45
+    "stated_class_hours": 45,
+    "whole_course_end": "2027-01-29",
+    "garett_last_lesson": "2027-01-21",
+    "source": "2027 01 14 - HK244HG_CW_FINAL (CHI) - CA - 彩雲.docx",
+    "confirmed_date": "2026-11-20"
   }
 }
