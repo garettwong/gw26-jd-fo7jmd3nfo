@@ -20,6 +20,16 @@
     "full_lesson_entries": 6
   },
   {
+    "group": "g33",
+    "label": "HK239HG · FS-NOV2026",
+    "course_code": "HK239HG",
+    "course_name": "人工智能知識及應用證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-11-10",
+    "full_course_end": "2026-11-24",
+    "full_lesson_entries": 6
+  },
+  {
     "group": "g04",
     "label": "HK239HG · LT",
     "course_code": "HK239HG",
@@ -110,6 +120,16 @@
     "full_lesson_entries": 12
   },
   {
+    "group": "g35",
+    "label": "HK244HG · CW11",
+    "course_code": "HK244HG",
+    "course_name": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-11-19",
+    "full_course_end": "2026-12-09",
+    "full_lesson_entries": 12
+  },
+  {
     "group": "g23",
     "label": "HK265HG · FS · JUL 2026",
     "course_code": "HK265HG",
@@ -137,7 +157,10 @@
     "provider": "基督教勵行會",
     "full_course_start": "2026-11-11",
     "full_course_end": "2026-11-20",
-    "full_lesson_entries": 8
+    "full_lesson_entries": 8,
+    "garett_assignment": "not_assigned",
+    "salary_excluded": true,
+    "assignment_updated_on": "2026-10-17"
   },
   {
     "group": "g25",
@@ -209,5 +232,101 @@
     "full_course_start": "2026-09-11",
     "full_course_end": "2026-10-30",
     "full_lesson_entries": 6
+  },
+  {
+    "group": "g36",
+    "label": "HK244HG · CW8-REEXAM",
+    "course_code": "HK244HG",
+    "course_name": "HK244HG CW8 補考監考及改卷",
+    "provider": "基督教勵行會",
+    "full_course_start": "2026-11-13",
+    "full_course_end": "2026-11-13",
+    "full_lesson_entries": 1,
+    "assessment_type": "reexam",
+    "original_class": "CW8"
+  },
+  {
+    "group": "g37",
+    "label": "YMCA · YC145HS-1",
+    "course_code": "YC145HS",
+    "course_name": "人工智能的設計、實施及應用證書（兼讀制）",
+    "provider": "YMCA",
+    "full_course_start": "2026-10-30",
+    "full_course_end": "2026-11-19",
+    "full_lesson_entries": 9,
+    "assignment_status": "confirmed",
+    "official_code_pending": false,
+    "assignment_confirmation_date": "2026-10-23",
+    "class": "1",
+    "official_course_identifier": "YC145HS-1"
+  },
+  {
+    "group": "g38",
+    "label": "MC244EG · 3",
+    "course_code": "MC244EG",
+    "course_name": "人工智能知識及應用證書（兼讀制）",
+    "provider": "循道衞理中心",
+    "full_course_start": "2026-11-06",
+    "full_course_end": "2026-12-11",
+    "full_lesson_entries": 6,
+    "assignment_status": "confirmed",
+    "official_code_pending": false,
+    "assignment_confirmation_date": "2026-10-23",
+    "class_code": "3",
+    "full_course_end_time": "21:45",
+    "official_course_hours": 18,
+    "official_source": "Methodist Centre official MC244EG Class 3 timetable photo supplied by Garett on 2026-11-06; names 黃偉漢. SHA256 999ef9feec1bd6b589fa9f9cb4f10bbbf9624f14306f5830bb90134dc21ff381. Six Fridays 18:45-21:45; explicitly18hours; final written exam2026-12-11 20:30-21:30. Address22 HennessyRoad,WanChai,3F; room cropped. Supersedes October23 enquiry time18:30-21:30. Original photo preserved in FINAL FINAL."
+  },
+  {
+    "group": "g39",
+    "label": "HK239HG · LT · JAN 2027",
+    "course_code": "HK239HG",
+    "course_name": "人工智能知識及應用證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2027-01-04",
+    "full_course_end": "2027-01-15",
+    "full_lesson_entries": 6
+  },
+  {
+    "group": "g40",
+    "label": "HK239HG · ST · FEB 2027",
+    "course_code": "HK239HG",
+    "course_name": "人工智能知識及應用證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2027-02-20",
+    "full_course_end": "2027-04-03",
+    "full_lesson_entries": 6
+  },
+  {
+    "group": "g43",
+    "label": "HK244HG · CW",
+    "course_code": "HK244HG",
+    "class_code": "CW",
+    "course_name": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
+    "provider": "基督教勵行會",
+    "full_course_start": "2027-01-14",
+    "full_course_end": "2027-01-29",
+    "full_course_end_time": "13:00",
+    "full_lesson_entries": 12,
+    "assignment_status": "confirmed",
+    "assignment_confirmation_date": "2026-11-20",
+    "garett_lesson_numbers": [
+      1,
+      3,
+      4,
+      5,
+      7
+    ],
+    "garett_lesson_count": 5,
+    "garett_hours": 19,
+    "garett_last_lesson": "2027-01-21",
+    "official_course_hours": 45,
+    "scheduled_course_hours": 44.5,
+    "source_hours_note": "Source states45hours; listed lesson windows total44.5hours. Garett payable times total19hours. Preserve discrepancy; do not invent extra half hour.",
+    "source": "2027 01 14 - HK244HG_CW_FINAL (CHI) - CA - 彩雲.docx",
+    "source_path": "D:\\Garett Super Jobs 2026\\Calvin\\REAL ERB\\Check schedule only (Codex)\\_____05 Confirmed Schedules\\00 FINAL FINAL - Calvin Confirmed\\2027 01 14 - HK244HG_CW_FINAL (CHI) - CA - 彩雲.docx",
+    "source_sha256": "6629018200061f6ae5f326df716575c1551890a52156d5d20ac5c3f0642ccc8d",
+    "source_original_sha256": "54c9fb470557a3d838f01ef23d06d96766cec63849c9d9a4da61bbc0104fa0d7",
+    "raw_events_note": "January2027 cohort is held in confirmed class_context, not legacy workbook events.json. Explicit named assignments verified against final source."
   }
 ]
