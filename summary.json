@@ -9,9 +9,9 @@
   "class_spans": 32,
   "first_lesson_markers": 30,
   "first_personal_lesson_markers": 30,
-  "comparison_baseline": "versions/2026-11-18-V44",
-  "comparison_label": "V45",
-  "changed_in_version": 12,
+  "comparison_baseline": "versions/2026-11-20-V45",
+  "comparison_label": "V46",
+  "changed_in_version": 3,
   "counts": {
     "confirmed": 381,
     "unconfirmed": 49,
@@ -63,5 +63,15 @@
     "garett_last_lesson": "2027-01-21",
     "source": "2027 01 14 - HK244HG_CW_FINAL (CHI) - CA - 彩雲.docx",
     "confirmed_date": "2026-11-20"
+  },
+  "cw11_assessment_update": {
+    "source": "HK244HG_CW11_CONFIRMED_20261123.jpg",
+    "updated": "2026-11-23",
+    "group_presentation_lesson": 11,
+    "group_presentation_date": "2026-12-08",
+    "group_presentation_time": "13:30-17:00",
+    "final_exam": "2026-12-09 09:30-12:30",
+    "garett_hours": 11,
+    "whole_completion": "2026-12-09"
   }
 }

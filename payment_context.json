@@ -127,7 +127,13 @@
     "provider": "基督教勵行會",
     "full_course_start": "2026-11-19",
     "full_course_end": "2026-12-09",
-    "full_lesson_entries": 12
+    "full_lesson_entries": 12,
+    "source": "HK244HG_CW11_CONFIRMED_20261123.jpg",
+    "source_sha256": "dbe2b86490eb2346740d3a5de47c03a82fa5a0bab5b12d4b957fbcf8962418ab",
+    "source_revision_date": "2026-11-23",
+    "full_course_end_time": "13:00",
+    "official_course_hours": 45,
+    "assessment_update": "L11 December8 13:30-17:00 group presentation; L12 December9 practical exam09:30-12:30 within09:00-13:00 lesson. Garett L9-L11 remain11hours."
   },
   {
     "group": "g23",
