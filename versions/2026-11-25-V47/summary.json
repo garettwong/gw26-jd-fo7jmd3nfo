@@ -1,0 +1,81 @@
+{
+  "source": "C:\\Users\\garet\\OneDrive\\桌面\\Timetable\\ERB Super Timetable 04_checking 11_20260715_V07_HK239HGCW10_REDO.xlsx",
+  "override_source": "D:\\Codex 2\\projects\\erb-mc244eg3-20261106\\schedule_overrides.json",
+  "override_revision": "V20af",
+  "override_confirmation": "Recovered the 2026-08-31 HK239HG CW10 Lesson 3 note from Garett's preserved Chrome timetable and restored it to the central service. No lesson date, time, teacher, ownership, room, duration, or salary row changed.",
+  "events": 135,
+  "display_events": 437,
+  "context_events": 302,
+  "class_spans": 32,
+  "first_lesson_markers": 30,
+  "first_personal_lesson_markers": 30,
+  "comparison_baseline": "versions/2026-11-23-V46",
+  "comparison_label": "V47",
+  "changed_in_version": 12,
+  "counts": {
+    "confirmed": 381,
+    "unconfirmed": 49,
+    "note": 7
+  },
+  "layers": {
+    "mine": 237,
+    "class": 197,
+    "other": 3
+  },
+  "categories": {
+    "YMCA SEN": 39,
+    "School": 1,
+    "勵行 / ERB": 298,
+    "Holiday": 6,
+    "Mike Sir": 6,
+    "DGS / UE": 2,
+    "循道": 59,
+    "DGS Blender": 1,
+    "YMCA / ERB": 9,
+    "ERB": 12,
+    "Private course": 4
+  },
+  "months": [
+    "June",
+    "July New",
+    "August New",
+    "September New",
+    "October New",
+    "November New",
+    "December New"
+  ],
+  "qat7_source": "2027 Jan-Jun_Booster Calendar_20261105.pdf: YMCA dates; Garett 2026-11-05: 09:30-12:30 and 13:30-17:30.",
+  "personal_note_update": {
+    "id": "ywca-wong-tai-sin-20261120",
+    "date": "2026-11-20",
+    "period": "morning",
+    "exact_time_pending": true
+  },
+  "cw11_assessment_update": {
+    "source": "2026 12 03 (2026 11 19) - HK244HG_CW11_CONFIRMED_20261123 (CHI) - CA - 彩雲.jpg",
+    "updated": "2026-11-23",
+    "group_presentation_lesson": 11,
+    "group_presentation_date": "2026-12-08",
+    "group_presentation_time": "13:30-17:00",
+    "final_exam": "2026-12-09 09:30-12:30",
+    "garett_hours": 11,
+    "whole_completion": "2026-12-09"
+  },
+  "hk244hg_cw12_confirmed": {
+    "class_sessions": 12,
+    "garett_sessions": 5,
+    "garett_hours": 19.25,
+    "other_tutor": "Chan Shuk Ki",
+    "other_tutor_sessions": 7,
+    "listed_class_hours": 45,
+    "stated_class_hours": 45,
+    "whole_course_end": "2027-01-29",
+    "garett_last_lesson": "2027-01-21",
+    "source": "2027 01 14 (2027 01 14) - HK244HG_CW12_FINAL_R2 (CHI) - CA - 彩雲.docx",
+    "confirmed_date": "2026-11-20",
+    "updated": "2026-11-25",
+    "previous_class_code": "CW",
+    "class_code": "CW12",
+    "hour_discrepancy_resolved": true
+  }
+}

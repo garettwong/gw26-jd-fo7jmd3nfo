@@ -9,9 +9,9 @@
   "class_spans": 32,
   "first_lesson_markers": 30,
   "first_personal_lesson_markers": 30,
-  "comparison_baseline": "versions/2026-11-20-V45",
-  "comparison_label": "V46",
-  "changed_in_version": 3,
+  "comparison_baseline": "versions/2026-11-23-V46",
+  "comparison_label": "V47",
+  "changed_in_version": 12,
   "counts": {
     "confirmed": 381,
     "unconfirmed": 49,
@@ -51,21 +51,8 @@
     "period": "morning",
     "exact_time_pending": true
   },
-  "hk244hg_cw_confirmed": {
-    "class_sessions": 12,
-    "garett_sessions": 5,
-    "garett_hours": 19,
-    "other_tutor": "Shuki",
-    "other_tutor_sessions": 7,
-    "listed_class_hours": 44.5,
-    "stated_class_hours": 45,
-    "whole_course_end": "2027-01-29",
-    "garett_last_lesson": "2027-01-21",
-    "source": "2027 01 14 - HK244HG_CW_FINAL (CHI) - CA - 彩雲.docx",
-    "confirmed_date": "2026-11-20"
-  },
   "cw11_assessment_update": {
-    "source": "HK244HG_CW11_CONFIRMED_20261123.jpg",
+    "source": "2026 12 03 (2026 11 19) - HK244HG_CW11_CONFIRMED_20261123 (CHI) - CA - 彩雲.jpg",
     "updated": "2026-11-23",
     "group_presentation_lesson": 11,
     "group_presentation_date": "2026-12-08",
@@ -73,5 +60,22 @@
     "final_exam": "2026-12-09 09:30-12:30",
     "garett_hours": 11,
     "whole_completion": "2026-12-09"
+  },
+  "hk244hg_cw12_confirmed": {
+    "class_sessions": 12,
+    "garett_sessions": 5,
+    "garett_hours": 19.25,
+    "other_tutor": "Chan Shuk Ki",
+    "other_tutor_sessions": 7,
+    "listed_class_hours": 45,
+    "stated_class_hours": 45,
+    "whole_course_end": "2027-01-29",
+    "garett_last_lesson": "2027-01-21",
+    "source": "2027 01 14 (2027 01 14) - HK244HG_CW12_FINAL_R2 (CHI) - CA - 彩雲.docx",
+    "confirmed_date": "2026-11-20",
+    "updated": "2026-11-25",
+    "previous_class_code": "CW",
+    "class_code": "CW12",
+    "hour_discrepancy_resolved": true
   }
 }

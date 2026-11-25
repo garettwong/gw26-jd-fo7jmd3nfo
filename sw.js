@@ -1,4 +1,4 @@
-const BUILD_ID = 'v46-cw11-assessment-20261123';
+const BUILD_ID = 'v47-cw12-r2-20261125';
 
 self.addEventListener('install', event => {
   self.skipWaiting();
