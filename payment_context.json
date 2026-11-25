@@ -128,7 +128,7 @@
     "full_course_start": "2026-11-19",
     "full_course_end": "2026-12-09",
     "full_lesson_entries": 12,
-    "source": "HK244HG_CW11_CONFIRMED_20261123.jpg",
+    "source": "2026 12 03 (2026 11 19) - HK244HG_CW11_CONFIRMED_20261123 (CHI) - CA - 彩雲.jpg",
     "source_sha256": "dbe2b86490eb2346740d3a5de47c03a82fa5a0bab5b12d4b957fbcf8962418ab",
     "source_revision_date": "2026-11-23",
     "full_course_end_time": "13:00",
@@ -305,9 +305,9 @@
   },
   {
     "group": "g43",
-    "label": "HK244HG · CW",
+    "label": "HK244HG · CW12",
     "course_code": "HK244HG",
-    "class_code": "CW",
+    "class_code": "CW12",
     "course_name": "人工智能創作營銷社交媒體內容技巧證書（兼讀制）",
     "provider": "基督教勵行會",
     "full_course_start": "2027-01-14",
@@ -324,15 +324,17 @@
       7
     ],
     "garett_lesson_count": 5,
-    "garett_hours": 19,
+    "garett_hours": 19.25,
     "garett_last_lesson": "2027-01-21",
     "official_course_hours": 45,
-    "scheduled_course_hours": 44.5,
-    "source_hours_note": "Source states45hours; listed lesson windows total44.5hours. Garett payable times total19hours. Preserve discrepancy; do not invent extra half hour.",
-    "source": "2027 01 14 - HK244HG_CW_FINAL (CHI) - CA - 彩雲.docx",
-    "source_path": "D:\\Garett Super Jobs 2026\\Calvin\\REAL ERB\\Check schedule only (Codex)\\_____05 Confirmed Schedules\\00 FINAL FINAL - Calvin Confirmed\\2027 01 14 - HK244HG_CW_FINAL (CHI) - CA - 彩雲.docx",
-    "source_sha256": "6629018200061f6ae5f326df716575c1551890a52156d5d20ac5c3f0642ccc8d",
-    "source_original_sha256": "54c9fb470557a3d838f01ef23d06d96766cec63849c9d9a4da61bbc0104fa0d7",
-    "raw_events_note": "January2027 cohort is held in confirmed class_context, not legacy workbook events.json. Explicit named assignments verified against final source."
+    "scheduled_course_hours": 45,
+    "source_hours_note": "R2 extendsL4andL10 by15minutes each; scheduled45hours now matches declared45hours. Garett5lessons19.25hours.",
+    "source": "2027 01 14 (2027 01 14) - HK244HG_CW12_FINAL_R2 (CHI) - CA - 彩雲.docx",
+    "source_path": "D:\\Garett Super Jobs 2026\\Calvin\\REAL ERB\\Check schedule only (Codex)\\_____05 Confirmed Schedules\\00 FINAL FINAL - Calvin Confirmed\\2027 01 14 (2027 01 14) - HK244HG_CW12_FINAL_R2 (CHI) - CA - 彩雲.docx",
+    "source_sha256": "a4792cf3691d3e58c6fb548a3f8350a4db17bc84e151c92837295a743f615685",
+    "source_original_sha256": "35c2fd72b3adef0232989c720f2a9bd12d75c1f695a9ded2f9eedb144f2eb972",
+    "raw_events_note": "January2027 cohort is held in confirmed class_context, not legacy workbook events.json. Explicit named assignments verified against final source.",
+    "previous_class_code": "CW",
+    "source_revision_date": "2026-11-25"
   }
 ]
